@@ -37,7 +37,7 @@
 1. 브랜치는 생성 전 디스코드의 팀원들과 논의합니다.
 2. [기능]-mvp-[front/back/merge]의 형태로 생성합니다. 예) user-mvp-front
 3. dev로의 머지나 테스트를 위한 브랜치 머지는 깃랩의 Merge Request 기능을 사용합니다.
-- 이 때, Merge Request는 동일 기능 및 포지션의 팀원들을 Asignee/Reviewer로 설정합니다.
+-- 이 때, Merge Request는 동일 기능 및 포지션의 팀원들을 Asignee/Reviewer로 설정합니다.
 4. 작업자 본인의 브랜치에서 파생되는 브랜치는 로컬 터미널에서 머지해도 괜찮습니다.
 
 ## 팀원들 간의 규칙
