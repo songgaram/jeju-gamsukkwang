@@ -5,19 +5,6 @@ paths:
         - User
       summary: 회원가입 기능
       description: 테스트중
-      parameters:
-        - name: email
-          required: true
-          schema:
-            type: string
-        - name: password
-          required: true
-          schema:
-            type: string
-        - name: nickname
-          required: true
-          schema:
-            type: string
       requestBody:
         required: true
         description: testing
@@ -28,6 +15,26 @@ paths:
               example:
                 {
                   "email": "test@elice.io",
-                  "password": "hashedText",
-                  "nickname": "rabbit",
+                  "password": "1234",
+                  "nickname": "test",
                 }
+      responses:
+        "200":
+          description: testing
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  {
+                    "id": "80d0119c-6361-4926-905b-43984cda95ca",
+                    "email": "test@elice.io",
+                    "nickname": "test",
+                    "hashedPassword": "$2b$10$.eAdPb/HHd9X3mqHnOXINOVXiAZA8UKsb1a2pGr1Kd9GppByYijy6",
+                    "description": "None",
+                    "auth": [],
+                    "_id": "6299a9acdb11172b1eb0b6df",
+                    "createdAt": "2022-06-03T06:26:52.996Z",
+                    "updatedAt": "2022-06-03T06:26:52.996Z",
+                    "__v": 0,
+                  }
