@@ -4,9 +4,11 @@ const { Schema, model } = pkg;
 const UserSchema = new Schema(
 	{
 		id: {
-      type: String,
-      required: true,
-    },
+			type: String,
+			unique: true,
+			required: true,
+			index: true,
+		},
 		email: {
 			type: String,
 			required: true,
@@ -17,7 +19,6 @@ const UserSchema = new Schema(
 			type: String,
 			required: true,
 			unique: true,
-			index: true,
 		},
 		hashedPassword: {
 			type: String,
@@ -25,11 +26,6 @@ const UserSchema = new Schema(
 		},
 		description: {
 			type: String,
-			default: "None",
-		},
-		auth: {
-			type: Array,
-			default: []
 		},
 	},
 	{
@@ -38,4 +34,3 @@ const UserSchema = new Schema(
 );
 
 export const User = model("User", UserSchema);
-  
