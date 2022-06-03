@@ -3,6 +3,7 @@
 import express from "express";
 import cors from "cors";
 import swaggerJsDoc from "swagger-jsdoc";
+import { userAuthRouter } from "./routers/UserRouter";
 
 const app = express();
 const { swaggerUi, specs } = require("./modules/swagger");
@@ -18,5 +19,7 @@ app.use(
 	swaggerUi.serve,
 	swaggerUi.setup(specs, { explorer: true })
 );
+
+app.use("/user", userAuthRouter)
 
 export { app };
