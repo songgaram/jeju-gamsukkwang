@@ -3,8 +3,8 @@ paths:
     post:
       tags:
         - User
-      summary: 회원가입 기능
-      description: 테스트중
+      summary: 회원 가입
+      description: email, password, nickname으로 회원 가입 요청을 보냅니다.
       requestBody:
         required: true
         description: testing
@@ -20,8 +20,4 @@ paths:
                 }
       responses:
         "200":
-          description: testing
-          content:
-            application/json:
-              schema:
-                type: object
+          description: 회원 가입 성공

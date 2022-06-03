@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { userModel } from "..db/models/userModel";
+import { userModel } from "../db/models/userModel";
 
 const loginRequired = async (req, res, next) => {
 	// request 헤더로부터 authorization bearer 토큰을 받음.

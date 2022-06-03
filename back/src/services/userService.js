@@ -9,7 +9,7 @@ class userService {
 	static addUser = async ({ email, password, nickname }) => {
 		// 이메일 중복 확인
 		const isEmailExist = await userModel.isEmailExist({ email });
-		if (isEmailExist) {
+		if (!isEmailExist) {
 			const errorMessage = "이 이메일은 현재 사용중입니다.";
 			throw new Error(errorMessage);
 		}

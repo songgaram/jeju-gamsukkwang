@@ -1,11 +1,11 @@
 import { userRouter } from "./routers/userRouter";
 import { errorMiddleware } from "./middlewares/errorMiddleware";
+import { swaggerUi, specs } from "./swagger/swagger";
 
 import express from "express";
 import cors from "cors";
 
 const app = express();
-const { swaggerUi, specs } = require("./modules/swagger");
 
 // default app.use
 app.use(cors());

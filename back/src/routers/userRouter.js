@@ -2,7 +2,7 @@ import is from "@sindresorhus/is";
 
 import { Router } from "express";
 import { userService } from "../services/userService";
-import { loginRequired } from "./middlewares/loginRequired";
+import { loginRequired } from "../middlewares/loginRequired";
 
 const userRouter = Router();
 
