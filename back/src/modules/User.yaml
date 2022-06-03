@@ -7,17 +7,14 @@ paths:
       description: 테스트중
       parameters:
         - name: email
-          in: query
           required: true
           schema:
             type: string
         - name: password
-          in: query
           required: true
           schema:
             type: string
         - name: nickname
-          in: query
           required: true
           schema:
             type: string
@@ -28,10 +25,9 @@ paths:
             application/json:
               schema:
                 type: object
-                properties:
-                  example:
-                    {
-                      "email": "test@elice.io",
-                      "password": "hashedText",
-                      "nickname": "rabbit",
-                    }
+                example:
+                  {
+                    "email": "test@elice.io",
+                    "password": "hashedText",
+                    "nickname": "rabbit",
+                  }
