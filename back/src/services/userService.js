@@ -10,8 +10,8 @@ class userService {
 		// 이메일 중복 확인
 		const user = await User.findByEmail({ email });
 		if (user) {
-			const errMessage = "이 이메일은 현재 사용중입니다.";
-			return { errMessage };
+			const errorMessage = "이 이메일은 현재 사용중입니다.";
+			return { errorMessage };
 		}
 
 		// 비밀번호 해쉬화
