@@ -1,5 +1,5 @@
-// import { router } from xxx
 import { userRouter } from "./routers/userRouter";
+import { errorMiddleware } from "./middlewares/errorMiddleware";
 
 import express from "express";
 import cors from "cors";
@@ -19,6 +19,10 @@ app.use(
 	swaggerUi.setup(specs, { explorer: true })
 );
 
+// routers
 app.use(userRouter);
+
+// error Middleware
+app.use(errorMiddleware);
 
 export { app };
