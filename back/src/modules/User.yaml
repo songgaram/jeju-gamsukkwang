@@ -18,3 +18,10 @@ paths:
                   "password": "1234",
                   "nickname": "test",
                 }
+      responses:
+        "200":
+          description: testing
+          content:
+            application/json:
+              schema:
+                type: object
