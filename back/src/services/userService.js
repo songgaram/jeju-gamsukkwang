@@ -19,7 +19,7 @@ class userService {
 
 		// id에 유니크 값 부여
 		const id = uuidv4();
-		const newUser = { id, email, password: hashedPassword, nickname };
+		const newUser = { id, email, hashedPassword, nickname };
 
 		// db에 저장
 		const createdNewUser = await userModel.create({ newUser });

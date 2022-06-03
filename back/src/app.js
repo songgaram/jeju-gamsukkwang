@@ -19,6 +19,6 @@ app.use(
 	swaggerUi.setup(specs, { explorer: true })
 );
 
-app.use("/user", userRouter);
+app.use(userRouter);
 
 export { app };
