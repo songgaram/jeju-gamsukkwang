@@ -27,7 +27,7 @@ userRouter.post("/user/register", async (req, res, next) => {
 			throw new Error(newUser.errorMessage);
 		}
 
-		res.status(201).json(newUser);
+		res.status(200).json(newUser);
 	} catch (err) {
 		next(err);
 	}

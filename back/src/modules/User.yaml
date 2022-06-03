@@ -21,22 +21,17 @@ paths:
           required: true
           schema:
             type: string
-
-      # reponses :
-      #   '201' :
-      #     description : 테스트중
-      #       content :
-      #         application/json :
-      #           schema :
-      #             type: object
-      #             properties :
-      #               user :
-      #                 type : array
-      #                 items :
-      #                   type : object
-      #                   example :
-      #                     {
-      #                       "email" : "elice4thai@elice.io",
-      #                       "password" : "hashedPassword"
-      #                       "nickname" : "엘리스 토끼"
-      #                     }
+      responses:
+        "200":
+          description: testing
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  example:
+                    {
+                      "email": "test@elice.io",
+                      "password": "hashedText",
+                      "nickname": "rabbit",
+                    }
