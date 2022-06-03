@@ -4,10 +4,10 @@ paths:
       tags:
         - User
       summary: 회원 가입
-      description: email, password, nickname으로 회원 가입 요청을 보냅니다.
+      description: /user/register로 회원 가입 요청을 보냅니다.
       requestBody:
         required: true
-        description: testing
+        description: 이메일, 비밀번호, 닉네임을 필수 req.body로 받습니다.
         content:
           application/json:
             schema:
