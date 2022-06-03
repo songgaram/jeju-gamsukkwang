@@ -19,5 +19,5 @@ paths:
                   "nickname": "test",
                 }
       responses:
-        "200":
+        "201":
           description: 회원 가입 성공

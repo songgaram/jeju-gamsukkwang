@@ -22,7 +22,7 @@ userRouter.post("/user/register", async (req, res, next) => {
 			nickname,
 		});
 
-		res.status(200).json(newUser);
+		res.status(201).json(newUser);
 	} catch (err) {
 		next(err);
 	}
