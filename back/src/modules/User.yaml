@@ -18,16 +18,16 @@ paths:
           required: true
           schema:
             type: string
-      responses:
-        "200":
-          description: testing
-          content:
-            application/json:
-              schema:
-                type: object
-                example:
-                  {
-                    "email": "test@elice.io",
-                    "password": "hashedText",
-                    "nickname": "rabbit",
-                  }
+      requestBody:
+        required: true
+        description: testing
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                {
+                  "email": "test@elice.io",
+                  "password": "hashedText",
+                  "nickname": "rabbit",
+                }
