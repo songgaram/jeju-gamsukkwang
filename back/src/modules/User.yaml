@@ -1,0 +1,42 @@
+paths:
+  /user/register:
+    post:
+      tags:
+        - User
+      summary: 회원가입 기능
+      description: 테스트중
+      parameters:
+        - name: email
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: password
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: nickname
+          in: query
+          required: true
+          schema:
+            type: string
+
+      # reponses :
+      #   '201' :
+      #     description : 테스트중
+      #       content :
+      #         application/json :
+      #           schema :
+      #             type: object
+      #             properties :
+      #               user :
+      #                 type : array
+      #                 items :
+      #                   type : object
+      #                   example :
+      #                     {
+      #                       "email" : "elice4thai@elice.io",
+      #                       "password" : "hashedPassword"
+      #                       "nickname" : "엘리스 토끼"
+      #                     }
