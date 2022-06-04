@@ -32,6 +32,49 @@ class userService {
 		return createdNewUser;
 	};
 
+	// 회원 로그인 기능
+	static loginUser = async ({ email, password }) => {
+		// 이메일로 회원이 DB에 있는지 확인
+		const user = await userModel.findByEmail({ email });
+
+		// 해당 회원이 없을 경우 error
+		if (!user) {
+			throw new Error("system.error.no.user");
+		}
+
+		// 비밀번호 일치 여부 확인
+		const passwordFromDB = user.password;
+		const isPasswordSame = await bcrypt.compare(password, passwordFromDB);
+
+		// 비밀번호가 일치하지 않을 경우 Error
+		if (!isPasswordSame) {
+			throw new Error("system.error.different.password");
+		}
+
+		// 로그인 성공 => jwt 생성
+		const secretKey = process.env.JWT_SECRET_KEY;
+
+		if (!secretKey) {
+			throw new Error("system.error.no.secretKey");
+		}
+
+		const token = jwt.sign({ userId: user.id }, secretKey, {
+			expiresIn: "1 days",
+		});
+
+		// loginUser 객체에 반환할 데이터 설정
+		const { id, nickname } = user;
+
+		const loginUser = {
+			token,
+			id,
+			email,
+			nickname,
+		};
+
+		return loginUser;
+	};
+
 	// 회원 탈퇴 기능
 	static withdrawUser = async ({ userId, password }) => {
 		// 유저 ID로 DB에 있는 회원 정보 확인

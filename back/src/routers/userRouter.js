@@ -29,6 +29,21 @@ userRouter.post("/user/register", async (req, res, next) => {
 	}
 });
 
+// 회원 로그인 기능
+userRouter.post("/user/login", async (req, res, next) => {
+	try {
+		// req에서 데이터 가져오기
+		const { email, password } = req.body;
+
+		// 위 데이터로 DB 검색
+		const user = await userService.loginUser({ email, password });
+
+		res.status(200).send(user);
+	} catch (err) {
+		next(err);
+	}
+});
+
 // 회원 탈퇴 기능
 userRouter.post("/user/withdraw", loginRequired, async (req, res, next) => {
 	try {
@@ -36,7 +51,7 @@ userRouter.post("/user/withdraw", loginRequired, async (req, res, next) => {
 			throw new Error("system.error.fail");
 		}
 
-		// req에서 userId와 password를 가져옴
+		// req에서 데이터 가져오기
 		const userId = req.currentUserId;
 		const password = req.body.password;
 
