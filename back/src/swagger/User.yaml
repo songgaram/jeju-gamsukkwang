@@ -28,4 +28,4 @@ paths:
               schema:
                 type: object
                 example:
-                  { "errormessage": "이 이메일/닉네임은 현재 사용중입니다." }
+                  { "errormessage": "system.error.duplicated.email/nickname" }

@@ -10,15 +10,13 @@ class userService {
 		// 이메일 중복 확인
 		const isEmailExist = await userModel.isEmailExist({ email });
 		if (!isEmailExist) {
-			const errorMessage = "이 이메일은 현재 사용중입니다.";
-			throw new Error(errorMessage);
+			throw new Error("system.error.duplicated.email");
 		}
 
 		// 닉네임 중복 확인
 		const isNicknameExist = await userModel.isNicknameExist({ nickname });
 		if (!isNicknameExist) {
-			const errorMessage = "이 닉네임은 현재 사용중입니다.";
-			throw new Error(errorMessage);
+			throw new Error("system.error.duplicated.nickname");
 		}
 
 		// 비밀번호 해쉬화
@@ -32,6 +30,46 @@ class userService {
 		const createdNewUser = await userModel.create({ newUser });
 
 		return createdNewUser;
+	};
+
+	// 회원 탈퇴 기능
+	static withdrawUser = async ({ userId, password }) => {
+		// 유저 ID로 DB에 있는 회원 정보 확인
+		const user = await userModel.findById({ userId });
+
+		// 해당 회원이 없을 경우 error
+		if (!user) {
+			throw new Error("system.error.no.user");
+		}
+
+		// 비밀번호 일치 여부 확인
+		const passwordFromDB = user.password;
+		const isPasswordSame = await bcrypt.compare(password, passwordFromDB);
+
+		// 비밀번호가 일치하지 않을 경우 Error
+		if (!isPasswordSame) {
+			throw new Error("system.error.different.password");
+		}
+
+		const session = await db.startSession();
+
+		try {
+			session.startTransaction();
+
+			const withdrawResult = userModel.deleteById({ userId });
+			if (!withdrawResult) {
+				throw new Error("system.error.fail");
+			}
+
+			session.commitTransaction();
+
+			return "system.success";
+		} catch (err) {
+			await session.abortTransaction();
+			throw new Error("system.error.fail");
+		} finally {
+			session.endSession();
+		}
 	};
 }
 

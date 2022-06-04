@@ -6,6 +6,7 @@ import { loginRequired } from "../middlewares/loginRequired";
 
 const userRouter = Router();
 
+// 회원 등록 기능
 userRouter.post("/user/register", async (req, res, next) => {
 	try {
 		if (is.emptyObject(req.body)) {
@@ -23,6 +24,26 @@ userRouter.post("/user/register", async (req, res, next) => {
 		});
 
 		res.status(201).json(newUser);
+	} catch (err) {
+		next(err);
+	}
+});
+
+// 회원 탈퇴 기능
+userRouter.post("/user/withdraw", loginRequired, async (req, res, next) => {
+	try {
+		if (is.emptyObject(req.body) || !req.body.password) {
+			throw new Error("system.error.fail");
+		}
+
+		// req에서 userId와 password를 가져옴
+		const userId = req.currentUserId;
+		const password = req.body.password;
+
+		// 위 데이터로 회원 탈퇴 시도
+		const user = await userService.withdrawUser({ userId, password });
+
+		res.status(200).send(user);
 	} catch (err) {
 		next(err);
 	}
