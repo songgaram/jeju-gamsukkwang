@@ -14,6 +14,13 @@ class userService {
 			throw new Error(errorMessage);
 		}
 
+		// 닉네임 중복 확인
+		const isNicknameExist = await userModel.isNicknameExist({ nickname });
+		if (!isNicknameExist) {
+			const errorMessage = "이 닉네임은 현재 사용중입니다.";
+			throw new Error(errorMessage);
+		}
+
 		// 비밀번호 해쉬화
 		const hashedPassword = await bcrypt.hash(password, 10);
 
