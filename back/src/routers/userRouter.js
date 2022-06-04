@@ -10,7 +10,7 @@ const userRouter = Router();
 userRouter.post("/user/register", async (req, res, next) => {
 	try {
 		if (is.emptyObject(req.body)) {
-			throw new Error("Content-type을 application/json으로 설정");
+			throw new Error("system.error.badRequest");
 		}
 
 		// req에서 데이터 가져오기

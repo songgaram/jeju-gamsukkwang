@@ -10,13 +10,13 @@ class userService {
 		// 이메일 중복 확인
 		const isEmailExist = await userModel.isEmailExist({ email });
 		if (!isEmailExist) {
-			throw new Error("system.error.duplicated.email");
+			throw new Error("system.error.duplicatedEmail");
 		}
 
 		// 닉네임 중복 확인
 		const isNicknameExist = await userModel.isNicknameExist({ nickname });
 		if (!isNicknameExist) {
-			throw new Error("system.error.duplicated.nickname");
+			throw new Error("system.error.duplicatedNickname");
 		}
 
 		// 비밀번호 해쉬화
@@ -39,7 +39,7 @@ class userService {
 
 		// 해당 회원이 없을 경우 error
 		if (!user) {
-			throw new Error("system.error.no.user");
+			throw new Error("system.error.noUser");
 		}
 
 		// 비밀번호 일치 여부 확인
@@ -48,13 +48,13 @@ class userService {
 
 		// 비밀번호가 일치하지 않을 경우 Error
 		if (!isPasswordSame) {
-			throw new Error("system.error.different.password");
+			throw new Error("system.error.differentPassword");
 		}
 
 		// 로그인 성공 => jwt 생성
 		const secretKey = process.env.JWT_SECRET_KEY;
 		if (!secretKey) {
-			throw new Error("system.error.no.secretKey");
+			throw new Error("system.error.noSecretKey");
 		}
 		const token = jwt.sign({ userId: user.id }, secretKey, {
 			expiresIn: "1 days",
@@ -81,7 +81,7 @@ class userService {
 
 		// 해당 회원이 없을 경우 error
 		if (!user) {
-			throw new Error("system.error.no.user");
+			throw new Error("system.error.noUser");
 		}
 
 		try {

@@ -6,7 +6,7 @@ const loginRequired = async (req, res, next) => {
 
 	// 토큰이 없을 경우, 로그인된 사용자만 사용할 수 있는 서비스로의 접근을 제한
 	if (!userToken) {
-		res.status(400).send("system.error.no.token");
+		res.status(400).send("system.error.noToken");
 		return;
 	}
 
@@ -19,7 +19,7 @@ const loginRequired = async (req, res, next) => {
 		req.currentUserId = userId;
 		next();
 	} catch (err) {
-		res.status(400).send("system.error.unvalid.token");
+		res.status(400).send("system.error.unvalidToken");
 		return;
 	}
 };
