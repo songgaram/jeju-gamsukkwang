@@ -23,9 +23,23 @@ paths:
           description: 회원 가입 성공
         "400":
           description: 중복된 이메일이나 닉네임을 보냈을 때 오류가 발생합니다.
-          content:
-            application/json:
-              schema:
-                type: object
-                example:
-                  { "errormessage": "system.error.duplicated.email/nickname" }
+
+  /user/login:
+    post:
+      tags:
+        - User
+      summary: 회원 로그인
+      description: /user/login으로 회원 로그인 요청을 보냅니다.
+      requestBody:
+        required: true
+        description: 이메일, 비밀번호를 필수 req.body로 받습니다.
+        content:
+          application/json:
+            schema:
+              type: object
+              example: { "email": "test@elice.io", "password": "1234" }
+      responses:
+        "200":
+          description: 로그인 성공
+        "400":
+          description: 잘못된 이메일을 보내거나, 비밀번호가 DB와 일치하지 않으면 오류가 발생합니다.
