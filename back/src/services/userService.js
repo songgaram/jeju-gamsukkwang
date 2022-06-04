@@ -43,7 +43,7 @@ class userService {
 		}
 
 		// 비밀번호 일치 여부 확인
-		const passwordFromDB = user.password;
+		const passwordFromDB = user.hashedPassword;
 		const isPasswordSame = await bcrypt.compare(password, passwordFromDB);
 
 		// 비밀번호가 일치하지 않을 경우 Error
@@ -53,11 +53,9 @@ class userService {
 
 		// 로그인 성공 => jwt 생성
 		const secretKey = process.env.JWT_SECRET_KEY;
-
 		if (!secretKey) {
 			throw new Error("system.error.no.secretKey");
 		}
-
 		const token = jwt.sign({ userId: user.id }, secretKey, {
 			expiresIn: "1 days",
 		});
@@ -86,7 +84,7 @@ class userService {
 		}
 
 		// 비밀번호 일치 여부 확인
-		const passwordFromDB = user.password;
+		const passwordFromDB = user.hashedPassword;
 		const isPasswordSame = await bcrypt.compare(password, passwordFromDB);
 
 		// 비밀번호가 일치하지 않을 경우 Error
