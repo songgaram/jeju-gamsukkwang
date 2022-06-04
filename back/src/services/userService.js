@@ -74,8 +74,9 @@ class userService {
 	};
 
 	// 회원 탈퇴 기능
-	static withdrawUser = async ({ userId, password }) => {
+	static withdrawUser = async ({ userId }) => {
 		// 유저 ID로 DB에 있는 회원 정보 확인
+		console.log(userId);
 		const user = await userModel.findById({ userId });
 
 		// 해당 회원이 없을 경우 error
@@ -83,33 +84,15 @@ class userService {
 			throw new Error("system.error.no.user");
 		}
 
-		// 비밀번호 일치 여부 확인
-		const passwordFromDB = user.hashedPassword;
-		const isPasswordSame = await bcrypt.compare(password, passwordFromDB);
-
-		// 비밀번호가 일치하지 않을 경우 Error
-		if (!isPasswordSame) {
-			throw new Error("system.error.different.password");
-		}
-
-		const session = await db.startSession();
-
 		try {
-			session.startTransaction();
-
 			const withdrawResult = userModel.deleteById({ userId });
 			if (!withdrawResult) {
 				throw new Error("system.error.fail");
 			}
 
-			session.commitTransaction();
-
 			return "system.success";
 		} catch (err) {
-			await session.abortTransaction();
 			throw new Error("system.error.fail");
-		} finally {
-			session.endSession();
 		}
 	};
 }

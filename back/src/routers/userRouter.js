@@ -45,18 +45,13 @@ userRouter.post("/user/login", async (req, res, next) => {
 });
 
 // 회원 탈퇴 기능
-userRouter.post("/user/withdraw", loginRequired, async (req, res, next) => {
+userRouter.delete("/user", loginRequired, async (req, res, next) => {
 	try {
-		if (is.emptyObject(req.body) || !req.body.password) {
-			throw new Error("system.error.fail");
-		}
-
 		// req에서 데이터 가져오기
 		const userId = req.currentUserId;
-		const password = req.body.password;
 
 		// 위 데이터로 회원 탈퇴 시도
-		const user = await userService.withdrawUser({ userId, password });
+		const user = await userService.withdrawUser({ userId });
 
 		res.status(200).send(user);
 	} catch (err) {
