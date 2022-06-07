@@ -1,0 +1,113 @@
+paths:
+  /community?page={page}&perPage={perPage}:
+    get:
+      tags:
+        - Community
+      summary: 게시글 요청
+      description: /community?page={page}&perPage={perPage}로 게시글 목록을 요청합니다. page 쿼리는 현재 페이지를, perPage 쿼리는 페이지 당 나타낼 게시글 수를 의미합니다.
+      parameters:
+        - name: page
+          in: query
+          required: true
+          schema:
+            type: integer
+        - name: perPage
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: 게시글 요청 성공
+        "400":
+          description: 잘못된 요청을 보냈을 때 오류가 발생합니다.
+
+  /community/{id}:
+    get:
+      tags:
+        - Community
+      summary: 특정 게시글 요청
+      description: /community/{id}로 특정 게시글의 제목과 내용, 그리고 게시글의 댓글을 요청합니다. id Params는 게시글의 고유 id입니다. 단, 로그인 사용자만 사용할 수 있습니다.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: 게시글 요청 성공
+        "400":
+          description: 잘못된 요청을 보냈을 때 오류가 발생합니다.
+
+  /community/write:
+    post:
+      tags:
+        - Community
+      summary: 게시글 작성
+      description: /community/write로 게시글 작성 요청을 보냅니다. 단, 로그인 사용자만 사용할 수 있습니다.
+      requestBody:
+        required: true
+        description: 제목, 내용을 필수 req.body로 받습니다.
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                {
+                  "title": "점심 뭐 먹지",
+                  "contents": "돈까스가 좋을까요 카레가 좋을까요 딩동댕동",
+                }
+      responses:
+        "201":
+          description: 게시글 작성 성공
+        "400":
+          description: 제목이나 내용이 공란일 때 오류가 발생합니다.
+
+  /community/{id}/edit:
+    put:
+      tags:
+        - Community
+      summary: 특정 게시글 수정
+      description: /community/{id}/edit으로 특정 게시글의 제목과 내용을 수정 요청합니다. id Params는 게시글의 고유 id입니다. 단, 해당 게시글의 작성자만 사용할 수 있습니다.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        description: 제목, 내용을 필수 req.body로 받습니다.
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                {
+                  "title": "점심 뭐 먹지",
+                  "contents": "돈까스가 좋을까요 카레가 좋을까요 딩동댕동",
+                }
+      responses:
+        "201":
+          description: 게시글 수정 성공
+        "400":
+          description: 제목이나 내용이 공란일 때, 사용자가 수정 권한이 없을 때 오류가 발생합니다.
+
+/community/{id}:
+  delete:
+    tags:
+      - Community
+    summary: 특정 게시글 삭제
+    description: /community/{id}로 특정 게시글의 제목과 내용, 그리고 게시글의 댓글을 요청합니다. id Params는 게시글의 고유 id입니다. 단, 해당 게시글의 작성자만 사용할 수 있습니다.
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+    responses:
+      "200":
+        description: 게시글 삭제 성공
+      "400":
+        description: 사용자가 삭제 권한이 없을 때, 잘못된 요청을 보냈을 떄 오류가 발생합니다.
