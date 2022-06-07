@@ -3,7 +3,7 @@
 1. 관광지(랜드마크) 선정
   - 44개의 랜드마크
   - 선정 기준 : 비짓제주 ([visitjeju.net](https://www.visitjeju.net/kr)) 여행지 목록 중, 좋아요순•리뷰순 기준으로 정렬 후 선정
-  - 목록 : [train_list.txt](ai\train_list.txt)
+  - 목록 : [train_list.txt](https://kdt-gitlab.elice.io/ai_track/class_04/ai_project/team8/team8/-/blob/ai/ai/train_list.txt)
 
 2. 데이터 폴더 구조
   
