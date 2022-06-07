@@ -127,9 +127,9 @@ paths:
         - Tour
       requestBody:
         required: true
+        description: visitJeju의 cid를 활용하여 데이터의 한글명, 도로명주소, 소개, 썸네일 이미지를 획득하여 저장합니다. 랜드마크 DB 구축 후 삭제 예정
         content:
           application/json:
-            description: visitJeju의 cid를 활용하여 데이터의 한글명, 도로명주소, 소개, 썸네일 이미지를 획득하여 저장합니다. 랜드마크 DB 구축 후 삭제 예정
             schema:
               type: object
               example: { "cid": "cid" }
