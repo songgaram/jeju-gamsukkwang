@@ -4,18 +4,20 @@ paths:
       tags:
         - Community
       summary: 게시글 요청
-      description: /community?page={page}&perPage={perPage}로 게시글 목록을 요청합니다. page 쿼리는 현재 페이지를, perPage 쿼리는 페이지 당 나타낼 게시글 수를 의미합니다.
+      description: /community?page={page}&perPage={perPage}로 게시글 목록을 요청합니다.
       parameters:
         - name: page
           in: query
           required: true
           schema:
             type: integer
+          description: 현재 페이지를 의미합니다. ex) 1페이지, 2페이지, ...
         - name: perPage
           in: query
           required: true
           schema:
             type: integer
+          description: 페이지 당 나타낼 게시글 수를 의미합니다.
       responses:
         "200":
           description: 게시글 요청 성공
@@ -27,13 +29,14 @@ paths:
       tags:
         - Community
       summary: 특정 게시글 요청
-      description: /community/{id}로 특정 게시글의 제목과 내용, 그리고 게시글의 댓글을 요청합니다. id Params는 게시글의 고유 id입니다. 단, 로그인 사용자만 사용할 수 있습니다.
+      description: /community/{id}로 특정 게시글의 제목과 내용, 그리고 게시글의 댓글을 요청합니다. 단, 로그인 사용자만 사용할 수 있습니다.
       parameters:
         - name: id
           in: path
           required: true
           schema:
             type: string
+          description: 게시글의 고유 id입니다.
       responses:
         "200":
           description: 게시글 요청 성공
@@ -69,13 +72,14 @@ paths:
       tags:
         - Community
       summary: 특정 게시글 수정
-      description: /community/{id}/edit으로 특정 게시글의 제목과 내용을 수정 요청합니다. id Params는 게시글의 고유 id입니다. 단, 해당 게시글의 작성자만 사용할 수 있습니다.
+      description: /community/{id}/edit으로 특정 게시글의 제목과 내용을 수정 요청합니다. 단, 해당 게시글의 작성자만 사용할 수 있습니다.
       parameters:
         - name: id
           in: path
           required: true
           schema:
             type: string
+          description: 게시글의 고유 id입니다.
       requestBody:
         required: true
         description: 제목, 내용을 필수 req.body로 받습니다.
@@ -99,13 +103,14 @@ paths:
     tags:
       - Community
     summary: 특정 게시글 삭제
-    description: /community/{id}로 특정 게시글의 제목과 내용, 그리고 게시글의 댓글을 요청합니다. id Params는 게시글의 고유 id입니다. 단, 해당 게시글의 작성자만 사용할 수 있습니다.
+    description: /community/{id}로 특정 게시글의 제목과 내용, 그리고 게시글의 댓글을 요청합니다. 단, 해당 게시글의 작성자만 사용할 수 있습니다.
     parameters:
       - name: id
         in: path
         required: true
         schema:
           type: string
+        description: 게시글의 고유 id입니다.
     responses:
       "200":
         description: 게시글 삭제 성공
