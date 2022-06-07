@@ -77,3 +77,15 @@ paths:
           description: 해당 랜드마크에 사용자의 리뷰와 평점 수정 완료
         "400":
           description: 해당 리뷰를 작성한 사용자가 아닐 때, req.body에 공란이 있을 때, 잘못된 요청이 있을 때 오류가 발생합니다.
+
+  /landmark:
+    post:
+      tags:
+        - Tour
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example: { "cid": "cid" }
