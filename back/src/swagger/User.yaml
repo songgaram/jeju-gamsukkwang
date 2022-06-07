@@ -78,7 +78,7 @@ paths:
                   "nickname": "testEditing",
                 }
       responses:
-        "200":
+        "201":
           description: 회원 수정 성공
         "400":
           description: 유효한 토큰을 가지고 있지 않거나, DB에 없는 회원이거나, 중복된 닉네임을 보낼 때 오류가 발생합니다.
