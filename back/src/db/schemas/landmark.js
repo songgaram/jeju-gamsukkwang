@@ -22,6 +22,10 @@ const LandmarkSchema = new Schema({
 		type: String,
 		index: true,
 	},
+	phoneNo: {
+		type: String,
+		index: true,
+	},
 });
 
 export const Landmark = model("Landmark", LandmarkSchema);
