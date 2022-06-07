@@ -29,6 +29,8 @@ paths:
       tags:
         - Community
       summary: 특정 게시글 요청
+      security:
+        - Authorization: []
       description: /community/{id}로 특정 게시글의 제목과 내용, 그리고 게시글의 댓글을 요청합니다. 단, 로그인 사용자만 사용할 수 있습니다.
       parameters:
         - name: id
@@ -48,6 +50,8 @@ paths:
       tags:
         - Community
       summary: 게시글 작성
+      security:
+        - Authorization: []
       description: /community로 게시글 작성 요청을 보냅니다. 단, 로그인 사용자만 사용할 수 있습니다.
       requestBody:
         required: true
@@ -72,6 +76,8 @@ paths:
       tags:
         - Community
       summary: 특정 게시글 수정
+      security:
+        - Authorization: []
       description: /community/{id}/으로 특정 게시글의 제목과 내용을 수정 요청합니다. 단, 해당 게시글의 작성자만 사용할 수 있습니다. url 맨 뒤의 /는 없어도 됩니다.
       parameters:
         - name: id
@@ -103,6 +109,8 @@ paths:
     tags:
       - Community
     summary: 특정 게시글 삭제
+    security:
+      - Authorization: []
     description: /community/{id}로 특정 게시글의 제목과 내용, 그리고 게시글의 댓글을 요청합니다. 단, 해당 게시글의 작성자만 사용할 수 있습니다.
     parameters:
       - name: id
