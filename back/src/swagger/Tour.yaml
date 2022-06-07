@@ -1,0 +1,19 @@
+paths:
+  /tour?name={name}:
+    get:
+      tags:
+        - Tour
+      summary: 랜드마크 정보 불러오기
+      description: /tour?name={name} 으로 랜드마크의 이름, 상세정보, 최근 리뷰, 평점을 불러옵니다. 단, name은 영문명입니다.
+      parameters:
+        - name: name
+          in: query
+          required: true
+          schema:
+            type: string
+          # description: 랜드마크 영문명 제공
+      responses:
+        "200":
+          description: 해당 랜드마크 정보 불러오기 성공
+        "400":
+          description: DB에 해당 영문명 랜드마크가 없을 때 오류가 발생합니다.
