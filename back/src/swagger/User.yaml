@@ -39,7 +39,7 @@ paths:
               type: object
               example: { "email": "test@elice.io", "password": "1234" }
       responses:
-        "200":
+        "201":
           description: 로그인 성공
         "400":
           description: 잘못된 이메일을 보내거나, 비밀번호가 DB와 일치하지 않으면 오류가 발생합니다.
