@@ -59,4 +59,19 @@ userRouter.delete("/user", loginRequired, async (req, res, next) => {
 	}
 });
 
+//회원 수정 기능
+userRouter.put("/user", loginRequired, async (req, res, next) => {
+	try{
+		// req에서 데이터 가져오기
+		const userId = req.currentUserId
+		const toUpdate = req.body
+		
+		const updatedUser = await userService.setUser({ userId, toUpdate })
+
+		res.status(200).json(updatedUser)
+	} catch(err) {
+		next(err)
+	}
+})
+
 export { userRouter };
