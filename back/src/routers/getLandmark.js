@@ -32,26 +32,4 @@ getLandmark.post("/landmark", async (req, res, next) => {
 	res.status(201).json(newLandmark);
 });
 
-// userRouter.post("/user/register", async (req, res, next) => {
-// 	try {
-// 		if (is.emptyObject(req.body)) {
-// 			throw new Error("system.error.badRequest");
-// 		}
-
-// 		// req에서 데이터 가져오기
-// 		const { email, password, nickname } = req.body;
-
-// 		// 데이터를 유저 db에 추가하기
-// 		const newUser = await userService.addUser({
-// 			email,
-// 			password,
-// 			nickname,
-// 		});
-
-// 		res.status(201).json(newUser);
-// 	} catch (err) {
-// 		next(err);
-// 	}
-// });
-
 export { getLandmark };
