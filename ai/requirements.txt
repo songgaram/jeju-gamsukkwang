@@ -33,7 +33,9 @@ pytz==2022.1
 pywin32==304
 pyzmq==23.1.0
 six==1.16.0
+split-folders==0.5.1
 stack-data==0.2.0
 tornado==6.1
+tqdm==4.64.0
 traitlets==5.2.2.post1
 wcwidth==0.2.5
