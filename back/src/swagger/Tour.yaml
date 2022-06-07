@@ -22,7 +22,9 @@ paths:
     post:
       tags:
         - Tour
-      summary: 랜드마크 평가하기
+      summary: 랜드마크
+      security:
+        - Authorization: []
       description: /tour?name={name}으로 리뷰와 평점을 등록합니다. 단, 로그인된 사용자만 사용 가능하며, 랜드마크 당 사용자는 1개의 리뷰만 작성 가능합니다. url 맨 뒤의 /는 없어도 됩니다.
       parameters:
         - name: name
@@ -51,6 +53,8 @@ paths:
       tags:
         - Tour
       summary: 랜드마크 평가 수정하기
+      security:
+        - Authorization: []
       description: /tour?name={name}으로 등록된 리뷰와 평점을 수정 요청합니다. 단, 해당 리뷰를 작성한 사용자만 사용 가능합니다. url 맨 뒤의 //는 없어도 됩니다.
       parameters:
         - name: name
