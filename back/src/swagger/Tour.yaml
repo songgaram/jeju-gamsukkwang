@@ -271,7 +271,7 @@ paths:
         "400":
           description: 로그인한 사용자가 아닐 때, 잘못된 요청이 있을 때 오류가 발생합니다.
 
-    /tour/dislike?name={name}:
+  /tour/dislike?name={name}:
     put:
       tags:
         - Tour
