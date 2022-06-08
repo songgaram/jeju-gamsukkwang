@@ -19,6 +19,22 @@ export const reviewModel = {
   findByLandmarkId: async ({ landmarkId }) => {
     const reviews = await Review.find({ landmarkId })
     return reviews
+  },
+
+  // reviewId로 리뷰 정보 찾기
+  findById: async ({ reviewId }) => {
+    const review = await Review.findOne({ reviewId })
+    return review
+  },
+
+  // 리뷰 수정하기
+  update: async ({ reviewId, data }) => {
+		const update = { $set: data };
+		const option = { returnOriginal: false };
+
+		const updatedUser = await Review.findByIdAndUpdate(reviewId, update, option);
+
+		return updatedUser;
   }
 
 };

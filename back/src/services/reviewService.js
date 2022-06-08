@@ -2,6 +2,7 @@ import { reviewModel } from "../db/models/reviewModel.js";
 import { userModel } from "../db/models/userModel.js";
 
 class reviewService {
+
   static addReview = async ({ 
     loginUserId, 
     landmarkId,
@@ -30,9 +31,34 @@ class reviewService {
     return createdNewReview
   };
 
+  // 리뷰 목록 불러오기
   static getReviews = async ({ landmarkId }) => {
     const reviews = await reviewModel.findByLandmarkId({ landmarkId })
     return reviews
+  }
+
+  // 본인 리뷰인지 확인하고 수정하기
+  static setReview = async ({ 
+    loginUserId, 
+    reviewId,
+    toUpdate
+  }) => {
+    const currentReview = await reviewModel.findById({ reviewId })
+
+    if(!currentReview){
+      throw new Error("system.error.noReview")
+    }
+
+    const writerId = currentReview.writerId
+
+    // 현재 로그인한 사용자와 리뷰 작성자가 같아야 수정 가능
+    if(writerId === loginUserId){
+      const editedReview = await reviewModel.update({ reviewId, data: toUpdate })
+      return editedReview
+    }
+    else {
+      throw new Error("system.error.notEqualWithWriter")
+    }
   }
 }
 

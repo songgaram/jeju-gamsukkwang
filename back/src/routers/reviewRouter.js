@@ -32,7 +32,7 @@ reviewRouter.post("/review/:id", async (req, res, next) => {
 })
 
 // 해당 랜드마크의 리뷰 목록 불러오기
-reviewRouter.get("/review/:id", async (req, res, next) => {
+reviewRouter.get("/review/:id/list", async (req, res, next) => {
   try{
     const landmarkId = req.params.id
     const reviews = await reviewService.getReviews({ landmarkId })
@@ -43,4 +43,26 @@ reviewRouter.get("/review/:id", async (req, res, next) => {
   }
 })
 
+// 리뷰 수정하기
+reviewRouter.put("/review/:id", async (req, res, next) => {
+  try{
+    if (is.emptyObject(req.body)) {
+			throw new Error("system.error.badRequest");
+		}
+
+    const loginUserId = req.currentUserId
+    const reviewId = req.params.id
+    const toUpdate = req.body
+
+    const editedReview = await reviewService.setReview({
+      loginUserId, 
+      reviewId,
+      toUpdate
+    })
+
+    res.status(201).json(editedReview)
+  } catch(err) {
+    next(err)
+  }
+})
 export { reviewRouter }
