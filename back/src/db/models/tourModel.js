@@ -11,4 +11,38 @@ export const tourModel = {
 
 		return isLandmarkExist ? true : false;
 	},
+
+	addLike: async ({ enTitle, currentUserId }) => {
+		const filter = { enTitle };
+		const update = {
+			$inc: { likeCount: 1 },
+			$push: { likedUsers: currentUserId },
+		};
+		const option = { returnOriginal: false };
+
+		const addLikeCount = await Landmark.findOneAndUpdate(
+			filter,
+			update,
+			option
+		);
+
+		return addLikeCount;
+	},
+
+	removeLike: async ({ enTitle, currentUserId }) => {
+		const filter = { enTitle };
+		const update = {
+			$inc: { likeCount: -1 },
+			$pull: { likedUsers: currentUserId },
+		};
+		const option = { returnOriginal: false };
+
+		const removeLikeCount = await Landmark.findOneAndUpdate(
+			filter,
+			update,
+			option
+		);
+
+		return removeLikeCount;
+	},
 };
