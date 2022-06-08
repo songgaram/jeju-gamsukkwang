@@ -40,8 +40,13 @@ export const tourModel = {
 
 	didUseLike: async ({ enTitle, currentUserId }) => {
 		const landmark = await Tour.findOne({ enTitle });
-		const didUseLike = null;
+		const likedUsers = landmark.likedUsers;
+		if (likedUsers.length > 0) {
+			const result = likedUsers.filter((v) => v === currentUserId);
 
-		return didUseLike ? true : false;
+			return result.length > 0 ? true : false;
+		} else if (likedUsers.length === 0) {
+			return false;
+		}
 	},
 };
