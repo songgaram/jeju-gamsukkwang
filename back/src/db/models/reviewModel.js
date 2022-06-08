@@ -7,10 +7,15 @@ export const reviewModel = {
     return createdNewReview
   },
 
-  IsPosted: async ({ writerId }) => {
-    const IsPosted = Review.exists({ writerId })
+  // 해당 랜드마크에 대한 리뷰를 이미 작성했던 사람인지 확인
+  IsPosted: async ({ landmarkId, writerId }) => {
+    const IsPosted = Review.exists({ 
+      $and: [{ landmarkId }, { writerId } ]
+    })
     return IsPosted
-  }
+  },
+
+
 
 
 };

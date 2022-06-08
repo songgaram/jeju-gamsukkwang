@@ -20,7 +20,7 @@ class reviewService {
     }
 
     // 이미 리뷰를 쓴 상태라면 { _id } 객체를 반환, 아니라면 null을 반환
-    const didPostReview = await reviewModel.IsPosted({ writerId: loginUserId })
+    const didPostReview = await reviewModel.IsPosted({ landmarkId, writerId: loginUserId })
 
     if(didPostReview){
       throw new Error("system.error.alreadyPosting")
