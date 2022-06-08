@@ -18,6 +18,14 @@ class tourService {
 			throw new Error("system.error.noLandmark");
 		}
 
+		const didUseLike = await tourModel.didUseLike({
+			enTitle: name,
+			currentUserId,
+		});
+		if (didUseLike) {
+			throw new Error("system.error.alreadyLiked");
+		}
+
 		const addLiketoLandmark = tourModel.addLike({
 			enTitle: name,
 			currentUserId,
@@ -30,6 +38,14 @@ class tourService {
 		const isLandmarkExist = await tourModel.isLandmarkExist({ enTitle: name });
 		if (!isLandmarkExist) {
 			throw new Error("system.error.noLandmark");
+		}
+
+		const didUseLike = await tourModel.didUseLike({
+			enTitle: name,
+			currentUserId,
+		});
+		if (!didUseLike) {
+			throw new Error("system.error.noLiked");
 		}
 
 		const removeLikefromLandmark = tourModel.removeLike({

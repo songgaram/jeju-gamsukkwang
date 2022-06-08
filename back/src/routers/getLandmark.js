@@ -1,12 +1,12 @@
 import { Router } from "express";
 import axios from "axios";
-import { Landmark } from "../db/schemas/landmark";
+import { Tour } from "../db/schemas/tour";
 
 // DB에 랜드마크 정보를 넣기 위한 js 파일.
 const getLandmark = Router();
 
 const addLandmark = async ({ title, roadaddress, introduction, image }) => {
-	const newLandmark = await Landmark.create({
+	const newLandmark = await Tour.create({
 		krTitle: title,
 		address: roadaddress,
 		description: introduction,
