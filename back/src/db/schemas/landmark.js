@@ -26,6 +26,20 @@ const LandmarkSchema = new Schema({
 		type: String,
 		index: true,
 	},
+	likeCount: {
+		type: Number,
+		default: 0,
+		index: true,
+	},
+	likedUsers: {
+		type: Array,
+		default: [],
+		index: true,
+	},
+	phoneNo: {
+		type: String,
+		index: true,
+	},
 });
 
 export const Landmark = model("Landmark", LandmarkSchema);
