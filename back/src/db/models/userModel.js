@@ -53,4 +53,9 @@ export const userModel = {
 		const user = await User.deleteOne({ id: userId });
 		return user;
 	},
+
+	countUsers: async () => {
+		const userCount = await User.find({}).count()
+		return userCount
+	}
 };

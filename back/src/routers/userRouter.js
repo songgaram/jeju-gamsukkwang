@@ -59,4 +59,13 @@ userRouter.delete("/user", loginRequired, async (req, res, next) => {
 	}
 });
 
+userRouter.get("/user/count", async (req, res, next) => {
+	try{
+		const counts = await userService.countUser()
+		res.status(200).json(counts)
+	} catch(err){
+		next(err)
+	}
+})
+
 export { userRouter };
