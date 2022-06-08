@@ -2,6 +2,7 @@ import styled from "styled-components";
 import IntroTitle from "assets/images/IntroTitle.png";
 import BrowserImage from "assets/images/BrowserImage.png";
 import BackgroundImage from "assets/images/BackgroundImage.png";
+import { StyledButton } from "components/Button";
 
 function Intro() {
   return (
@@ -15,7 +16,7 @@ function Intro() {
           인증할 수 있는 <Highlighted>공유 서비스</Highlighted>
           입니다.
         </Subtitle>
-
+        <StyledButton>로그인하고 시작하기</StyledButton>
         <Browser src={BrowserImage} alt="브라우저" />
       </MainContainer>
     </IntroContainer>
@@ -44,12 +45,12 @@ const MainContainer = styled.div`
 
 const Title = styled.img`
   width: 40%;
-  margin-top: 3%;
+  margin: 3% 0 2% 0;
 `;
 
 const Subtitle = styled.div`
-  margin-top: 2%;
-  font-size: 2rem;
+  margin-bottom: 1.5%;
+  font-size: ${({ theme }) => theme.fontSizes.xxxl};
   text-align: center;
   font-weight: 500;
 `;
