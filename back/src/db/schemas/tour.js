@@ -1,7 +1,7 @@
 import pkg from "mongoose";
 const { Schema, model } = pkg;
 
-const LandmarkSchema = new Schema({
+const TourSchema = new Schema({
 	krTitle: {
 		type: String,
 		index: true,
@@ -42,4 +42,4 @@ const LandmarkSchema = new Schema({
 	},
 });
 
-export const Landmark = model("Landmark", LandmarkSchema);
+export const Tour = model("Tour", TourSchema);

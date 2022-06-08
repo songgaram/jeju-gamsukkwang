@@ -1,13 +1,13 @@
-import { Landmark } from "../schemas/landmark";
+import { Tour } from "../schemas/tour";
 
 export const tourModel = {
 	findByEnTitle: async ({ enTitle }) => {
-		const landmark = await Landmark.findOne({ enTitle });
+		const landmark = await Tour.findOne({ enTitle });
 		return landmark;
 	},
 
 	isLandmarkExist: async ({ enTitle }) => {
-		const isLandmarkExist = await Landmark.exists({ enTitle });
+		const isLandmarkExist = await Tour.exists({ enTitle });
 
 		return isLandmarkExist ? true : false;
 	},
@@ -20,11 +20,7 @@ export const tourModel = {
 		};
 		const option = { returnOriginal: false };
 
-		const addLikeCount = await Landmark.findOneAndUpdate(
-			filter,
-			update,
-			option
-		);
+		const addLikeCount = await Tour.findOneAndUpdate(filter, update, option);
 
 		return addLikeCount;
 	},
@@ -37,12 +33,15 @@ export const tourModel = {
 		};
 		const option = { returnOriginal: false };
 
-		const removeLikeCount = await Landmark.findOneAndUpdate(
-			filter,
-			update,
-			option
-		);
+		const removeLikeCount = await Tour.findOneAndUpdate(filter, update, option);
 
 		return removeLikeCount;
+	},
+
+	didUseLike: async ({ enTitle, currentUserId }) => {
+		const landmark = await Tour.findOne({ enTitle });
+		const didUseLike = null;
+
+		return didUseLike ? true : false;
 	},
 };
