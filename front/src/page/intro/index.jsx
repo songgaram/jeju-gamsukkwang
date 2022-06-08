@@ -4,6 +4,7 @@ import BrowserImage from "assets/images/BrowserImage.png";
 import BackgroundImage from "assets/images/BackgroundImage.png";
 import { StyledButton } from "components/Button";
 import CardSection from "./CardSection";
+import DescSection from "./DescSection";
 
 function Intro() {
   return (
@@ -21,6 +22,7 @@ function Intro() {
         <Browser src={BrowserImage} alt="브라우저" />
       </MainContainer>
       <CardSection />
+      <DescSection />
     </IntroContainer>
   );
 }
