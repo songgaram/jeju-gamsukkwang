@@ -5,4 +5,10 @@ export const tourModel = {
 		const landmark = await Landmark.findOne({ enTitle });
 		return landmark;
 	},
+
+	isLandmarkExist: async ({ enTitle }) => {
+		const isLandmarkExist = await Landmark.exists({ enTitle });
+
+		return isLandmarkExist ? false : true;
+	},
 };
