@@ -27,8 +27,12 @@ class reviewService {
     }
     
     const createdNewReview = await reviewModel.create({ newReview })
-
     return createdNewReview
+  };
+
+  static getReviews = async ({ landmarkId }) => {
+    const reviews = await reviewModel.findByLandmarkId({ landmarkId })
+    return reviews
   }
 }
 

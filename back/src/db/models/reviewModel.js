@@ -15,7 +15,10 @@ export const reviewModel = {
     return IsPosted
   },
 
-
-
+  // 해당 랜드마크의 리뷰 목록 불러오기
+  findByLandmarkId: async ({ landmarkId }) => {
+    const reviews = await Review.find({ landmarkId })
+    return reviews
+  }
 
 };
