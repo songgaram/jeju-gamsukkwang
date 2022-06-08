@@ -3,6 +3,7 @@ import IntroTitle from "assets/images/IntroTitle.png";
 import BrowserImage from "assets/images/BrowserImage.png";
 import BackgroundImage from "assets/images/BackgroundImage.png";
 import { StyledButton } from "components/Button";
+import CardSection from "./CardSection";
 
 function Intro() {
   return (
@@ -19,6 +20,7 @@ function Intro() {
         <StyledButton>로그인하고 시작하기</StyledButton>
         <Browser src={BrowserImage} alt="브라우저" />
       </MainContainer>
+      <CardSection />
     </IntroContainer>
   );
 }
@@ -62,6 +64,7 @@ const Highlighted = styled.span`
 const Browser = styled.img`
   width: 50%;
   margin-top: 5%;
+  margin-bottom: 3%;
 `;
 
 export default Intro;
