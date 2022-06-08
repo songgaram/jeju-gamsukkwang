@@ -13,7 +13,7 @@ split = ['/train', '/test', '/val']
 
 for part in split:
 
-  df = pd.DataFrame(columns = {'categoryId', 'categoryName', 'fileName', 'bBoxX','bBoxY','bBoxW','bBoxH'})
+  df = pd.DataFrame(columns = {'categoryId', 'categoryName', 'fileName', 'bBoxX','bBoxY','bBoxW','bBoxH', 'width', 'height'})
 
   for (root, directories, files) in tqdm(os.walk(PATH+part)):
       for file in files:
@@ -25,10 +25,12 @@ for part in split:
           categoryName = local['categories'][0]['name']
           fileName = local['images'][0]['file_name']
           bBoxX,bBoxY,bBoxW,bBoxH = local['annotations'][0]['bbox']
-
+          width = local['images'][0]['width']
+          height = local['images'][0]['height']
           # print(categoryId, categoryName, fileName, bBoxX,bBoxY,bBoxW,bBoxH)
           newData = {'categoryId':categoryId, 'categoryName':categoryName, 'fileName':fileName,
-              'bBoxX':bBoxX,'bBoxY':bBoxY,'bBoxW':bBoxW,'bBoxH':bBoxH}
+              'bBoxX':bBoxX,'bBoxY':bBoxY,'bBoxW':bBoxW,'bBoxH':bBoxH,
+              'width':width, 'height': height}
           df = df.append(newData, ignore_index=True)
 
   df.to_csv('../labelsCsv'+part+'Labels.csv')
