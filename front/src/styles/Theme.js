@@ -5,6 +5,8 @@ const colors = {
   gray02: "#dedede",
   primary: "#ff881d",
   secondary: "#b5d3ec",
+  orange: "#F4AA19",
+  skyblue: "#AAD8FE",
 };
 
 const calcRem = (size) => `${size / 16}rem`;

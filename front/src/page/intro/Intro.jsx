@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import IntroTitle from "../../assets/images/IntroTitle.png";
-import BrowserImage from "../../assets/images/BrowserImage.png";
-import BackgroundImage from "../../assets/images/BackgroundImage.png";
+import IntroTitle from "assets/images/IntroTitle.png";
+import BrowserImage from "assets/images/BrowserImage.png";
+import BackgroundImage from "assets/images/BackgroundImage.png";
 
 function Intro() {
   return (
@@ -10,9 +10,9 @@ function Intro() {
       <MainContainer>
         <Title src={IntroTitle} alt="인트로 타이틀" />
         <Subtitle>
-          <span style={{ color: "#F4AA19" }}>제주감수꽝</span>은 제주를 소개하고
-          다녀온 랜드마크를 <br />
-          인증할 수 있는 <span style={{ color: "#F4AA19" }}>공유 서비스</span>
+          <Highlighted>제주감수꽝</Highlighted>은 제주를 소개하고 다녀온
+          랜드마크를 <br />
+          인증할 수 있는 <Highlighted>공유 서비스</Highlighted>
           입니다.
         </Subtitle>
 
@@ -52,6 +52,10 @@ const Subtitle = styled.div`
   font-size: 2rem;
   text-align: center;
   font-weight: 500;
+`;
+
+const Highlighted = styled.span`
+  color: ${({ theme }) => theme.colors.orange};
 `;
 
 const Browser = styled.img`
