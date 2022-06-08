@@ -10,6 +10,7 @@ export const StyledButton = styled.button`
   cursor: pointer;
   padding-left: 1rem;
   padding-right: 1rem;
+  transition: all 0.2s ease-in-out;
 
   /*크기*/
   height: 2.25rem;
