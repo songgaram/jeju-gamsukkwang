@@ -119,10 +119,6 @@ class userService {
 		return user
 	}
 
-	static countUser = async () => {
-		const userCounts = await userModel.countUsers()
-		return userCounts
-	}
 }
 
 export { userService };

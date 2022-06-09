@@ -57,8 +57,4 @@ export const userModel = {
 		return user;
 	},
 
-	countUsers: async () => {
-		const userCount = await User.find({}).count()
-		return userCount
-	}
 };
