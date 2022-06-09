@@ -2,7 +2,7 @@ import styled from "styled-components";
 import IntroTitle from "assets/images/IntroTitle.png";
 import BrowserImage from "assets/images/BrowserImage.png";
 import BackgroundImage from "assets/images/BackgroundImage.png";
-import { StyledButton } from "components/Button";
+import Button from "components/Button";
 import CardSection from "./CardSection";
 import DescSection from "./DescSection";
 
@@ -18,7 +18,7 @@ function Intro() {
           인증할 수 있는 <Highlighted>공유 서비스</Highlighted>
           입니다.
         </Subtitle>
-        <StyledButton>로그인하고 시작하기</StyledButton>
+        <Button>로그인하고 시작하기</Button>
         <Browser src={BrowserImage} alt="브라우저" />
       </MainContainer>
       <CardSection />

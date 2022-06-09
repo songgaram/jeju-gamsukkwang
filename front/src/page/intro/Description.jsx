@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { CardTitle, CardSubtitle } from "./intro";
-import { StyledButton } from "components/Button";
+import Button from "components/Button";
 
 function Descrption({ title, subtitle }) {
   return (
@@ -8,7 +8,7 @@ function Descrption({ title, subtitle }) {
       <CardTitle>{title}</CardTitle>
       <CardSubtitle>{subtitle}</CardSubtitle>
       <div>
-        <StyledButton>자세히 보기</StyledButton>
+        <Button color="gray03">자세히 보기</Button>
       </div>
     </DescrptionCard>
   );
