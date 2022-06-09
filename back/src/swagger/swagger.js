@@ -13,23 +13,23 @@ const options = {
 			description: "엘리스 AI 트랙 4기 AI 프로젝트 8팀의 API 명세서입니다.",
 		},
 		components: {
-      securitySchemes: {
-        Authorization: {
-          type: "http",
-          scheme: "Bearer",
-          name: "Authorization",
-          bearerFormat: "JWT",
-          in: "header",
-        },
-      },
-    },
+			securitySchemes: {
+				Authorization: {
+					type: "http",
+					scheme: "Bearer",
+					name: "Authorization",
+					bearerFormat: "JWT",
+					in: "header",
+				},
+			},
+		},
 		servers: [
 			{
 				url: `http://localhost:${PORT}`,
 			},
 		],
 	},
-	apis: ["./src/swagger/User.yaml"],
+	apis: ["./src/swagger/User.yaml", "./src/swagger/Tour.yaml"],
 };
 
 const specs = swaggerJsdoc(options);
