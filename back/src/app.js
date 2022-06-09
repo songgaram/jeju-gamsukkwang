@@ -1,4 +1,5 @@
 import { userRouter } from "./routers/userRouter";
+import { communityRouter } from "./routers/communityRouter";
 import { errorMiddleware } from "./middlewares/errorMiddleware";
 import { swaggerUi, specs } from "./swagger/swagger";
 
@@ -21,6 +22,7 @@ app.use(
 
 // routers
 app.use(userRouter);
+app.use(communityRouter);
 
 // error Middleware
 app.use(errorMiddleware);
