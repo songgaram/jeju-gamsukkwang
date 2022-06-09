@@ -6,16 +6,27 @@ import is from "@sindresorhus/is";
 
 const tourRouter = Router();
 
-// 랜드마크 정보 GET
+// 모든 랜드마크 정보 GET
 tourRouter.get("/tour", async (req, res, next) => {
 	try {
-		if (is.emptyObject(req.query)) {
-			throw new Error("system.error.noTitle");
+		const allLandmarks = await tourService.getAllLandmarks({});
+
+		res.status(200).send(allLandmarks);
+	} catch (err) {
+		next(err);
+	}
+});
+
+// 랜드마크 ID로 특정 랜드마크 정보 GET
+tourRouter.get("/tour/:id", async (req, res, next) => {
+	try {
+		if (is.emptyObject(req.params)) {
+			throw new Error("system.error.noLandmarkId");
 		}
 
-		const { name } = req.query;
+		const { id } = req.params;
 
-		const landmark = await tourService.getLandmark({ name });
+		const landmark = await tourService.getLandmark({ id });
 
 		res.status(200).send(landmark);
 	} catch (err) {
@@ -24,18 +35,18 @@ tourRouter.get("/tour", async (req, res, next) => {
 });
 
 // 랜드마크 좋아요 추가
-tourRouter.put("/tour/like", loginRequired, async (req, res, next) => {
+tourRouter.put("/tour/like/:id", loginRequired, async (req, res, next) => {
 	try {
-		if (is.emptyObject(req.query)) {
-			throw new Error("system.error.noTitle");
+		if (is.emptyObject(req.params)) {
+			throw new Error("system.error.noLandmarkId");
 		}
 
 		// req에서 데이터 가져오기
 		const userId = req.currentUserId;
-		const { name } = req.query;
+		const { id } = req.params;
 
 		const addLiketoLandmark = await tourService.addLike({
-			name,
+			id,
 			currentUserId: userId,
 		});
 
@@ -46,18 +57,18 @@ tourRouter.put("/tour/like", loginRequired, async (req, res, next) => {
 });
 
 // 랜드마크 싫어요 추가
-tourRouter.put("/tour/dislike", loginRequired, async (req, res, next) => {
+tourRouter.put("/tour/dislike/:id", loginRequired, async (req, res, next) => {
 	try {
-		if (is.emptyObject(req.query)) {
-			throw new Error("system.error.noTitle");
+		if (is.emptyObject(req.params)) {
+			throw new Error("system.error.noLandmarkId");
 		}
 
 		// req에서 데이터 가져오기
 		const userId = req.currentUserId;
-		const { name } = req.query;
+		const { id } = req.params;
 
 		const removeLikefromLandmark = await tourService.removeLike({
-			name,
+			id,
 			currentUserId: userId,
 		});
 

@@ -1,19 +1,24 @@
 import { Tour } from "../schemas/tour";
 
 export const tourModel = {
-	findByEnTitle: async ({ enTitle }) => {
-		const landmark = await Tour.findOne({ enTitle });
+	findAll: async () => {
+		const allLandmarks = await Tour.find({});
+		return allLandmarks;
+	},
+
+	findById: async ({ id }) => {
+		const landmark = await Tour.findOne({ id });
 		return landmark;
 	},
 
-	isLandmarkExist: async ({ enTitle }) => {
-		const isLandmarkExist = await Tour.exists({ enTitle });
+	isLandmarkExist: async ({ id }) => {
+		const isLandmarkExist = await Tour.exists({ id });
 
-		return isLandmarkExist ? true : false;
+		return isLandmarkExist;
 	},
 
-	addLike: async ({ enTitle, currentUserId }) => {
-		const filter = { enTitle };
+	addLike: async ({ id, currentUserId }) => {
+		const filter = { id };
 		const update = {
 			$inc: { likeCount: 1 },
 			$push: { likedUsers: currentUserId },
@@ -25,8 +30,8 @@ export const tourModel = {
 		return addLikeCount;
 	},
 
-	removeLike: async ({ enTitle, currentUserId }) => {
-		const filter = { enTitle };
+	removeLike: async ({ id, currentUserId }) => {
+		const filter = { id };
 		const update = {
 			$inc: { likeCount: -1 },
 			$pull: { likedUsers: currentUserId },
@@ -38,9 +43,9 @@ export const tourModel = {
 		return removeLikeCount;
 	},
 
-	didUseLike: async ({ enTitle, currentUserId }) => {
+	didUseLike: async ({ id, currentUserId }) => {
 		const didUseLike = await Tour.exists({
-			$and: [{ enTitle }, { likedUsers: currentUserId }],
+			$and: [{ id }, { likedUsers: currentUserId }],
 		});
 
 		return didUseLike;

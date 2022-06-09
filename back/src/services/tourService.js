@@ -1,25 +1,31 @@
 import { db, tourModel } from "../db";
 
 class tourService {
-	static getLandmark = async ({ name }) => {
-		const isLandmarkExist = await tourModel.isLandmarkExist({ enTitle: name });
+	static getAllLandmarks = async () => {
+		const allLandmarks = await tourModel.findAll({});
+
+		return allLandmarks;
+	};
+
+	static getLandmark = async ({ id }) => {
+		const isLandmarkExist = await tourModel.isLandmarkExist({ id });
 		if (!isLandmarkExist) {
 			throw new Error("system.error.noLandmark");
 		}
 
-		const landmark = await tourModel.findByEnTitle({ enTitle: name });
+		const landmark = await tourModel.findById({ id });
 
 		return landmark;
 	};
 
-	static addLike = async ({ name, currentUserId }) => {
-		const isLandmarkExist = await tourModel.isLandmarkExist({ enTitle: name });
+	static addLike = async ({ id, currentUserId }) => {
+		const isLandmarkExist = await tourModel.isLandmarkExist({ id });
 		if (!isLandmarkExist) {
 			throw new Error("system.error.noLandmark");
 		}
 
 		const didUseLike = await tourModel.didUseLike({
-			enTitle: name,
+			id,
 			currentUserId,
 		});
 
@@ -29,21 +35,21 @@ class tourService {
 		}
 
 		const addLiketoLandmark = tourModel.addLike({
-			enTitle: name,
+			id,
 			currentUserId,
 		});
 
 		return addLiketoLandmark;
 	};
 
-	static removeLike = async ({ name, currentUserId }) => {
-		const isLandmarkExist = await tourModel.isLandmarkExist({ enTitle: name });
+	static removeLike = async ({ id, currentUserId }) => {
+		const isLandmarkExist = await tourModel.isLandmarkExist({ id });
 		if (!isLandmarkExist) {
 			throw new Error("system.error.noLandmark");
 		}
 
 		const didUseLike = await tourModel.didUseLike({
-			enTitle: name,
+			id,
 			currentUserId,
 		});
 
@@ -53,7 +59,7 @@ class tourService {
 		}
 
 		const removeLikefromLandmark = tourModel.removeLike({
-			enTitle: name,
+			id,
 			currentUserId,
 		});
 
