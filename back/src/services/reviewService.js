@@ -1,5 +1,6 @@
 import { reviewModel } from "../db/models/reviewModel.js";
 import { userModel } from "../db/models/userModel.js";
+import { v4 as uuidv4 } from "uuid";
 
 class reviewService {
 
@@ -11,8 +12,10 @@ class reviewService {
   }) => {
     const user = await userModel.findById({ userId: loginUserId })
     const writerNickName = user.nickname
+    const id = uuidv4()
 
     const newReview = {
+      id,
       landmarkId,
       writerId: loginUserId,
       writerNickName,
