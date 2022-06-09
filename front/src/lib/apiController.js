@@ -1,7 +1,9 @@
 import axios from "axios";
+// import { errorController } from "./errorController";
 
-const SERVER_PORT_NUMBER = process.env.SERVER_PORT;
+const SERVER_PORT_NUMBER = process.env.REACT_APP_SERVER_PORT;
 const SEVER_URL = `http://${window.location.hostname}:${SERVER_PORT_NUMBER}/`;
+console.log(SEVER_URL);
 const TOKEN = localStorage.getItem("userToken");
 
 // axios 생성
@@ -35,6 +37,25 @@ instance.interceptors.response.use(
   },
   function (error) {
     // 오류 처리를 위한 별도 errorController
-    errorController(error);
+    console.log("🚀 ~ response error : ", error);
+    return Promise.reject(error);
   },
 );
+
+const get = (...args) => {
+  instance.get(...args);
+};
+
+const post = (...args) => {
+  instance.post(...args);
+};
+
+const put = (...args) => {
+  instance.put(...args);
+};
+
+const del = (...args) => {
+  instance.del(...args);
+};
+
+export { get, post, put, del };
