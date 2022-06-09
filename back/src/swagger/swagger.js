@@ -29,7 +29,7 @@ const options = {
 			},
 		],
 	},
-	apis: ["./src/swagger/User.yaml", "./src/swagger/Com.yaml"],
+	apis: ["./src/swagger/*.yaml"],
 };
 
 const specs = swaggerJsdoc(options);
