@@ -22,6 +22,8 @@ class tourService {
 			enTitle: name,
 			currentUserId,
 		});
+
+		// didUseLike가 무언가를 반환할 때 에러를 발생
 		if (didUseLike) {
 			throw new Error("system.error.alreadyLiked");
 		}
@@ -44,6 +46,8 @@ class tourService {
 			enTitle: name,
 			currentUserId,
 		});
+
+		// didUseLike가 무언가를 반환하지 않을 때 에러를 발생
 		if (!didUseLike) {
 			throw new Error("system.error.noLiked");
 		}

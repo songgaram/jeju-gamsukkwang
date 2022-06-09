@@ -39,9 +39,10 @@ export const tourModel = {
 	},
 
 	didUseLike: async ({ enTitle, currentUserId }) => {
-		const landmark = await Tour.findOne({ enTitle });
-		const didUseLike = null;
+		const didUseLike = await Tour.exists({
+			$and: [{ enTitle }, { likedUsers: currentUserId }],
+		});
 
-		return didUseLike ? true : false;
+		return didUseLike;
 	},
 };
