@@ -76,10 +76,12 @@ class reviewService {
     
     // 현재 로그인한 사용자와 리뷰 작성자가 같아야 수정 가능
     if(writerId === loginUserId){
-      const isDataDeleted = await reviewModel.deleteById({ reviewId })
-      if(!isDataDeleted){
+      const isDeleted = await reviewModel.deleteById({ reviewId })
+
+      if(isDeleted.deletedCount !== 1){
         throw new Error("system.error.fail")
       }
+
       return "system.success"
     }
     else {
