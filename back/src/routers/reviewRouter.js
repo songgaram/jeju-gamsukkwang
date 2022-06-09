@@ -65,4 +65,18 @@ reviewRouter.put("/review/:id", async (req, res, next) => {
   }
 })
 
+// 리뷰 삭제하기
+reviewRouter.delete("/review/:id", async (req, res, next) => {
+  try{
+    const loginUserId = req.currentUserId
+    const reviewId = req.params.id
+
+    const deleteResult = await reviewService.deleteReview({ loginUserId, reviewId })
+    
+    res.status(200).send(deleteResult)
+  } catch(err) {
+    next(err)
+  }
+})
+
 export { reviewRouter }

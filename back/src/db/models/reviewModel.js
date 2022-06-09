@@ -32,9 +32,14 @@ export const reviewModel = {
 		const update = { $set: data };
 		const option = { returnOriginal: false };
 
-		const updatedUser = await Review.findByIdAndUpdate(reviewId, update, option);
+		const updatedReview = await Review.findByIdAndUpdate(reviewId, update, option);
+		return updatedReview;
+  },
 
-		return updatedUser;
+  // 리뷰 삭제하기
+  deleteById: async ({ reviewId }) => {
+    const deleteResult = await Review.deleteOne({ id: reviewId })
+    return deleteResult
   }
 
 };

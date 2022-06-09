@@ -53,8 +53,31 @@ class reviewService {
 
     // 현재 로그인한 사용자와 리뷰 작성자가 같아야 수정 가능
     if(writerId === loginUserId){
-      const editedReview = await reviewModel.update({ reviewId, data: toUpdate })
-      return editedReview
+      const updatedReview = await reviewModel.update({ reviewId, data: toUpdate })
+      return updatedReview
+    }
+    else {
+      throw new Error("system.error.notEqualWithWriter")
+    }
+  }
+
+  // 리뷰 삭제하기
+  static deleteReview = async({ loginUserId, reviewId }) => {
+    const currentReview = await reviewModel.findById({ reviewId })
+
+    if(!currentReview){
+      throw new Error("system.error.noReview")
+    }
+
+    const writerId = currentReview.writerId
+    
+    // 현재 로그인한 사용자와 리뷰 작성자가 같아야 수정 가능
+    if(writerId === loginUserId){
+      const isDataDeleted = await reviewModel.deleteById({ reviewId })
+      if(!isDataDeleted){
+        throw new Error("system.error.fail")
+      }
+      return "system.success"
     }
     else {
       throw new Error("system.error.notEqualWithWriter")
