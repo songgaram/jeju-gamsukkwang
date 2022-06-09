@@ -1,7 +1,16 @@
 import styled from "styled-components";
-import { CardTitle, CardSubtitle } from "./intro";
+// import { CardTitle, CardSubtitle } from "./intro";
 import Button from "components/Button";
 import { useScrollFadeIn } from "assets/hook/useScrollFadeIn";
+import DescImage1 from "assets/images/DescImage1.png";
+import DescImage2 from "assets/images/DescImage2.png";
+import DescImage3 from "assets/images/DescImage3.png";
+
+const image = {
+  0: DescImage1,
+  1: DescImage2,
+  2: DescImage3,
+};
 
 function Descrption({ title, subtitle, number, flex }) {
   const animatedItem = {
@@ -11,21 +20,41 @@ function Descrption({ title, subtitle, number, flex }) {
   };
 
   return (
-    <DescrptionCard>
-      <ContentContainer {...animatedItem[number]} flex={flex}>
-        <CardTitle>{title}</CardTitle>
-        <CardSubtitle>{subtitle}</CardSubtitle>
-        <div>
-          <Button color="gray03">자세히 보기</Button>
-        </div>
-      </ContentContainer>
-    </DescrptionCard>
+    <DescContainer number={number}>
+      <ImgContainer>
+        <img src={image[number]} alt="기능 이미지" style={{ width: "70%" }} />
+      </ImgContainer>
+      <DescrptionCard>
+        <ContentContainer {...animatedItem[number]} flex={flex}>
+          <CardTitle>{title}</CardTitle>
+          <CardSubtitle>{subtitle}</CardSubtitle>
+          <div>
+            <Button color="gray03">자세히 보기</Button>
+          </div>
+        </ContentContainer>
+      </DescrptionCard>
+    </DescContainer>
   );
 }
+
+const DescContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: ${(props) => (props.number === 1 ? "row-reverse" : "row")};
+`;
+
+const ImgContainer = styled.div`
+  width: 50%;
+  text-align: center;
+`;
 
 const DescrptionCard = styled.div`
   width: 50%;
   background-color: ${({ theme }) => theme.colors.gray01};
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 5%;
 `;
 
 const ContentContainer = styled.div`
@@ -33,7 +62,18 @@ const ContentContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: ${(props) => props.flex};
-  padding: 5% 5%;
+`;
+
+const CardTitle = styled.div`
+  font-size: ${({ theme }) => theme.fontSizes.xxxl};
+  font-weight: bold;
+  margin-bottom: 3%;
+`;
+
+const CardSubtitle = styled.div`
+  font-size: ${({ theme }) => theme.fontSizes.base};
+  font-weight: 300;
+  margin-bottom: 1%;
 `;
 
 export default Descrption;
