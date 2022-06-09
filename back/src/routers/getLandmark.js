@@ -4,11 +4,19 @@ import { Router } from "express";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 
-// DB에 랜드마크 정보를 넣기 위한 js 파일.
+// DB에 랜드마크 정보를 넣기 위한 파일. 라우터와 서비스 기능 통합되어 있음.
 const getLandmark = Router();
 
-const addLandmark = async ({ title, roadaddress, introduction, image }) => {
+const addLandmark = async ({
+	title,
+	roadaddress,
+	introduction,
+	image,
+	phoneno,
+}) => {
+	const id = uuidv4();
 	const newLandmark = await Tour.create({
+		id,
 		krTitle: title,
 		address: roadaddress,
 		description: introduction,
