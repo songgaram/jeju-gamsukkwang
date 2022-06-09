@@ -85,7 +85,7 @@ class userService {
 		}
 
 		try {
-			const withdrawResult = userModel.deleteById({ userId });
+			const withdrawResult = await userModel.deleteById({ userId });
 			if (!withdrawResult) {
 				throw new Error("system.error.fail");
 			}
@@ -117,6 +117,11 @@ class userService {
 
 		user = await userModel.update({ userId, data: toUpdate })
 		return user
+	}
+
+	static countUser = async () => {
+		const userCounts = await userModel.countUsers()
+		return userCounts
 	}
 }
 
