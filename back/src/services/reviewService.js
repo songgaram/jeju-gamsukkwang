@@ -1,5 +1,5 @@
-import { reviewModel } from "../db/models/reviewModel.js";
-import { userModel } from "../db/models/userModel.js";
+import { db, userModel, reviewModel } from "../db";
+
 import { v4 as uuidv4 } from "uuid";
 
 class reviewService {
