@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import Card from "./Card";
+import { useScrollFadeIn } from "assets/hook/useScrollFadeIn";
 
 const content = [
   {
@@ -19,24 +20,39 @@ const content = [
 ];
 
 function CardSection() {
+  const animatedItem = {
+    0: useScrollFadeIn("up", 0.9, 0),
+    1: useScrollFadeIn("up", 0.9, 0.3),
+    2: useScrollFadeIn("up", 0.9, 0.4),
+  };
+
   return (
     <CardSectionContainer>
-      <Title>
-        “내가 간 제주를 <Highlighted>저장</Highlighted>하고{" "}
-        <Highlighted>공유</Highlighted>하는 방법은 없을까?”
-      </Title>
-      <SubTitle>제주감수꽝은 두가지 니즈에서 출발하였습니다.</SubTitle>
+      <ContentContainer {...animatedItem[0]}>
+        <Title>
+          “내가 간 제주를 <Highlighted>저장</Highlighted>하고{" "}
+          <Highlighted>공유</Highlighted>하는 방법은 없을까?”
+        </Title>
+        <SubTitle>제주감수꽝은 두가지 니즈에서 출발하였습니다.</SubTitle>
+      </ContentContainer>
+
       <CardContainer>
-        <Card
-          title={content[0].title}
-          subtitle1={content[0].subtitle1}
-          subtitle2={content[0].subtitle2}
-        />
-        <Card
-          title={content[1].title}
-          subtitle1={content[1].subtitle1}
-          subtitle2={content[1].subtitle2}
-        />
+        <InnerCardContainer {...animatedItem[1]}>
+          <Card
+            {...animatedItem[1]}
+            title={content[0].title}
+            subtitle1={content[0].subtitle1}
+            subtitle2={content[0].subtitle2}
+          />
+        </InnerCardContainer>
+        <InnerCardContainer {...animatedItem[2]}>
+          <Card
+            {...animatedItem[1]}
+            title={content[1].title}
+            subtitle1={content[1].subtitle1}
+            subtitle2={content[1].subtitle2}
+          />
+        </InnerCardContainer>
       </CardContainer>
     </CardSectionContainer>
   );
@@ -52,12 +68,27 @@ const CardSectionContainer = styled.div`
   align-items: center;
 `;
 
+const ContentContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 3%;
+`;
+
 const CardContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: center;
-  margin-bottom: 10%;
+  margin-bottom: 12%;
+`;
+
+const InnerCardContainer = styled.div`
+  width: 25%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Title = styled.div`
@@ -72,7 +103,6 @@ const Highlighted = styled.span`
 `;
 
 const SubTitle = styled.div`
-  margin-bottom: 1.5%;
   font-size: ${({ theme }) => theme.fontSizes.xxxl};
   color: ${({ theme }) => theme.colors.gray03};
   text-align: center;

@@ -25,13 +25,28 @@ function DescSection() {
   return (
     <>
       <CardSectionContainer flex="flex-end">
-        <Descrption title={content[0].title} subtitle={content[0].subtitle} />
+        <Descrption
+          title={content[0].title}
+          subtitle={content[0].subtitle}
+          number={0}
+          flex="flex-start"
+        />
       </CardSectionContainer>
       <CardSectionContainer flex="flex-start">
-        <Descrption title={content[1].title} subtitle={content[1].subtitle} />
+        <Descrption
+          title={content[1].title}
+          subtitle={content[1].subtitle}
+          number={1}
+          flex="flex-end"
+        />
       </CardSectionContainer>
       <CardSectionContainer flex="flex-end">
-        <Descrption title={content[2].title} subtitle={content[2].subtitle} />
+        <Descrption
+          title={content[2].title}
+          subtitle={content[2].subtitle}
+          number={2}
+          flex="flex-start"
+        />
       </CardSectionContainer>
     </>
   );

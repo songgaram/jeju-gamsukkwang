@@ -5,10 +5,10 @@ const CardWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   border-radius: 1rem;
-  padding: 5% 3%;
+  padding: 10% 10%;
   margin: 2%;
-  width: 22%;
-  max-height: 70%;
+  width: 90%;
+  max-height: 100%;
   background-color: ${({ theme }) => theme.colors.skyblue};
   transition: background-color 0.3s;
   &:hover {
