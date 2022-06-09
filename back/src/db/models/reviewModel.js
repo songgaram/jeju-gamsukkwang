@@ -29,10 +29,11 @@ export const reviewModel = {
 
   // 리뷰 수정하기
   update: async ({ reviewId, data }) => {
+    const filter = { id: reviewId}
 		const update = { $set: data };
 		const option = { returnOriginal: false };
 
-		const updatedReview = await Review.findByIdAndUpdate(reviewId, update, option);
+		const updatedReview = await Review.findOneAndUpdate(filter, update, option);
 		return updatedReview;
   },
 
