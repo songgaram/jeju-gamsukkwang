@@ -4,7 +4,9 @@ paths:
       tags:
         - Tour
       summary: 전체 랜드마크 정보 불러오기
-      description: /tour으로부터 전체 랜드마크의 id, 이름, 주소, 상세정보, 썸네일 이미지 URL, 전화번호, 좋아요 횟수, 좋아요를 한 유저ID를 불러옵니다.
+      description:
+        /tour으로부터 전체 랜드마크의 id, 이름, 주소, 상세정보, 썸네일 이미지 URL, 전화번호, 좋아요 횟수, 좋아요를 한 유저ID를 불러옵니다. <br>
+        krTitle 등으로 배열 내의 요소를 검색하여 id를 찾을 수 있습니다.
       responses:
         "200":
           description: 전체 랜드마크 정보 불러오기 성공
