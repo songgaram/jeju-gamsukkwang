@@ -2,11 +2,12 @@ import pkg from "mongoose";
 const { Schema, model } = pkg;
 
 const TourSchema = new Schema({
-	krTitle: {
+	id: {
 		type: String,
+		unique: true,
 		index: true,
 	},
-	enTitle: {
+	krTitle: {
 		type: String,
 		index: true,
 	},
