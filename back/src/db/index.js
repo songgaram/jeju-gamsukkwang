@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import { userModel } from "./models/userModel.js";
-import { communityModel } from "./models/userModel.js";
+import { communityModel } from "./models/communityModel.js";
 
 const DB_URL = process.env.MONGODB_URL || "MongoDB 서버 주소를 설정해주세요.";
 console.log(DB_URL);
