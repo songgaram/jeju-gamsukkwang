@@ -27,6 +27,20 @@ const UserSchema = new Schema(
 		description: {
 			type: String,
 		},
+		stamp: {
+			type: Array,
+			default: [],
+		},
+		exp: {
+			type: Number,
+			default: 0,
+		},
+		saveFileName: {
+			type: String,
+		},
+		saveFilePath: {
+			type: String,
+		},
 	},
 	{
 		timestamps: true,

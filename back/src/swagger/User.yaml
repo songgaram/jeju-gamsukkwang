@@ -1,4 +1,23 @@
 paths:
+  /user/{id}:
+    get:
+      tags:
+        - User
+      summary: 회원 정보 가져오기
+      description: /user/:id로부터 회원 정보를 불러옵니다.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: 회원의 고유 ID입니다.
+      responses:
+        "200":
+          description: 회원 정보 가져오기 성공
+        "400":
+          description: 잘못된 요청을 보냈을 때 오류가 발생합니다.
+
   /user/register:
     post:
       tags:
@@ -73,12 +92,31 @@ paths:
           application/json:
             schema:
               type: object
-              example:
-                {
-                  "nickname": "testEditing",
-                }
+              example: { "nickname": "testEditing" }
       responses:
         "201":
           description: 회원 수정 성공
         "400":
           description: 유효한 토큰을 가지고 있지 않거나, DB에 없는 회원이거나, 중복된 닉네임을 보낼 때 오류가 발생합니다.
+
+  /user/stamp:
+    post:
+      tags:
+        - User
+      summary: 회원 스탬프 추가
+      description: /user/stamp로 현재 로그인 중인 사용자에게 랜드마크 스탬프를 줍니다. 로그인된 사용자만 사용할 수 있습니다.
+      security:
+        - Authorization: []
+      requestBody:
+        required: true
+        description: 스탬프로 추가할 랜드마크의 고유 Id를 req.body로 받습니다.
+        content:
+          application/json:
+            schema:
+              type: object
+              example: { "landmarkId": "011bcd14-2cc7-4195-9ec9-747e4fb1838a" }
+      responses:
+        "201":
+          description: 스탬프 추가 성공
+        "400":
+          description: 이미 스탬프로 추가한 랜드마크거나, DB에 없는 회원이거나, 잘못된 요청을 보냈을 때 오류가 발생합니다.
