@@ -11,18 +11,20 @@ paths:
           required: true
           schema:
             type: integer
+            default: 1
           description: 현재 페이지를 의미합니다. ex) 1페이지, 2페이지, ...
         - name: limit
           in: query
           required: true
           schema:
             type: integer
+            default: 10
           description: 페이지 당 나타낼 게시글 수를 의미합니다. 따로 쿼리에 적지 않을 경우 기본 10입니다.
       responses:
         "200":
           description: 게시글 요청 성공
         "400":
-          description: 잘못된 요청을 보냈을 때 오류가 발생합니다.
+          description: 어떠한 게시글도 없을 때, 잘못된 요청을 보냈을 때 오류가 발생합니다.
 
   /community/{id}:
     get:
@@ -57,12 +59,14 @@ paths:
           required: true
           schema:
             type: integer
+            default: 1
           description: 현재 페이지를 의미합니다. ex) 1페이지, 2페이지, ...
         - name: limit
           in: query
           required: true
           schema:
             type: integer
+            default: 10
           description: 페이지 당 나타낼 게시글 수를 의미합니다. 따로 쿼리에 적지 않을 경우 기본 10입니다.
         - name: head
           in: query
@@ -78,7 +82,7 @@ paths:
         "200":
           description: 특정 말머리 게시글 요청 성공
         "400":
-          description: 제목이나 내용이 공란일 때 오류가 발생합니다.
+          description: 해당 말머리로 글이 검색되지 않을 때, 잘못된 요청이 올 때 오류가 발생합니다.
 
   /community:
     post:
