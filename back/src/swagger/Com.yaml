@@ -93,7 +93,7 @@ paths:
               example:
                 {
                   "title": "점심 뭐 먹지",
-                  "contents": "돈까스가 좋을까요 카레가 좋을까요 딩동댕동",
+                  "content": "돈까스가 좋을까요 카레가 좋을까요 딩동댕동",
                 }
       responses:
         "201":
@@ -126,7 +126,7 @@ paths:
               example:
                 {
                   "title": "점심 뭐 먹지",
-                  "contents": "돈까스가 좋을까요 카레가 좋을까요 딩동댕동",
+                  "content": "돈까스가 좋을까요 카레가 좋을까요 딩동댕동",
                 }
       responses:
         "201":
