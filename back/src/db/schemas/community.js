@@ -12,6 +12,7 @@ const CommunitySchema = new Schema(
 		head: {
 			type: String,
 			index: true,
+			required: true,
 		},
 		writerId: {
 			type: String,

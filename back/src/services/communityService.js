@@ -44,7 +44,7 @@ class communityService {
 
   static addArticle = async ({
     loginUserId, 
-    title, content
+    title, content, head
   }) => {
     const user = await userModel.findById({ userId: loginUserId })
     const writerNickName = user.nickname 
@@ -55,7 +55,8 @@ class communityService {
       writerId: loginUserId,
       writerNickName,
       title,
-      content
+      content,
+      head
     }
 
     const createdNewArticle = await communityModel.create({ newArticle })
@@ -69,7 +70,7 @@ class communityService {
     toUpdate
   }) => {
     const currentArticle = await communityModel.findById({ articleId })
-
+console.log(currentArticle)
     if(!currentArticle) {
       throw new Error("system.error.noArticle")
     }

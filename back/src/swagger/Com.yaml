@@ -74,6 +74,11 @@ paths:
             question = 질문 <br>
             info = 정보 <br>
             free = 잡담
+      responses:
+        "200":
+          description: 특정 말머리 게시글 요청 성공
+        "400":
+          description: 제목이나 내용이 공란일 때 오류가 발생합니다.
 
   /community:
     post:

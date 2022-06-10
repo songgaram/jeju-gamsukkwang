@@ -7,22 +7,23 @@ export const communityModel = {
 	},
 
 	deleteById: async ({ articleId }) => {
-		const deletedArticle = await Community.deleteOne({ articleId });
+		const deletedArticle = await Community.deleteOne({ id: articleId });
 
 		return deletedArticle;
 	},
 
 	findById: async ({ articleId }) => {
-		const foundArticle = await Community.findOne({ articleId });
+		const foundArticle = await Community.findOne({ id: articleId });
 
 		return foundArticle;
 	},
 
 	update: async ({ articleId, data }) => {
+		const filter = { id: articleId }
 		const update = { $set: data };
 		const option = { returnOriginal: false };
 		const updatedArticle = await Community.findOneAndUpdate(
-			articleId,
+			filter,
 			update,
 			option
 		);

@@ -5,21 +5,20 @@ import { communityService } from "../services/communityService";
 import { loginRequired } from "../middlewares/loginRequired";
 
 const communityRouter = Router();
-communityRouter.use(loginRequired)
 
 // 게시글 작성
-communityRouter.post("/community", async (req, res, next) => {
+communityRouter.post("/community", loginRequired, async (req, res, next) => {
   try{
     if(is.emptyObject(req.body)){
       throw new Error("system.error.badRequest");
     }
 
     const loginUserId = req.currentUserId
-    const { title, content } = req.body
+    const { title, content, head } = req.body
 
     const newArticle = await communityService.addArticle({ 
       loginUserId,
-      title, content
+      title, content, head
     })
 
     res.status(201).json(newArticle)
@@ -29,7 +28,7 @@ communityRouter.post("/community", async (req, res, next) => {
 })
 
 // 게시글 수정
-communityRouter.put("/community/:id", async (req, res, next) => {
+communityRouter.put("/community/:id", loginRequired, async (req, res, next) => {
   try{
     if(is.emptyObject(req.body)){
       throw new Error("system.error.badRequest")
@@ -37,7 +36,8 @@ communityRouter.put("/community/:id", async (req, res, next) => {
 
     const loginUserId = req.currentUserId
     const articleId = req.params.id
-    const toUpdate = req.body
+    const { title, content, head } = req.body
+    const toUpdate = { title, content, head }
 
     const editedArticle = await communityService.setArticle({ 
       loginUserId,
@@ -52,7 +52,7 @@ communityRouter.put("/community/:id", async (req, res, next) => {
 })
 
 // 특정 게시글 불러오기
-communityRouter.get("/community/:id", async (req, res, next) => {
+communityRouter.get("/community/:id", loginRequired, async (req, res, next) => {
   try{
     const articleId = req.params.id
     const article = await communityService.getArticle({ articleId })
@@ -63,7 +63,7 @@ communityRouter.get("/community/:id", async (req, res, next) => {
   }
 })
 
-communiyRouter.get("/community", async (req, res, next) => {
+communityRouter.get("/community", async (req, res, next) => {
 	try {
 		if (is.emptyObject(req.query)) {
 			throw new Error("system.error.badRequest");
