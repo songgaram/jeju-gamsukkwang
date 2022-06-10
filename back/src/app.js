@@ -27,8 +27,8 @@ app.use(
 app.use(userRouter);
 app.use(getLandmark);
 app.use(tourRouter);
-app.use(reviewRouter);
 app.use(communityRouter);
+app.use(reviewRouter);
 
 // error Middleware
 app.use(errorMiddleware);
