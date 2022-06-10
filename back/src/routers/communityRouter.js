@@ -28,6 +28,27 @@ communityRouter.post("/community", async (req, res, next) => {
   }
 })
 
+// 게시글 수정
+communityRouter.put("/community/:id", async (req, res, next) => {
+  try{
+    if(is.emptyObject(req.body)){
+      throw new Error("system.error.badRequest")
+    }
 
+    const loginUserId = req.currentUserId
+    const articleId = req.params.id
+    const toUpdate = req.body
+
+    const editedArticle = await communityService.setArticle({ 
+      loginUserId,
+      articleId, 
+      toUpdate
+    })
+
+    res.status(201).json(editedArticle)
+  } catch(err){
+    next(err)
+  }
+})
 
 export { communityRouter };
