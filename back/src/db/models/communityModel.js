@@ -3,7 +3,6 @@ import { Community } from "../schemas/community";
 export const communityModel = {
 	create: async ({ newArticle }) => {
 		const createdNewArticle = await Community.create(newArticle);
-
 		return createdNewArticle;
 	},
 
