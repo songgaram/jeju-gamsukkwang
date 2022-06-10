@@ -43,7 +43,7 @@ export const userModel = {
 	},
 
 	update: async ({ userId, data }) => {
-		const filter = { id: userId }
+		const filter = { id: userId };
 		const update = { $set: data };
 		const option = { returnOriginal: false };
 
@@ -57,4 +57,23 @@ export const userModel = {
 		return user;
 	},
 
+	addStamp: async ({ userId, landmarkId }) => {
+		const filter = { id: userId };
+		const update = {
+			$push: { stamp: landmarkId },
+		};
+		const option = { returnOriginal: false };
+
+		const addStamp = await User.findOneAndUpdate(filter, update, option);
+
+		return addStamp;
+	},
+
+	isStampExist: async ({ userId, landmarkId }) => {
+		const isStampExist = await User.exists({
+			$and: [{ id: userId }, { stamp: landmarkId }],
+		});
+
+		return isStampExist;
+	},
 };
