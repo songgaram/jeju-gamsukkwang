@@ -72,7 +72,8 @@ paths:
           description:
             게시글의 말머리입니다. 말머리 종류는 아래와 같습니다. <br>
             question = 질문 <br>
-            info = 정보
+            info = 정보 <br>
+            free = 잡담
 
   /community:
     post:
