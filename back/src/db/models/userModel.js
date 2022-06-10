@@ -57,4 +57,13 @@ export const userModel = {
 		return user;
 	},
 
+	updateExp: async ({ userId, point }) => {
+		const filter = { id: userId }
+		const update = { $inc: { exp: point }  }
+		const option = { returnOriginal: false }
+
+		const upgradeUser = await User.findOneAndUpdate(filter, update, option);
+		return upgradeUser
+	}
+
 };

@@ -119,6 +119,17 @@ class userService {
 		return user
 	}
 
+	static addExp = async ({ userId, point }) => {
+		let user = await userModel.findById({ userId })
+
+		if(!user){
+			throw new Error("system.error.noUser")
+		}
+
+		user = await userModel.updateExp({ userId, point })
+		return user
+	}
+
 }
 
 export { userService };
