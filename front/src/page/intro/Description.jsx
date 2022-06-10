@@ -45,11 +45,17 @@ const DescContainer = styled.div`
 
 const ImgContainer = styled.div`
   width: 50%;
+  padding-top: 3%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   text-align: center;
 `;
 
 const DescrptionCard = styled.div`
   width: 50%;
+  min-height: 380px;
   background-color: ${({ theme }) => theme.colors.gray01};
   display: flex;
   flex-direction: column;
