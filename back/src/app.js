@@ -2,6 +2,7 @@ import { userRouter } from "./routers/userRouter";
 import { getLandmark } from "./routers/getLandmark";
 import { tourRouter } from "./routers/tourRouter";
 import { reviewRouter } from "./routers/reviewRouter";
+import { communityRouter } from "./routers/communityRouter";
 import { errorMiddleware } from "./middlewares/errorMiddleware";
 import { swaggerUi, specs } from "./swagger/swagger";
 
@@ -27,6 +28,7 @@ app.use(userRouter);
 app.use(getLandmark);
 app.use(tourRouter);
 app.use(reviewRouter);
+app.use(communityRouter);
 
 // error Middleware
 app.use(errorMiddleware);
