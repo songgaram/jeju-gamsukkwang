@@ -51,4 +51,16 @@ communityRouter.put("/community/:id", async (req, res, next) => {
   }
 })
 
+// 특정 게시글 불러오기
+communityRouter.get("/community/:id", async (req, res, next) => {
+  try{
+    const articleId = req.params.id
+    const article = await communityService.getArticle({ articleId })
+
+    res.status(200).json(article)
+  } catch(err){
+    next(err)
+  }
+})
+
 export { communityRouter };

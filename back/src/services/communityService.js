@@ -47,6 +47,16 @@ class communityService {
       throw new Error("system.error.notEqualWithWriter")
     }
   }
+
+  static getArticle = async ({ articleId }) => {
+    const article = await communityModel.findById({ articleId })
+
+    if(!article) {
+      throw new Error("system.error.noArticle")
+    }
+
+    return article
+  }
   
 }
 
