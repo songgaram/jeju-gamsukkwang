@@ -6,6 +6,23 @@ import { loginRequired } from "../middlewares/loginRequired";
 
 const userRouter = Router();
 
+// 회원 정보 가져오기 기능
+userRouter.get("/user/:id", async (req, res, next) => {
+	try {
+		if (is.emptyObject(req.params)) {
+			throw new Error("system.error.badRequest");
+		}
+
+		const userId = req.params.id;
+
+		const user = await userService.findUser({ userId });
+
+		res.status(200).json(user);
+	} catch (err) {
+		next(err);
+	}
+});
+
 // 회원 등록 기능
 userRouter.post("/user/register", async (req, res, next) => {
 	try {
@@ -61,15 +78,52 @@ userRouter.delete("/user", loginRequired, async (req, res, next) => {
 
 //회원 수정 기능
 userRouter.put("/user", loginRequired, async (req, res, next) => {
-	try{
+	try {
 		// req에서 데이터 가져오기
-		const userId = req.currentUserId
-		const toUpdate = req.body
-		
-		const updatedUser = await userService.setUser({ userId, toUpdate })
+		const userId = req.currentUserId;
+		const toUpdate = req.body;
 
-		res.status(200).json(updatedUser)
-	} catch(err) {
+		const updatedUser = await userService.setUser({ userId, toUpdate });
+
+		res.status(200).json(updatedUser);
+	} catch (err) {
+		next(err);
+	}
+});
+
+// 회원 스탬프 추가 기능
+userRouter.post("/user/stamp", loginRequired, async (req, res, next) => {
+	try {
+		if (is.emptyObject(req.body)) {
+			throw new Error("system.error.badRequest");
+		}
+
+		const userId = req.currentUserId;
+		const { landmarkId } = req.body;
+
+		const landmarkIntoStamp = await userService.addStamp({
+			userId,
+			landmarkId,
+		});
+
+		res.status(201).json(landmarkIntoStamp);
+	} catch (err) {
+		next(err);
+	}
+});
+
+userRouter.put("/user/exp", loginRequired, async (req, res, next) => {
+	try{
+		if(is.emptyObject(req.body)){
+			throw new Error("system.error.badRequest");
+		}
+
+		const { point } = req.body
+		const userId = req.currentUserId
+		const upgradeUser = await userService.addExp({ userId, point })
+
+		res.status(201).json(upgradeUser)
+	} catch(err){
 		next(err)
 	}
 })

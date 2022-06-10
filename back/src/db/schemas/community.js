@@ -1,39 +1,40 @@
 import pkg from "mongoose";
 const { Schema, model } = pkg;
 
-const UserSchema = new Schema(
+const CommunitySchema = new Schema(
 	{
 		id: {
 			type: String,
+			index: true,
 			unique: true,
+			required: true,
+		},
+		head: {
+			type: String,
+			index: true,
+			required: true,
+		},
+		writerId: {
+			type: String,
 			required: true,
 			index: true,
 		},
-		email: {
+		writerNickName: {
 			type: String,
 			required: true,
-			unique: true,
 			index: true,
 		},
-		nickname: {
-			type: String,
-			required: true,
-			unique: true,
-		},
-		hashedPassword: {
+		title: {
 			type: String,
 			required: true,
 		},
-		description: {
+		content: {
 			type: String,
+			required: true,
 		},
-		stamp: {
+		likedUsers: {
 			type: Array,
 			default: [],
-		},
-		exp: {
-			type: Number,
-			default: 0,
 		},
 		saveFileName: {
 			type: String,
@@ -47,4 +48,4 @@ const UserSchema = new Schema(
 	}
 );
 
-export const User = model("User", UserSchema);
+export const Community = model("Community", CommunitySchema);
