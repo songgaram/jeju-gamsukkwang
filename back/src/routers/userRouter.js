@@ -112,4 +112,20 @@ userRouter.post("/user/stamp", loginRequired, async (req, res, next) => {
 	}
 });
 
+userRouter.put("/user/exp", loginRequired, async (req, res, next) => {
+	try{
+		if(is.emptyObject(req.body)){
+			throw new Error("system.error.badRequest");
+		}
+
+		const { point } = req.body
+		const userId = req.currentUserId
+		const upgradeUser = await userService.addExp({ userId, point })
+
+		res.status(201).json(upgradeUser)
+	} catch(err){
+		next(err)
+	}
+})
+
 export { userRouter };
