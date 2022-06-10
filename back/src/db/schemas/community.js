@@ -32,7 +32,7 @@ const CommunitySchema = new Schema(
 			type: String,
 			required: true,
 		},
-		likedUser: {
+		likedUsers: {
 			type: Array,
 			default: [],
 		},

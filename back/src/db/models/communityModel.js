@@ -19,7 +19,7 @@ export const communityModel = {
 	},
 
 	update: async ({ articleId, data }) => {
-		const filter = { id: articleId }
+		const filter = { id: articleId };
 		const update = { $set: data };
 		const option = { returnOriginal: false };
 		const updatedArticle = await Community.findOneAndUpdate(
@@ -62,5 +62,50 @@ export const communityModel = {
 		};
 
 		return sendArticles;
+	},
+	addLike: async ({ articleId, currentUserId }) => {
+		const filter = { id: articleId };
+		const update = {
+			$push: { likedUsers: currentUserId },
+		};
+		const option = { returnOriginal: false };
+
+		const addLikeCount = await Community.findOneAndUpdate(
+			filter,
+			update,
+			option
+		);
+
+		return addLikeCount;
+	},
+
+	removeLike: async ({ articleId, currentUserId }) => {
+		const filter = { id: articleId };
+		const update = {
+			$pull: { likedUsers: currentUserId },
+		};
+		const option = { returnOriginal: false };
+
+		const removeLikeCount = await Community.findOneAndUpdate(
+			filter,
+			update,
+			option
+		);
+
+		return removeLikeCount;
+	},
+
+	didUseLike: async ({ articleId, currentUserId }) => {
+		const didUseLike = await Community.exists({
+			$and: [{ id: articleId }, { likedUsers: currentUserId }],
+		});
+
+		return didUseLike;
+	},
+
+	isArticleExist: async ({ articleId }) => {
+		const isArticleExist = await Community.exists({ id: articleId });
+
+		return isArticleExist;
 	},
 };
