@@ -39,7 +39,7 @@ paths:
               type: object
               example: { "email": "test@elice.io", "password": "1234" }
       responses:
-        "200":
+        "201":
           description: 로그인 성공
         "400":
           description: 잘못된 이메일을 보내거나, 비밀번호가 DB와 일치하지 않으면 오류가 발생합니다.
@@ -49,9 +49,36 @@ paths:
       tags:
         - User
       summary: 회원 탈퇴
+      security:
+        - Authorization: []
       description: /user로 회원 탈퇴 요청을 보냅니다. req.body에 어떤 것도 받지 않습니다. 단, 로그인된 사용자만 회원 탈퇴 기능을 사용할 수 있습니다.
       responses:
         "200":
           description: 회원 탈퇴 성공
         "400":
           description: 유효한 토큰을 가지고 있지 않거나, DB에 없는 회원일 시 오류가 발생합니다.
+
+  /user/:
+    put:
+      tags:
+        - User
+      summary: 회원 수정
+      description: /user로 회원 수정 요청을 보냅니다.
+      security:
+        - Authorization: []
+      requestBody:
+        required: true
+        description: 수정할 닉네임을 req.body로 받습니다.
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                {
+                  "nickname": "testEditing",
+                }
+      responses:
+        "201":
+          description: 회원 수정 성공
+        "400":
+          description: 유효한 토큰을 가지고 있지 않거나, DB에 없는 회원이거나, 중복된 닉네임을 보낼 때 오류가 발생합니다.

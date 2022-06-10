@@ -1,8 +1,10 @@
 import mongoose from "mongoose";
-import { userModel } from "./models/userModel.js";
+import { userModel } from "./models/userModel";
+import { tourModel } from "./models/tourModel";
+import { reviewModel } from "./models/reviewModel";
 
 const DB_URL = process.env.MONGODB_URL || "MongoDB 서버 주소를 설정해주세요.";
-console.log(DB_URL);
+
 mongoose.connect(DB_URL);
 const db = mongoose.connection;
 
@@ -12,4 +14,6 @@ db.on("error", (err) =>
 );
 
 export { userModel };
+export { tourModel };
+export { reviewModel };
 export { db };
