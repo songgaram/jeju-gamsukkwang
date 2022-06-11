@@ -3,55 +3,101 @@ import is from "@sindresorhus/is";
 import { Router } from "express";
 import { communityService } from "../services/communityService";
 import { loginRequired } from "../middlewares/loginRequired";
+import { s3Array } from "../middlewares/multerS3";
 
 const communityRouter = Router();
 
 // 게시글 작성
-communityRouter.post("/community", loginRequired, async (req, res, next) => {
-	try {
-		if (is.emptyObject(req.body)) {
-			throw new Error("system.error.badRequest");
+communityRouter.post(
+	"/community",
+	loginRequired,
+	s3Array(),
+	async (req, res, next) => {
+		try {
+			if (is.emptyObject(req.body)) {
+				throw new Error("system.error.badRequest");
+			}
+
+			const loginUserId = req.currentUserId;
+			const { title, content, head } = req.body;
+
+			if (req.files) {
+				const images = req.files.map(
+					(image) => image.location.split("amazonaws.com/")[1]
+				);
+
+				const newArticle = await communityService.addArticleWithImages({
+					loginUserId,
+					title,
+					content,
+					head,
+					images,
+				});
+
+				res.status(201).json(newArticle);
+			} else if (!req.files) {
+				const newArticle = await communityService.addArticle({
+					loginUserId,
+					title,
+					content,
+					head,
+				});
+
+				res.status(201).json(newArticle);
+			}
+		} catch (err) {
+			next(err);
 		}
-
-		const loginUserId = req.currentUserId;
-		const { title, content, head } = req.body;
-
-		const newArticle = await communityService.addArticle({
-			loginUserId,
-			title,
-			content,
-			head,
-		});
-
-		res.status(201).json(newArticle);
-	} catch (err) {
-		next(err);
 	}
-});
+);
 
 // 게시글 수정
-communityRouter.put("/community/:id", loginRequired, async (req, res, next) => {
-	try {
-		if (is.emptyObject(req.body)) {
-			throw new Error("system.error.badRequest");
+communityRouter.put(
+	"/community/:id",
+	loginRequired,
+	s3Array(),
+	async (req, res, next) => {
+		try {
+			if (is.emptyObject(req.body)) {
+				throw new Error("system.error.badRequest");
+			}
+
+			const loginUserId = req.currentUserId;
+			const articleId = req.params.id;
+			const { title, content, head } = req.body;
+
+			if (!req.files) {
+				const toUpdate = { title, content, head };
+
+				const editedArticle = await communityService.setArticle({
+					loginUserId,
+					articleId,
+					toUpdate,
+				});
+
+				res.status(201).json(editedArticle);
+			} else if (req.files) {
+				const images = req.files.map(
+					(image) => image.location.split("amazonaws.com/")[1]
+				);
+
+				const toUpdate = { title, content, head };
+
+				toUpdate.saveFileName = images;
+
+				const editedArticle = await communityService.setArticle({
+					loginUserId,
+					articleId,
+					toUpdate,
+				});
+
+				res.status(201).json(editedArticle);
+			}
+		} catch (err) {
+			next(err);
 		}
-
-		const loginUserId = req.currentUserId;
-		const articleId = req.params.id;
-		const { title, content, head } = req.body;
-		const toUpdate = { title, content, head };
-
-		const editedArticle = await communityService.setArticle({
-			loginUserId,
-			articleId,
-			toUpdate,
-		});
-
-		res.status(201).json(editedArticle);
-	} catch (err) {
-		next(err);
 	}
-});
+);
 
 // 특정 게시글 불러오기
 communityRouter.get("/community/:id", loginRequired, async (req, res, next) => {
