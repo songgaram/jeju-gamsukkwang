@@ -1,11 +1,43 @@
 import styled from "styled-components";
+import Button from "components/Button";
 
 const Landmark = () => {
   return (
     <LandmarkContainer>
       <ImgContainer>이미지</ImgContainer>
 
-      <DetailContainer>디테일</DetailContainer>
+      <DetailContainer>
+        <DetailTitle>우도</DetailTitle>
+        <DetailContent>
+          <DetailTabRow>
+            <DetailTabCell>
+              <DetailHighlight>주소</DetailHighlight>
+            </DetailTabCell>
+            <DetailTabCell>
+              <p>제주도 제주시</p>
+            </DetailTabCell>
+          </DetailTabRow>
+          <DetailTabRow>
+            <DetailTabCell>
+              <DetailHighlight>소개</DetailHighlight>
+            </DetailTabCell>
+            <DetailTabCell>
+              <p>소가 누워있는 형상을 하고 있는 제주의 가장 큰 부속섬</p>
+            </DetailTabCell>
+          </DetailTabRow>
+          <DetailTabRow>
+            <DetailTabCell>
+              <DetailHighlight>연락처</DetailHighlight>
+            </DetailTabCell>
+            <DetailTabCell>
+              <p>(+82) 064-728-1527</p>
+            </DetailTabCell>
+          </DetailTabRow>
+        </DetailContent>
+        <BtnPosition>
+          <Button color="gray03">길찾기</Button>
+        </BtnPosition>
+      </DetailContainer>
     </LandmarkContainer>
   );
 };
@@ -19,11 +51,44 @@ const LandmarkContainer = styled.div`
 
 const ImgContainer = styled.div`
   width: 50%;
+  height: 400px;
 `;
 
 const DetailContainer = styled.div`
   width: 50%;
   background-color: ivory;
+  padding: 8% 0 0 5%;
+`;
+
+const DetailTitle = styled.div`
+  font-size: ${({ theme }) => theme.fontSizes.xxxl};
+  font-weight: bold;
+  margin-bottom: 5%;
+  width: 100%;
+`;
+
+const DetailHighlight = styled.p`
+  font-weight: bold;
+`;
+
+const DetailContent = styled.div`
+  display: table;
+  width: 100%;
+`;
+
+const DetailTabRow = styled.div`
+  display: table-row;
+  height: 30px;
+`;
+
+const DetailTabCell = styled.div`
+  display: table-cell;
+`;
+
+const BtnPosition = styled.div`
+  width: 100%;
+  margin-top: 3%;
+  padding-left: 75%;
 `;
 
 export default Landmark;
