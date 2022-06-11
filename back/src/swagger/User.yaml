@@ -145,3 +145,28 @@ paths:
           description: 스탬프 추가 성공
         "400":
           description: 이미 스탬프로 추가한 랜드마크거나, DB에 없는 회원이거나, 잘못된 요청을 보냈을 때 오류가 발생합니다.
+  
+  /user/profileImg:
+    put:
+      tags:
+        - User
+      summary: 프로필 이미지 수정
+      description: /user/profileImg로 프로필 이미지 수정 요청을 보냅니다.
+      security:
+        - Authorization: []
+      requestBody:
+        required: true
+        description: 업로드할 프로필 이미지 파일을 req.body로 받습니다.
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                imgFile: 
+                  type: string
+                  format: binary
+      responses:
+        "201":
+          description: 프로필 이미지 업로드 및 수정 성공
+        "400":
+          description: 유효한 토큰을 가지고 있지 않거나, DB에 없는 회원이거나, 이미지 파일이 아닐 경우 오류가 발생합니다.
