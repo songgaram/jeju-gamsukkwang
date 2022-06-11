@@ -18,20 +18,21 @@ export const reviewModel = {
   // 해당 랜드마크의 총 리뷰수, 평점 평균, 리뷰 목록 불러오기
   findByLandmarkId: async ({ landmarkId }) => {
     const reviews = await Review.find({ landmarkId }).sort({ createdAt: -1 }) //리뷰 목록 최신순으로
-    const totalCount = await Review.find({ landmarkId }).countDocuments({}) // 총 리뷰수
     
-    const calcAvg = await Review.aggregate([
+    const calc = await Review.aggregate([
       { $match: { landmarkId } },
-      { $group: { _id: null, avg: { $avg: "$rating" } }}
+      { $group: { _id: null, avg: { $avg: "$rating" }, cnt: { $sum: 1 } }}
     ])
-    const avgRating = calcAvg[0].avg // 총 리뷰 평점의 평균
+
+    const totalCount = calc[0].cnt // 총 리뷰 수
+    const avgRating = calc[0].avg // 총 리뷰 평점의 평균
     
     const starCount = await Review.aggregate([
       { $match: { landmarkId } },
-      { $group: { _id: "$rating", cnt: { $sum: 1 } }}
+      { $group: { _id: "$rating", cnt: { $sum: 1 } }},
+      { $sort : {"_id": -1}} // 별점 높은 것부터 순서대로 나오도록 함
     ])
 
-    console.log(starCount)
     const star5 = starCount[0]?.cnt ?? 0
     const star4 = starCount[1]?.cnt ?? 0
     const star3 = starCount[2]?.cnt ?? 0
