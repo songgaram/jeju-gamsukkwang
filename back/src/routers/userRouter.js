@@ -3,6 +3,7 @@ import is from "@sindresorhus/is";
 import { Router } from "express";
 import { userService } from "../services/userService";
 import { loginRequired } from "../middlewares/loginRequired";
+import { s3Upload } from "../middlewares/multerS3";
 
 const userRouter = Router();
 
@@ -112,6 +113,7 @@ userRouter.post("/user/stamp", loginRequired, async (req, res, next) => {
 	}
 });
 
+// exp(경험치) 증가시키기
 userRouter.put("/user/exp", loginRequired, async (req, res, next) => {
 	try{
 		if(is.emptyObject(req.body)){
@@ -127,5 +129,25 @@ userRouter.put("/user/exp", loginRequired, async (req, res, next) => {
 		next(err)
 	}
 })
+
+// 프로필 이미지 업로드
+userRouter.post(
+	"/user/profileImg", 
+	loginRequired, 
+	s3Upload(),
+	async (req, res, next) => {
+		try{
+			console.log("ㅇㅕㄱㅣㅣㅣ")
+			const loginUserId = req.currentUserId
+			const user = await userService.findUser({ loginUserId })
+	
+			console.log(req.file)
+		/* 	const { location } = req.file
+			console.log(location) */
+		} catch(err){
+			next(err)
+		}
+	}
+)
 
 export { userRouter };
