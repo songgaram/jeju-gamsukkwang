@@ -3,3 +3,7 @@
 
 # 제주특별자치도 랜드마크 데이터셋
 /dataSet
+
+# model
+/checkpoints
+/model
