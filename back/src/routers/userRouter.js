@@ -3,7 +3,7 @@ import is from "@sindresorhus/is";
 import { Router } from "express";
 import { userService } from "../services/userService";
 import { loginRequired } from "../middlewares/loginRequired";
-import { s3Upload } from "../middlewares/multerS3";
+import { s3Single } from "../middlewares/multerS3";
 
 const userRouter = Router();
 
@@ -24,7 +24,7 @@ userRouter.get("/user/:id", async (req, res, next) => {
 	}
 });
 
-// 회원 등록 기능
+// 회원 등록 기능 (프로필 이미지는 기본 이미지로 설정됨)
 userRouter.post("/user/register", async (req, res, next) => {
 	try {
 		if (is.emptyObject(req.body)) {
@@ -130,20 +130,22 @@ userRouter.put("/user/exp", loginRequired, async (req, res, next) => {
 	}
 })
 
-// 프로필 이미지 업로드
-userRouter.post(
+// 프로필 이미지 변경
+userRouter.put(
 	"/user/profileImg", 
-	// loginRequired, 
-	s3Upload(),
+	loginRequired, 
+	s3Single(),
 	async (req, res, next) => {
 		try{
-			console.log("여기는 안들어오네")
-			/* const loginUserId = req.currentUserId
-			const user = await userService.findUser({ loginUserId }) */
-	
-			console.log(req.file)
-		/* 	const { location } = req.file
-			console.log(location) */
+			const userId = req.currentUserId
+
+			const { location } = req.file
+			const imageName = location.split("amazonaws.com/")[1]
+			const toUpdate = { saveFileName: imageName }
+
+			const updatedUser = await userService.setUser({ userId, toUpdate })
+
+			res.status(201).json(updatedUser)
 		} catch(err){
 			next(err)
 		}

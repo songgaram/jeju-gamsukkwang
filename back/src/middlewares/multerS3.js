@@ -19,14 +19,16 @@ const storage = multerS3({
 	bucket: process.env.AWS_S3_BUCKET,
 	contentType: multerS3.AUTO_CONTENT_TYPE,
 	key: (req, file, cb) => {
-		console.log("file", file);
-		let ext = file.mimetype.split("/")[1];
-		const dateTime = moment().format("YYYYMMDDHHmmss");
+		const ext = file.mimetype.split("/")[1];
+    const dateTime = moment().format("YYYYMMDDHHmmss");
+
+    if (!["png", "jpg", "jpeg", "gif", "bmp"].includes(ext)) {
+      return cb(new Error("system.error.noImageFile"))
+    }
+		
 		cb(
 			null,
-			`${dateTime}_${Math.floor(Math.random() * 10000).toString()}_${
-				file.originalname
-			}.${ext}`
+			`${dateTime}_${Math.floor(Math.random() * 10000).toString()}_${file.originalname}`
 		);
 	},
 });
