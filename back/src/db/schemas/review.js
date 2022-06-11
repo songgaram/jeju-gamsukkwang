@@ -1,44 +1,41 @@
 import pkg from "mongoose";
 const { Schema, model } = pkg;
 
-const UserSchema = new Schema(
+const ReviewSchema = new Schema(
 	{
 		id: {
 			type: String,
+			index: true,
 			unique: true,
+			required: true,
+		},
+		tourId: {
+			type: String,
 			required: true,
 			index: true,
 		},
-		email: {
+		userId: {
 			type: String,
 			required: true,
-			unique: true,
 			index: true,
 		},
-		nickname: {
-			type: String,
-			required: true,
-			unique: true,
-			index: true,
-		},
-		hashedPassword: {
+		userNickName: {
 			type: String,
 			required: true,
 		},
-		description: {
+		content: {
 			type: String,
+			required: true,
 		},
-		stamp: {
-			type: Array,
-			default: [],
-		},
-		exp: {
+		rating: {
 			type: Number,
 			default: 0,
+			required: true,
+			index: true,
 		},
 		saveFileName: {
-			type: String,
-			default: "defaultProfile.jpg",
+			type: Array,
+			default: [],
 		},
 	},
 	{
@@ -46,4 +43,4 @@ const UserSchema = new Schema(
 	}
 );
 
-export const User = model("User", UserSchema);
+export const Review = model("Review", ReviewSchema);

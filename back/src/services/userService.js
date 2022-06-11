@@ -5,6 +5,19 @@ import jwt from "jsonwebtoken";
 import { db, userModel } from "../db";
 
 class userService {
+	// 회원 정보 찾기 기능
+	static findUser = async ({ userId }) => {
+		const user = await userModel.findById({ userId });
+
+		// 해당 회원이 없을 경우 error
+		if (!user) {
+			throw new Error("system.error.noUser");
+		}
+
+		const foundUser = await userModel.findById({ userId });
+		return foundUser;
+	};
+
 	// 회원 등록 기능
 	static addUser = async ({ email, password, nickname }) => {
 		// 이메일 중복 확인
@@ -85,7 +98,7 @@ class userService {
 		}
 
 		try {
-			const withdrawResult = userModel.deleteById({ userId });
+			const withdrawResult = await userModel.deleteById({ userId });
 			if (!withdrawResult) {
 				throw new Error("system.error.fail");
 			}
@@ -94,6 +107,58 @@ class userService {
 		} catch (err) {
 			throw new Error("system.error.fail");
 		}
+	};
+
+	//회원 수정 기능
+	static setUser = async ({ userId, toUpdate }) => {
+		// 유저 ID로 DB에 있는 회원 정보 확인
+		let user = await userModel.findById({ userId });
+
+		// 해당 회원이 없을 경우 error
+		if (!user) {
+			throw new Error("system.error.noUser");
+		}
+
+		// nickname 중복확인
+		const isNicknameExist = await userModel.isNicknameExist({
+			nickname: toUpdate.nickname,
+		});
+
+		if (!isNicknameExist) {
+			throw new Error("system.error.duplicatedNickname");
+		}
+
+		user = await userModel.update({ userId, data: toUpdate });
+		return user;
+	};
+
+	// 회원 스탬프 추가 기능
+	static addStamp = async ({ userId, tourId }) => {
+		const user = await userModel.findById({ userId });
+
+		// 해당 회원이 없을 경우 error
+		if (!user) {
+			throw new Error("system.error.noUser");
+		}
+
+		const isStampExist = await userModel.isStampExist({ userId, tourId });
+		if (isStampExist) {
+			throw new Error("system.error.alreadyStamped");
+		}
+
+		const addStamp = await userModel.addStamp({ userId, tourId });
+
+		return addStamp;
+	};
+	static addExp = async ({ userId, point }) => {
+		let user = await userModel.findById({ userId });
+
+		if (!user) {
+			throw new Error("system.error.noUser");
+		}
+
+		user = await userModel.updateExp({ userId, point });
+		return user;
 	};
 }
 

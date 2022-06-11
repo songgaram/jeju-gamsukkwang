@@ -43,14 +43,45 @@ export const userModel = {
 	},
 
 	update: async ({ userId, data }) => {
+		const filter = { id: userId };
 		const update = { $set: data };
 		const option = { returnOriginal: false };
-		const updatedUser = await User.findByIdAndUpdate(userId, update, option);
+
+		const updatedUser = await User.findOneAndUpdate(filter, update, option);
+
 		return updatedUser;
 	},
 
 	deleteById: async ({ userId }) => {
 		const user = await User.deleteOne({ id: userId });
 		return user;
+	},
+
+	addStamp: async ({ userId, tourId }) => {
+		const filter = { id: userId };
+		const update = {
+			$push: { stamp: tourId },
+		};
+		const option = { returnOriginal: false };
+
+		const addStamp = await User.findOneAndUpdate(filter, update, option);
+
+		return addStamp;
+	},
+
+	isStampExist: async ({ userId, tourId }) => {
+		const isStampExist = await User.exists({
+			$and: [{ id: userId }, { stamp: tourId }],
+		});
+
+		return isStampExist;
+	},
+	updateExp: async ({ userId, point }) => {
+		const filter = { id: userId };
+		const update = { $inc: { exp: point } };
+		const option = { returnOriginal: false };
+
+		const upgradeUser = await User.findOneAndUpdate(filter, update, option);
+		return upgradeUser;
 	},
 };
