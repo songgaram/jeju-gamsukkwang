@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { post } from "lib/apiController";
+import http from "libs/apiController";
 
 const initInfo = {
   email: "",
@@ -26,7 +26,7 @@ const Register = () => {
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    post("user/register", { email, password, nickname });
+    http.post("user/register", { email, password, nickname });
     setRegisterInfo(initInfo);
     navigate("/");
   };

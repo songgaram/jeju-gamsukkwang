@@ -1,7 +1,7 @@
 import styled from "styled-components";
 // import { CardTitle, CardSubtitle } from "./intro";
 import Button from "components/Button";
-import { useScrollFadeIn } from "assets/hook/useScrollFadeIn";
+import { useScrollFadeIn } from "hooks/useScrollFadeIn";
 import DescImage1 from "assets/images/DescImage1.png";
 import DescImage2 from "assets/images/DescImage2.png";
 import DescImage3 from "assets/images/DescImage3.png";

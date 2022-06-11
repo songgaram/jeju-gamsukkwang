@@ -5,7 +5,7 @@ import BackgroundImage from "assets/images/BackgroundImage.png";
 import Button from "components/Button";
 import CardSection from "./CardSection";
 import DescSection from "./DescSection";
-import { useScrollFadeIn } from "assets/hook/useScrollFadeIn";
+import { useScrollFadeIn } from "hooks/useScrollFadeIn";
 
 const Intro = () => {
   const animatedItem = {

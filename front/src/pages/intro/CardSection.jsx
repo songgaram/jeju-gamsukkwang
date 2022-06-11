@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Card from "./Card";
-import { useScrollFadeIn } from "assets/hook/useScrollFadeIn";
+import { useScrollFadeIn } from "hooks/useScrollFadeIn";
 
 const content = [
   {
