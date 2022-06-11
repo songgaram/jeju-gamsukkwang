@@ -37,10 +37,8 @@ const CommunitySchema = new Schema(
 			default: [],
 		},
 		saveFileName: {
-			type: String,
-		},
-		saveFilePath: {
-			type: String,
+			type: Array,
+			default: [],
 		},
 	},
 	{

@@ -37,9 +37,7 @@ const UserSchema = new Schema(
 		},
 		saveFileName: {
 			type: String,
-		},
-		saveFilePath: {
-			type: String,
+			default: "defaultProfile.jpg",
 		},
 	},
 	{
