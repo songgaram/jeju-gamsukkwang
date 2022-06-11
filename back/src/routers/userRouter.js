@@ -3,7 +3,7 @@ import is from "@sindresorhus/is";
 import { Router } from "express";
 import { userService } from "../services/userService";
 import { loginRequired } from "../middlewares/loginRequired";
-import { s3Upload } from "../middlewares/multerS3";
+import { s3Single } from "../middlewares/multerS3";
 
 const userRouter = Router();
 
@@ -115,39 +115,39 @@ userRouter.post("/user/stamp", loginRequired, async (req, res, next) => {
 
 // exp(경험치) 증가시키기
 userRouter.put("/user/exp", loginRequired, async (req, res, next) => {
-	try{
-		if(is.emptyObject(req.body)){
+	try {
+		if (is.emptyObject(req.body)) {
 			throw new Error("system.error.badRequest");
 		}
 
-		const { point } = req.body
-		const userId = req.currentUserId
-		const upgradeUser = await userService.addExp({ userId, point })
+		const { point } = req.body;
+		const userId = req.currentUserId;
+		const upgradeUser = await userService.addExp({ userId, point });
 
-		res.status(201).json(upgradeUser)
-	} catch(err){
-		next(err)
+		res.status(201).json(upgradeUser);
+	} catch (err) {
+		next(err);
 	}
-})
+});
 
 // 프로필 이미지 업로드
 userRouter.post(
-	"/user/profileImg", 
-	// loginRequired, 
-	s3Upload(),
+	"/user/profileImg",
+	// loginRequired,
+	s3Single(),
 	async (req, res, next) => {
-		try{
-			console.log("여기는 안들어오네")
+		try {
+			console.log("여기는 안들어오네");
 			/* const loginUserId = req.currentUserId
 			const user = await userService.findUser({ loginUserId }) */
-	
-			console.log(req.file)
-		/* 	const { location } = req.file
+
+			console.log(req.file);
+			/* 	const { location } = req.file
 			console.log(location) */
-		} catch(err){
-			next(err)
+		} catch (err) {
+			next(err);
 		}
 	}
-)
+);
 
 export { userRouter };

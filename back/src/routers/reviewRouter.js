@@ -1,82 +1,120 @@
 import is from "@sindresorhus/is";
+
 import { loginRequired } from "../middlewares/loginRequired";
-import { reviewService } from '../services/reviewService.js'
+import { reviewService } from "../services/reviewService.js";
+import { s3Array } from "../middlewares/multerS3";
 import { Router } from "express";
 
 const reviewRouter = Router();
-reviewRouter.use(loginRequired)
+reviewRouter.use(loginRequired);
 
 // 리뷰 작성하기
-reviewRouter.post("/review", async (req, res, next) => {
-  try{
-    if (is.emptyObject(req.body)) {
+reviewRouter.post("/review", s3Array(), async (req, res, next) => {
+	try {
+		if (is.emptyObject(req.body)) {
 			throw new Error("system.error.badRequest");
 		}
 
-    const loginUserId = req.currentUserId
-    const { landmarkId, content, rating } = req.body
+		const loginUserId = req.currentUserId;
+		const { landmarkId, content, rating } = req.body;
 
-    const newReview = await reviewService.addReview({ 
-      loginUserId, 
-      landmarkId,
-      content, 
-      rating
-    })
+		if (req.files) {
+			const images = req.files.map(
+				(image) => image.location.split("amazonaws.com/")[1]
+			);
 
-    res.status(201).json(newReview)
+			const newReview = await reviewService.addReviewWithImages({
+				loginUserId,
+				landmarkId,
+				content,
+				rating,
+				images,
+			});
 
-  } catch(err){
-    next(err)
-  }
-})
+			res.status(201).json(newReview);
+		} else if (!req.files) {
+			const newReview = await reviewService.addReview({
+				loginUserId,
+				landmarkId,
+				content,
+				rating,
+			});
+
+			res.status(201).json(newReview);
+		}
+	} catch (err) {
+		next(err);
+	}
+});
 
 // 해당 랜드마크의 리뷰 목록 불러오기
 reviewRouter.get("/review/:landmarkId/list", async (req, res, next) => {
-  try{
-    const landmarkId = req.params.landmarkId
-    const reviews = await reviewService.getReviews({ landmarkId })
+	try {
+		const landmarkId = req.params.landmarkId;
+		const reviews = await reviewService.getReviews({ landmarkId });
 
-    res.status(200).json(reviews)
-  } catch(err){
-    next(err)
-  }
-})
+		res.status(200).json(reviews);
+	} catch (err) {
+		next(err);
+	}
+});
 
 // 리뷰 수정하기
-reviewRouter.put("/review/:id", async (req, res, next) => {
-  try{
-    if (is.emptyObject(req.body)) {
+reviewRouter.put("/review/:id", s3Array(), async (req, res, next) => {
+	try {
+		if (is.emptyObject(req.body)) {
 			throw new Error("system.error.badRequest");
 		}
 
-    const loginUserId = req.currentUserId
-    const reviewId = req.params.id
-    const toUpdate = req.body
+		const loginUserId = req.currentUserId;
+		const reviewId = req.params.id;
+		if (!req.files) {
+			const toUpdate = req.body;
 
-    const editedReview = await reviewService.setReview({
-      loginUserId, 
-      reviewId,
-      toUpdate
-    })
+			const editedReview = await reviewService.setReview({
+				loginUserId,
+				reviewId,
+				toUpdate,
+			});
 
-    res.status(201).json(editedReview)
-  } catch(err) {
-    next(err)
-  }
-})
+			res.status(201).json(editedReview);
+		} else if (req.files) {
+			const images = req.files.map(
+				(image) => image.location.split("amazonaws.com/")[1]
+			);
+
+			const toUpdate = req.body;
+
+			toUpdate.saveFileName = images;
+
+			const editedReview = await reviewService.setReview({
+				loginUserId,
+				reviewId,
+				toUpdate,
+			});
+
+			res.status(201).json(editedReview);
+		}
+	} catch (err) {
+		next(err);
+	}
+});
 
 // 리뷰 삭제하기
 reviewRouter.delete("/review/:id", async (req, res, next) => {
-  try{
-    const loginUserId = req.currentUserId
-    const reviewId = req.params.id
+	try {
+		const loginUserId = req.currentUserId;
+		const reviewId = req.params.id;
 
-    const deleteResult = await reviewService.deleteReview({ loginUserId, reviewId })
-    
-    res.status(200).send(deleteResult)
-  } catch(err) {
-    next(err)
-  }
-})
+		const deleteResult = await reviewService.deleteReview({
+			loginUserId,
+			reviewId,
+		});
 
-export { reviewRouter }
+		res.status(200).send(deleteResult);
+	} catch (err) {
+		next(err);
+	}
+});
+
+export { reviewRouter };
