@@ -36,7 +36,7 @@ class reviewService {
 
   // 리뷰 목록 불러오기
   static getReviews = async ({ landmarkId }) => {
-    const reviews = await reviewModel.findByLandmarkId({ landmarkId })
+    const reviews = await reviewModel.findByLandmarkId({ landmarkId }) 
     return reviews
   }
 
