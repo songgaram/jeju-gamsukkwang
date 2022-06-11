@@ -44,7 +44,7 @@ export const reviewModel = {
 
   // reviewId로 리뷰 정보 찾기
   findById: async ({ reviewId }) => {
-    const review = await Review.findOne({ reviewId })
+    const review = await Review.findOne({ id: reviewId })
     return review
   },
 
