@@ -25,21 +25,36 @@ export const reviewModel = {
     ])
 
     const totalCount = calc[0].cnt // 총 리뷰 수
-    const avgRating = calc[0].avg // 총 리뷰 평점의 평균
+    const avgRating = calc[0].avg.toFixed(1) // 총 리뷰 평점의 평균 (소수점 첫째자리까지 반올림)
     
     const starCount = await Review.aggregate([
       { $match: { landmarkId } },
       { $group: { _id: "$rating", cnt: { $sum: 1 } }},
-      { $sort : {"_id": -1}} // 별점 높은 것부터 순서대로 나오도록 함
     ])
 
-    const star5 = starCount[0]?.cnt ?? 0
-    const star4 = starCount[1]?.cnt ?? 0
-    const star3 = starCount[2]?.cnt ?? 0
-    const star2 = starCount[3]?.cnt ?? 0
-    const star1 = starCount[4]?.cnt ?? 0
+    let star5 = 0, star4 = 0, star3 = 0, star2 = 0, star1 = 0
+    starCount.forEach((item) => {
+      switch(item._id){
+        case 5:
+          star5 = item?.cnt
+          break
+        case 4:
+          star4 = item?.cnt
+          break
+        case 3:
+          star3 = item?.cnt
+          break
+        case 2:
+          star2 = item?.cnt
+          break
+        case 1:
+          star1 = item?.cnt
+          break
+      }
+    })
 
     return { totalCount, avgRating, star5, star4, star3, star2, star1, reviews}
+
   },
 
   // reviewId로 리뷰 정보 찾기
