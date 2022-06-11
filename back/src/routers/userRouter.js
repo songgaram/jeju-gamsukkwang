@@ -115,41 +115,41 @@ userRouter.post("/user/stamp", loginRequired, async (req, res, next) => {
 
 // exp(경험치) 증가시키기
 userRouter.put("/user/exp", loginRequired, async (req, res, next) => {
-	try{
-		if(is.emptyObject(req.body)){
+	try {
+		if (is.emptyObject(req.body)) {
 			throw new Error("system.error.badRequest");
 		}
 
-		const { point } = req.body
-		const userId = req.currentUserId
-		const upgradeUser = await userService.addExp({ userId, point })
+		const { point } = req.body;
+		const userId = req.currentUserId;
+		const upgradeUser = await userService.addExp({ userId, point });
 
-		res.status(201).json(upgradeUser)
-	} catch(err){
-		next(err)
+		res.status(201).json(upgradeUser);
+	} catch (err) {
+		next(err);
 	}
-})
+});
 
 // 프로필 이미지 변경
 userRouter.put(
-	"/user/profileImg", 
-	loginRequired, 
+	"/user/profileImg",
+	loginRequired,
 	s3Single(),
 	async (req, res, next) => {
-		try{
-			const userId = req.currentUserId
+		try {
+			const userId = req.currentUserId;
 
-			const { location } = req.file
-			const imageName = location.split("amazonaws.com/")[1]
-			const toUpdate = { saveFileName: imageName }
+			const { location } = req.file;
+			const imageName = location.split("amazonaws.com/")[1];
+			const toUpdate = { saveFileName: imageName };
 
-			const updatedUser = await userService.setUser({ userId, toUpdate })
+			const updatedUser = await userService.setUser({ userId, toUpdate });
 
-			res.status(201).json(updatedUser)
-		} catch(err){
-			next(err)
+			res.status(201).json(updatedUser);
+		} catch (err) {
+			next(err);
 		}
 	}
-)
+);
 
 export { userRouter };

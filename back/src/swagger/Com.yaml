@@ -93,18 +93,23 @@ paths:
         - Authorization: []
       description: /community로 게시글 작성 요청을 보냅니다. 단, 로그인 사용자만 사용할 수 있습니다.
       requestBody:
-        required: true
         description: 제목, 내용을 필수 req.body로 받습니다.
         content:
-          application/json:
+          multipart/form-data:
             schema:
               type: object
-              example:
-                {
-                  "title": "점심 뭐 먹지",
-                  "content": "돈까스가 좋을까요 카레가 좋을까요 딩동댕동",
-                  "head": "free",
-                }
+              properties:
+                title:
+                  type: string
+                  required: true
+                content:
+                  type: string
+                  required: true
+                head:
+                  type: string
+                imgFile:
+                  type: array
+                  format: binary
       responses:
         "201":
           description: 게시글 작성 성공
@@ -127,17 +132,23 @@ paths:
             type: string
           description: 게시글의 고유 id입니다.
       requestBody:
-        required: true
         description: 제목, 내용을 필수 req.body로 받습니다.
         content:
-          application/json:
+          multipart/form-data:
             schema:
               type: object
-              example:
-                {
-                  "title": "점심 뭐 먹지",
-                  "content": "돈까스가 좋을까요 카레가 좋을까요 딩동댕동",
-                }
+              properties:
+                title:
+                  type: string
+                  required: true
+                content:
+                  type: string
+                  required: true
+                head:
+                  type: string
+                imgFile:
+                  type: array
+                  format: binary
       responses:
         "201":
           description: 게시글 수정 성공

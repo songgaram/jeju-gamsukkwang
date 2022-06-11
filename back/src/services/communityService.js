@@ -65,6 +65,31 @@ class communityService {
 		return createdNewArticle;
 	};
 
+	static addArticleWithImages = async ({
+		loginUserId,
+		title,
+		content,
+		head,
+		images,
+	}) => {
+		const user = await userModel.findById({ userId: loginUserId });
+		const writerNickName = user.nickname;
+		const id = uuidv4();
+
+		const newArticle = {
+			id,
+			writerId: loginUserId,
+			writerNickName,
+			title,
+			content,
+			head,
+			saveFileName: images,
+		};
+
+		const createdNewArticle = await communityModel.create({ newArticle });
+		return createdNewArticle;
+	};
+
 	// 본인 리뷰만 수정 가능
 	static setArticle = async ({ loginUserId, articleId, toUpdate }) => {
 		const currentArticle = await communityModel.findById({ articleId });
