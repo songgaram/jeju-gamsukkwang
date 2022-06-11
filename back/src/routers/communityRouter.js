@@ -35,16 +35,16 @@ communityRouter.post(
 				});
 
 				res.status(201).json(newArticle);
-			} else if (!req.files) {
-				const newArticle = await communityService.addArticle({
-					loginUserId,
-					title,
-					content,
-					head,
-				});
-
-				res.status(201).json(newArticle);
 			}
+
+			const newArticle = await communityService.addArticle({
+				loginUserId,
+				title,
+				content,
+				head,
+			});
+
+			res.status(201).json(newArticle);
 		} catch (err) {
 			next(err);
 		}
@@ -66,33 +66,22 @@ communityRouter.put(
 			const articleId = req.params.id;
 			const { title, content, head } = req.body;
 
-			if (!req.files) {
-				const toUpdate = { title, content, head };
+			let toUpdate = { title, content, head };
 
-				const editedArticle = await communityService.setArticle({
-					loginUserId,
-					articleId,
-					toUpdate,
-				});
-
-				res.status(201).json(editedArticle);
-			} else if (req.files) {
+			if (req.files) {
 				const images = req.files.map(
 					(image) => image.location.split("amazonaws.com/")[1]
 				);
-
-				const toUpdate = { title, content, head };
-
 				toUpdate.saveFileName = images;
-
-				const editedArticle = await communityService.setArticle({
-					loginUserId,
-					articleId,
-					toUpdate,
-				});
-
-				res.status(201).json(editedArticle);
 			}
+
+			const editedArticle = await communityService.setArticle({
+				loginUserId,
+				articleId,
+				toUpdate,
+			});
+
+			res.status(201).json(editedArticle);
 		} catch (err) {
 			next(err);
 		}

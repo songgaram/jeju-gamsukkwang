@@ -32,16 +32,16 @@ reviewRouter.post("/review", s3Array(), async (req, res, next) => {
 			});
 
 			res.status(201).json(newReview);
-		} else if (!req.files) {
-			const newReview = await reviewService.addReview({
-				loginUserId,
-				landmarkId,
-				content,
-				rating,
-			});
-
-			res.status(201).json(newReview);
 		}
+
+		const newReview = await reviewService.addReview({
+			loginUserId,
+			landmarkId,
+			content,
+			rating,
+		});
+
+		res.status(201).json(newReview);
 	} catch (err) {
 		next(err);
 	}
@@ -68,33 +68,23 @@ reviewRouter.put("/review/:id", s3Array(), async (req, res, next) => {
 
 		const loginUserId = req.currentUserId;
 		const reviewId = req.params.id;
-		if (!req.files) {
-			const toUpdate = req.body;
 
-			const editedReview = await reviewService.setReview({
-				loginUserId,
-				reviewId,
-				toUpdate,
-			});
+		let toUpdate = req.body;
 
-			res.status(201).json(editedReview);
-		} else if (req.files) {
+		if (req.files) {
 			const images = req.files.map(
 				(image) => image.location.split("amazonaws.com/")[1]
 			);
-
-			const toUpdate = req.body;
-
 			toUpdate.saveFileName = images;
-
-			const editedReview = await reviewService.setReview({
-				loginUserId,
-				reviewId,
-				toUpdate,
-			});
-
-			res.status(201).json(editedReview);
 		}
+
+		const editedReview = await reviewService.setReview({
+			loginUserId,
+			reviewId,
+			toUpdate,
+		});
+
+		res.status(201).json(editedReview);
 	} catch (err) {
 		next(err);
 	}
