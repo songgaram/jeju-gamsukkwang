@@ -133,13 +133,13 @@ userRouter.put("/user/exp", loginRequired, async (req, res, next) => {
 // 프로필 이미지 업로드
 userRouter.post(
 	"/user/profileImg", 
-	loginRequired, 
+	// loginRequired, 
 	s3Upload(),
 	async (req, res, next) => {
 		try{
-			console.log("ㅇㅕㄱㅣㅣㅣ")
-			const loginUserId = req.currentUserId
-			const user = await userService.findUser({ loginUserId })
+			console.log("여기는 안들어오네")
+			/* const loginUserId = req.currentUserId
+			const user = await userService.findUser({ loginUserId }) */
 	
 			console.log(req.file)
 		/* 	const { location } = req.file

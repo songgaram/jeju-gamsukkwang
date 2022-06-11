@@ -15,11 +15,11 @@ const s3 = new AWS.S3({
 
 const storage = multerS3({
   s3: s3,
-  acl: 'public-read-write',
+  acl: 'public-read',
   bucket: process.env.AWS_S3_BUCKET,
   contentType: multerS3.AUTO_CONTENT_TYPE, 
   key: (req, file, cb) => {
-    console.log(file)
+    console.log("file", file)
     let ext = file.mimetype.split("/")[1]
     const dateTime = moment().format("YYYYMMDDHHmmss")
     cb(null, `${dateTime}_${Math.floor(Math.random() * 10000).toString()}_${file.originalname}.${ext}`)
