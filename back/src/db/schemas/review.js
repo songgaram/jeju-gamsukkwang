@@ -9,20 +9,19 @@ const ReviewSchema = new Schema(
 			unique: true,
 			required: true,
 		},
-		landmarkId: {
+		tourId: {
 			type: String,
 			required: true,
 			index: true,
 		},
-		writerId: {
+		userId: {
 			type: String,
 			required: true,
 			index: true,
 		},
-		writerNickName: {
+		userNickName: {
 			type: String,
 			required: true,
-			index: true,
 		},
 		content: {
 			type: String,

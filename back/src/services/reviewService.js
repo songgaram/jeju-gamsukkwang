@@ -3,24 +3,24 @@ import { db, userModel, reviewModel } from "../db";
 import { v4 as uuidv4 } from "uuid";
 
 class reviewService {
-	static addReview = async ({ loginUserId, landmarkId, content, rating }) => {
+	static addReview = async ({ loginUserId, tourId, content, rating }) => {
 		const user = await userModel.findById({ userId: loginUserId });
-		const writerNickName = user.nickname;
+		const userNickName = user.nickname;
 		const id = uuidv4();
 
 		const newReview = {
 			id,
-			landmarkId,
-			writerId: loginUserId,
-			writerNickName,
+			tourId,
+			userId: loginUserId,
+			userNickName,
 			content,
 			rating,
 		};
 
 		// 이미 리뷰를 쓴 상태라면 { _id } 객체를 반환, 아니라면 null을 반환
 		const didPostReview = await reviewModel.IsPosted({
-			landmarkId,
-			writerId: loginUserId,
+			tourId,
+			userId: loginUserId,
 		});
 
 		if (didPostReview) {
@@ -33,20 +33,20 @@ class reviewService {
 
 	static addReviewWithImages = async ({
 		loginUserId,
-		landmarkId,
+		tourId,
 		content,
 		rating,
 		images,
 	}) => {
 		const user = await userModel.findById({ userId: loginUserId });
-		const writerNickName = user.nickname;
+		const userNickName = user.nickname;
 		const id = uuidv4();
 
 		const newReview = {
 			id,
-			landmarkId,
-			writerId: loginUserId,
-			writerNickName,
+			tourId,
+			userId: loginUserId,
+			userNickName,
 			content,
 			rating,
 			saveFileName: images,
@@ -54,8 +54,8 @@ class reviewService {
 
 		// 이미 리뷰를 쓴 상태라면 { _id } 객체를 반환, 아니라면 null을 반환
 		const didPostReview = await reviewModel.IsPosted({
-			landmarkId,
-			writerId: loginUserId,
+			tourId,
+			userId: loginUserId,
 		});
 
 		if (didPostReview) {
@@ -67,8 +67,8 @@ class reviewService {
 	};
 
 	// 리뷰 목록 불러오기
-	static getReviews = async ({ landmarkId }) => {
-		const reviews = await reviewModel.findByLandmarkId({ landmarkId });
+	static getReviews = async ({ tourId }) => {
+		const reviews = await reviewModel.findByTourId({ tourId });
 		return reviews;
 	};
 
@@ -80,10 +80,10 @@ class reviewService {
 			throw new Error("system.error.noReview");
 		}
 
-		const writerId = currentReview.writerId;
+		const userId = currentReview.userId;
 
 		// 현재 로그인한 사용자와 리뷰 작성자가 같아야 수정 가능
-		if (writerId === loginUserId) {
+		if (userId === loginUserId) {
 			const updatedReview = await reviewModel.update({
 				reviewId,
 				data: toUpdate,
@@ -102,10 +102,10 @@ class reviewService {
 			throw new Error("system.error.noReview");
 		}
 
-		const writerId = currentReview.writerId;
+		const userId = currentReview.userId;
 
 		// 현재 로그인한 사용자와 리뷰 작성자가 같아야 수정 가능
-		if (writerId === loginUserId) {
+		if (userId === loginUserId) {
 			const isDeleted = await reviewModel.deleteById({ reviewId });
 
 			if (isDeleted.deletedCount !== 1) {

@@ -14,12 +14,11 @@ const CommunitySchema = new Schema(
 			index: true,
 			required: true,
 		},
-		writerId: {
+		userId: {
 			type: String,
 			required: true,
-			index: true,
 		},
-		writerNickName: {
+		userNickName: {
 			type: String,
 			required: true,
 			index: true,
@@ -27,6 +26,7 @@ const CommunitySchema = new Schema(
 		title: {
 			type: String,
 			required: true,
+			index: true,
 		},
 		content: {
 			type: String,
@@ -35,6 +35,7 @@ const CommunitySchema = new Schema(
 		likedUsers: {
 			type: Array,
 			default: [],
+			index: true,
 		},
 		saveFileName: {
 			type: Array,

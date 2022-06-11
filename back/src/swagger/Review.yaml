@@ -14,7 +14,7 @@ paths:
             schema:
               type: object
               properties:
-                landmarkId:
+                tourId:
                   type: string
                   required: true
                 content:
@@ -30,18 +30,18 @@ paths:
         "201":
           description: 리뷰 등록 성공
         "400":
-          description: 유효한 토큰을 가지고 있지 않거나, 필수인 필드(landmarkId, content, rating)가 없을 시 오류가 발생합니다.
+          description: 유효한 토큰을 가지고 있지 않거나, 필수인 필드(tourId, content, rating)가 없을 시 오류가 발생합니다.
 
-  /review/{landmarkId}/list:
+  /review/{tourId}/list:
     get:
       tags:
         - Review
       summary: 해당 랜드마크의 리뷰 목록
       security:
         - Authorization: []
-      description: /review/:landmarkId/list로 해당 랜드마크의 리뷰 목록을 요청합니다.
+      description: /review/:tourId/list로 해당 랜드마크의 리뷰 목록을 요청합니다.
       parameters:
-        - name: landmarkId
+        - name: tourId
           in: path
           required: true
           schema:
@@ -51,7 +51,7 @@ paths:
         "200":
           description: 랜드마크의 리뷰 목록 불러오기 성공
         "400":
-          description: 유효한 토큰을 가지고 있지 않거나, landmarkId를 입력하지 않을 시 오류가 발생합니다.
+          description: 유효한 토큰을 가지고 있지 않거나, tourId를 입력하지 않을 시 오류가 발생합니다.
 
   /review/{id}:
     put:

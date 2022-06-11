@@ -29,9 +29,9 @@ class communityService {
 			throw new Error("system.error.noArticle");
 		}
 
-		const writerId = currentArticle.writerId;
+		const userId = currentArticle.userId;
 
-		if (writerId !== loginUserId) {
+		if (userId !== loginUserId) {
 			throw new Error("system.error.notEqualWithWriter");
 		}
 
@@ -49,13 +49,13 @@ class communityService {
 
 	static addArticle = async ({ loginUserId, title, content, head }) => {
 		const user = await userModel.findById({ userId: loginUserId });
-		const writerNickName = user.nickname;
+		const userNickName = user.nickname;
 		const id = uuidv4();
 
 		const newArticle = {
 			id,
-			writerId: loginUserId,
-			writerNickName,
+			userId: loginUserId,
+			userNickName,
 			title,
 			content,
 			head,
@@ -73,13 +73,13 @@ class communityService {
 		images,
 	}) => {
 		const user = await userModel.findById({ userId: loginUserId });
-		const writerNickName = user.nickname;
+		const userNickName = user.nickname;
 		const id = uuidv4();
 
 		const newArticle = {
 			id,
-			writerId: loginUserId,
-			writerNickName,
+			userId: loginUserId,
+			userNickName,
 			title,
 			content,
 			head,
@@ -93,15 +93,14 @@ class communityService {
 	// 본인 리뷰만 수정 가능
 	static setArticle = async ({ loginUserId, articleId, toUpdate }) => {
 		const currentArticle = await communityModel.findById({ articleId });
-		console.log(currentArticle);
 		if (!currentArticle) {
 			throw new Error("system.error.noArticle");
 		}
 
-		const writerId = currentArticle.writerId;
+		const userId = currentArticle.userId;
 
 		//현재 로그인한 사용자와 리뷰 작성자가 같아야 수정 가능
-		if (writerId === loginUserId) {
+		if (userId === loginUserId) {
 			const updatedArticle = await communityModel.update({
 				articleId,
 				data: toUpdate,

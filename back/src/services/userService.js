@@ -133,7 +133,7 @@ class userService {
 	};
 
 	// 회원 스탬프 추가 기능
-	static addStamp = async ({ userId, landmarkId }) => {
+	static addStamp = async ({ userId, tourId }) => {
 		const user = await userModel.findById({ userId });
 
 		// 해당 회원이 없을 경우 error
@@ -141,26 +141,25 @@ class userService {
 			throw new Error("system.error.noUser");
 		}
 
-		const isStampExist = await userModel.isStampExist({ userId, landmarkId });
+		const isStampExist = await userModel.isStampExist({ userId, tourId });
 		if (isStampExist) {
 			throw new Error("system.error.alreadyStamped");
 		}
 
-		const addStamp = await userModel.addStamp({ userId, landmarkId });
+		const addStamp = await userModel.addStamp({ userId, tourId });
 
 		return addStamp;
 	};
 	static addExp = async ({ userId, point }) => {
-		let user = await userModel.findById({ userId })
+		let user = await userModel.findById({ userId });
 
-		if(!user){
-			throw new Error("system.error.noUser")
+		if (!user) {
+			throw new Error("system.error.noUser");
 		}
 
-		user = await userModel.updateExp({ userId, point })
-		return user
-	}
-
+		user = await userModel.updateExp({ userId, point });
+		return user;
+	};
 }
 
 export { userService };

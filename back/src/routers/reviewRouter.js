@@ -16,7 +16,7 @@ reviewRouter.post("/review", s3Array(), async (req, res, next) => {
 		}
 
 		const loginUserId = req.currentUserId;
-		const { landmarkId, content, rating } = req.body;
+		const { tourId, content, rating } = req.body;
 
 		if (req.files) {
 			const images = req.files.map(
@@ -25,7 +25,7 @@ reviewRouter.post("/review", s3Array(), async (req, res, next) => {
 
 			const newReview = await reviewService.addReviewWithImages({
 				loginUserId,
-				landmarkId,
+				tourId,
 				content,
 				rating,
 				images,
@@ -36,7 +36,7 @@ reviewRouter.post("/review", s3Array(), async (req, res, next) => {
 
 		const newReview = await reviewService.addReview({
 			loginUserId,
-			landmarkId,
+			tourId,
 			content,
 			rating,
 		});
@@ -48,10 +48,10 @@ reviewRouter.post("/review", s3Array(), async (req, res, next) => {
 });
 
 // 해당 랜드마크의 리뷰 목록 불러오기
-reviewRouter.get("/review/:landmarkId/list", async (req, res, next) => {
+reviewRouter.get("/review/:tourId/list", async (req, res, next) => {
 	try {
-		const landmarkId = req.params.landmarkId;
-		const reviews = await reviewService.getReviews({ landmarkId });
+		const tourId = req.params.tourId;
+		const reviews = await reviewService.getReviews({ tourId });
 
 		res.status(200).json(reviews);
 	} catch (err) {

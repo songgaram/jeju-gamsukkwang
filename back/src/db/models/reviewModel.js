@@ -8,19 +8,19 @@ export const reviewModel = {
 	},
 
 	// 해당 랜드마크에 대한 리뷰를 이미 작성했던 사람인지 확인
-	IsPosted: async ({ landmarkId, writerId }) => {
+	IsPosted: async ({ tourId, userId }) => {
 		const IsPosted = Review.exists({
-			$and: [{ landmarkId }, { writerId }],
+			$and: [{ tourId }, { userId }],
 		});
 		return IsPosted;
 	},
 
 	// 해당 랜드마크의 총 리뷰수, 평점 평균, 리뷰 목록 불러오기
-	findByLandmarkId: async ({ landmarkId }) => {
-		const reviews = await Review.find({ landmarkId }).sort({ createdAt: -1 }); //리뷰 목록 최신순으로
+	findByTourId: async ({ tourId }) => {
+		const reviews = await Review.find({ tourId }).sort({ createdAt: -1 }); //리뷰 목록 최신순으로
 
 		const calc = await Review.aggregate([
-			{ $match: { landmarkId } },
+			{ $match: { tourId } },
 			{ $group: { _id: null, avg: { $avg: "$rating" }, cnt: { $sum: 1 } } },
 		]);
 
@@ -28,7 +28,7 @@ export const reviewModel = {
 		const avgRating = calc[0].avg.toFixed(1); // 총 리뷰 평점의 평균 (소수점 첫째자리까지 반올림)
 
 		const starCount = await Review.aggregate([
-			{ $match: { landmarkId } },
+			{ $match: { tourId } },
 			{ $group: { _id: "$rating", cnt: { $sum: 1 } } },
 		]);
 

@@ -100,14 +100,14 @@ userRouter.post("/user/stamp", loginRequired, async (req, res, next) => {
 		}
 
 		const userId = req.currentUserId;
-		const { landmarkId } = req.body;
+		const { tourId } = req.body;
 
-		const landmarkIntoStamp = await userService.addStamp({
+		const tourIntoStamp = await userService.addStamp({
 			userId,
-			landmarkId,
+			tourId,
 		});
 
-		res.status(201).json(landmarkIntoStamp);
+		res.status(201).json(tourIntoStamp);
 	} catch (err) {
 		next(err);
 	}
