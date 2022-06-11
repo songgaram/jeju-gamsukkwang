@@ -1,44 +1,48 @@
 import styled from "styled-components";
 import Button from "components/Button";
+import Review from "./Review";
 
 const Landmark = () => {
   return (
-    <LandmarkContainer>
-      <ImgContainer>이미지</ImgContainer>
+    <>
+      <LandmarkContainer>
+        <ImgContainer>이미지</ImgContainer>
 
-      <DetailContainer>
-        <DetailTitle>우도</DetailTitle>
-        <DetailContent>
-          <DetailTabRow>
-            <DetailTabCell>
-              <DetailHighlight>주소</DetailHighlight>
-            </DetailTabCell>
-            <DetailTabCell>
-              <p>제주도 제주시</p>
-            </DetailTabCell>
-          </DetailTabRow>
-          <DetailTabRow>
-            <DetailTabCell>
-              <DetailHighlight>소개</DetailHighlight>
-            </DetailTabCell>
-            <DetailTabCell>
-              <p>소가 누워있는 형상을 하고 있는 제주의 가장 큰 부속섬</p>
-            </DetailTabCell>
-          </DetailTabRow>
-          <DetailTabRow>
-            <DetailTabCell>
-              <DetailHighlight>연락처</DetailHighlight>
-            </DetailTabCell>
-            <DetailTabCell>
-              <p>(+82) 064-728-1527</p>
-            </DetailTabCell>
-          </DetailTabRow>
-        </DetailContent>
-        <BtnPosition>
-          <Button color="gray03">길찾기</Button>
-        </BtnPosition>
-      </DetailContainer>
-    </LandmarkContainer>
+        <DetailContainer>
+          <DetailTitle>우도</DetailTitle>
+          <DetailContent>
+            <DetailTabRow>
+              <DetailTabCell>
+                <DetailHighlight>주소</DetailHighlight>
+              </DetailTabCell>
+              <DetailTabCell>
+                <p>제주도 제주시</p>
+              </DetailTabCell>
+            </DetailTabRow>
+            <DetailTabRow>
+              <DetailTabCell>
+                <DetailHighlight>소개</DetailHighlight>
+              </DetailTabCell>
+              <DetailTabCell>
+                <p>소가 누워있는 형상을 하고 있는 제주의 가장 큰 부속섬</p>
+              </DetailTabCell>
+            </DetailTabRow>
+            <DetailTabRow>
+              <DetailTabCell>
+                <DetailHighlight>연락처</DetailHighlight>
+              </DetailTabCell>
+              <DetailTabCell>
+                <p>(+82) 064-728-1527</p>
+              </DetailTabCell>
+            </DetailTabRow>
+          </DetailContent>
+          <BtnPosition>
+            <Button color="gray03">길찾기</Button>
+          </BtnPosition>
+        </DetailContainer>
+      </LandmarkContainer>
+      <Review />
+    </>
   );
 };
 
@@ -47,6 +51,7 @@ const LandmarkContainer = styled.div`
   display: flex;
   flex-direction: row;
   background-color: gray;
+  margin-bottom: 10%;
 `;
 
 const ImgContainer = styled.div`
