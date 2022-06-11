@@ -1,6 +1,6 @@
 import { CardWrapper, CardTitle, CardSubtitle } from "./intro";
 
-export default function Card({ title, subtitle1, subtitle2 }) {
+const Card = ({ title, subtitle1, subtitle2 }) => {
   return (
     <CardWrapper>
       <CardTitle>{title}</CardTitle>
@@ -8,4 +8,6 @@ export default function Card({ title, subtitle1, subtitle2 }) {
       <CardSubtitle>{subtitle2}</CardSubtitle>
     </CardWrapper>
   );
-}
+};
+
+export default Card;

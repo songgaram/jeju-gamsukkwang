@@ -12,7 +12,7 @@ const image = {
   2: DescImage3,
 };
 
-function Descrption({ title, subtitle, number, flex }) {
+const Descrption = ({ title, subtitle, number, flex }) => {
   const animatedItem = {
     0: useScrollFadeIn("left", 0.9, 0.1),
     1: useScrollFadeIn("right", 0.9, 0.3),
@@ -35,7 +35,7 @@ function Descrption({ title, subtitle, number, flex }) {
       </DescrptionCard>
     </DescContainer>
   );
-}
+};
 
 const DescContainer = styled.div`
   width: 100%;
