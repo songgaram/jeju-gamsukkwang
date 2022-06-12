@@ -41,8 +41,6 @@ const Register = () => {
     });
   };
 
-  console.log(userInputData);
-
   const handleOnSubmit = (e) => {
     e.preventDefault();
 
@@ -110,7 +108,7 @@ const Register = () => {
           disabled={!isActive}
           active={isActive}
         >
-          REGISTER
+          회원가입
         </button>
         <span type="button" onClick={() => navigate("/login")}>
           로그인 페이지로 이동하기 〉
