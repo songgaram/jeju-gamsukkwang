@@ -16,7 +16,7 @@ http.interceptors.request.use(
     const accessToken = localStorage.getItem("accessToken");
 
     // config에 header 설정
-    config.headers["Content-Type"] = "application/json";
+    config.headers["Content-Type"] = "application/json; charset=utf-8";
     accessToken && (config.headers["Authorization"] = `Bearer ${accessToken}`);
 
     return config;
@@ -31,10 +31,7 @@ http.interceptors.request.use(
 // axios response 처리
 http.interceptors.response.use(
   function (response) {
-    // 응답에 대한 리턴값 설정
-    console.log(response);
-
-    return response.data.data;
+    return response;
   },
   function (error) {
     // 오류 처리를 위한 별도 errorController

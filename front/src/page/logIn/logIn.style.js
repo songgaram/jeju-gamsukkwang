@@ -32,10 +32,10 @@ const LogInForm = styled.form`
     width: 442px;
     height: 48px;
     font-weight: 600;
-    color: ${(props) => (props.active ? "#fff" : "#ff881d")};
+    color: ${(props) => (props.active === "true" ? "#fff" : "#ff881d")};
     border-radius: 10px;
     border: 1px solid ${({ theme }) => theme.colors.primary};
-    background: ${(props) => (props.active ? "#ff881d" : "#fff")};
+    background: ${(props) => (props.active === "true" ? "#ff881d" : "#fff")};
     cursor: pointer;
   }
 

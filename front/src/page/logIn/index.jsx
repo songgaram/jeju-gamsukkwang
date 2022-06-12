@@ -81,7 +81,7 @@ const LogIn = () => {
           type="submit"
           onClick={handleOnSubmit}
           disabled={!isActive}
-          active={isActive}
+          active={isActive + ""}
         >
           로그인
         </button>
