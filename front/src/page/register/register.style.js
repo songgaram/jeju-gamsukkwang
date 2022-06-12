@@ -6,25 +6,52 @@ const RegisterContainer = styled.div`
   justify-content: center;
   align-items: center;
   height: 100vh;
+  letter-spacing: 0.5px;
+
+  img {
+    width: 40px;
+  }
 `;
 
 const Title = styled.h2`
-  margin-bottom: 20px;
+  margin: 20px 0;
+  font-size: 22px;
+  font-weight: 600;
   color: ${({ theme }) => theme.colors.primary};
 `;
 
 const RegisterForm = styled.form`
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   margin: 0 auto;
+
+  button {
+    width: 442px;
+    height: 48px;
+    font-weight: 600;
+    color: ${(props) => (props.active ? "#fff" : "#ff881d")};
+    border-radius: 10px;
+    border: 1px solid ${({ theme }) => theme.colors.primary};
+    background: ${(props) => (props.active ? "#ff881d" : "#fff")};
+    cursor: pointer;
+  }
+
+  span {
+    margin: 20px 0;
+    font-size: 14px;
+    color: ${({ theme }) => theme.colors.gray03};
+    cursor: pointer;
+  }
 `;
 
 const InputBox = styled.div`
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  height: 110px;
+  height: 105px;
 
   label {
     margin: 7px;

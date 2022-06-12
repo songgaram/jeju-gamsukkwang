@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import http from "libs/apiController";
 import registerValidation from "./utils";
 import { INIT_USER_DATA, ERROR_MESSAGE } from "./constants";
 
 import Input from "components/input";
+import LogoIcon from "assets/images/LogoIcon.png";
 import {
   RegisterContainer,
   Title,
@@ -32,7 +33,6 @@ const Register = () => {
     isEmailValid && isPasswordValid && isPasswordSame && isNicknameValid;
 
   const handleOnChange = (e) => {
-    console.log(e.target.value);
     setUserInputData((prev) => {
       return {
         ...prev,
@@ -57,6 +57,7 @@ const Register = () => {
 
   return (
     <RegisterContainer>
+      <img src={LogoIcon} alt="제주감수꽝 마스코트 이미지" />
       <Title>회원가입</Title>
       <RegisterForm>
         <InputBox>
@@ -103,9 +104,17 @@ const Register = () => {
           />
           {isInValid.nickname && <p>{ERROR_MESSAGE.nickname}</p>}
         </InputBox>
-        <button type="submit" onClick={handleOnSubmit} disabled={!isActive}>
+        <button
+          type="submit"
+          onClick={handleOnSubmit}
+          disabled={!isActive}
+          active={isActive}
+        >
           REGISTER
         </button>
+        <span type="button" onClick={() => navigate("/login")}>
+          로그인 페이지로 이동하기 〉
+        </span>
       </RegisterForm>
     </RegisterContainer>
   );
