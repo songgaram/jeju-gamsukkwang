@@ -1,4 +1,4 @@
-import { Title } from "./home";
+import { Title } from "./home.style";
 
 const Home = () => {
   return (
