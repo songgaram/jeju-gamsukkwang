@@ -3,7 +3,6 @@ import axios from "axios";
 
 const SERVER_PORT_NUMBER = process.env.REACT_APP_SERVER_PORT;
 const SERVER_URL = `http://${window.location.hostname}:${SERVER_PORT_NUMBER}/`;
-console.log(SERVER_URL);
 const TOKEN = localStorage.getItem("userToken");
 
 // axios 생성

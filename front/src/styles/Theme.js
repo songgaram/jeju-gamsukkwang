@@ -1,5 +1,5 @@
 const colors = {
-  black: "#33333",
+  black: "#333333",
   white: "#ffffff",
   gray01: "#f6f6f6",
   gray02: "#dedede",
