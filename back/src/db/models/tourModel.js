@@ -50,4 +50,10 @@ export const tourModel = {
 
 		return didUseLike;
 	},
+
+	sortByLiked: async ({}) => {
+		const sortByLiked = await Tour.find({}).sort({ likeCount: -1 });
+
+		return sortByLiked;
+	},
 };
