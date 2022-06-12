@@ -32,15 +32,21 @@ const LogIn = () => {
     });
   };
 
-  const handleOnSubmit = (e) => {
+  const handleOnSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      http.post("user/register", { email, password });
-      setUserInputData(LOGIN_INIT_DATA);
+      const res = await http.post("user/login", {
+        email,
+        password,
+      });
+      localStorage.setItem("accessToken", res.data.token);
       navigate("/");
-    } catch (error) {
-      console.log("회원가입에 실패했습니다. 다시 시도해주세요.");
+    } catch (err) {
+      console.log("로그인에 실패하였습니다.\n", err);
+      alert(
+        "🤯 로그인에 실패하였습니다 🤯 \n 아이디와 비밀번호를 확인해주세요!",
+      );
     }
   };
 
