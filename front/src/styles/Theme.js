@@ -5,7 +5,7 @@ const colors = {
   gray02: "#dedede",
   gray03: "#8F8F8F",
   primary: "#ff881d",
-  secondary: "#b5d3ec",
+  secondary: "#AAD8FE",
   orange: "#F4AA19",
   skyblue: "#E3F1FB",
 };
