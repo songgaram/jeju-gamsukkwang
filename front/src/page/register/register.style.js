@@ -28,23 +28,23 @@ const RegisterForm = styled.form`
   width: 100%;
   margin: 0 auto;
 
-  button {
-    width: 442px;
-    height: 48px;
-    font-weight: 600;
-    color: ${(props) => (props.active ? "#fff" : "#ff881d")};
-    border-radius: 10px;
-    border: 1px solid ${({ theme }) => theme.colors.primary};
-    background: ${(props) => (props.active ? "#ff881d" : "#fff")};
-    cursor: pointer;
-  }
-
   span {
     margin: 20px 0;
     font-size: 14px;
     color: ${({ theme }) => theme.colors.gray03};
     cursor: pointer;
   }
+`;
+
+const RegisterButton = styled.button`
+  width: 442px;
+  height: 48px;
+  font-weight: 600;
+  color: ${(props) => (props.isActive === true ? "#fff" : "#ff881d")};
+  border-radius: 10px;
+  border: 1px solid ${({ theme }) => theme.colors.primary};
+  background: ${(props) => (props.isActive === true ? "#ff881d" : "#fff")};
+  cursor: pointer;
 `;
 
 const InputBox = styled.div`
@@ -66,4 +66,4 @@ const InputBox = styled.div`
   }
 `;
 
-export { RegisterContainer, Title, RegisterForm, InputBox };
+export { RegisterContainer, Title, RegisterForm, InputBox, RegisterButton };

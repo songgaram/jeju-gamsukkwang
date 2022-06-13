@@ -12,6 +12,7 @@ import {
   Title,
   RegisterForm,
   InputBox,
+  RegisterButton,
 } from "./register.style";
 
 const Register = () => {
@@ -47,7 +48,7 @@ const Register = () => {
     try {
       http.post("user/register", { email, password, nickname });
       setUserInputData(INIT_USER_DATA);
-      navigate("/");
+      navigate("/login");
     } catch (error) {
       console.log("회원가입에 실패했습니다. 다시 시도해주세요.");
     }
@@ -102,14 +103,14 @@ const Register = () => {
           />
           {isInValid.nickname && <p>{ERROR_MESSAGE.nickname}</p>}
         </InputBox>
-        <button
+        <RegisterButton
           type="submit"
           onClick={handleOnSubmit}
           disabled={!isActive}
-          active={isActive}
+          isActive={isActive}
         >
           회원가입
-        </button>
+        </RegisterButton>
         <span type="button" onClick={() => navigate("/login")}>
           로그인 페이지로 이동하기 〉
         </span>
