@@ -13,4 +13,6 @@ const ERROR_MESSAGE = {
   nickname: "닉네임은 2글자 이상이어야 합니다.",
 };
 
-export { INIT_USER_DATA, ERROR_MESSAGE };
+const MODAL_MESSAGE = "회원가입에 실패했습니다. 다시 시도해주세요.";
+
+export { INIT_USER_DATA, ERROR_MESSAGE, MODAL_MESSAGE };

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const RegisterContainer = styled.div`
+const LogInContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -20,7 +20,7 @@ const Title = styled.h2`
   color: ${({ theme }) => theme.colors.primary};
 `;
 
-const RegisterForm = styled.form`
+const LogInForm = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -29,14 +29,14 @@ const RegisterForm = styled.form`
   margin: 0 auto;
 
   span {
-    margin: 20px 0;
+    margin-top: 50px;
     font-size: 14px;
     color: ${({ theme }) => theme.colors.gray03};
     cursor: pointer;
   }
 `;
 
-const RegisterButton = styled.button`
+const LoginButton = styled.button`
   width: 442px;
   height: 48px;
   font-weight: 600;
@@ -66,4 +66,4 @@ const InputBox = styled.div`
   }
 `;
 
-export { RegisterContainer, Title, RegisterForm, InputBox, RegisterButton };
+export { LogInContainer, Title, LogInForm, InputBox, LoginButton };
