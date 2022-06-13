@@ -7,7 +7,13 @@ import { LOGIN_INIT_DATA, ERROR_MESSAGE } from "./constants";
 
 import Input from "components/input";
 import LogoIcon from "assets/images/LogoIcon.png";
-import { LogInContainer, Title, LogInForm, InputBox } from "./logIn.style";
+import {
+  LogInContainer,
+  Title,
+  LogInForm,
+  InputBox,
+  LoginButton,
+} from "./logIn.style";
 
 const LogIn = () => {
   const navigate = useNavigate();
@@ -77,14 +83,14 @@ const LogIn = () => {
           />
           {isInValid.password && <p>{ERROR_MESSAGE.password}</p>}
         </InputBox>
-        <button
+        <LoginButton
           type="submit"
           onClick={handleOnSubmit}
           disabled={!isActive}
-          active={isActive + ""}
+          isActive={isActive}
         >
           로그인
-        </button>
+        </LoginButton>
         <span type="button" onClick={() => navigate("/register")}>
           제주감수꽝 회원 가입하기 〉
         </span>
