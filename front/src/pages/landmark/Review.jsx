@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import StarRating from "./StarRating";
+// import { DetailContent, DetailTabRow, DetailTabCell } from "./landmark.style";
 
 const Review = () => {
   return (
@@ -10,9 +11,49 @@ const Review = () => {
       <RatingContainer>
         <RatingMean>
           <div style={{ fontSize: "3rem" }}>4.9</div>
-          <StarRating number={10} />
+          <StarRating number={5} />
         </RatingMean>
-        <RatingDetail>Detail</RatingDetail>
+        <CountsContainer>
+          <CountsDeatil>
+            <DetailTabCell>
+              <StarRating number={5} color="#AAD8FE" />
+            </DetailTabCell>
+            <DetailTabCell>
+              <BarContainer>
+                <Bar />
+              </BarContainer>
+            </DetailTabCell>
+            <DetailTabCell>
+              <CountsInfo>54</CountsInfo>
+            </DetailTabCell>
+          </CountsDeatil>
+          <CountsDeatil>
+            <DetailTabCell>
+              <StarRating number={5} color="#AAD8FE" />
+            </DetailTabCell>
+            <DetailTabCell>
+              <BarContainer>
+                <Bar />
+              </BarContainer>
+            </DetailTabCell>
+            <DetailTabCell>
+              <CountsInfo>54</CountsInfo>
+            </DetailTabCell>
+          </CountsDeatil>
+          <CountsDeatil>
+            <DetailTabCell>
+              <StarRating number={5} color="#AAD8FE" />
+            </DetailTabCell>
+            <DetailTabCell>
+              <BarContainer>
+                <Bar />
+              </BarContainer>
+            </DetailTabCell>
+            <DetailTabCell>
+              <CountsInfo>54</CountsInfo>
+            </DetailTabCell>
+          </CountsDeatil>
+        </CountsContainer>
       </RatingContainer>
       <ReviewContainer>리뷰</ReviewContainer>
     </>
@@ -48,9 +89,40 @@ const RatingMean = styled.div`
   justify-content: center;
 `;
 
-const RatingDetail = styled.div`
+const CountsContainer = styled.div`
   width: 60%;
   background-color: ${({ theme }) => theme.colors.gray01};
+  display: table;
+`;
+
+const CountsDeatil = styled.div`
+  display: table-row;
+`;
+
+const DetailTabCell = styled.div`
+  display: table-cell;
+`;
+
+const BarContainer = styled.div`
+  width: 150px;
+  height: 6px;
+  background-color: ${({ theme }) => theme.colors.gray02};
+  border-radius: 4px;
+  position: relative;
+`;
+
+const Bar = styled.div`
+  width: 80%;
+  height: 6px;
+  background-color: ${({ theme }) => theme.colors.secondary};
+  border-radius: 4px;
+  display: inline-block;
+  position: absolute;
+  top: 0;
+`;
+
+const CountsInfo = styled.div`
+  color: ${({ theme }) => theme.colors.gray03};
 `;
 
 const ReviewContainer = styled.div`

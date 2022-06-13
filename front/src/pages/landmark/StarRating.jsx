@@ -1,13 +1,13 @@
 import styled from "styled-components";
 import { BsStarFill } from "react-icons/bs";
 
-const StarRating = (number) => {
+const StarRating = ({ number, color }) => {
   const Stars = new Array(number).fill(undefined);
 
   return (
     <StarContainer>
       {Stars.map((e) => (
-        <BsStarFill key={e} />
+        <BsStarFill key={e} color={color} />
       ))}
     </StarContainer>
   );

@@ -1,4 +1,4 @@
-import { CardWrapper, CardTitle, CardSubtitle } from "./intro";
+import { CardWrapper, CardTitle, CardSubtitle } from "./intro.style";
 
 const Card = ({ title, subtitle1, subtitle2 }) => {
   return (
