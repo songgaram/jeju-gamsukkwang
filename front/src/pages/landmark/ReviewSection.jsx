@@ -31,12 +31,12 @@ const DataSet = [
   },
 ];
 
-const Review = () => {
+const ReviewSection = () => {
   return (
     <>
-      <RatingHeader>
+      <ReviewHeader>
         후기 <Highlighted>114</Highlighted>
-      </RatingHeader>
+      </ReviewHeader>
       <RatingContainer>
         <RatingMean>
           <div style={{ fontSize: "3rem" }}>4.9</div>
@@ -53,7 +53,7 @@ const Review = () => {
   );
 };
 
-const RatingHeader = styled.div`
+const ReviewHeader = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.xxxl};
   font-weight: bold;
   margin-bottom: 1%;
@@ -94,4 +94,4 @@ const ReviewContainer = styled.div`
   background-color: gray;
 `;
 
-export default Review;
+export default ReviewSection;

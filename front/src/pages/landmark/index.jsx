@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Button from "components/Button";
-import Review from "./Review";
+import ReviewSection from "./ReviewSection";
 
 const Landmark = () => {
   return (
@@ -41,7 +41,7 @@ const Landmark = () => {
           </BtnPosition>
         </DetailContainer>
       </LandmarkContainer>
-      <Review />
+      <ReviewSection />
     </>
   );
 };
