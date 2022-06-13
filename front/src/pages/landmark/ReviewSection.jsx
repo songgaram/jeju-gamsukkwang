@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import StarRating from "./StarRating";
 import ReviewCounts from "./ReviewCounts";
+import ReviewList from "./ReviewList";
 
 const DataSet = [
   {
@@ -48,7 +49,9 @@ const ReviewSection = () => {
           ))}
         </CountsContainer>
       </RatingContainer>
-      <ReviewContainer>리뷰</ReviewContainer>
+      <ReviewContainer>
+        <ReviewList />
+      </ReviewContainer>
     </>
   );
 };
@@ -90,8 +93,6 @@ const CountsContainer = styled.div`
 
 const ReviewContainer = styled.div`
   width: 100%;
-  height: 500px;
-  background-color: gray;
 `;
 
 export default ReviewSection;
