@@ -8,7 +8,6 @@ import Input from "components/input";
 import Modal from "components/modal";
 import ModalPortal from "components/modal/modalPortal";
 
-import LogoIcon from "assets/images/LogoIcon.png";
 import {
   RegisterContainer,
   Title,
@@ -62,7 +61,6 @@ const Register = () => {
   return (
     <>
       <RegisterContainer>
-        <img src={LogoIcon} alt="제주감수꽝 마스코트 이미지" />
         <Title>회원가입</Title>
         <RegisterForm>
           <InputBox>
