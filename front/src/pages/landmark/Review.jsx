@@ -1,6 +1,35 @@
 import styled from "styled-components";
 import StarRating from "./StarRating";
-// import { DetailContent, DetailTabRow, DetailTabCell } from "./landmark.style";
+import ReviewCounts from "./ReviewCounts";
+
+const DataSet = [
+  {
+    totalReview: 114,
+    star: 5,
+    review: 80,
+  },
+
+  {
+    totalReview: 114,
+    star: 4,
+    review: 20,
+  },
+  {
+    totalReview: 114,
+    star: 3,
+    review: 8,
+  },
+  {
+    totalReview: 114,
+    star: 2,
+    review: 6,
+  },
+  {
+    totalReview: 114,
+    star: 1,
+    review: 0,
+  },
+];
 
 const Review = () => {
   return (
@@ -14,45 +43,9 @@ const Review = () => {
           <StarRating number={5} />
         </RatingMean>
         <CountsContainer>
-          <CountsDeatil>
-            <DetailTabCell>
-              <StarRating number={5} color="#AAD8FE" />
-            </DetailTabCell>
-            <DetailTabCell>
-              <BarContainer>
-                <Bar />
-              </BarContainer>
-            </DetailTabCell>
-            <DetailTabCell>
-              <CountsInfo>54</CountsInfo>
-            </DetailTabCell>
-          </CountsDeatil>
-          <CountsDeatil>
-            <DetailTabCell>
-              <StarRating number={5} color="#AAD8FE" />
-            </DetailTabCell>
-            <DetailTabCell>
-              <BarContainer>
-                <Bar />
-              </BarContainer>
-            </DetailTabCell>
-            <DetailTabCell>
-              <CountsInfo>54</CountsInfo>
-            </DetailTabCell>
-          </CountsDeatil>
-          <CountsDeatil>
-            <DetailTabCell>
-              <StarRating number={5} color="#AAD8FE" />
-            </DetailTabCell>
-            <DetailTabCell>
-              <BarContainer>
-                <Bar />
-              </BarContainer>
-            </DetailTabCell>
-            <DetailTabCell>
-              <CountsInfo>54</CountsInfo>
-            </DetailTabCell>
-          </CountsDeatil>
+          {DataSet.map((data) => (
+            <ReviewCounts data={data} key={data.star} />
+          ))}
         </CountsContainer>
       </RatingContainer>
       <ReviewContainer>리뷰</ReviewContainer>
@@ -93,36 +86,6 @@ const CountsContainer = styled.div`
   width: 60%;
   background-color: ${({ theme }) => theme.colors.gray01};
   display: table;
-`;
-
-const CountsDeatil = styled.div`
-  display: table-row;
-`;
-
-const DetailTabCell = styled.div`
-  display: table-cell;
-`;
-
-const BarContainer = styled.div`
-  width: 150px;
-  height: 6px;
-  background-color: ${({ theme }) => theme.colors.gray02};
-  border-radius: 4px;
-  position: relative;
-`;
-
-const Bar = styled.div`
-  width: 80%;
-  height: 6px;
-  background-color: ${({ theme }) => theme.colors.secondary};
-  border-radius: 4px;
-  display: inline-block;
-  position: absolute;
-  top: 0;
-`;
-
-const CountsInfo = styled.div`
-  color: ${({ theme }) => theme.colors.gray03};
 `;
 
 const ReviewContainer = styled.div`
