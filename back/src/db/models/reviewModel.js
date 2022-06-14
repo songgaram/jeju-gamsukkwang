@@ -8,11 +8,11 @@ export const reviewModel = {
 	},
 
 	// 해당 랜드마크에 대한 리뷰를 이미 작성했던 사람인지 확인
-	IsPosted: async ({ tourId, userId }) => {
-		const IsPosted = Review.exists({
+	isPosted: async ({ tourId, userId }) => {
+		const isPosted = Review.exists({
 			$and: [{ tourId }, { userId }],
 		});
-		return IsPosted;
+		return isPosted;
 	},
 
 	// 해당 랜드마크의 총 리뷰수, 평점 평균, 리뷰 목록 불러오기
@@ -24,6 +24,9 @@ export const reviewModel = {
 			{ $group: { _id: null, avg: { $avg: "$rating" }, cnt: { $sum: 1 } } },
 		]);
 
+		if (calc.length === 0) {
+			throw new Error("system.error.noReviews");
+		}
 		const totalCount = calc[0].cnt; // 총 리뷰 수
 		const avgRating = calc[0].avg.toFixed(1); // 총 리뷰 평점의 평균 (소수점 첫째자리까지 반올림)
 

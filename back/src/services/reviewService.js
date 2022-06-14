@@ -2,7 +2,7 @@ import { db, userModel, reviewModel } from "../db";
 
 import { v4 as uuidv4 } from "uuid";
 
-class reviewService {
+class ReviewService {
 	static addReview = async ({ loginUserId, tourId, content, rating }) => {
 		const user = await userModel.findById({ userId: loginUserId });
 		const userNickName = user.nickname;
@@ -53,7 +53,7 @@ class reviewService {
 		};
 
 		// 이미 리뷰를 쓴 상태라면 { _id } 객체를 반환, 아니라면 null을 반환
-		const didPostReview = await reviewModel.IsPosted({
+		const didPostReview = await reviewModel.isPosted({
 			tourId,
 			userId: loginUserId,
 		});
@@ -90,7 +90,7 @@ class reviewService {
 			});
 			return updatedReview;
 		} else {
-			throw new Error("system.error.notEqualWithWriter");
+			throw new Error("system.error.unAuthorized");
 		}
 	};
 
@@ -114,9 +114,9 @@ class reviewService {
 
 			return "system.success";
 		} else {
-			throw new Error("system.error.notEqualWithWriter");
+			throw new Error("system.error.unAuthorized");
 		}
 	};
 }
 
-export { reviewService };
+export { ReviewService };

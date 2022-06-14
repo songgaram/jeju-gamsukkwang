@@ -76,9 +76,10 @@ export const userModel = {
 
 		return isStampExist;
 	},
+
 	updateExp: async ({ userId, point }) => {
 		const filter = { id: userId };
-		const update = { $inc: { exp: point } };
+		const update = { $inc: { experience: point } };
 		const option = { returnOriginal: false };
 
 		const upgradeUser = await User.findOneAndUpdate(filter, update, option);

@@ -1,9 +1,9 @@
 import is from "@sindresorhus/is";
 
 import { Router } from "express";
-import { communityService } from "../services/communityService";
-import { loginRequired } from "../middlewares/loginRequired";
-import { s3Array } from "../middlewares/multerS3";
+import { CommunityService } from "../services/CommunityService";
+import { loginRequired } from "../middlewares/";
+import { s3Multi } from "../middlewares/multerS3";
 
 const communityRouter = Router();
 
@@ -11,7 +11,7 @@ const communityRouter = Router();
 communityRouter.post(
 	"/community",
 	loginRequired,
-	s3Array(),
+	s3Multi(),
 	async (req, res, next) => {
 		try {
 			if (is.emptyObject(req.body)) {
@@ -26,7 +26,7 @@ communityRouter.post(
 					(image) => image.location.split("amazonaws.com/")[1]
 				);
 
-				const newArticle = await communityService.addArticleWithImages({
+				const newArticle = await CommunityService.addArticleWithImages({
 					loginUserId,
 					title,
 					content,
@@ -37,7 +37,7 @@ communityRouter.post(
 				res.status(201).json(newArticle);
 			}
 
-			const newArticle = await communityService.addArticle({
+			const newArticle = await CommunityService.addArticle({
 				loginUserId,
 				title,
 				content,
@@ -55,7 +55,7 @@ communityRouter.post(
 communityRouter.put(
 	"/community/:id",
 	loginRequired,
-	s3Array(),
+	s3Multi(),
 	async (req, res, next) => {
 		try {
 			if (is.emptyObject(req.body)) {
@@ -75,7 +75,7 @@ communityRouter.put(
 				toUpdate.saveFileName = images;
 			}
 
-			const editedArticle = await communityService.setArticle({
+			const editedArticle = await CommunityService.setArticle({
 				loginUserId,
 				articleId,
 				toUpdate,
@@ -92,7 +92,7 @@ communityRouter.put(
 communityRouter.get("/community/:id", loginRequired, async (req, res, next) => {
 	try {
 		const articleId = req.params.id;
-		const article = await communityService.getArticle({ articleId });
+		const article = await CommunityService.getArticle({ articleId });
 
 		res.status(200).json(article);
 	} catch (err) {
@@ -106,8 +106,8 @@ communityRouter.get("/community", async (req, res, next) => {
 		if (is.emptyObject(req.query)) {
 			throw new Error("system.error.badRequest");
 		}
-		const page = req.query.page || 1;
-		const limit = req.query.limit || 10;
+		const page = +req.query.page || 1;
+		const limit = +req.query.limit || 10;
 		const head = req.query.head;
 
 		const getArticles = {
@@ -116,7 +116,7 @@ communityRouter.get("/community", async (req, res, next) => {
 			head,
 		};
 
-		const articles = await communityService.getArticles({ getArticles });
+		const articles = await CommunityService.getArticles({ getArticles });
 
 		res.status(200).send(articles);
 	} catch (err) {
@@ -136,7 +136,7 @@ communityRouter.delete(
 			const loginUserId = req.currentUserId;
 			const articleId = req.params.id;
 
-			const deletedArticle = await communityService.deleteArticle({
+			const deletedArticle = await CommunityService.deleteArticle({
 				articleId,
 				loginUserId,
 			});
@@ -150,7 +150,7 @@ communityRouter.delete(
 
 // 게시글 좋아요 추가
 communityRouter.put(
-	"/community/like/:id",
+	"/community/:id/like",
 	loginRequired,
 	async (req, res, next) => {
 		try {
@@ -162,7 +162,7 @@ communityRouter.put(
 			const userId = req.currentUserId;
 			const articleId = req.params.id;
 
-			const addLiketoArticle = await communityService.addLike({
+			const addLiketoArticle = await CommunityService.addLike({
 				articleId,
 				currentUserId: userId,
 			});
@@ -176,7 +176,7 @@ communityRouter.put(
 
 // 게시글 싫어요 추가
 communityRouter.put(
-	"/community/dislike/:id",
+	"/community/:id/dislike",
 	loginRequired,
 	async (req, res, next) => {
 		try {
@@ -188,7 +188,7 @@ communityRouter.put(
 			const userId = req.currentUserId;
 			const articleId = req.params.id;
 
-			const removeLikefromArticle = await communityService.removeLike({
+			const removeLikefromArticle = await CommunityService.removeLike({
 				articleId,
 				currentUserId: userId,
 			});

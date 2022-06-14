@@ -1,6 +1,6 @@
 import { db, tourModel } from "../db";
 
-class tourService {
+class TourService {
 	static getAllLandmarks = async () => {
 		const allLandmarks = await tourModel.findAll({});
 
@@ -73,4 +73,4 @@ class tourService {
 	};
 }
 
-export { tourService };
+export { TourService };

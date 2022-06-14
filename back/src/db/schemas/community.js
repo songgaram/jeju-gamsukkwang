@@ -33,12 +33,12 @@ const CommunitySchema = new Schema(
 			required: true,
 		},
 		likedUsers: {
-			type: Array,
+			type: [String],
 			default: [],
 			index: true,
 		},
 		saveFileName: {
-			type: Array,
+			type: [String],
 			default: [],
 		},
 	},

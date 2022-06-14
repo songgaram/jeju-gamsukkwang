@@ -29,16 +29,16 @@ const UserSchema = new Schema(
 			type: String,
 		},
 		stamp: {
-			type: Array,
+			type: [String],
 			default: [],
 		},
-		exp: {
+		experience: {
 			type: Number,
 			default: 0,
 		},
-		saveFileName: {
+		profileImgUrl: {
 			type: String,
-			default: "defaultProfile.jpg",
+			default: "undefined",
 		},
 	},
 	{
