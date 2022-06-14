@@ -35,7 +35,7 @@ const DataSet = [
 
 const ReviewSection = () => {
   return (
-    <>
+    <ReviewContainer>
       <ReviewHeader>
         후기 <Highlighted>114</Highlighted>
       </ReviewHeader>
@@ -50,11 +50,9 @@ const ReviewSection = () => {
           ))}
         </CountsContainer>
       </RatingContainer>
-      <ReviewContainer>
-        <ReviewList />
-        <ReviewForm />
-      </ReviewContainer>
-    </>
+      <ReviewList />
+      <ReviewForm />
+    </ReviewContainer>
   );
 };
 
@@ -74,11 +72,10 @@ const RatingContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  background-color: ivory;
 `;
 
 const RatingMean = styled.div`
-  width: 30%;
+  width: 35%;
   background-color: ${({ theme }) => theme.colors.gray01};
   margin-right: 1%;
   display: flex;
@@ -88,13 +85,13 @@ const RatingMean = styled.div`
 `;
 
 const CountsContainer = styled.div`
-  width: 60%;
+  width: 65%;
   background-color: ${({ theme }) => theme.colors.gray01};
   display: table;
 `;
 
 const ReviewContainer = styled.div`
-  width: 100%;
+  padding: 0 5%;
 `;
 
 export default ReviewSection;

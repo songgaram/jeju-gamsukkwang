@@ -7,7 +7,6 @@ const Landmark = () => {
     <>
       <LandmarkContainer>
         <ImgContainer>이미지</ImgContainer>
-
         <DetailContainer>
           <DetailTitle>우도</DetailTitle>
           <DetailContent>
@@ -50,18 +49,17 @@ const LandmarkContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: row;
-  background-color: gray;
   margin-bottom: 10%;
 `;
 
 const ImgContainer = styled.div`
   width: 50%;
   height: 400px;
+  background-color: gray;
 `;
 
 const DetailContainer = styled.div`
   width: 50%;
-  background-color: ivory;
   padding: 8% 0 0 5%;
 `;
 

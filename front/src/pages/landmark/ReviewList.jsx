@@ -29,7 +29,7 @@ const CardHeader = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin: 10% 1% 0 1%;
+  margin: 5% 1% 0 0;
 `;
 
 const CardContent = styled.div`
