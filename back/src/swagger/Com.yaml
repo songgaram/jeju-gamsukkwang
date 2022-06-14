@@ -104,14 +104,20 @@ paths:
                 title:
                   type: string
                   required: true
+                  default: 게시글 테스트 중입니다, 제목.
                 content:
                   type: string
                   required: true
+                  default: 게시글 테스트 중입니다, 내용.
                 head:
                   type: string
+                  required: true
+                  default: 게시글 테스트 중입니다, 말머리
                 imgFile:
                   type: array
-                  format: binary
+                  items:
+                    type: string
+                    format: binary
       responses:
         "201":
           description: 게시글 작성 성공
@@ -145,14 +151,20 @@ paths:
                 title:
                   type: string
                   required: true
+                  default: 게시글 수정 테스트 중입니다, 제목.
                 content:
                   type: string
                   required: true
+                  default: 게시글 수정 테스트 중입니다, 내용.
                 head:
                   type: string
+                  required: true
+                  default: 게시글 수정 테스트 중입니다, 말머리
                 imgFile:
                   type: array
-                  format: binary
+                  items:
+                    type: string
+                    format: binary
       responses:
         "201":
           description: 게시글 수정 성공

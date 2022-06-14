@@ -35,26 +35,26 @@ export const reviewModel = {
 			{ $group: { _id: "$rating", cnt: { $sum: 1 } } },
 		]);
 
-		let starRating = []
-		
-		// 0으로 초기화
-		for(let i=5; i>0; i--){
-			let starObj = { 
-				star: 0,
-				reviews: 0
-			}
+		let starRating = [];
 
-			starObj.star = i
-			starRating.push(starObj)
+		// 0으로 초기화
+		for (let i = 5; i > 0; i--) {
+			let starObj = {
+				star: 0,
+				reviews: 0,
+			};
+
+			starObj.star = i;
+			starRating.push(starObj);
 		}
 
-		// 별점 별 계산된 개수를 넣어주는 
+		// 별점 별 계산된 개수를 넣어주는
 		starCount.forEach((item) => {
-			for(let i = 5; i > 0; i--){
-        if(item._id === i){
-          starRating[5-i].reviews = item?.cnt
-        }
-      }
+			for (let i = 5; i > 0; i--) {
+				if (item._id === i) {
+					starRating[5 - i].reviews = item?.cnt;
+				}
+			}
 		});
 
 		return {

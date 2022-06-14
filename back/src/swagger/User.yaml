@@ -30,13 +30,18 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              example:
-                {
-                  "email": "test@elice.io",
-                  "password": "1234",
-                  "nickname": "test",
-                }
+              email:
+                type: string
+                required: true
+                default: test@elice.io
+              password:
+                type: string
+                required: true
+                default: 1234
+              nickname:
+                type: string
+                required: true
+                default: test
       responses:
         "201":
           description: 회원 가입 성공
@@ -55,8 +60,14 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              example: { "email": "test@elice.io", "password": "1234" }
+              email:
+                type: string
+                required: true
+                default: test@elice.io
+              password:
+                type: string
+                required: true
+                default: 1234
       responses:
         "201":
           description: 로그인 성공
@@ -93,8 +104,10 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              example: { "nickname": "testEditing" }
+              nickname:
+                type: string
+                required: true
+                default: testEditing
       responses:
         "201":
           description: 회원 수정 성공
@@ -117,8 +130,10 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              example: { "point": 10 }
+              point:
+                type: integer
+                required: true
+                point: 10
       responses:
         "201":
           description: 경험치(포인트) 증가 성공
@@ -141,8 +156,10 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              example: { "tourId": "011bcd14-2cc7-4195-9ec9-747e4fb1838a" }
+              tourId:
+                type: string
+                required: true
+                default: 011bcd14-2cc7-4195-9ec9-747e4fb1838a
       responses:
         "201":
           description: 스탬프 추가 성공
