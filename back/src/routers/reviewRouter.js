@@ -1,82 +1,110 @@
 import is from "@sindresorhus/is";
-import { loginRequired } from "../middlewares/loginRequired";
-import { reviewService } from '../services/reviewService.js'
+
+import { loginRequired } from "../middlewares/";
+import { ReviewService } from "../services/ReviewService.js";
+import { s3Multi } from "../middlewares/multerS3";
 import { Router } from "express";
 
 const reviewRouter = Router();
-reviewRouter.use(loginRequired)
+reviewRouter.use(loginRequired);
 
 // 리뷰 작성하기
-reviewRouter.post("/review", async (req, res, next) => {
-  try{
-    if (is.emptyObject(req.body)) {
+reviewRouter.post("/review", s3Multi(), async (req, res, next) => {
+	try {
+		if (is.emptyObject(req.body)) {
 			throw new Error("system.error.badRequest");
 		}
 
-    const loginUserId = req.currentUserId
-    const { landmarkId, content, rating } = req.body
+		const loginUserId = req.currentUserId;
+		const { tourId, content, rating } = req.body;
 
-    const newReview = await reviewService.addReview({ 
-      loginUserId, 
-      landmarkId,
-      content, 
-      rating
-    })
+		if (req.files) {
+			const images = req.files.map(
+				(image) => image.location.split("amazonaws.com/")[1]
+			);
 
-    res.status(201).json(newReview)
+			const newReview = await ReviewService.addReviewWithImages({
+				loginUserId,
+				tourId,
+				content,
+				rating,
+				images,
+			});
 
-  } catch(err){
-    next(err)
-  }
-})
+			res.status(201).json(newReview);
+		}
+
+		const newReview = await ReviewService.addReview({
+			loginUserId,
+			tourId,
+			content,
+			rating,
+		});
+
+		res.status(201).json(newReview);
+	} catch (err) {
+		next(err);
+	}
+});
 
 // 해당 랜드마크의 리뷰 목록 불러오기
-reviewRouter.get("/review/:landmarkId/list", async (req, res, next) => {
-  try{
-    const landmarkId = req.params.landmarkId
-    const reviews = await reviewService.getReviews({ landmarkId })
+reviewRouter.get("/review/:tourId/list", async (req, res, next) => {
+	try {
+		const tourId = req.params.tourId;
+		const reviews = await ReviewService.getReviews({ tourId });
 
-    res.status(200).json(reviews)
-  } catch(err){
-    next(err)
-  }
-})
+		res.status(200).json(reviews);
+	} catch (err) {
+		next(err);
+	}
+});
 
 // 리뷰 수정하기
-reviewRouter.put("/review/:id", async (req, res, next) => {
-  try{
-    if (is.emptyObject(req.body)) {
+reviewRouter.put("/review/:id", s3Multi(), async (req, res, next) => {
+	try {
+		if (is.emptyObject(req.body)) {
 			throw new Error("system.error.badRequest");
 		}
 
-    const loginUserId = req.currentUserId
-    const reviewId = req.params.id
-    const toUpdate = req.body
+		const loginUserId = req.currentUserId;
+		const reviewId = req.params.id;
 
-    const editedReview = await reviewService.setReview({
-      loginUserId, 
-      reviewId,
-      toUpdate
-    })
+		let toUpdate = req.body;
 
-    res.status(201).json(editedReview)
-  } catch(err) {
-    next(err)
-  }
-})
+		if (req.files) {
+			const images = req.files.map(
+				(image) => image.location.split("amazonaws.com/")[1]
+			);
+			toUpdate.saveFileName = images;
+		}
+
+		const editedReview = await ReviewService.setReview({
+			loginUserId,
+			reviewId,
+			toUpdate,
+		});
+
+		res.status(201).json(editedReview);
+	} catch (err) {
+		next(err);
+	}
+});
 
 // 리뷰 삭제하기
 reviewRouter.delete("/review/:id", async (req, res, next) => {
-  try{
-    const loginUserId = req.currentUserId
-    const reviewId = req.params.id
+	try {
+		const loginUserId = req.currentUserId;
+		const reviewId = req.params.id;
 
-    const deleteResult = await reviewService.deleteReview({ loginUserId, reviewId })
-    
-    res.status(200).send(deleteResult)
-  } catch(err) {
-    next(err)
-  }
-})
+		const deleteResult = await ReviewService.deleteReview({
+			loginUserId,
+			reviewId,
+		});
 
-export { reviewRouter }
+		res.status(200).send(deleteResult);
+	} catch (err) {
+		next(err);
+	}
+});
+
+export { reviewRouter };

@@ -2,7 +2,7 @@ import swaggerJsdoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
 import "dotenv/config";
 
-const PORT = process.env.SERVER_PORT || 5000;
+const PORT = +process.env.SERVER_PORT || 5000;
 
 const options = {
 	swaggerDefinition: {

@@ -6,22 +6,19 @@ const TourSchema = new Schema({
 		type: String,
 		unique: true,
 		index: true,
+		required: true,
 	},
 	krTitle: {
 		type: String,
-		index: true,
 	},
 	address: {
 		type: String,
-		index: true,
 	},
 	description: {
 		type: String,
-		index: true,
 	},
 	image: {
 		type: String,
-		index: true,
 	},
 	phoneNo: {
 		type: String,
@@ -33,13 +30,8 @@ const TourSchema = new Schema({
 		index: true,
 	},
 	likedUsers: {
-		type: Array,
+		type: [String],
 		default: [],
-		index: true,
-	},
-	phoneNo: {
-		type: String,
-		index: true,
 	},
 });
 

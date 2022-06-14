@@ -8,45 +8,59 @@ paths:
         - Authorization: []
       description: /review로 리뷰 등록 요청을 보냅니다.
       requestBody:
-        required: true
         description: 랜드마크 id, 리뷰 내용, 별점을 필수 req.body로 받습니다.
         content:
-          application/json:
+          multipart/form-data:
             schema:
               type: object
-              example:
-                {
-                  "landmarkId": "011bcd14-2cc7-4195-9ec9-747e4fb1838a",
-                  "content": "곽지 해수욕장 굿",
-                  "rating": "5"
-                }
+              properties:
+                tourId:
+                  type: string
+                  required: true
+                  default: 1d4ec9e9-fef7-4204-8527-10fa21e9e851
+                content:
+                  type: string
+                  required: true
+                  default: 리뷰 테스트 중입니다, 내용.
+                rating:
+                  type: integer
+                  required: true
+                  default: 4
+                imgFile:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
       responses:
         "201":
           description: 리뷰 등록 성공
         "400":
-          description: 유효한 토큰을 가지고 있지 않거나, 필수인 필드(landmarkId, content, rating)가 없을 시 오류가 발생합니다.
-  
-  /review/{landmarkId}/list:
+          description: 필수인 필드(tourId, content, rating)가 없을 시 오류가 발생합니다.
+        "403":
+          description: 로그인되어 있지 않을 때 오류가 발생합니다.
+
+  /review/{tourId}/list:
     get:
-      tags: 
+      tags:
         - Review
       summary: 해당 랜드마크의 리뷰 목록
       security:
         - Authorization: []
-      description: /review/:landmarkId/list로 해당 랜드마크의 리뷰 목록을 요청합니다.
+      description: /review/:tourId/list로 해당 랜드마크의 리뷰 목록을 요청합니다.
       parameters:
-        - name: landmarkId
+        - name: tourId
           in: path
           required: true
           schema:
             type: string
-          description:
-            해당 랜드마크의 id를 입력해주세요.
+          description: 해당 랜드마크의 id를 입력해주세요.
       responses:
         "200":
           description: 랜드마크의 리뷰 목록 불러오기 성공
         "400":
-          description: 유효한 토큰을 가지고 있지 않거나, landmarkId를 입력하지 않을 시 오류가 발생합니다.
+          description: tourId를 입력하지 않을 시 오류가 발생합니다.
+        "403":
+          description: 로그인되어 있지 않을 때 오류가 발생합니다.
 
   /review/{id}:
     put:
@@ -62,29 +76,42 @@ paths:
           required: true
           schema:
             type: string
-          description:
-            해당 리뷰의 id를 입력해주세요.
+          description: 해당 리뷰의 id를 입력해주세요.
       requestBody:
-        required: true
-        description: 수정할 리뷰 내용, 별점을 필수 req.body로 받습니다.
+        description: 리뷰 내용, 별점을 필수 req.body로 받습니다.
         content:
-          application/json:
+          multipart/form-data:
             schema:
               type: object
-              example:
-                {
-                  "content": "리뷰 수정하기!!!",
-                  "rating": "5"
-                }
+              properties:
+                tourId:
+                  type: string
+                  required: true
+                  default: 1d4ec9e9-fef7-4204-8527-10fa21e9e851
+                content:
+                  type: string
+                  required: true
+                  default: 리뷰 테스트 수정 중입니다, 내용.
+                rating:
+                  type: integer
+                  required: true
+                  default: 2
+                imgFile:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
       responses:
         "201":
           description: 리뷰 수정 성공
         "400":
-          description: 유효한 토큰을 가지고 있지 않거나, 리뷰 아이디가 정확하지 않거나, 리뷰 작성자 본인이 아닐 시 오류가 발생합니다.
-  
+          description: 리뷰 아이디가 정확하지 않거나, 리뷰 작성자 본인이 아닐 시 오류가 발생합니다.
+        "403":
+          description: 로그인되어 있지 않을 때 오류가 발생합니다.
+
   /review/{id}/:
     delete:
-      tags: 
+      tags:
         - Review
       summary: 리뷰 삭제
       security:
@@ -96,10 +123,11 @@ paths:
           required: true
           schema:
             type: string
-          description:
-            해당 리뷰의 id를 입력해주세요.
+          description: 해당 리뷰의 id를 입력해주세요.
       responses:
         "200":
           description: 리뷰 삭제 성공
         "400":
-          description: 유효한 토큰을 가지고 있지 않거나, 리뷰 아이디가 정확하지 않거나, 리뷰 작성자 본인이 아닐 시 오류가 발생합니다.
+          description: 리뷰 아이디가 정확하지 않거나, 리뷰 작성자 본인이 아닐 시 오류가 발생합니다.
+        "403":
+          description: 로그인되어 있지 않을 때 오류가 발생합니다.

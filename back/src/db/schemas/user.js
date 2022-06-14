@@ -19,6 +19,7 @@ const UserSchema = new Schema(
 			type: String,
 			required: true,
 			unique: true,
+			index: true,
 		},
 		hashedPassword: {
 			type: String,
@@ -28,18 +29,16 @@ const UserSchema = new Schema(
 			type: String,
 		},
 		stamp: {
-			type: Array,
+			type: [String],
 			default: [],
 		},
-		exp: {
+		experience: {
 			type: Number,
 			default: 0,
 		},
-		saveFileName: {
+		profileImgUrl: {
 			type: String,
-		},
-		saveFilePath: {
-			type: String,
+			default: "undefined",
 		},
 	},
 	{
