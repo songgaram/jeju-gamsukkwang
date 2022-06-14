@@ -27,7 +27,7 @@ export const reviewModel = {
 		if (calc.length === 0) {
 			throw new Error("system.error.noReviews");
 		}
-		const totalCount = calc[0].cnt; // 총 리뷰 수
+		const totalReview = calc[0].cnt; // 총 리뷰 수
 		const avgRating = calc[0].avg.toFixed(1); // 총 리뷰 평점의 평균 (소수점 첫째자리까지 반올림)
 
 		const starCount = await Review.aggregate([
@@ -35,39 +35,32 @@ export const reviewModel = {
 			{ $group: { _id: "$rating", cnt: { $sum: 1 } } },
 		]);
 
-		let star5 = 0,
-			star4 = 0,
-			star3 = 0,
-			star2 = 0,
-			star1 = 0;
-		starCount.forEach((item) => {
-			switch (item._id) {
-				case 5:
-					star5 = item?.cnt;
-					break;
-				case 4:
-					star4 = item?.cnt;
-					break;
-				case 3:
-					star3 = item?.cnt;
-					break;
-				case 2:
-					star2 = item?.cnt;
-					break;
-				case 1:
-					star1 = item?.cnt;
-					break;
+		let starRating = []
+		
+		// 0으로 초기화
+		for(let i=5; i>0; i--){
+			let starObj = { 
+				star: 0,
+				reviews: 0
 			}
+
+			starObj.star = i
+			starRating.push(starObj)
+		}
+
+		// 별점 별 계산된 개수를 넣어주는 
+		starCount.forEach((item) => {
+			for(let i = 5; i > 0; i--){
+        if(item._id === i){
+          starRating[5-i].reviews = item?.cnt
+        }
+      }
 		});
 
 		return {
-			totalCount,
+			totalReview,
 			avgRating,
-			star5,
-			star4,
-			star3,
-			star2,
-			star1,
+			starRating,
 			reviews,
 		};
 	},
