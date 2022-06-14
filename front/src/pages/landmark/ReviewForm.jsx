@@ -2,6 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import { BsStarFill } from "react-icons/bs";
 import theme from "styles/Theme";
+import Button from "components/Button";
 
 const ReviewForm = () => {
   const [hovered, setHovered] = useState(null);
@@ -35,6 +36,12 @@ const ReviewForm = () => {
         <Title>다른 여행객을 위한 후기와 팁</Title>
         <Required>필수</Required>
       </HeaderContainer>
+      <div>
+        <textarea style={{ width: "100%", height: "300px", margin: "1% 0" }} />
+      </div>
+      <BtnPosition>
+        <Button color="secondary">리뷰 등록</Button>
+      </BtnPosition>
     </>
   );
 };
@@ -62,6 +69,11 @@ const Required = styled.p`
   font-size: ${theme.fontSizes.base};
   color: ${theme.colors.secondary};
   font-weight: bold;
+`;
+
+const BtnPosition = styled.div`
+  width: 100%;
+  padding-left: 93%;
 `;
 
 export default ReviewForm;
