@@ -1,8 +1,13 @@
 import styled from "styled-components";
 import Button from "components/Button";
 import ReviewSection from "./ReviewSection";
+import { useGetLandmark } from "queries/landmarkQuery";
 
 const Landmark = () => {
+  const id = "1d4ec9e9-fef7-4204-8527-10fa21e9e851";
+  const { krTitle } = useGetLandmark(id);
+
+  console.log(krTitle);
   return (
     <>
       <LandmarkContainer>
