@@ -3,8 +3,6 @@ import axios from "axios";
 
 const SERVER_PORT_NUMBER = process.env.REACT_APP_SERVER_PORT;
 const SERVER_URL = `http://${window.location.hostname}:${SERVER_PORT_NUMBER}/`;
-console.log(SERVER_URL);
-const TOKEN = localStorage.getItem("userToken");
 
 // axios 생성
 const http = axios.create({
@@ -14,10 +12,13 @@ const http = axios.create({
 
 // axios request 처리
 http.interceptors.request.use(
-  function (config) {
+  async (config) => {
+    const accessToken = localStorage.getItem("accessToken");
+
     // config에 header 설정
-    config.headers["Content-Type"] = "application/json";
-    config.headers["Authorization"] = TOKEN ? `Bearer ${TOKEN}` : "";
+    config.headers["Content-Type"] = "application/json; charset=utf-8";
+    accessToken && (config.headers["Authorization"] = `Bearer ${accessToken}`);
+
     return config;
   },
   function (error) {
@@ -30,10 +31,7 @@ http.interceptors.request.use(
 // axios response 처리
 http.interceptors.response.use(
   function (response) {
-    // 응답에 대한 리턴값 설정
-    console.log(response);
-
-    return response.data.data;
+    return response;
   },
   function (error) {
     // 오류 처리를 위한 별도 errorController
@@ -41,28 +39,5 @@ http.interceptors.response.use(
     return Promise.reject(error);
   },
 );
-
-/**
- * ! 코드가 약간 줄어보여도 좋지 않음
- * ! get이 뭐하는 get인지 누가봐도 알 수 있도록 하는게 좋음
- */
-
-// const get = (...args) => {
-//   instance.get(...args);
-// };
-
-// const post = (...args) => {
-//   instance.post(...args);
-// };
-
-// const put = (...args) => {
-//   instance.put(...args);
-// };
-
-// const del = (...args) => {
-//   instance.del(...args);
-// };
-
-//export { get, post, put, del };
 
 export default http;
