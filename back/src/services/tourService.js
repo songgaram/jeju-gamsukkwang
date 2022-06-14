@@ -24,13 +24,13 @@ class TourService {
 			throw new Error("system.error.noLandmark");
 		}
 
-		const didUseLike = await tourModel.didUseLike({
+		const didUserLiked = await tourModel.didUserLiked({
 			id,
 			currentUserId,
 		});
 
-		// didUseLike가 무언가를 반환할 때 에러를 발생
-		if (didUseLike) {
+		// didUserLiked가 무언가를 반환할 때 에러를 발생
+		if (didUserLiked) {
 			throw new Error("system.error.alreadyLiked");
 		}
 
@@ -48,13 +48,13 @@ class TourService {
 			throw new Error("system.error.noLandmark");
 		}
 
-		const didUseLike = await tourModel.didUseLike({
+		const didUserLiked = await tourModel.didUserLiked({
 			id,
 			currentUserId,
 		});
 
-		// didUseLike가 무언가를 반환하지 않을 때 에러를 발생
-		if (!didUseLike) {
+		// didUserLiked가 무언가를 반환하지 않을 때 에러를 발생
+		if (!didUserLiked) {
 			throw new Error("system.error.noLiked");
 		}
 

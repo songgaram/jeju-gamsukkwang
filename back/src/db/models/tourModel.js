@@ -43,12 +43,12 @@ export const tourModel = {
 		return removeLikeCount;
 	},
 
-	didUseLike: async ({ id, currentUserId }) => {
-		const didUseLike = await Tour.exists({
+	didUserLiked: async ({ id, currentUserId }) => {
+		const didUserLiked = await Tour.exists({
 			$and: [{ id }, { likedUsers: currentUserId }],
 		});
 
-		return didUseLike;
+		return didUserLiked;
 	},
 
 	sortByLiked: async ({}) => {
