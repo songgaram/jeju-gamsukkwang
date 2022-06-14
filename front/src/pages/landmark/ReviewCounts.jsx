@@ -1,11 +1,12 @@
 import styled from "styled-components";
+import theme from "styles/Theme";
 import StarRating from "./StarRating";
 
 const ReviewCounts = ({ data }) => {
   return (
     <CountsDeatil>
       <DetailTabCell align="right" width="20">
-        <StarRating number={data.star} color="#AAD8FE" />
+        <StarRating number={data.star} color={theme.colors.secondary} />
       </DetailTabCell>
       <DetailTabCell width="60">
         <BarContainer>

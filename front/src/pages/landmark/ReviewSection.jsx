@@ -2,6 +2,7 @@ import styled from "styled-components";
 import StarRating from "./StarRating";
 import ReviewCounts from "./ReviewCounts";
 import ReviewList from "./ReviewList";
+import ReviewForm from "./ReviewForm";
 
 const DataSet = [
   {
@@ -51,6 +52,7 @@ const ReviewSection = () => {
       </RatingContainer>
       <ReviewContainer>
         <ReviewList />
+        <ReviewForm />
       </ReviewContainer>
     </>
   );

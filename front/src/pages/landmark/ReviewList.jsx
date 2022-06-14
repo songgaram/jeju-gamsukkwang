@@ -1,11 +1,12 @@
 import styled, { css } from "styled-components";
 import StarRating from "./StarRating";
+import theme from "styles/Theme";
 
 const ReviewList = () => {
   return (
     <ReviewCard>
       <CardHeader>
-        <StarRating number={5} color="#AAD8FE" />
+        <StarRating number={5} color={theme.colors.secondary} />
         <CardText>가라미</CardText>
         <CardText color="gray03">2022-02-20</CardText>
       </CardHeader>
