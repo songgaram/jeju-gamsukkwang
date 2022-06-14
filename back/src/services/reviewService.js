@@ -18,7 +18,7 @@ class ReviewService {
 		};
 
 		// 이미 리뷰를 쓴 상태라면 { _id } 객체를 반환, 아니라면 null을 반환
-		const didPostReview = await reviewModel.IsPosted({
+		const didPostReview = await reviewModel.isPosted({
 			tourId,
 			userId: loginUserId,
 		});
