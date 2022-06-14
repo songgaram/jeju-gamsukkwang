@@ -83,22 +83,22 @@ paths:
           multipart/form-data:
             schema:
               tourId:
+                type: string
+                required: true
+                default: 1d4ec9e9-fef7-4204-8527-10fa21e9e851
+              content:
+                type: string
+                required: true
+                default: 리뷰 테스트 수정 중입니다, 내용.
+              rating:
+                type: integer
+                required: true
+                default: 2
+              imgFile:
+                type: array
+                items:
                   type: string
-                  required: true
-                  default: 1d4ec9e9-fef7-4204-8527-10fa21e9e851
-                content:
-                  type: string
-                  required: true
-                  default: 리뷰 테스트 수정 중입니다, 내용.
-                rating:
-                  type: integer
-                  required: true
-                  default: 2
-                imgFile:
-                  type: array
-                  items:
-                    type: string
-                    format: binary
+                  format: binary
       responses:
         "201":
           description: 리뷰 수정 성공
