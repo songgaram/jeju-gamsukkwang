@@ -8,7 +8,6 @@ import Input from "components/input";
 import Modal from "components/modal";
 import ModalPortal from "components/modal/modalPortal";
 
-import LogoIcon from "assets/images/LogoIcon.png";
 import {
   LogInContainer,
   Title,
@@ -61,7 +60,6 @@ const LogIn = () => {
   return (
     <>
       <LogInContainer>
-        <img src={LogoIcon} alt="제주감수꽝 마스코트 이미지" />
         <Title>로그인</Title>
         <LogInForm>
           <InputBox>

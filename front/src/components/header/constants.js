@@ -7,7 +7,7 @@ const NAV_LIST = [
   {
     id: "2",
     text: "추천 랜드마크",
-    path: "/landmark",
+    path: "/tour",
   },
   {
     id: "3",

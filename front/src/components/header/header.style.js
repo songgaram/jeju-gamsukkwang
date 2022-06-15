@@ -4,6 +4,10 @@ const HeaderContainer = styled.div`
   width: 100%;
   height: 70px;
   background: ${({ theme }) => theme.colors.white};
+
+  svg {
+    cursor: pointer;
+  }
 `;
 
 const HeaderWrapper = styled.div`
