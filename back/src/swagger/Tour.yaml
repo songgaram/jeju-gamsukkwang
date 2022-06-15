@@ -78,7 +78,7 @@ paths:
         "403":
           description: 로그인되어 있지 않을 때 오류가 발생합니다.
 
-  /recommend:
+  /recommend/likes:
     get:
       tags:
         - Tour
@@ -87,6 +87,30 @@ paths:
       responses:
         "200":
           description: 좋아요 순(내림차순)으로 랜드마크 정렬 성공
+        "400":
+          description: 잘못된 요청이 있을 때 오류가 발생합니다.
+
+  /recommend/reviews:
+    get:
+      tags:
+        - Tour
+      summary: 리뷰 수 순(내림차순)으로 랜드마크 정렬
+      description: /recommend로부터 리뷰 수 순(내림차순)으로 정렬된 랜드마크 목록을 불러옵니다.
+      responses:
+        "200":
+          description: 리뷰 수 순(내림차순)으로 랜드마크 정렬 성공
+        "400":
+          description: 잘못된 요청이 있을 때 오류가 발생합니다.
+
+  /recommend/rating:
+    get:
+      tags:
+        - Tour
+      summary: 평점 평균 순(내림차순)으로 랜드마크 정렬
+      description: /recommend로부터 평점 평균 순(내림차순)으로 정렬된 랜드마크 목록을 불러옵니다.
+      responses:
+        "200":
+          description: 평점 평균 순(내림차순)으로 랜드마크 정렬 성공
         "400":
           description: 잘못된 요청이 있을 때 오류가 발생합니다.
 
