@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 
 import Button from "components/Button";
 import { NAV_LIST } from "./constants";
@@ -7,10 +7,12 @@ import { Logo } from "assets/svgs/index";
 import { HeaderContainer, HeaderWrapper, Nav } from "./header.style";
 
 const Header = () => {
+  const navigate = useNavigate();
+
   return (
     <HeaderContainer>
       <HeaderWrapper>
-        <Logo />
+        <Logo type="button" onClick={() => navigate("/")} />
         <Nav>
           <ul>
             {NAV_LIST.map((data) => (
@@ -28,7 +30,9 @@ const Header = () => {
               </li>
             ))}
           </ul>
-          <Button>로그인</Button>
+          <Button type="button" onClick={() => navigate("/login")}>
+            로그인
+          </Button>
         </Nav>
       </HeaderWrapper>
     </HeaderContainer>

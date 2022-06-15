@@ -6,6 +6,7 @@ import Register from "pages/register";
 import Landmark from "pages/landmark";
 import LogIn from "pages/logIn";
 import Layout from "components/layout";
+import Tour from "pages/tour";
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
         <Route path="/login" element={<LogIn />} />
         <Route path="/intro" element={<Intro />} />
         <Route path="/landmark/detail" element={<Landmark />} />
+        <Route path="/tour" element={<Tour />} />
       </Route>
     </Routes>
   );
