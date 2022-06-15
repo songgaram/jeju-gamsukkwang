@@ -66,8 +66,20 @@ class TourService {
 		return removeLikefromLandmark;
 	};
 
-	static sortLandmarks = async ({}) => {
+	static sortByLiked = async ({}) => {
 		const sortLandmarks = await tourModel.sortByLiked({});
+
+		return sortLandmarks;
+	};
+
+	static sortByReviews = async ({}) => {
+		const sortLandmarks = await tourModel.sortByReviews({});
+
+		return sortLandmarks;
+	};
+
+	static sortByRating = async ({}) => {
+		const sortLandmarks = await tourModel.sortByRating({});
 
 		return sortLandmarks;
 	};

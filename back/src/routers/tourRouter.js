@@ -81,7 +81,27 @@ tourRouter.put("/tour/:id/dislike", loginRequired, async (req, res, next) => {
 // 랜드마크 좋아요 높은 순으로 정리
 tourRouter.get("/recommend", async (req, res, next) => {
 	try {
-		const sortedLandmarks = await TourService.sortLandmarks({});
+		const sortedLandmarks = await TourService.sortByLiked({});
+
+		res.status(200).json(sortedLandmarks);
+	} catch (err) {
+		next(err);
+	}
+});
+
+tourRouter.get("/recommend/reviews", async (req, res, next) => {
+	try {
+		const sortedLandmarks = await TourService.sortByReviews({});
+
+		res.status(200).json(sortedLandmarks);
+	} catch (err) {
+		next(err);
+	}
+});
+
+tourRouter.get("/recommend/rating", async (req, res, next) => {
+	try {
+		const sortedLandmarks = await TourService.sortByRating({});
 
 		res.status(200).json(sortedLandmarks);
 	} catch (err) {

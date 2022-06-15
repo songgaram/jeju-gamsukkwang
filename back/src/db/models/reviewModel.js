@@ -25,13 +25,17 @@ export const reviewModel = {
 		]);
 
 		if (calc.length === 0) {
-			throw new Error("system.error.noReviews");
+			const newObj = {
+				cnt: 0,
+				avg: 0,
+			};
+			calc.push(newObj);
 		}
 
 		const totalReview = calc[0].cnt; // 총 리뷰 수
 		const avgRating = calc[0].avg.toFixed(1); // 총 리뷰 평점의 평균 (소수점 첫째자리까지 반올림)
 
-		// _id: 별점(5, 4, 3, 2, 1), cnt: 해당 별점의 리뷰 개수 
+		// _id: 별점(5, 4, 3, 2, 1), cnt: 해당 별점의 리뷰 개수
 		// * 예시. [ { _id: 5, cnt: 1 }, { _id: 2, cnt: 2 } ]
 		const starCount = await Review.aggregate([
 			{ $match: { tourId } },
@@ -50,10 +54,10 @@ export const reviewModel = {
 			starObj.star = i;
 			starCount.map((item) => {
 				// starCount에서 해당하는 별점은 찾아서 각각 넣어주기
-				if(item._id === i){
-					starObj.reviews = item?.cnt
+				if (item._id === i) {
+					starObj.reviews = item?.cnt;
 				}
-			})
+			});
 
 			starRating.push(starObj);
 		}
@@ -64,7 +68,6 @@ export const reviewModel = {
 			starRating,
 			reviews,
 		};
-
 	},
 
 	// reviewId로 리뷰 정보 찾기
