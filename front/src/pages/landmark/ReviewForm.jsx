@@ -31,6 +31,13 @@ const ReviewForm = () => {
           />
         ))}
       </StarContainer>
+      <div style={{ position: "relative" }}>
+        {[1, 2, 3, 4, 5].map((num) => (
+          <HiddenText key={num} show={hovered === num}>
+            {textList[num - 1]}
+          </HiddenText>
+        ))}
+      </div>
 
       <HeaderContainer align="center">
         <Title>다른 여행객을 위한 후기와 팁</Title>
@@ -46,6 +53,14 @@ const ReviewForm = () => {
   );
 };
 
+const textList = [
+  "별로에요",
+  "그저 그래요",
+  "보통이에요",
+  "좋아요",
+  "최고예요",
+];
+
 const StarContainer = styled.div`
   text-align: center;
   border: none;
@@ -56,7 +71,7 @@ const HeaderContainer = styled.div`
   display: flex;
   justify-content: ${(props) => props.justify};
   align-items: ${(props) => props.align};
-  margin-top: 5%;
+  margin-top: 10%;
 `;
 
 const Title = styled.div`
@@ -74,6 +89,19 @@ const Required = styled.p`
 const BtnPosition = styled.div`
   width: 100%;
   padding-left: 93%;
+`;
+
+const HiddenText = styled.p`
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  text-align: center;
+  width: 130px;
+  height: 30px;
+  transform: translate(-50%, -50%);
+  color: ${theme.colors.gray03};
+  font-size: ${theme.fontSizes.lg};
+  ${({ show }) => (show ? `display:block` : `display: none`)}
 `;
 
 export default ReviewForm;
