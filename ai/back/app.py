@@ -1,5 +1,5 @@
 from distutils.log import debug
-from flask import Flask, request, jsonify
+from flask import Flask, request, Response
 from flask_cors import CORS
 import json
 import prediction
@@ -15,9 +15,12 @@ def index():
 def post():
   if request.method == 'POST':
     res = request.get_json()
-    imgURL = res['imgURL']
-    print(imgURL)
-    prediction.predictImage(imgURL)
+    imageURL = res['imageURL']
+    summary = prediction.predictImage(imageURL)
+    summary['imageURL'] = imageURL
+    summaryJson = json.dumps(summary)
+
+    return summaryJson, 200
     
 
 if __name__ == '__main__':

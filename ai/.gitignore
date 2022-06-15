@@ -1,9 +1,13 @@
 # venv
 /aiWebProject
 
+# compile
+/back/__pycache__
+
 # 제주특별자치도 랜드마크 데이터셋
 /dataSet
 
 # models
 /checkpoints
 /model/savedModels
+/back/model
