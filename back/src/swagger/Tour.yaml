@@ -83,7 +83,7 @@ paths:
       tags:
         - Tour
       summary: 좋아요 순(내림차순)으로 랜드마크 정렬
-      description: /recommend로부터 좋아요 순(내림차순)으로 정렬된 랜드마크 목록을 불러옵니다.
+      description: /recommend/likes로부터 좋아요 순(내림차순)으로 정렬된 랜드마크 목록을 불러옵니다.
       responses:
         "200":
           description: 좋아요 순(내림차순)으로 랜드마크 정렬 성공
@@ -95,7 +95,7 @@ paths:
       tags:
         - Tour
       summary: 리뷰 수 순(내림차순)으로 랜드마크 정렬
-      description: /recommend로부터 리뷰 수 순(내림차순)으로 정렬된 랜드마크 목록을 불러옵니다.
+      description: /recommend/reviews로부터 리뷰 수 순(내림차순)으로 정렬된 랜드마크 목록을 불러옵니다.
       responses:
         "200":
           description: 리뷰 수 순(내림차순)으로 랜드마크 정렬 성공
@@ -107,7 +107,7 @@ paths:
       tags:
         - Tour
       summary: 평점 평균 순(내림차순)으로 랜드마크 정렬
-      description: /recommend로부터 평점 평균 순(내림차순)으로 정렬된 랜드마크 목록을 불러옵니다.
+      description: /recommend/rating로부터 평점 평균 순(내림차순)으로 정렬된 랜드마크 목록을 불러옵니다.
       responses:
         "200":
           description: 평점 평균 순(내림차순)으로 랜드마크 정렬 성공

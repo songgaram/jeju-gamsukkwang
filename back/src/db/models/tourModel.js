@@ -54,13 +54,19 @@ export const tourModel = {
 	},
 
 	sortByLiked: async ({}) => {
-		const sortByLiked = await Tour.find({}).sort({ likeCount: -1 });
+		const sortByLiked = await Tour.find(
+			{},
+			{ _id: 0, id: 1, krTitle: 1, likeCount: 1, image: 1 }
+		).sort({ likeCount: -1 });
 
 		return sortByLiked;
 	},
 
 	sortByReviews: async ({}) => {
-		const tourIds = await Tour.find({}, { _id: 0, id: 1, krTitle: 1 });
+		const tourIds = await Tour.find(
+			{},
+			{ _id: 0, id: 1, krTitle: 1, image: 1 }
+		);
 		let newArray = [];
 
 		for (let i = 0; i < tourIds.length; i++) {
@@ -73,6 +79,7 @@ export const tourModel = {
 
 			newObj.id = tourIds[i].id;
 			newObj.krTitle = tourIds[i].krTitle;
+			newObj.image = tourIds[i].image;
 			newObj.totalReview = result.totalReview;
 
 			newArray.push(newObj);
@@ -86,7 +93,10 @@ export const tourModel = {
 	},
 
 	sortByRating: async ({}) => {
-		const tourIds = await Tour.find({}, { _id: 0, id: 1, krTitle: 1 });
+		const tourIds = await Tour.find(
+			{},
+			{ _id: 0, id: 1, krTitle: 1, image: 1 }
+		);
 		let newArray = [];
 
 		for (let i = 0; i < tourIds.length; i++) {
@@ -99,7 +109,8 @@ export const tourModel = {
 
 			newObj.id = tourIds[i].id;
 			newObj.krTitle = tourIds[i].krTitle;
-			newObj.avgRating = result.avgRating;
+			newObj.image = tourIds[i].image;
+			newObj.avgRating = Number(result.avgRating);
 
 			newArray.push(newObj);
 		}
