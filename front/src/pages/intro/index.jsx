@@ -15,7 +15,6 @@ const Intro = () => {
 
   return (
     <IntroContainer>
-      <Header />
       <MainContainer>
         <ContentContainer {...animatedItem[0]}>
           <Title src={IntroTitle} alt="인트로 타이틀" />
@@ -39,11 +38,6 @@ const Intro = () => {
 const IntroContainer = styled.div`
   width: 100%;
   height: auto;
-`;
-
-const Header = styled.div`
-  height: 80px;
-  background-color: white;
 `;
 
 const ContentContainer = styled.div`
