@@ -31,7 +31,7 @@ reviewRouter.post("/review", s3Multi(), async (req, res, next) => {
 				images,
 			});
 
-			res.status(201).json(newReview);
+			return res.status(201).json(newReview);
 		}
 
 		const newReview = await ReviewService.addReview({
