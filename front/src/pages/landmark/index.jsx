@@ -47,7 +47,7 @@ const Landmark = () => {
           </DetailContent>
         </DetailContainer>
       </LandmarkContainer>
-      <ReviewSection />
+      <ReviewSection id={id} />
     </>
   );
 };

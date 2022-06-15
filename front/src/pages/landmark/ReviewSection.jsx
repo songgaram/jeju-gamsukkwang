@@ -33,7 +33,7 @@ const DataSet = [
   },
 ];
 
-const ReviewSection = () => {
+const ReviewSection = ({ id }) => {
   return (
     <ReviewContainer>
       <ReviewHeader>
@@ -50,7 +50,7 @@ const ReviewSection = () => {
           ))}
         </CountsContainer>
       </RatingContainer>
-      <ReviewList />
+      <ReviewList id={id} />
       <ReviewForm />
     </ReviewContainer>
   );
