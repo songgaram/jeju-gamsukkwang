@@ -12,7 +12,7 @@ const Header = () => {
   return (
     <HeaderContainer>
       <HeaderWrapper>
-        <Logo />
+        <Logo type="button" onClick={() => navigate("/")} />
         <Nav>
           <ul>
             {NAV_LIST.map((data) => (
