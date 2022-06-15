@@ -30,7 +30,7 @@ const TourSchema = new Schema({
 		index: true,
 	},
 	likedUsers: {
-		type: Array,
+		type: [String],
 		default: [],
 	},
 });

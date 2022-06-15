@@ -1,9 +1,11 @@
-import { userRouter } from "./routers/userRouter";
-import { getLandmark } from "./routers/getLandmark";
-import { tourRouter } from "./routers/tourRouter";
-import { reviewRouter } from "./routers/reviewRouter";
-import { communityRouter } from "./routers/communityRouter";
-import { errorMiddleware } from "./middlewares/errorMiddleware";
+import {
+	userRouter,
+	getLandmark,
+	tourRouter,
+	reviewRouter,
+	communityRouter,
+} from "./routers/";
+import { errorMiddleware } from "./middlewares/";
 import { swaggerUi, specs } from "./swagger/swagger";
 
 import express from "express";

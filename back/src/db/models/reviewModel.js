@@ -8,11 +8,11 @@ export const reviewModel = {
 	},
 
 	// 해당 랜드마크에 대한 리뷰를 이미 작성했던 사람인지 확인
-	IsPosted: async ({ tourId, userId }) => {
-		const IsPosted = Review.exists({
+	isPosted: async ({ tourId, userId }) => {
+		const isPosted = Review.exists({
 			$and: [{ tourId }, { userId }],
 		});
-		return IsPosted;
+		return isPosted;
 	},
 
 	// 해당 랜드마크의 총 리뷰수, 평점 평균, 리뷰 목록 불러오기
@@ -24,47 +24,48 @@ export const reviewModel = {
 			{ $group: { _id: null, avg: { $avg: "$rating" }, cnt: { $sum: 1 } } },
 		]);
 
-		const totalCount = calc[0].cnt; // 총 리뷰 수
+		if (calc.length === 0) {
+			const newObj = {
+				cnt: 0,
+				avg: 0,
+			};
+			calc.push(newObj);
+		}
+
+		const totalReview = calc[0].cnt; // 총 리뷰 수
 		const avgRating = calc[0].avg.toFixed(1); // 총 리뷰 평점의 평균 (소수점 첫째자리까지 반올림)
 
+		// _id: 별점(5, 4, 3, 2, 1), cnt: 해당 별점의 리뷰 개수
+		// * 예시. [ { _id: 5, cnt: 1 }, { _id: 2, cnt: 2 } ]
 		const starCount = await Review.aggregate([
 			{ $match: { tourId } },
 			{ $group: { _id: "$rating", cnt: { $sum: 1 } } },
 		]);
 
-		let star5 = 0,
-			star4 = 0,
-			star3 = 0,
-			star2 = 0,
-			star1 = 0;
-		starCount.forEach((item) => {
-			switch (item._id) {
-				case 5:
-					star5 = item?.cnt;
-					break;
-				case 4:
-					star4 = item?.cnt;
-					break;
-				case 3:
-					star3 = item?.cnt;
-					break;
-				case 2:
-					star2 = item?.cnt;
-					break;
-				case 1:
-					star1 = item?.cnt;
-					break;
-			}
-		});
+		let starRating = [];
+
+		for (let i = 5; i > 0; i--) {
+			// starCount에 없는 별점은 0으로 초기화
+			let starObj = {
+				star: 0,
+				reviews: 0,
+			};
+
+			starObj.star = i;
+			starCount.map((item) => {
+				// starCount에서 해당하는 별점은 찾아서 각각 넣어주기
+				if (item._id === i) {
+					starObj.reviews = item?.cnt;
+				}
+			});
+
+			starRating.push(starObj);
+		}
 
 		return {
-			totalCount,
+			totalReview,
 			avgRating,
-			star5,
-			star4,
-			star3,
-			star2,
-			star1,
+			starRating,
 			reviews,
 		};
 	},

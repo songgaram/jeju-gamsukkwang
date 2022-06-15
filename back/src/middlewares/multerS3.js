@@ -20,22 +20,24 @@ const storage = multerS3({
 	contentType: multerS3.AUTO_CONTENT_TYPE,
 	key: (req, file, cb) => {
 		const ext = file.mimetype.split("/")[1];
-    const dateTime = moment().format("YYYYMMDDHHmmss");
+		const dateTime = moment().format("YYYYMMDDHHmmss");
 
-    if (!["png", "jpg", "jpeg", "gif", "bmp"].includes(ext)) {
-      return cb(new Error("system.error.noImageFile"))
-    }
-		
+		if (!["png", "jpg", "jpeg", "gif", "bmp"].includes(ext)) {
+			return cb(new Error("system.error.noImageFile"));
+		}
+
 		cb(
 			null,
-			`${dateTime}_${Math.floor(Math.random() * 10000).toString()}_${file.originalname}`
+			`${dateTime}_${Math.floor(Math.random() * 10000).toString()}_${
+				file.originalname
+			}`
 		);
 	},
 });
 
 const s3Single = () => {
 	const limits = {
-		fileSize: 5242880, //5MB
+		fileSize: 5242880 * 2, //10MB
 	};
 
 	const upload = multer({
@@ -46,9 +48,9 @@ const s3Single = () => {
 	return upload;
 };
 
-const s3Array = () => {
+const s3Multi = () => {
 	const limits = {
-		fileSize: 5242880 * 2, //10MB
+		fileSize: 5242880 * 4, //20MB
 	};
 
 	const upload = multer({
@@ -59,4 +61,4 @@ const s3Array = () => {
 	return upload;
 };
 
-module.exports = { s3Single, s3Array };
+module.exports = { s3Single, s3Multi };

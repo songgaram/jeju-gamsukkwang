@@ -1,15 +1,15 @@
 import is from "@sindresorhus/is";
 
-import { loginRequired } from "../middlewares/loginRequired";
-import { reviewService } from "../services/reviewService.js";
-import { s3Array } from "../middlewares/multerS3";
+import { loginRequired } from "../middlewares/";
+import { ReviewService } from "../services/ReviewService.js";
+import { s3Multi } from "../middlewares/multerS3";
 import { Router } from "express";
 
 const reviewRouter = Router();
 reviewRouter.use(loginRequired);
 
 // 리뷰 작성하기
-reviewRouter.post("/review", s3Array(), async (req, res, next) => {
+reviewRouter.post("/review", s3Multi(), async (req, res, next) => {
 	try {
 		if (is.emptyObject(req.body)) {
 			throw new Error("system.error.badRequest");
@@ -23,7 +23,7 @@ reviewRouter.post("/review", s3Array(), async (req, res, next) => {
 				(image) => image.location.split("amazonaws.com/")[1]
 			);
 
-			const newReview = await reviewService.addReviewWithImages({
+			const newReview = await ReviewService.addReviewWithImages({
 				loginUserId,
 				tourId,
 				content,
@@ -34,7 +34,7 @@ reviewRouter.post("/review", s3Array(), async (req, res, next) => {
 			res.status(201).json(newReview);
 		}
 
-		const newReview = await reviewService.addReview({
+		const newReview = await ReviewService.addReview({
 			loginUserId,
 			tourId,
 			content,
@@ -51,7 +51,7 @@ reviewRouter.post("/review", s3Array(), async (req, res, next) => {
 reviewRouter.get("/review/:tourId/list", async (req, res, next) => {
 	try {
 		const tourId = req.params.tourId;
-		const reviews = await reviewService.getReviews({ tourId });
+		const reviews = await ReviewService.getReviews({ tourId });
 
 		res.status(200).json(reviews);
 	} catch (err) {
@@ -60,7 +60,7 @@ reviewRouter.get("/review/:tourId/list", async (req, res, next) => {
 });
 
 // 리뷰 수정하기
-reviewRouter.put("/review/:id", s3Array(), async (req, res, next) => {
+reviewRouter.put("/review/:id", s3Multi(), async (req, res, next) => {
 	try {
 		if (is.emptyObject(req.body)) {
 			throw new Error("system.error.badRequest");
@@ -78,7 +78,7 @@ reviewRouter.put("/review/:id", s3Array(), async (req, res, next) => {
 			toUpdate.saveFileName = images;
 		}
 
-		const editedReview = await reviewService.setReview({
+		const editedReview = await ReviewService.setReview({
 			loginUserId,
 			reviewId,
 			toUpdate,
@@ -96,7 +96,7 @@ reviewRouter.delete("/review/:id", async (req, res, next) => {
 		const loginUserId = req.currentUserId;
 		const reviewId = req.params.id;
 
-		const deleteResult = await reviewService.deleteReview({
+		const deleteResult = await ReviewService.deleteReview({
 			loginUserId,
 			reviewId,
 		});

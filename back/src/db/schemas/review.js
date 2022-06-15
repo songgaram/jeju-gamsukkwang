@@ -34,7 +34,7 @@ const ReviewSchema = new Schema(
 			index: true,
 		},
 		saveFileName: {
-			type: Array,
+			type: [String],
 			default: [],
 		},
 	},

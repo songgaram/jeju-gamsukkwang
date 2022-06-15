@@ -95,12 +95,12 @@ export const communityModel = {
 		return removeLikeCount;
 	},
 
-	didUseLike: async ({ articleId, currentUserId }) => {
-		const didUseLike = await Community.exists({
+	didUserLiked: async ({ articleId, currentUserId }) => {
+		const didUserLiked = await Community.exists({
 			$and: [{ id: articleId }, { likedUsers: currentUserId }],
 		});
 
-		return didUseLike;
+		return didUserLiked;
 	},
 
 	isArticleExist: async ({ articleId }) => {

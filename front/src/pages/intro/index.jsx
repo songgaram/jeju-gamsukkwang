@@ -5,9 +5,9 @@ import BackgroundImage from "assets/images/BackgroundImage.png";
 import Button from "components/Button";
 import CardSection from "./CardSection";
 import DescSection from "./DescSection";
-import { useScrollFadeIn } from "assets/hook/useScrollFadeIn";
+import { useScrollFadeIn } from "hooks/useScrollFadeIn";
 
-function Intro() {
+const Intro = () => {
   const animatedItem = {
     0: useScrollFadeIn("up", 0.9, 0),
     1: useScrollFadeIn("up", 0.9, 0.5),
@@ -34,7 +34,7 @@ function Intro() {
       <DescSection />
     </IntroContainer>
   );
-}
+};
 
 const IntroContainer = styled.div`
   width: 100%;

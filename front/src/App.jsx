@@ -1,10 +1,11 @@
 import { Route, Routes } from "react-router-dom";
 
-import Layout from "components/layout";
 import Home from "pages/home";
-import Register from "pages/register";
 import Intro from "pages/intro";
+import Register from "pages/register";
+import Landmark from "pages/landmark";
 import LogIn from "pages/logIn";
+import Layout from "components/layout";
 import Tour from "pages/tour";
 
 const App = () => {
@@ -15,6 +16,7 @@ const App = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<LogIn />} />
         <Route path="/intro" element={<Intro />} />
+        <Route path="/landmark/detail" element={<Landmark />} />
         <Route path="/tour" element={<Tour />} />
       </Route>
     </Routes>

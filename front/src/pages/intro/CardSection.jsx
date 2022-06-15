@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Card from "./Card";
-import { useScrollFadeIn } from "assets/hook/useScrollFadeIn";
+import { useScrollFadeIn } from "hooks/useScrollFadeIn";
 
 const content = [
   {
@@ -19,7 +19,7 @@ const content = [
   },
 ];
 
-function CardSection() {
+const CardSection = () => {
   const animatedItem = {
     0: useScrollFadeIn("up", 0.9, 0),
     1: useScrollFadeIn("up", 0.9, 0.3),
@@ -56,7 +56,7 @@ function CardSection() {
       </CardContainer>
     </CardSectionContainer>
   );
-}
+};
 
 export default CardSection;
 

@@ -32,14 +32,14 @@ paths:
         "400":
           description: 해당 랜드마크 ID가 없을 때, 잘못된 요청이 있을 때 오류가 발생합니다.
 
-  /tour/like/{id}:
+  /tour/{id}/like:
     put:
       tags:
         - Tour
       summary: 해당 랜드마크 좋아요 추가
       security:
         - Authorization: []
-      description: /tour/like/:id으로 해당 랜드마크에 좋아요를 추가합니다. req.body에 어떤 것도 받지 않습니다. 단, 로그인한 사용자임과 동시에 해당 랜드마크에 좋아요를 하지 않은 사용자만 사용 가능합니다.
+      description: /tour/:id/like로 해당 랜드마크에 좋아요를 추가합니다. req.body에 어떤 것도 받지 않습니다. 단, 로그인한 사용자임과 동시에 해당 랜드마크에 좋아요를 하지 않은 사용자만 사용 가능합니다.
       parameters:
         - name: id
           in: path
@@ -51,16 +51,18 @@ paths:
         "200":
           description: 해당 랜드마크에 좋아요 추가
         "400":
-          description: 로그인한 사용자가 아닐 때, 잘못된 요청이 있을 때 오류가 발생합니다.
+          description: 잘못된 요청이 있을 때 오류가 발생합니다.
+        "403":
+          description: 로그인되어 있지 않을 때 오류가 발생합니다.
 
-  /tour/dislike/{id}:
+  /tour/{id}/dislike:
     put:
       tags:
         - Tour
       summary: 해당 랜드마크 좋아요 삭제
       security:
         - Authorization: []
-      description: /tour/dislike/:id으로 해당 랜드마크에 좋아요를 삭제합니다. req.body에 어떤 것도 받지 않습니다. 단, 로그인한 사용자임과 동시에 해당 랜드마크에 좋아요를 하지 않은 사용자만 사용 가능합니다.
+      description: /tour/:id/dislike로 해당 랜드마크에 좋아요를 삭제합니다. req.body에 어떤 것도 받지 않습니다. 단, 로그인한 사용자임과 동시에 해당 랜드마크에 좋아요를 하지 않은 사용자만 사용 가능합니다.
       parameters:
         - name: id
           in: path
@@ -72,17 +74,43 @@ paths:
         "200":
           description: 해당 랜드마크에 좋아요 삭제
         "400":
-          description: 로그인한 사용자가 아닐 때, 잘못된 요청이 있을 때 오류가 발생합니다.
+          description: 잘못된 요청이 있을 때 오류가 발생합니다.
+        "403":
+          description: 로그인되어 있지 않을 때 오류가 발생합니다.
 
-  /recommend:
+  /recommend/likes:
     get:
       tags:
         - Tour
       summary: 좋아요 순(내림차순)으로 랜드마크 정렬
-      description: /recommend로부터 좋아요 순(내림차순)으로 정렬된 랜드마크 목록을 불러옵니다.
+      description: /recommend/likes로부터 좋아요 순(내림차순)으로 정렬된 랜드마크 목록을 불러옵니다.
       responses:
         "200":
           description: 좋아요 순(내림차순)으로 랜드마크 정렬 성공
+        "400":
+          description: 잘못된 요청이 있을 때 오류가 발생합니다.
+
+  /recommend/reviews:
+    get:
+      tags:
+        - Tour
+      summary: 리뷰 수 순(내림차순)으로 랜드마크 정렬
+      description: /recommend/reviews로부터 리뷰 수 순(내림차순)으로 정렬된 랜드마크 목록을 불러옵니다.
+      responses:
+        "200":
+          description: 리뷰 수 순(내림차순)으로 랜드마크 정렬 성공
+        "400":
+          description: 잘못된 요청이 있을 때 오류가 발생합니다.
+
+  /recommend/rating:
+    get:
+      tags:
+        - Tour
+      summary: 평점 평균 순(내림차순)으로 랜드마크 정렬
+      description: /recommend/rating로부터 평점 평균 순(내림차순)으로 정렬된 랜드마크 목록을 불러옵니다.
+      responses:
+        "200":
+          description: 평점 평균 순(내림차순)으로 랜드마크 정렬 성공
         "400":
           description: 잘못된 요청이 있을 때 오류가 발생합니다.
 
@@ -97,4 +125,7 @@ paths:
           application/json:
             schema:
               type: object
-              example: { "cid": "cid" }
+              properties:
+                cid:
+                  type: string
+                  required: true

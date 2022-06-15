@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 
 import { db, userModel } from "../db";
 
-class userService {
+class UserService {
 	// 회원 정보 찾기 기능
 	static findUser = async ({ userId }) => {
 		const user = await userModel.findById({ userId });
@@ -49,6 +49,7 @@ class userService {
 	static loginUser = async ({ email, password }) => {
 		// 이메일로 회원이 DB에 있는지 확인
 		const user = await userModel.findByEmail({ email });
+		const { id, nickname, hashedPassword } = user;
 
 		// 해당 회원이 없을 경우 error
 		if (!user) {
@@ -56,8 +57,7 @@ class userService {
 		}
 
 		// 비밀번호 일치 여부 확인
-		const passwordFromDB = user.hashedPassword;
-		const isPasswordSame = await bcrypt.compare(password, passwordFromDB);
+		const isPasswordSame = await bcrypt.compare(password, hashedPassword);
 
 		// 비밀번호가 일치하지 않을 경우 Error
 		if (!isPasswordSame) {
@@ -69,13 +69,11 @@ class userService {
 		if (!secretKey) {
 			throw new Error("system.error.noSecretKey");
 		}
-		const token = jwt.sign({ userId: user.id }, secretKey, {
+		const token = jwt.sign({ userId: id }, secretKey, {
 			expiresIn: "1 days",
 		});
 
 		// loginUser 객체에 반환할 데이터 설정
-		const { id, nickname } = user;
-
 		const loginUser = {
 			token,
 			id,
@@ -89,7 +87,6 @@ class userService {
 	// 회원 탈퇴 기능
 	static withdrawUser = async ({ userId }) => {
 		// 유저 ID로 DB에 있는 회원 정보 확인
-		console.log(userId);
 		const user = await userModel.findById({ userId });
 
 		// 해당 회원이 없을 경우 error
@@ -150,6 +147,7 @@ class userService {
 
 		return addStamp;
 	};
+
 	static addExp = async ({ userId, point }) => {
 		let user = await userModel.findById({ userId });
 
@@ -162,4 +160,4 @@ class userService {
 	};
 }
 
-export { userService };
+export { UserService };
