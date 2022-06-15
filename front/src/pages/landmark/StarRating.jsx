@@ -6,8 +6,8 @@ const StarRating = ({ number, color }) => {
 
   return (
     <StarContainer>
-      {Stars.map((e) => (
-        <BsStarFill key={e} color={color} />
+      {Stars.map((e, idx) => (
+        <BsStarFill key={idx} color={color} />
       ))}
     </StarContainer>
   );

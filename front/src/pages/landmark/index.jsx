@@ -5,22 +5,22 @@ import { useGetLandmark } from "queries/landmarkQuery";
 
 const Landmark = () => {
   const id = "1d4ec9e9-fef7-4204-8527-10fa21e9e851";
-  const { krTitle } = useGetLandmark(id);
+  const { data } = useGetLandmark(id);
+  const { krTitle, address, description, image, phoneNo } = data;
 
-  console.log(krTitle);
   return (
     <>
       <LandmarkContainer>
-        <ImgContainer>이미지</ImgContainer>
+        <ImgContainer img={image} />
         <DetailContainer>
-          <DetailTitle>우도</DetailTitle>
+          <DetailTitle>{krTitle}</DetailTitle>
           <DetailContent>
             <DetailTabRow>
               <DetailTabCell>
                 <DetailHighlight>주소</DetailHighlight>
               </DetailTabCell>
               <DetailTabCell>
-                <p>제주도 제주시</p>
+                <p>{address}</p>
               </DetailTabCell>
             </DetailTabRow>
             <DetailTabRow>
@@ -28,7 +28,7 @@ const Landmark = () => {
                 <DetailHighlight>소개</DetailHighlight>
               </DetailTabCell>
               <DetailTabCell>
-                <p>소가 누워있는 형상을 하고 있는 제주의 가장 큰 부속섬</p>
+                <p>{description}</p>
               </DetailTabCell>
             </DetailTabRow>
             <DetailTabRow>
@@ -36,7 +36,7 @@ const Landmark = () => {
                 <DetailHighlight>연락처</DetailHighlight>
               </DetailTabCell>
               <DetailTabCell>
-                <p>(+82) 064-728-1527</p>
+                <p>{phoneNo}</p>
               </DetailTabCell>
             </DetailTabRow>
           </DetailContent>
@@ -60,7 +60,9 @@ const LandmarkContainer = styled.div`
 const ImgContainer = styled.div`
   width: 50%;
   height: 400px;
-  background-color: gray;
+  background-image: url(${(props) => props.img});
+  background-size: cover;
+  background-repeat: no-repeat;
 `;
 
 const DetailContainer = styled.div`
