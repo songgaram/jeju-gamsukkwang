@@ -4,6 +4,6 @@ import http from "libs/apiController";
 export const useGetLandmark = (id) => {
   return useQuery(["landmark", id], async () => {
     const res = await http.get(`tour/${id}`);
-    return res.data;
+    return { landmark: res.data };
   });
 };

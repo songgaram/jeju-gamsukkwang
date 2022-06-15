@@ -1,26 +1,31 @@
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import Button from "components/Button";
 import ReviewSection from "./ReviewSection";
 import { useGetLandmark } from "queries/landmarkQuery";
 
 const Landmark = () => {
-  const id = "1d4ec9e9-fef7-4204-8527-10fa21e9e851";
+  const params = useParams();
+  const id = params.id;
   const { data } = useGetLandmark(id);
-  const { krTitle, address, description, image, phoneNo } = data;
 
   return (
     <>
       <LandmarkContainer>
-        <ImgContainer img={image} />
+        <ImgContainer img={data?.landmark?.image} />
         <DetailContainer>
-          <DetailTitle>{krTitle}</DetailTitle>
+          <Header>
+            <DetailTitle>{data?.landmark?.krTitle}</DetailTitle>
+            <Button color="gray03">길찾기</Button>
+          </Header>
+
           <DetailContent>
             <DetailTabRow>
               <DetailTabCell>
                 <DetailHighlight>주소</DetailHighlight>
               </DetailTabCell>
               <DetailTabCell>
-                <p>{address}</p>
+                <p>{data?.landmark?.address}</p>
               </DetailTabCell>
             </DetailTabRow>
             <DetailTabRow>
@@ -28,7 +33,7 @@ const Landmark = () => {
                 <DetailHighlight>소개</DetailHighlight>
               </DetailTabCell>
               <DetailTabCell>
-                <p>{description}</p>
+                <p>{data?.landmark?.description}</p>
               </DetailTabCell>
             </DetailTabRow>
             <DetailTabRow>
@@ -36,13 +41,10 @@ const Landmark = () => {
                 <DetailHighlight>연락처</DetailHighlight>
               </DetailTabCell>
               <DetailTabCell>
-                <p>{phoneNo}</p>
+                <p>{data?.landmark?.phoneNo}</p>
               </DetailTabCell>
             </DetailTabRow>
           </DetailContent>
-          <BtnPosition>
-            <Button color="gray03">길찾기</Button>
-          </BtnPosition>
         </DetailContainer>
       </LandmarkContainer>
       <ReviewSection />
@@ -67,14 +69,21 @@ const ImgContainer = styled.div`
 
 const DetailContainer = styled.div`
   width: 50%;
-  padding: 8% 0 0 5%;
+  padding: 10% 8%;
 `;
 
 const DetailTitle = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.xxxl};
   font-weight: bold;
-  margin-bottom: 5%;
+`;
+
+const Header = styled.div`
   width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5%;
 `;
 
 const DetailHighlight = styled.p`
@@ -93,12 +102,6 @@ const DetailTabRow = styled.div`
 
 const DetailTabCell = styled.div`
   display: table-cell;
-`;
-
-const BtnPosition = styled.div`
-  width: 100%;
-  margin-top: 3%;
-  padding-left: 75%;
 `;
 
 export default Landmark;
