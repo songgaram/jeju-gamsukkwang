@@ -4,13 +4,17 @@ from keras.models import load_model
 import numpy as np
 import pandas as pd
 import urllib.request
+from PIL import Image
 
 def predictImage(imageURL):
 
   model = tf.keras.models.load_model('./model')
 
-  # img = urllib.request.urlopen(imageURL)
-  img = load_img(imageURL, target_size=(224,224))
+  res = urllib.request.urlopen(imageURL)
+
+  img = Image.open(res)
+  img = img.resize((224,224))
+  # img = load_img(imageURL, target_size=(224,224))
   img = img_to_array(img)
   img = img/255.0
 

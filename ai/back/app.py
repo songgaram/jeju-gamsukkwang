@@ -16,11 +16,13 @@ def post():
   if request.method == 'POST':
     res = request.get_json()
     imageURL = res['imageURL']
+
     summary = prediction.predictImage(imageURL)
+
     summary['imageURL'] = imageURL
     summaryJson = json.dumps(summary)
 
-    return summaryJson, 200
+    return Response(summaryJson, mimetype='application/json'), 200
     
 
 if __name__ == '__main__':
