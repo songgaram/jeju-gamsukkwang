@@ -7,6 +7,7 @@ import Landmark from "pages/landmark";
 import LogIn from "pages/logIn";
 import Layout from "components/layout";
 import Tour from "pages/tour";
+import MyPage from "pages/mypage";
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
         <Route path="/intro" element={<Intro />} />
         <Route path="/landmark/detail" element={<Landmark />} />
         <Route path="/tour" element={<Tour />} />
+        <Route path="/mypage" element={<MyPage />} />
       </Route>
     </Routes>
   );
