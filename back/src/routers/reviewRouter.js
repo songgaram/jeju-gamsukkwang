@@ -17,31 +17,21 @@ reviewRouter.post("/review", s3Multi(), async (req, res, next) => {
 
 		const loginUserId = req.currentUserId;
 		const { tourId, content, rating } = req.body;
-
-		if (req.files) {
-			const images = req.files.map(
-				(image) => image.location.split("amazonaws.com/")[1]
-			);
-
-			const newReview = await ReviewService.addReviewWithImages({
-				loginUserId,
-				tourId,
-				content,
-				rating,
-				images,
-			});
-
-			return res.status(201).json(newReview);
-		}
+		const images = req.files.map(
+			(image) => image.location.split("amazonaws.com/")[1]
+		);
 
 		const newReview = await ReviewService.addReview({
 			loginUserId,
 			tourId,
 			content,
 			rating,
+			images,
 		});
 
 		res.status(201).json(newReview);
+		return;
+		return;
 	} catch (err) {
 		next(err);
 	}
@@ -54,6 +44,7 @@ reviewRouter.get("/review/:tourId/list", async (req, res, next) => {
 		const reviews = await ReviewService.getReviews({ tourId });
 
 		res.status(200).json(reviews);
+		return;
 	} catch (err) {
 		next(err);
 	}
@@ -85,6 +76,7 @@ reviewRouter.put("/review/:id", s3Multi(), async (req, res, next) => {
 		});
 
 		res.status(201).json(editedReview);
+		return;
 	} catch (err) {
 		next(err);
 	}
@@ -102,6 +94,7 @@ reviewRouter.delete("/review/:id", async (req, res, next) => {
 		});
 
 		res.status(200).send(deleteResult);
+		return;
 	} catch (err) {
 		next(err);
 	}

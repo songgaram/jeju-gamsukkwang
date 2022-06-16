@@ -20,31 +20,20 @@ communityRouter.post(
 
 			const loginUserId = req.currentUserId;
 			const { title, content, head } = req.body;
-
-			if (req.files) {
-				const images = req.files.map(
-					(image) => image.location.split("amazonaws.com/")[1]
-				);
-
-				const newArticle = await CommunityService.addArticleWithImages({
-					loginUserId,
-					title,
-					content,
-					head,
-					images,
-				});
-
-				res.status(201).json(newArticle);
-			}
+			const images = req.files.map(
+				(image) => image.location.split("amazonaws.com/")[1]
+			);
 
 			const newArticle = await CommunityService.addArticle({
 				loginUserId,
 				title,
 				content,
 				head,
+				images,
 			});
 
 			res.status(201).json(newArticle);
+			return;
 		} catch (err) {
 			next(err);
 		}
@@ -73,6 +62,7 @@ communityRouter.put(
 					(image) => image.location.split("amazonaws.com/")[1]
 				);
 				toUpdate.saveFileName = images;
+				return;
 			}
 
 			const editedArticle = await CommunityService.setArticle({
@@ -82,6 +72,7 @@ communityRouter.put(
 			});
 
 			res.status(201).json(editedArticle);
+			return;
 		} catch (err) {
 			next(err);
 		}
@@ -95,6 +86,7 @@ communityRouter.get("/community/:id", loginRequired, async (req, res, next) => {
 		const article = await CommunityService.getArticle({ articleId });
 
 		res.status(200).json(article);
+		return;
 	} catch (err) {
 		next(err);
 	}
@@ -119,6 +111,7 @@ communityRouter.get("/community", async (req, res, next) => {
 		const articles = await CommunityService.getArticles({ getArticles });
 
 		res.status(200).send(articles);
+		return;
 	} catch (err) {
 		next(err);
 	}
@@ -142,6 +135,7 @@ communityRouter.delete(
 			});
 
 			res.status(200).send(deletedArticle);
+			return;
 		} catch (err) {
 			next(err);
 		}
@@ -168,6 +162,7 @@ communityRouter.put(
 			});
 
 			res.status(200).json(addLiketoArticle);
+			return;
 		} catch (err) {
 			next(err);
 		}
@@ -194,6 +189,7 @@ communityRouter.put(
 			});
 
 			res.status(200).json(removeLikefromArticle);
+			return;
 		} catch (err) {
 			next(err);
 		}
