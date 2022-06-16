@@ -2,7 +2,7 @@ import bcrypt from "bcrypt";
 import { v4 as uuidv4 } from "uuid";
 import jwt from "jsonwebtoken";
 
-import { db, userModel } from "../db";
+import { db, userModel, tourModel } from "../db";
 
 class UserService {
 	// 회원 정보 찾기 기능
@@ -136,6 +136,11 @@ class UserService {
 		// 해당 회원이 없을 경우 error
 		if (!user) {
 			throw new Error("system.error.noUser");
+		}
+
+		const isTourExist = await tourModel.isLandmarkExist({ id: tourId })
+		if(!isTourExist) {
+			throw new Error("system.error.noSuchTourId")
 		}
 
 		const isStampExist = await userModel.isStampExist({ userId, tourId });
