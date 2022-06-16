@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
+import Joi from "joi";
 
-import { db, userModel, communityModel } from "../db";
+import { userModel, communityModel } from "../db";
 
 class CommunityService {
 	static getArticles = async ({ getArticles }) => {
