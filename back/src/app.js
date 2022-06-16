@@ -1,11 +1,17 @@
-// import { router } from xxx
+import {
+	userRouter,
+	getLandmark,
+	tourRouter,
+	reviewRouter,
+	communityRouter,
+} from "./routers/";
+import { errorMiddleware } from "./middlewares/";
+import { swaggerUi, specs } from "./swagger/swagger";
 
 import express from "express";
 import cors from "cors";
-import swaggerJsDoc from "swagger-jsdoc";
 
 const app = express();
-const { swaggerUi, specs } = require("./modules/swagger");
 
 // default app.use
 app.use(cors());
@@ -18,5 +24,15 @@ app.use(
 	swaggerUi.serve,
 	swaggerUi.setup(specs, { explorer: true })
 );
+
+// routers
+app.use(userRouter);
+app.use(getLandmark);
+app.use(tourRouter);
+app.use(communityRouter);
+app.use(reviewRouter);
+
+// error Middleware
+app.use(errorMiddleware);
 
 export { app };
