@@ -3,7 +3,7 @@ import styled from "styled-components";
 const Profile = () => {
   return (
     <ProfileBox>
-      <ProfileImg src="https://dev-team8-bucket.s3.ap-northeast-2.amazonaws.com/20220611150713_9445_%EB%AC%BC%EC%86%8D.jpg.jpeg" />
+      <ProfileImg src="https://dev-team8-bucket.s3.ap-northeast-2.amazonaws.com/profileImg.png" />
 
       <InfoBox>
         <NickName>송가람</NickName>
@@ -17,10 +17,9 @@ const Profile = () => {
 };
 
 const ProfileBox = styled.div`
-  border: 1px solid red;
   display: flex;
   flex-direction: row;
-  // padding-left: 10px;
+  padding-left: 15px;
 `;
 
 const ProfileImg = styled.img.attrs({ alt: "프로필 이미지" })`

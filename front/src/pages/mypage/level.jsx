@@ -3,23 +3,24 @@ import styled from "styled-components";
 const Level = () => {
   return (
     <LevelBox>
-      <FigureContainer>
+      <FigureBox>
         <Desc>12 until Next Level</Desc>
         <ProgressBar value="8" max="20"></ProgressBar>
-      </FigureContainer>
-      <Number>8 / 20</Number>
+      </FigureBox>
+      <Number>
+        <Emphasized>8</Emphasized> / 20
+      </Number>
     </LevelBox>
   );
 };
 
 const LevelBox = styled.div`
-  border: 1px solid blue;
   display: flex;
   flex-direction: row;
   align-items: center;
 `;
 
-const FigureContainer = styled.div`
+const FigureBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -48,7 +49,17 @@ const Desc = styled.div`
   margin-bottom: 15px;
 `;
 
-const Number = styled.div``;
+const Number = styled.div`
+  color: ${({ theme }) => theme.colors.orange};
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-left: 25px;
+`;
+
+const Emphasized = styled.span`
+  color: ${({ theme }) => theme.colors.black};
+  font-size: 3rem;
+`;
 
 const ProgressBar = styled.progress``;
 
