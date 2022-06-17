@@ -6,7 +6,7 @@ import {
 	communityRouter,
 } from "./routers/";
 import { errorMiddleware } from "./middlewares/";
-import { swaggerUi, specs } from "./swagger/swagger";
+import { swaggerUi, specs } from "./swagger/";
 
 import express from "express";
 import cors from "cors";
