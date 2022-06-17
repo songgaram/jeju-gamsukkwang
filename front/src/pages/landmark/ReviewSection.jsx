@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import StarRating from "./StarRating";
+import { StarRating } from "./StarRating";
 import ReviewCounts from "./ReviewCounts";
 import ReviewList from "./ReviewList";
 import ReviewForm from "./ReviewForm";

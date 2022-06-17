@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import theme from "styles/Theme";
-import StarRating from "./StarRating";
+import { StarRating } from "./StarRating";
 
 const ReviewCounts = ({ data, totalReview }) => {
   const { star, reviews } = data;
-  console.log(data, totalReview);
+
   return (
     <CountsDeatil>
       <DetailTabCell align="right" width="20">

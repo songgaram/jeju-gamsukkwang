@@ -1,20 +1,18 @@
 import styled, { css } from "styled-components";
 import theme from "styles/Theme";
-import StarRating from "./StarRating";
+import { StarRating } from "./StarRating";
 
-export const ReviewCard = () => {
+export const ReviewCard = ({ review, idx }) => {
+  const { userNickName, content, rating } = review;
   return (
-    <ReviewCardContainer>
+    <ReviewCardContainer idx={idx}>
       <CardHeader>
-        <StarRating number={5} color={theme.colors.secondary} />
-        <CardText>가라미</CardText>
+        <StarRating number={rating} color={theme.colors.secondary} />
+        <CardText>{userNickName}</CardText>
         <CardText color="gray03">2022-02-20</CardText>
       </CardHeader>
       <CardContent>
-        <CardText>
-          유익한 시간이었구 제주도는 정말 오랜만이었는데 힐링되고 자연이 최고
-          인거 같습니다~ 추천해요!
-        </CardText>
+        <CardText>{content}</CardText>
       </CardContent>
     </ReviewCardContainer>
   );
@@ -22,6 +20,8 @@ export const ReviewCard = () => {
 
 const ReviewCardContainer = styled.div`
   width: 100%;
+  border-top: ${(props) =>
+    props.idx === 0 ? "none" : `1px dashed ${theme.colors.secondary}`};
 `;
 
 const CardHeader = styled.div`
@@ -46,3 +46,5 @@ const CardText = styled.p`
   }}
   margin-left: 1%;
 `;
+
+export default ReviewCard;
