@@ -1,15 +1,15 @@
 import styled, { css } from "styled-components";
 import theme from "styles/Theme";
-import { StarRating } from "./StarRating";
+import { StarRatingWithEmpty } from "./StarRating";
 
 export const ReviewCard = ({ review, idx }) => {
-  const { userNickName, content, rating } = review;
+  const { userNickName, content, rating, createdAt } = review;
   return (
     <ReviewCardContainer idx={idx}>
       <CardHeader>
-        <StarRating number={rating} color={theme.colors.secondary} />
+        <StarRatingWithEmpty number={rating} />
         <CardText>{userNickName}</CardText>
-        <CardText color="gray03">2022-02-20</CardText>
+        <CardText color="gray03">{createdAt.slice(0, 10)}</CardText>
       </CardHeader>
       <CardContent>
         <CardText>{content}</CardText>
