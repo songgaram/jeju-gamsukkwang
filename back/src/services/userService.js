@@ -29,7 +29,7 @@ class UserService {
 		const registerValidator = Joi.object({
 			email: Joi.string().trim().empty().required()
 				.email({ minDomainSegments: 2, tlds: { allow: ["com", "net", "kr", "io"] } } ),
-			password: Joi.string().trim().empty().pattern(new RegExp('^[a-zA-Z0-9]{8,20}$')).required(),
+				password: Joi.string().trim().empty().pattern(new RegExp('^[a-zA-Z0-9~`!@#$%^&*()-=+?]{8,}$')).required(),
 			nickname: Joi.string().trim().empty().min(2).required(),
 		})
 		await registerValidator.validateAsync({ email, password, nickname })

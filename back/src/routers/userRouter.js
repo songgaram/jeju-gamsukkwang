@@ -27,10 +27,11 @@ userRouter.post("/account/register", async (req, res, next) => {
 	try {
 
 		// 입력한 데이터의 유효성을 체크
+
 		const registerValidator = Joi.object({
 			email: Joi.string().trim().empty().required()
 				.email({ minDomainSegments: 2, tlds: { allow: ["com", "net", "kr", "io"] } } ),
-			password: Joi.string().trim().empty().pattern(new RegExp('^[a-zA-Z0-9]{8,20}$')).required(),
+			password: Joi.string().trim().empty().pattern(new RegExp('^[a-zA-Z0-9~`!@#$%^&*()-=+?]{8,}$')).required(),
 			nickname: Joi.string().trim().empty().min(2).required(),
 		})
 		const { email, password, nickname } = await registerValidator.validateAsync(req.body);
