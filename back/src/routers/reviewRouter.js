@@ -39,7 +39,6 @@ reviewRouter.post(
 
 			res.status(201).json(newReview);
 			return;
-			return;
 		} catch (err) {
 			next(err);
 		}
@@ -110,7 +109,14 @@ reviewRouter.put(
 				id: Joi.string().required(),
 			});
 
+			const bodySchema = Joi.object().keys({
+				content: Joi.string().required(),
+				rating: Joi.number().valid(5, 4, 3, 2, 1).required(),
+				imgFile: Joi.any(),
+			});
+
 			await paramSchema.validateAsync(req.params);
+			await bodySchema.validateAsync(req.body);
 
 			const loginUserId = req.currentUserId;
 			const reviewId = req.params.id;
