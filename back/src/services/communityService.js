@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
+import Joi from "joi";
 
-import { db, userModel, communityModel } from "../db";
+import { userModel, communityModel } from "../db";
 
 class CommunityService {
 	static getArticles = async ({ getArticles }) => {
@@ -46,31 +47,7 @@ class CommunityService {
 		}
 	};
 
-	static addArticle = async ({ loginUserId, title, content, head }) => {
-		const user = await userModel.findById({ userId: loginUserId });
-		const { nickname: userNickName } = user;
-		const id = uuidv4();
-
-		const newArticle = {
-			id,
-			userId: loginUserId,
-			userNickName,
-			title,
-			content,
-			head,
-		};
-
-		const createdNewArticle = await communityModel.create({ newArticle });
-		return createdNewArticle;
-	};
-
-	static addArticleWithImages = async ({
-		loginUserId,
-		title,
-		content,
-		head,
-		images,
-	}) => {
+	static addArticle = async ({ loginUserId, title, content, head, images }) => {
 		const user = await userModel.findById({ userId: loginUserId });
 		const { nickname: userNickName } = user;
 		const id = uuidv4();
