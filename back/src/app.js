@@ -35,4 +35,9 @@ app.use(reviewRouter);
 // error Middleware
 app.use(errorMiddleware);
 
+// 404 notFound (잘못된 주소 요청시)
+app.use((req, res, next) => {
+	res.status(404).json("Oops..404 notFound!")
+});
+
 export { app };
