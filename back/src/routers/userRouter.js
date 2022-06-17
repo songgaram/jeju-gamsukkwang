@@ -32,7 +32,7 @@ userRouter.post("/account/register", async (req, res, next) => {
 		const registerValidator = Joi.object({
 			email: Joi.string().trim().empty().required()
 				.email({ minDomainSegments: 2, tlds: { allow: ["com", "net", "kr", "io"] } } ),
-			password: Joi.string().trim().empty().pattern(new RegExp('^[a-zA-Z0-9]{4,10}$')).required(),
+			password: Joi.string().trim().empty().pattern(new RegExp('^[a-zA-Z0-9]{8,20}$')).required(),
 			nickname: Joi.string().trim().empty().min(2).required(),
 		})
 		const { email, password, nickname } = await registerValidator.validateAsync(req.body);
@@ -56,7 +56,7 @@ userRouter.post("/account/login", async (req, res, next) => {
 		// 입력한 데이터의 유효성을 체크
 		const loginValidator = Joi.object({
 			email: Joi.string().trim().empty().required(),
-			password: Joi.string().trim().empty().min(4).required(),
+			password: Joi.string().trim().empty().min(8).required(),
 		})
 		const { email, password } = await loginValidator.validateAsync(req.body);
 
