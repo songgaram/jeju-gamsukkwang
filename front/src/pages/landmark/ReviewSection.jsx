@@ -5,42 +5,13 @@ import ReviewList from "./ReviewList";
 import ReviewForm from "./ReviewForm";
 import { useGetRatingInfo } from "queries/reviewQuery";
 
-const DataSet = [
-  {
-    totalReview: 114,
-    star: 5,
-    review: 80,
-  },
-
-  {
-    totalReview: 114,
-    star: 4,
-    review: 20,
-  },
-  {
-    totalReview: 114,
-    star: 3,
-    review: 8,
-  },
-  {
-    totalReview: 114,
-    star: 2,
-    review: 6,
-  },
-  {
-    totalReview: 114,
-    star: 1,
-    review: 0,
-  },
-];
-
 const ReviewSection = ({ id }) => {
   const { data } = useGetRatingInfo(id);
-
+  const totalReview = data?.rating?.totalReview;
   return (
     <ReviewContainer>
       <ReviewHeader>
-        후기 <Highlighted>114</Highlighted>
+        후기 <Highlighted>{data?.rating?.totalReview}</Highlighted>
       </ReviewHeader>
       <RatingContainer>
         <RatingMean>
@@ -48,9 +19,14 @@ const ReviewSection = ({ id }) => {
           <StarRating number={5} />
         </RatingMean>
         <CountsContainer>
-          {DataSet.map((data) => (
-            <ReviewCounts data={data} key={data.star} />
-          ))}
+          {data &&
+            data.rating.starRating.map((data) => (
+              <ReviewCounts
+                data={data}
+                key={data.star}
+                totalReview={totalReview}
+              />
+            ))}
         </CountsContainer>
       </RatingContainer>
       <ReviewList id={id} />

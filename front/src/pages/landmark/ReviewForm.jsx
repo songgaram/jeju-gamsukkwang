@@ -54,7 +54,7 @@ const ReviewForm = () => {
 };
 
 const textList = [
-  "별로에요",
+  "별로예요",
   "그저 그래요",
   "보통이에요",
   "좋아요",

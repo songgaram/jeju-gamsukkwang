@@ -2,19 +2,21 @@ import styled from "styled-components";
 import theme from "styles/Theme";
 import StarRating from "./StarRating";
 
-const ReviewCounts = ({ data }) => {
+const ReviewCounts = ({ data, totalReview }) => {
+  const { star, reviews } = data;
+  console.log(data, totalReview);
   return (
     <CountsDeatil>
       <DetailTabCell align="right" width="20">
-        <StarRating number={data.star} color={theme.colors.secondary} />
+        <StarRating number={star} color={theme.colors.secondary} />
       </DetailTabCell>
       <DetailTabCell width="60">
         <BarContainer>
-          <Bar width={((data.review / data.totalReview) * 100).toFixed(2)} />
+          <Bar width={((reviews / totalReview) * 100).toFixed()} />
         </BarContainer>
       </DetailTabCell>
       <DetailTabCell align="left" width="20">
-        <CountsInfo>{data.review}</CountsInfo>
+        <CountsInfo>{reviews}</CountsInfo>
       </DetailTabCell>
     </CountsDeatil>
   );
