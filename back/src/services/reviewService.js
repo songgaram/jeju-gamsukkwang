@@ -1,37 +1,10 @@
-import { db, userModel, reviewModel } from "../db";
+import { userModel, reviewModel } from "../db";
+import Joi from "joi";
 
 import { v4 as uuidv4 } from "uuid";
 
 class ReviewService {
-	static addReview = async ({ loginUserId, tourId, content, rating }) => {
-		const user = await userModel.findById({ userId: loginUserId });
-		const userNickName = user.nickname;
-		const id = uuidv4();
-
-		const newReview = {
-			id,
-			tourId,
-			userId: loginUserId,
-			userNickName,
-			content,
-			rating,
-		};
-
-		// 이미 리뷰를 쓴 상태라면 { _id } 객체를 반환, 아니라면 null을 반환
-		const didPostReview = await reviewModel.isPosted({
-			tourId,
-			userId: loginUserId,
-		});
-
-		if (didPostReview) {
-			throw new Error("system.error.alreadyPosting");
-		}
-
-		const createdNewReview = await reviewModel.create({ newReview });
-		return createdNewReview;
-	};
-
-	static addReviewWithImages = async ({
+	static addReview = async ({
 		loginUserId,
 		tourId,
 		content,
