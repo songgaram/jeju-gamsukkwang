@@ -40,9 +40,15 @@ class ReviewService {
 	};
 
 	// 리뷰 목록 불러오기
-	static getReviews = async ({ tourId }) => {
-		const reviews = await reviewModel.findByTourId({ tourId });
+	static getReviews = async ({ getReviews }) => {
+		const reviews = await reviewModel.findByTourId({ getReviews });
 		return reviews;
+	};
+
+	// 리뷰 요약 정보 불러오기
+	static getReviewInfo = async ({ tourId }) => {
+		const reviewInfo = await reviewModel.findReviewData({ tourId });
+		return reviewInfo;
 	};
 
 	// 본인 리뷰인지 확인하고 수정하기

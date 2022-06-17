@@ -16,9 +16,32 @@ export const reviewModel = {
 	},
 
 	// 해당 랜드마크의 총 리뷰수, 평점 평균, 리뷰 목록 불러오기
-	findByTourId: async ({ tourId }) => {
-		const reviews = await Review.find({ tourId }).sort({ createdAt: -1 }); //리뷰 목록 최신순으로
+	findByTourId: async ({ getReviews }) => {
+		const { tourId, page, limit } = getReviews;
+		const total = await Review.countDocuments({ tourId });
+		const offset = (page - 1) * limit;
+		let totalPage = 0;
 
+		totalPage = Math.floor(total / limit);
+
+		if (total % limit !== 0) {
+			totalPage = Math.floor(total / limit) + 1;
+		}
+
+		const reviews = await Review.find({ tourId })
+			.limit(limit)
+			.skip(offset)
+			.sort({ createdAt: -1 }); //리뷰 목록 최신순으로
+
+		return {
+			total,
+			totalPage,
+			reviews,
+		};
+	},
+
+	// tourId로 리뷰 관련 정보 가져오기
+	findReviewData: async ({ tourId }) => {
 		const calc = await Review.aggregate([
 			{ $match: { tourId } },
 			{ $group: { _id: null, avg: { $avg: "$rating" }, cnt: { $sum: 1 } } },
@@ -66,7 +89,6 @@ export const reviewModel = {
 			totalReview,
 			avgRating,
 			starRating,
-			reviews,
 		};
 	},
 

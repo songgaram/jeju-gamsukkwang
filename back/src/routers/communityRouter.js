@@ -15,10 +15,6 @@ communityRouter.post(
 	s3Multi(),
 	async (req, res, next) => {
 		try {
-			if (is.emptyObject(req.body)) {
-				throw new Error("system.error.badRequest");
-			}
-
 			const bodySchema = Joi.object().keys({
 				title: Joi.string().required(),
 				content: Joi.string().required(),
@@ -57,10 +53,6 @@ communityRouter.put(
 	s3Multi(),
 	async (req, res, next) => {
 		try {
-			if (is.emptyObject(req.body)) {
-				throw new Error("system.error.badRequest");
-			}
-
 			const bodySchema = Joi.object().keys({
 				title: Joi.string().required(),
 				content: Joi.string().required(),
@@ -120,10 +112,6 @@ communityRouter.get("/community/:id", loginRequired, async (req, res, next) => {
 // 게시글 불러오기
 communityRouter.get("/community", async (req, res, next) => {
 	try {
-		if (is.emptyObject(req.query)) {
-			throw new Error("system.error.badRequest");
-		}
-
 		const querySchema = Joi.object().keys({
 			page: Joi.number(),
 			limit: Joi.number(),
@@ -157,10 +145,6 @@ communityRouter.delete(
 	loginRequired,
 	async (req, res, next) => {
 		try {
-			if (is.emptyObject(req.params)) {
-				throw new Error("system.error.badRequest");
-			}
-
 			const paramSchema = Joi.object().keys({
 				id: Joi.string().required(),
 			});
@@ -189,10 +173,6 @@ communityRouter.put(
 	loginRequired,
 	async (req, res, next) => {
 		try {
-			if (is.emptyObject(req.params)) {
-				throw new Error("system.error.noArticleId");
-			}
-
 			const paramSchema = Joi.object().keys({
 				id: Joi.string().required(),
 			});
@@ -222,10 +202,6 @@ communityRouter.put(
 	loginRequired,
 	async (req, res, next) => {
 		try {
-			if (is.emptyObject(req.params)) {
-				throw new Error("system.error.noArticleId");
-			}
-
 			const paramSchema = Joi.object().keys({
 				id: Joi.string().required(),
 			});
