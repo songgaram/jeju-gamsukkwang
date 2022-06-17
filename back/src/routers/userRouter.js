@@ -1,5 +1,3 @@
-import is from "@sindresorhus/is";
-
 import { Router } from "express";
 import { UserService } from "../services/UserService";
 import { loginRequired } from "../middlewares/";
@@ -13,7 +11,7 @@ userRouter.get("/account/:id", async (req, res, next) => {
 	try {
 
 		// userId의 유효성을 체크
-		const userIdValidator = Joi.string().empty().required()
+		const userIdValidator = Joi.string().trim().empty().required()
 		const userId = await userIdValidator.validateAsync(req.params.id);
 
 		const user = await UserService.findUser({ userId });
