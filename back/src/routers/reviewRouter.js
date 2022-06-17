@@ -15,9 +15,9 @@ reviewRouter.post(
 	async (req, res, next) => {
 		try {
 			const bodySchema = Joi.object().keys({
-				title: Joi.string().required(),
+				tourId: Joi.string().required(),
 				content: Joi.string().required(),
-				head: Joi.string().valid("free", "info", "question").required(),
+				rating: Joi.number().valid(5, 4, 3, 2, 1).required(),
 				imgFile: Joi.any(),
 			});
 
