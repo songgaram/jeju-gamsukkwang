@@ -3,6 +3,7 @@ import StarRating from "./StarRating";
 import ReviewCounts from "./ReviewCounts";
 import ReviewList from "./ReviewList";
 import ReviewForm from "./ReviewForm";
+import { useGetRatingInfo } from "queries/reviewQuery";
 
 const DataSet = [
   {
@@ -34,6 +35,8 @@ const DataSet = [
 ];
 
 const ReviewSection = ({ id }) => {
+  const { data } = useGetRatingInfo(id);
+
   return (
     <ReviewContainer>
       <ReviewHeader>
