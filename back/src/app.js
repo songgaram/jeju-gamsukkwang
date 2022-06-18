@@ -25,6 +25,7 @@ app.use(
 	swaggerUi.setup(specs, { explorer: true })
 );
 
+
 // routers
 app.use(userRouter);
 app.use(getLandmark);
