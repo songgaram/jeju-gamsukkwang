@@ -21,7 +21,7 @@ def predictImage(imageURL):
   pred = model.predict(img.reshape((1, 224,224,3)))
   probsArgsort = tf.argsort(pred, direction='DESCENDING')
   
-  category = pd.read_csv('category.csv', encoding='cp949')
+  category = pd.read_csv('categoryList.csv', encoding='cp949')
 
   summary = {}
   categoryDict = {}
