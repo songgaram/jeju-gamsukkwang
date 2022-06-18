@@ -6,7 +6,7 @@
 .pnp.js
 
 # jwt private/public key
-jwt.js
+/src/config
 
 # testing
 /coverage
