@@ -1,10 +1,10 @@
 paths:
-  /user/{id}:
+  /account/{id}:
     get:
       tags:
         - User
       summary: 회원 정보 가져오기
-      description: /user/:id로부터 회원 정보를 불러옵니다.
+      description: /account/:id로부터 회원 정보를 불러옵니다.
       parameters:
         - name: id
           in: path
@@ -18,12 +18,12 @@ paths:
         "400":
           description: 잘못된 요청을 보냈을 때 오류가 발생합니다.
 
-  /user/register:
+  /account/register:
     post:
       tags:
         - User
       summary: 회원 가입
-      description: /user/register로 회원 가입 요청을 보냅니다.
+      description: /account/register로 회원 가입 요청을 보냅니다.
       requestBody:
         required: true
         description: 이메일, 비밀번호, 닉네임을 필수 req.body로 받습니다.
@@ -31,24 +31,31 @@ paths:
           application/json:
             schema:
               type: object
-              example:
-                {
-                  "email": "test@elice.io",
-                  "password": "1234",
-                  "nickname": "test",
-                }
+              properties:
+                email:
+                  type: string
+                  required: true
+                  default: test@elice.io
+                password:
+                  type: string
+                  required: true
+                  default: "!234abcd"
+                nickname:
+                  type: string
+                  required: true
+                  default: test
       responses:
         "201":
           description: 회원 가입 성공
         "400":
           description: 중복된 이메일이나 닉네임을 보냈을 때 오류가 발생합니다.
 
-  /user/login:
+  /account/login:
     post:
       tags:
         - User
       summary: 회원 로그인
-      description: /user/login으로 회원 로그인 요청을 보냅니다.
+      description: /account/login으로 회원 로그인 요청을 보냅니다.
       requestBody:
         required: true
         description: 이메일, 비밀번호를 필수 req.body로 받습니다.
@@ -56,7 +63,15 @@ paths:
           application/json:
             schema:
               type: object
-              example: { "email": "test@elice.io", "password": "1234" }
+              properties:
+                email:
+                  type: string
+                  required: true
+                  default: test@elice.io
+                password:
+                  type: string
+                  required: true
+                  default: "!234abcd"
       responses:
         "201":
           description: 로그인 성공
@@ -75,7 +90,9 @@ paths:
         "200":
           description: 회원 탈퇴 성공
         "400":
-          description: 유효한 토큰을 가지고 있지 않거나, DB에 없는 회원일 시 오류가 발생합니다.
+          description: DB에 없는 회원일 시 오류가 발생합니다.
+        "403":
+          description: 로그인되어 있지 않을 때 오류가 발생합니다.
 
   /user/:
     put:
@@ -92,15 +109,21 @@ paths:
           application/json:
             schema:
               type: object
-              example: { "nickname": "testEditing" }
+              properties:
+                nickname:
+                  type: string
+                  required: true
+                  default: testEditing
       responses:
         "201":
           description: 회원 수정 성공
         "400":
-          description: 유효한 토큰을 가지고 있지 않거나, DB에 없는 회원이거나, 중복된 닉네임을 보낼 때 오류가 발생합니다.
+          description: DB에 없는 회원이거나, 중복된 닉네임을 보낼 때 오류가 발생합니다.
+        "403":
+          description: 로그인되어 있지 않을 때 오류가 발생합니다.
 
   /user/exp:
-    put:
+    post:
       tags:
         - User
       summary: 경험치(포인트) 증가
@@ -114,12 +137,18 @@ paths:
           application/json:
             schema:
               type: object
-              example: { "point": 10 }
+              properties:
+                point:
+                  type: integer
+                  required: true
+                  point: 10
       responses:
         "201":
           description: 경험치(포인트) 증가 성공
         "400":
-          description: 유효한 토큰을 가지고 있지 않거나, DB에 없는 회원이거나, 적립할 포인트를 입력하지 않을 경우 오류가 발생합니다.
+          description: DB에 없는 회원이거나, 적립할 포인트를 입력하지 않을 경우 오류가 발생합니다.
+        "403":
+          description: 로그인되어 있지 않을 때 오류가 발생합니다.
 
   /user/stamp:
     post:
@@ -136,12 +165,18 @@ paths:
           application/json:
             schema:
               type: object
-              example: { "tourId": "011bcd14-2cc7-4195-9ec9-747e4fb1838a" }
+              properties:
+                tourId:
+                  type: string
+                  required: true
+                  default: 011bcd14-2cc7-4195-9ec9-747e4fb1838a
       responses:
         "201":
           description: 스탬프 추가 성공
         "400":
           description: 이미 스탬프로 추가한 랜드마크거나, DB에 없는 회원이거나, 잘못된 요청을 보냈을 때 오류가 발생합니다.
+        "403":
+          description: 로그인되어 있지 않을 때 오류가 발생합니다.
 
   /user/profileImg:
     put:
@@ -166,4 +201,6 @@ paths:
         "201":
           description: 프로필 이미지 업로드 및 수정 성공
         "400":
-          description: 유효한 토큰을 가지고 있지 않거나, DB에 없는 회원이거나, 이미지 파일이 아닐 경우 오류가 발생합니다.
+          description: DB에 없는 회원이거나, 이미지 파일이 아닐 경우 오류가 발생합니다.
+        "403":
+          description: 로그인되어 있지 않을 때 오류가 발생합니다.

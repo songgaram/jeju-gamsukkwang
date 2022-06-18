@@ -1,9 +1,10 @@
 import is from "@sindresorhus/is";
+import Joi from "joi";
 
 import { Router } from "express";
-import { communityService } from "../services/communityService";
-import { loginRequired } from "../middlewares/loginRequired";
-import { s3Array } from "../middlewares/multerS3";
+import { CommunityService } from "../services/CommunityService";
+import { loginRequired } from "../middlewares/";
+import { s3Multi } from "../middlewares/multerS3";
 
 const communityRouter = Router();
 
@@ -11,40 +12,34 @@ const communityRouter = Router();
 communityRouter.post(
 	"/community",
 	loginRequired,
-	s3Array(),
+	s3Multi(),
 	async (req, res, next) => {
 		try {
-			if (is.emptyObject(req.body)) {
-				throw new Error("system.error.badRequest");
-			}
+			const bodySchema = Joi.object().keys({
+				title: Joi.string().required(),
+				content: Joi.string().required(),
+				head: Joi.string().valid("free", "info", "question").required(),
+				imgFile: Joi.any(),
+			});
+
+			await bodySchema.validateAsync(req.body);
 
 			const loginUserId = req.currentUserId;
 			const { title, content, head } = req.body;
+			const images = req.files.map(
+				(image) => image.location.split("amazonaws.com/")[1]
+			);
 
-			if (req.files) {
-				const images = req.files.map(
-					(image) => image.location.split("amazonaws.com/")[1]
-				);
-
-				const newArticle = await communityService.addArticleWithImages({
-					loginUserId,
-					title,
-					content,
-					head,
-					images,
-				});
-
-				res.status(201).json(newArticle);
-			}
-
-			const newArticle = await communityService.addArticle({
+			const newArticle = await CommunityService.addArticle({
 				loginUserId,
 				title,
 				content,
 				head,
+				images,
 			});
 
 			res.status(201).json(newArticle);
+			return;
 		} catch (err) {
 			next(err);
 		}
@@ -55,12 +50,17 @@ communityRouter.post(
 communityRouter.put(
 	"/community/:id",
 	loginRequired,
-	s3Array(),
+	s3Multi(),
 	async (req, res, next) => {
 		try {
-			if (is.emptyObject(req.body)) {
-				throw new Error("system.error.badRequest");
-			}
+			const bodySchema = Joi.object().keys({
+				title: Joi.string().required(),
+				content: Joi.string().required(),
+				head: Joi.string().valid("free", "info", "question").required(),
+				imgFile: Joi.any(),
+			});
+
+			await bodySchema.validateAsync(req.body);
 
 			const loginUserId = req.currentUserId;
 			const articleId = req.params.id;
@@ -73,15 +73,17 @@ communityRouter.put(
 					(image) => image.location.split("amazonaws.com/")[1]
 				);
 				toUpdate.saveFileName = images;
+				return;
 			}
 
-			const editedArticle = await communityService.setArticle({
+			const editedArticle = await CommunityService.setArticle({
 				loginUserId,
 				articleId,
 				toUpdate,
 			});
 
 			res.status(201).json(editedArticle);
+			return;
 		} catch (err) {
 			next(err);
 		}
@@ -91,10 +93,17 @@ communityRouter.put(
 // 특정 게시글 불러오기
 communityRouter.get("/community/:id", loginRequired, async (req, res, next) => {
 	try {
+		const paramSchema = Joi.object().keys({
+			id: Joi.string().required(),
+		});
+
+		await paramSchema.validateAsync(req.params);
+
 		const articleId = req.params.id;
-		const article = await communityService.getArticle({ articleId });
+		const article = await CommunityService.getArticle({ articleId });
 
 		res.status(200).json(article);
+		return;
 	} catch (err) {
 		next(err);
 	}
@@ -103,11 +112,16 @@ communityRouter.get("/community/:id", loginRequired, async (req, res, next) => {
 // 게시글 불러오기
 communityRouter.get("/community", async (req, res, next) => {
 	try {
-		if (is.emptyObject(req.query)) {
-			throw new Error("system.error.badRequest");
-		}
-		const page = req.query.page || 1;
-		const limit = req.query.limit || 10;
+		const querySchema = Joi.object().keys({
+			page: Joi.number(),
+			limit: Joi.number(),
+			head: Joi.string().valid("", "free", "info", "question"),
+		});
+
+		await querySchema.validateAsync(req.query);
+
+		const page = +req.query.page || 1;
+		const limit = +req.query.limit || 10;
 		const head = req.query.head;
 
 		const getArticles = {
@@ -116,9 +130,10 @@ communityRouter.get("/community", async (req, res, next) => {
 			head,
 		};
 
-		const articles = await communityService.getArticles({ getArticles });
+		const articles = await CommunityService.getArticles({ getArticles });
 
 		res.status(200).send(articles);
+		return;
 	} catch (err) {
 		next(err);
 	}
@@ -130,18 +145,22 @@ communityRouter.delete(
 	loginRequired,
 	async (req, res, next) => {
 		try {
-			if (is.emptyObject(req.params)) {
-				throw new Error("system.error.badRequest");
-			}
+			const paramSchema = Joi.object().keys({
+				id: Joi.string().required(),
+			});
+
+			await paramSchema.validateAsync(req.params);
+
 			const loginUserId = req.currentUserId;
 			const articleId = req.params.id;
 
-			const deletedArticle = await communityService.deleteArticle({
+			const deletedArticle = await CommunityService.deleteArticle({
 				articleId,
 				loginUserId,
 			});
 
 			res.status(200).send(deletedArticle);
+			return;
 		} catch (err) {
 			next(err);
 		}
@@ -150,24 +169,27 @@ communityRouter.delete(
 
 // 게시글 좋아요 추가
 communityRouter.put(
-	"/community/like/:id",
+	"/community/:id/like",
 	loginRequired,
 	async (req, res, next) => {
 		try {
-			if (is.emptyObject(req.params)) {
-				throw new Error("system.error.noArticleId");
-			}
+			const paramSchema = Joi.object().keys({
+				id: Joi.string().required(),
+			});
+
+			await paramSchema.validateAsync(req.params);
 
 			// req에서 데이터 가져오기
 			const userId = req.currentUserId;
 			const articleId = req.params.id;
 
-			const addLiketoArticle = await communityService.addLike({
+			const addLiketoArticle = await CommunityService.addLike({
 				articleId,
 				currentUserId: userId,
 			});
 
 			res.status(200).json(addLiketoArticle);
+			return;
 		} catch (err) {
 			next(err);
 		}
@@ -176,24 +198,27 @@ communityRouter.put(
 
 // 게시글 싫어요 추가
 communityRouter.put(
-	"/community/dislike/:id",
+	"/community/:id/dislike",
 	loginRequired,
 	async (req, res, next) => {
 		try {
-			if (is.emptyObject(req.params)) {
-				throw new Error("system.error.noArticleId");
-			}
+			const paramSchema = Joi.object().keys({
+				id: Joi.string().required(),
+			});
+
+			await paramSchema.validateAsync(req.params);
 
 			// req에서 데이터 가져오기
 			const userId = req.currentUserId;
 			const articleId = req.params.id;
 
-			const removeLikefromArticle = await communityService.removeLike({
+			const removeLikefromArticle = await CommunityService.removeLike({
 				articleId,
 				currentUserId: userId,
 			});
 
 			res.status(200).json(removeLikefromArticle);
+			return;
 		} catch (err) {
 			next(err);
 		}

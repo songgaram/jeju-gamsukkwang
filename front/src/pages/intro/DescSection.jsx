@@ -21,7 +21,7 @@ const content = [
   },
 ];
 
-function DescSection() {
+const DescSection = () => {
   return (
     <CardSectionContainer>
       <Descrption
@@ -44,7 +44,7 @@ function DescSection() {
       />
     </CardSectionContainer>
   );
-}
+};
 
 const CardSectionContainer = styled.div`
   width: 100%;

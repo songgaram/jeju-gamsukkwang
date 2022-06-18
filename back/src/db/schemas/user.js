@@ -1,5 +1,4 @@
-import pkg from "mongoose";
-const { Schema, model } = pkg;
+import { Schema, model } from "mongoose";
 
 const UserSchema = new Schema(
 	{
@@ -29,16 +28,16 @@ const UserSchema = new Schema(
 			type: String,
 		},
 		stamp: {
-			type: Array,
+			type: [String],
 			default: [],
 		},
-		exp: {
+		experience: {
 			type: Number,
 			default: 0,
 		},
-		saveFileName: {
+		profileImgUrl: {
 			type: String,
-			default: "defaultProfile.jpg",
+			default: "undefined",
 		},
 	},
 	{
