@@ -2,7 +2,7 @@ import { loginRequired } from "../middlewares/";
 import { TourService } from "../services/TourService";
 
 import { Router } from "express";
-import is from "@sindresorhus/is";
+import * as Joi from 'joi'
 
 const tourRouter = Router();
 
@@ -20,11 +20,9 @@ tourRouter.get("/tour", async (req, res, next) => {
 // 랜드마크 ID로 특정 랜드마크 정보 GET
 tourRouter.get("/tour/:id", async (req, res, next) => {
 	try {
-		if (is.emptyObject(req.params)) {
-			throw new Error("system.error.noLandmarkId");
-		}
 
-		const { id } = req.params;
+		const tourIdValidator = Joi.string().empty().required();
+		const id = await tourIdValidator.validateAsync(req.params.id)
 
 		const landmark = await TourService.getLandmark({ id });
 
@@ -37,13 +35,11 @@ tourRouter.get("/tour/:id", async (req, res, next) => {
 // 랜드마크 좋아요 추가
 tourRouter.put("/tour/:id/like", loginRequired, async (req, res, next) => {
 	try {
-		if (is.emptyObject(req.params)) {
-			throw new Error("system.error.noLandmarkId");
-		}
 
-		// req에서 데이터 가져오기
 		const userId = req.currentUserId;
-		const { id } = req.params;
+
+		const tourIdValidator = Joi.string().empty().required();
+		const id = await tourIdValidator.validateAsync(req.params.id)
 
 		const addLiketoLandmark = await TourService.addLike({
 			id,
@@ -59,13 +55,11 @@ tourRouter.put("/tour/:id/like", loginRequired, async (req, res, next) => {
 // 랜드마크 싫어요 추가
 tourRouter.put("/tour/:id/dislike", loginRequired, async (req, res, next) => {
 	try {
-		if (is.emptyObject(req.params)) {
-			throw new Error("system.error.noLandmarkId");
-		}
 
-		// req에서 데이터 가져오기
 		const userId = req.currentUserId;
-		const { id } = req.params;
+
+		const tourIdValidator = Joi.string().empty().required();
+		const id = await tourIdValidator.validateAsync(req.params.id)
 
 		const removeLikefromLandmark = await TourService.removeLike({
 			id,

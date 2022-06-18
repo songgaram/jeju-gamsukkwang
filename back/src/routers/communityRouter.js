@@ -1,4 +1,5 @@
 import is from "@sindresorhus/is";
+import Joi from "joi";
 
 import { Router } from "express";
 import { CommunityService } from "../services/CommunityService";
@@ -14,37 +15,31 @@ communityRouter.post(
 	s3Multi(),
 	async (req, res, next) => {
 		try {
-			if (is.emptyObject(req.body)) {
-				throw new Error("system.error.badRequest");
-			}
+			const bodySchema = Joi.object().keys({
+				title: Joi.string().required(),
+				content: Joi.string().required(),
+				head: Joi.string().valid("free", "info", "question").required(),
+				imgFile: Joi.any(),
+			});
+
+			await bodySchema.validateAsync(req.body);
 
 			const loginUserId = req.currentUserId;
 			const { title, content, head } = req.body;
-
-			if (req.files) {
-				const images = req.files.map(
-					(image) => image.location.split("amazonaws.com/")[1]
-				);
-
-				const newArticle = await CommunityService.addArticleWithImages({
-					loginUserId,
-					title,
-					content,
-					head,
-					images,
-				});
-
-				res.status(201).json(newArticle);
-			}
+			const images = req.files.map(
+				(image) => image.location.split("amazonaws.com/")[1]
+			);
 
 			const newArticle = await CommunityService.addArticle({
 				loginUserId,
 				title,
 				content,
 				head,
+				images,
 			});
 
 			res.status(201).json(newArticle);
+			return;
 		} catch (err) {
 			next(err);
 		}
@@ -58,9 +53,14 @@ communityRouter.put(
 	s3Multi(),
 	async (req, res, next) => {
 		try {
-			if (is.emptyObject(req.body)) {
-				throw new Error("system.error.badRequest");
-			}
+			const bodySchema = Joi.object().keys({
+				title: Joi.string().required(),
+				content: Joi.string().required(),
+				head: Joi.string().valid("free", "info", "question").required(),
+				imgFile: Joi.any(),
+			});
+
+			await bodySchema.validateAsync(req.body);
 
 			const loginUserId = req.currentUserId;
 			const articleId = req.params.id;
@@ -73,6 +73,7 @@ communityRouter.put(
 					(image) => image.location.split("amazonaws.com/")[1]
 				);
 				toUpdate.saveFileName = images;
+				return;
 			}
 
 			const editedArticle = await CommunityService.setArticle({
@@ -82,6 +83,7 @@ communityRouter.put(
 			});
 
 			res.status(201).json(editedArticle);
+			return;
 		} catch (err) {
 			next(err);
 		}
@@ -91,10 +93,17 @@ communityRouter.put(
 // 특정 게시글 불러오기
 communityRouter.get("/community/:id", loginRequired, async (req, res, next) => {
 	try {
+		const paramSchema = Joi.object().keys({
+			id: Joi.string().required(),
+		});
+
+		await paramSchema.validateAsync(req.params);
+
 		const articleId = req.params.id;
 		const article = await CommunityService.getArticle({ articleId });
 
 		res.status(200).json(article);
+		return;
 	} catch (err) {
 		next(err);
 	}
@@ -103,9 +112,14 @@ communityRouter.get("/community/:id", loginRequired, async (req, res, next) => {
 // 게시글 불러오기
 communityRouter.get("/community", async (req, res, next) => {
 	try {
-		if (is.emptyObject(req.query)) {
-			throw new Error("system.error.badRequest");
-		}
+		const querySchema = Joi.object().keys({
+			page: Joi.number(),
+			limit: Joi.number(),
+			head: Joi.string().valid("", "free", "info", "question"),
+		});
+
+		await querySchema.validateAsync(req.query);
+
 		const page = +req.query.page || 1;
 		const limit = +req.query.limit || 10;
 		const head = req.query.head;
@@ -119,6 +133,7 @@ communityRouter.get("/community", async (req, res, next) => {
 		const articles = await CommunityService.getArticles({ getArticles });
 
 		res.status(200).send(articles);
+		return;
 	} catch (err) {
 		next(err);
 	}
@@ -130,9 +145,12 @@ communityRouter.delete(
 	loginRequired,
 	async (req, res, next) => {
 		try {
-			if (is.emptyObject(req.params)) {
-				throw new Error("system.error.badRequest");
-			}
+			const paramSchema = Joi.object().keys({
+				id: Joi.string().required(),
+			});
+
+			await paramSchema.validateAsync(req.params);
+
 			const loginUserId = req.currentUserId;
 			const articleId = req.params.id;
 
@@ -142,6 +160,7 @@ communityRouter.delete(
 			});
 
 			res.status(200).send(deletedArticle);
+			return;
 		} catch (err) {
 			next(err);
 		}
@@ -154,9 +173,11 @@ communityRouter.put(
 	loginRequired,
 	async (req, res, next) => {
 		try {
-			if (is.emptyObject(req.params)) {
-				throw new Error("system.error.noArticleId");
-			}
+			const paramSchema = Joi.object().keys({
+				id: Joi.string().required(),
+			});
+
+			await paramSchema.validateAsync(req.params);
 
 			// req에서 데이터 가져오기
 			const userId = req.currentUserId;
@@ -168,6 +189,7 @@ communityRouter.put(
 			});
 
 			res.status(200).json(addLiketoArticle);
+			return;
 		} catch (err) {
 			next(err);
 		}
@@ -180,9 +202,11 @@ communityRouter.put(
 	loginRequired,
 	async (req, res, next) => {
 		try {
-			if (is.emptyObject(req.params)) {
-				throw new Error("system.error.noArticleId");
-			}
+			const paramSchema = Joi.object().keys({
+				id: Joi.string().required(),
+			});
+
+			await paramSchema.validateAsync(req.params);
 
 			// req에서 데이터 가져오기
 			const userId = req.currentUserId;
@@ -194,6 +218,7 @@ communityRouter.put(
 			});
 
 			res.status(200).json(removeLikefromArticle);
+			return;
 		} catch (err) {
 			next(err);
 		}
