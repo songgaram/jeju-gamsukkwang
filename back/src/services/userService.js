@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 import { v4 as uuidv4 } from "uuid";
 import jwt from "jsonwebtoken";
 import * as Joi from 'joi'
+import { privateKey } from '../config/jwt'
 
 import { db, userModel, tourModel } from "../db";
 
@@ -91,13 +92,12 @@ class UserService {
 			throw new Error("system.error.differentPassword");
 		}
 
-		// 로그인 성공 => jwt 생성
-		const secretKey = process.env.JWT_SECRET_KEY;
-		if (!secretKey) {
-			throw new Error("system.error.noSecretKey");
+		if (!privateKey) {
+			throw new Error("system.error.noPrivateKey");
 		}
-		const token = jwt.sign({ userId: id }, secretKey, {
-			expiresIn: "1 days",
+		const token = jwt.sign({ userId: id }, privateKey, {
+			algorithm: 'RS256',
+			expiresIn: "24h",
 		});
 
 		// loginUser 객체에 반환할 데이터 설정
