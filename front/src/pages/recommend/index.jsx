@@ -1,4 +1,5 @@
 import RecommendCard from "./card";
+import Dropdown from "./dropdown";
 
 import { TourPage, ContentBox, CardsContainer } from "./recommend.style";
 

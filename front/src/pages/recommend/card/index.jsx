@@ -1,13 +1,16 @@
 import { useNavigate } from "react-router-dom";
+import { useRecoilValue } from "recoil";
 
-import { useGetRecommendLikes } from "queries/recommendQuery";
+import { filterStatus } from "../states";
+import { useGetLikes } from "queries/recommendQuery";
 
 import { Card, TextBox, ImgBox, Img } from "./card.style";
 
 const RecommendCard = () => {
   const navigate = useNavigate();
+  const filter = useRecoilValue(filterStatus);
 
-  const List = useGetRecommendLikes();
+  const List = useGetLikes();
 
   const handleClick = (tourId) => {
     navigate(`/landmark/detail/${tourId}`);
