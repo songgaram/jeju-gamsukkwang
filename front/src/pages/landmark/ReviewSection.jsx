@@ -6,8 +6,10 @@ import ReviewForm from "./ReviewForm";
 import { useGetRatingInfo } from "queries/reviewQuery";
 
 const ReviewSection = ({ id }) => {
-  const { data } = useGetRatingInfo(id);
+  const { data, isLoading } = useGetRatingInfo(id);
+
   const totalReview = data?.rating?.totalReview;
+
   return (
     <ReviewContainer>
       <ReviewHeader>
@@ -19,14 +21,16 @@ const ReviewSection = ({ id }) => {
           <StarRating number={5} />
         </RatingMean>
         <CountsContainer>
-          {data &&
-            data.rating.starRating.map((data) => (
-              <ReviewCounts
-                data={data}
-                key={data.star}
-                totalReview={totalReview}
-              />
-            ))}
+          <CountsContent>
+            {data &&
+              data.rating.starRating.map((data) => (
+                <ReviewCounts
+                  data={data}
+                  key={data.star}
+                  totalReview={totalReview}
+                />
+              ))}
+          </CountsContent>
         </CountsContainer>
       </RatingContainer>
       <ReviewList id={id} />
@@ -66,7 +70,15 @@ const RatingMean = styled.div`
 const CountsContainer = styled.div`
   width: 65%;
   background-color: ${({ theme }) => theme.colors.gray01};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const CountsContent = styled.div`
+  height: 200px;
   display: table;
+  width: 100%;
 `;
 
 const ReviewContainer = styled.div`

@@ -28,6 +28,7 @@ const ReviewForm = () => {
             onMouseEnter={() => setHovered(el)}
             onMouseLeave={() => setHovered(null)}
             onClick={() => setClicked(el)}
+            style={{ cursor: "pointer" }}
           />
         ))}
       </StarContainer>

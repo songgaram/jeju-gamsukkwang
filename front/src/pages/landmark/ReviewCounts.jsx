@@ -10,7 +10,7 @@ const ReviewCounts = ({ data, totalReview }) => {
       <DetailTabCell align="right" width="20">
         <StarRating number={star} color={theme.colors.secondary} />
       </DetailTabCell>
-      <DetailTabCell width="60">
+      <DetailTabCell width="60" align="center">
         <BarContainer>
           <Bar width={((reviews / totalReview) * 100).toFixed()} />
         </BarContainer>
@@ -34,11 +34,13 @@ const DetailTabCell = styled.div`
 `;
 
 const BarContainer = styled.div`
-  width: 230px;
+  width: 100%;
   height: 6px;
   background-color: ${({ theme }) => theme.colors.gray02};
   border-radius: 4px;
   position: relative;
+  display: inline-block;
+  text-align: left;
 `;
 
 const Bar = styled.div`
