@@ -7,6 +7,7 @@ import Button from "components/Button";
 const ReviewForm = () => {
   const [hovered, setHovered] = useState(null);
   const [clicked, setClicked] = useState(null);
+  const [body, setBody] = useState("");
 
   return (
     <>
@@ -44,12 +45,11 @@ const ReviewForm = () => {
         <Title>다른 여행객을 위한 후기와 팁</Title>
         <Required>필수</Required>
       </HeaderContainer>
-      <div>
-        <InputForm />
-      </div>
-      <BtnPosition>
+      <InputForm value={body} onChange={(e) => setBody(e.target.value)} />
+      <Footer>
         <Button color="secondary">리뷰 등록</Button>
-      </BtnPosition>
+        <div>{body.length}/1000</div>
+      </Footer>
     </>
   );
 };
@@ -87,9 +87,13 @@ const Required = styled.p`
   font-weight: bold;
 `;
 
-const BtnPosition = styled.div`
+const Footer = styled.div`
   width: 100%;
-  padding-left: 93%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  height: 50px;
 `;
 
 const HiddenText = styled.p`
@@ -110,6 +114,7 @@ const InputForm = styled.textarea`
   height: 300px;
   margin: 1% 0;
   resize: none;
+  maxlength: 100;
 `;
 
 export default ReviewForm;
