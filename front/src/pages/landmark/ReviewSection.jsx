@@ -1,43 +1,19 @@
 import styled from "styled-components";
-import StarRating from "./StarRating";
+import { StarRating } from "./StarRating";
 import ReviewCounts from "./ReviewCounts";
 import ReviewList from "./ReviewList";
 import ReviewForm from "./ReviewForm";
+import { useGetRatingInfo } from "queries/reviewQuery";
 
-const DataSet = [
-  {
-    totalReview: 114,
-    star: 5,
-    review: 80,
-  },
+const ReviewSection = ({ id }) => {
+  const { data, isLoading } = useGetRatingInfo(id);
 
-  {
-    totalReview: 114,
-    star: 4,
-    review: 20,
-  },
-  {
-    totalReview: 114,
-    star: 3,
-    review: 8,
-  },
-  {
-    totalReview: 114,
-    star: 2,
-    review: 6,
-  },
-  {
-    totalReview: 114,
-    star: 1,
-    review: 0,
-  },
-];
+  const totalReview = data?.rating?.totalReview;
 
-const ReviewSection = () => {
   return (
     <ReviewContainer>
       <ReviewHeader>
-        후기 <Highlighted>114</Highlighted>
+        후기 <Highlighted>{data?.rating?.totalReview}</Highlighted>
       </ReviewHeader>
       <RatingContainer>
         <RatingMean>
@@ -45,12 +21,19 @@ const ReviewSection = () => {
           <StarRating number={5} />
         </RatingMean>
         <CountsContainer>
-          {DataSet.map((data) => (
-            <ReviewCounts data={data} key={data.star} />
-          ))}
+          <CountsContent>
+            {data &&
+              data.rating.starRating.map((data) => (
+                <ReviewCounts
+                  data={data}
+                  key={data.star}
+                  totalReview={totalReview}
+                />
+              ))}
+          </CountsContent>
         </CountsContainer>
       </RatingContainer>
-      <ReviewList />
+      <ReviewList id={id} />
       <ReviewForm />
     </ReviewContainer>
   );
@@ -87,7 +70,15 @@ const RatingMean = styled.div`
 const CountsContainer = styled.div`
   width: 65%;
   background-color: ${({ theme }) => theme.colors.gray01};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const CountsContent = styled.div`
+  height: 200px;
   display: table;
+  width: 100%;
 `;
 
 const ReviewContainer = styled.div`
