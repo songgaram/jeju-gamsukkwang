@@ -6,14 +6,14 @@ import ReviewForm from "./ReviewForm";
 import { useGetRatingInfo } from "queries/reviewQuery";
 
 const ReviewSection = ({ id }) => {
-  const { data, isLoading } = useGetRatingInfo(id);
+  const { data } = useGetRatingInfo(id);
 
   const totalReview = data?.rating?.totalReview;
 
   return (
     <ReviewContainer>
       <ReviewHeader>
-        후기 <Highlighted>{data?.rating?.totalReview}</Highlighted>
+        후기 <Highlighted>{totalReview}</Highlighted>
       </ReviewHeader>
       <RatingContainer>
         <RatingMean>

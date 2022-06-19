@@ -45,7 +45,7 @@ const ReviewForm = () => {
         <Required>필수</Required>
       </HeaderContainer>
       <div>
-        <textarea style={{ width: "100%", height: "300px", margin: "1% 0" }} />
+        <InputForm />
       </div>
       <BtnPosition>
         <Button color="secondary">리뷰 등록</Button>
@@ -103,6 +103,13 @@ const HiddenText = styled.p`
   color: ${theme.colors.gray03};
   font-size: ${theme.fontSizes.lg};
   ${({ show }) => (show ? `display:block` : `display: none`)}
+`;
+
+const InputForm = styled.textarea`
+  width: 100%;
+  height: 300px;
+  margin: 1% 0;
+  resize: none;
 `;
 
 export default ReviewForm;
