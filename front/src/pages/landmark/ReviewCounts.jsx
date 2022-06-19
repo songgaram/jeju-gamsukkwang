@@ -1,20 +1,22 @@
 import styled from "styled-components";
 import theme from "styles/Theme";
-import StarRating from "./StarRating";
+import { StarRating } from "./StarRating";
 
-const ReviewCounts = ({ data }) => {
+const ReviewCounts = ({ data, totalReview }) => {
+  const { star, reviews } = data;
+
   return (
     <CountsDeatil>
       <DetailTabCell align="right" width="20">
-        <StarRating number={data.star} color={theme.colors.secondary} />
+        <StarRating number={star} color={theme.colors.secondary} />
       </DetailTabCell>
-      <DetailTabCell width="60">
+      <DetailTabCell width="60" align="center">
         <BarContainer>
-          <Bar width={((data.review / data.totalReview) * 100).toFixed(2)} />
+          <Bar width={((reviews / totalReview) * 100).toFixed()} />
         </BarContainer>
       </DetailTabCell>
       <DetailTabCell align="left" width="20">
-        <CountsInfo>{data.review}</CountsInfo>
+        <CountsInfo>{reviews}</CountsInfo>
       </DetailTabCell>
     </CountsDeatil>
   );
@@ -32,11 +34,13 @@ const DetailTabCell = styled.div`
 `;
 
 const BarContainer = styled.div`
-  width: 230px;
+  width: 100%;
   height: 6px;
   background-color: ${({ theme }) => theme.colors.gray02};
   border-radius: 4px;
   position: relative;
+  display: inline-block;
+  text-align: left;
 `;
 
 const Bar = styled.div`
