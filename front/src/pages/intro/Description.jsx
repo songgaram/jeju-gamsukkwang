@@ -1,7 +1,7 @@
 import styled from "styled-components";
 // import { CardTitle, CardSubtitle } from "./intro";
 import Button from "components/Button";
-import { useScrollFadeIn } from "assets/hook/useScrollFadeIn";
+import { useScrollFadeIn } from "hooks/useScrollFadeIn";
 import DescImage1 from "assets/images/DescImage1.png";
 import DescImage2 from "assets/images/DescImage2.png";
 import DescImage3 from "assets/images/DescImage3.png";
@@ -12,7 +12,7 @@ const image = {
   2: DescImage3,
 };
 
-function Descrption({ title, subtitle, number, flex }) {
+const Descrption = ({ title, subtitle, number, flex }) => {
   const animatedItem = {
     0: useScrollFadeIn("left", 0.9, 0.1),
     1: useScrollFadeIn("right", 0.9, 0.3),
@@ -35,7 +35,7 @@ function Descrption({ title, subtitle, number, flex }) {
       </DescrptionCard>
     </DescContainer>
   );
-}
+};
 
 const DescContainer = styled.div`
   width: 100%;

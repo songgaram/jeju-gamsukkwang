@@ -1,11 +1,11 @@
 import styled from "styled-components";
 
-const LogInContainer = styled.div`
+const RegisterContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: calc(100vh - 70px);
   letter-spacing: 0.5px;
 
   img {
@@ -20,7 +20,7 @@ const Title = styled.h2`
   color: ${({ theme }) => theme.colors.primary};
 `;
 
-const LogInForm = styled.form`
+const RegisterForm = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -29,14 +29,14 @@ const LogInForm = styled.form`
   margin: 0 auto;
 
   span {
-    margin-top: 50px;
+    margin: 20px 0;
     font-size: 14px;
     color: ${({ theme }) => theme.colors.gray03};
     cursor: pointer;
   }
 `;
 
-const LoginButton = styled.button`
+const RegisterButton = styled.button`
   width: 442px;
   height: 48px;
   font-weight: 600;
@@ -66,4 +66,4 @@ const InputBox = styled.div`
   }
 `;
 
-export { LogInContainer, Title, LogInForm, InputBox, LoginButton };
+export { RegisterContainer, Title, RegisterForm, InputBox, RegisterButton };

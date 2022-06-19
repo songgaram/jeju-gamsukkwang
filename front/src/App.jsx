@@ -1,10 +1,12 @@
 import { Route, Routes } from "react-router-dom";
 
+import Home from "pages/home";
+import Intro from "pages/intro";
+import Register from "pages/register";
+import Landmark from "pages/landmark";
+import LogIn from "pages/logIn";
 import Layout from "components/layout";
-import Home from "page/home";
-import Register from "page/register";
-import Intro from "page/intro";
-import LogIn from "page/logIn";
+import Tour from "pages/tour";
 
 const App = () => {
   return (
@@ -14,6 +16,8 @@ const App = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<LogIn />} />
         <Route path="/intro" element={<Intro />} />
+        <Route path="/landmark/detail/:id" element={<Landmark />} />
+        <Route path="/tour" element={<Tour />} />
       </Route>
     </Routes>
   );

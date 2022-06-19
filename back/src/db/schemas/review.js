@@ -1,5 +1,4 @@
-import pkg from "mongoose";
-const { Schema, model } = pkg;
+import { Schema, model } from "mongoose";
 
 const ReviewSchema = new Schema(
 	{
@@ -34,7 +33,7 @@ const ReviewSchema = new Schema(
 			index: true,
 		},
 		saveFileName: {
-			type: Array,
+			type: [String],
 			default: [],
 		},
 	},

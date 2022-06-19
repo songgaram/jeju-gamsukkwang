@@ -1,5 +1,4 @@
-import pkg from "mongoose";
-const { Schema, model } = pkg;
+import { Schema, model } from "mongoose";
 
 const TourSchema = new Schema({
 	id: {
@@ -30,7 +29,7 @@ const TourSchema = new Schema({
 		index: true,
 	},
 	likedUsers: {
-		type: Array,
+		type: [String],
 		default: [],
 	},
 });

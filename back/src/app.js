@@ -1,10 +1,12 @@
-import { userRouter } from "./routers/userRouter";
-import { getLandmark } from "./routers/getLandmark";
-import { tourRouter } from "./routers/tourRouter";
-import { reviewRouter } from "./routers/reviewRouter";
-import { communityRouter } from "./routers/communityRouter";
-import { errorMiddleware } from "./middlewares/errorMiddleware";
-import { swaggerUi, specs } from "./swagger/swagger";
+import {
+	userRouter,
+	getLandmark,
+	tourRouter,
+	reviewRouter,
+	communityRouter,
+} from "./routers/";
+import { errorMiddleware, badRequest } from "./middlewares/";
+import { swaggerUi, specs } from "./swagger/";
 
 import express from "express";
 import cors from "cors";
@@ -23,6 +25,7 @@ app.use(
 	swaggerUi.setup(specs, { explorer: true })
 );
 
+
 // routers
 app.use(userRouter);
 app.use(getLandmark);
@@ -32,5 +35,8 @@ app.use(reviewRouter);
 
 // error Middleware
 app.use(errorMiddleware);
+
+// 404 notFound (잘못된 주소로 요청시)
+app.use(badRequest);
 
 export { app };
