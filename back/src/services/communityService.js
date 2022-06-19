@@ -1,9 +1,18 @@
 import { v4 as uuidv4 } from "uuid";
+import Joi from "joi";
 
-import { db, userModel, communityModel } from "../db";
+import { userModel, communityModel } from "../db";
 
-class communityService {
+class CommunityService {
 	static getArticles = async ({ getArticles }) => {
+		const propSchema = Joi.object().keys({
+			page: Joi.number(),
+			limit: Joi.number(),
+			head: Joi.string().valid("", "free", "info", "question"),
+		});
+
+		await propSchema.validateAsync(getArticles);
+
 		if (!getArticles.head) {
 			const result = await communityModel.findAll({ getArticles });
 
@@ -12,27 +21,33 @@ class communityService {
 			}
 
 			return result;
-		} else if (getArticles.head) {
-			const result = await communityModel.findHead({ getArticles });
-
-			if (!result) {
-				throw new Error("system.error.noArticles");
-			}
-
-			return result;
 		}
+		const result = await communityModel.findHead({ getArticles });
+
+		if (!result) {
+			throw new Error("system.error.noArticles");
+		}
+
+		return result;
 	};
 
 	static deleteArticle = async ({ loginUserId, articleId }) => {
+		const propSchema = Joi.object().keys({
+			loginUserId: Joi.string().required(),
+			articleId: Joi.string().required(),
+		});
+
+		await propSchema.validateAsync({ loginUserId, articleId });
+
 		const currentArticle = await communityModel.findById({ articleId });
 		if (!currentArticle) {
 			throw new Error("system.error.noArticle");
 		}
 
-		const userId = currentArticle.userId;
+		const { userId } = currentArticle;
 
 		if (userId !== loginUserId) {
-			throw new Error("system.error.notEqualWithWriter");
+			throw new Error("system.error.unAuthorized");
 		}
 
 		try {
@@ -47,33 +62,25 @@ class communityService {
 		}
 	};
 
-	static addArticle = async ({ loginUserId, title, content, head }) => {
-		const user = await userModel.findById({ userId: loginUserId });
-		const userNickName = user.nickname;
-		const id = uuidv4();
+	static addArticle = async ({ loginUserId, title, content, head, images }) => {
+		const propSchema = Joi.object().keys({
+			loginUserId: Joi.string().required(),
+			title: Joi.string().required(),
+			content: Joi.string().required(),
+			head: Joi.string().valid("free", "info", "question").required(),
+			images: Joi.any(),
+		});
 
-		const newArticle = {
-			id,
-			userId: loginUserId,
-			userNickName,
+		await propSchema.validateAsync({
+			loginUserId,
 			title,
 			content,
 			head,
-		};
+			images,
+		});
 
-		const createdNewArticle = await communityModel.create({ newArticle });
-		return createdNewArticle;
-	};
-
-	static addArticleWithImages = async ({
-		loginUserId,
-		title,
-		content,
-		head,
-		images,
-	}) => {
 		const user = await userModel.findById({ userId: loginUserId });
-		const userNickName = user.nickname;
+		const { nickname: userNickName } = user;
 		const id = uuidv4();
 
 		const newArticle = {
@@ -90,28 +97,42 @@ class communityService {
 		return createdNewArticle;
 	};
 
-	// 본인 리뷰만 수정 가능
+	// 본인 게시글만 수정 가능
 	static setArticle = async ({ loginUserId, articleId, toUpdate }) => {
+		const propSchema = Joi.object().keys({
+			loginUserId: Joi.string().required(),
+			articleId: Joi.string().required(),
+			toUpdate: Joi.any().required(),
+		});
+
+		await propSchema.validateAsync({ loginUserId, articleId, toUpdate });
+
 		const currentArticle = await communityModel.findById({ articleId });
 		if (!currentArticle) {
 			throw new Error("system.error.noArticle");
 		}
 
-		const userId = currentArticle.userId;
+		const { userId } = currentArticle;
 
-		//현재 로그인한 사용자와 리뷰 작성자가 같아야 수정 가능
-		if (userId === loginUserId) {
-			const updatedArticle = await communityModel.update({
-				articleId,
-				data: toUpdate,
-			});
-			return updatedArticle;
-		} else {
-			throw new Error("system.error.notEqualWithWriter");
+		//현재 로그인한 사용자와 게시글 작성자가 같아야 수정 가능
+		if (userId !== loginUserId) {
+			throw new Error("system.error.unAuthorized");
 		}
+
+		const updatedArticle = await communityModel.update({
+			articleId,
+			data: toUpdate,
+		});
+		return updatedArticle;
 	};
 
 	static getArticle = async ({ articleId }) => {
+		const propSchema = Joi.object().keys({
+			articleId: Joi.string().required(),
+		});
+
+		await propSchema.validateAsync({ articleId });
+
 		const article = await communityModel.findById({ articleId });
 
 		if (!article) {
@@ -122,18 +143,25 @@ class communityService {
 	};
 
 	static addLike = async ({ articleId, currentUserId }) => {
+		const propSchema = Joi.object().keys({
+			articleId: Joi.string().required(),
+			currentUserId: Joi.string().required(),
+		});
+
+		await propSchema.validateAsync({ articleId, currentUserId });
+
 		const isArticleExist = await communityModel.isArticleExist({ articleId });
 		if (!isArticleExist) {
 			throw new Error("system.error.noArticle");
 		}
 
-		const didUseLike = await communityModel.didUseLike({
+		const didUserLiked = await communityModel.didUserLiked({
 			articleId,
 			currentUserId,
 		});
 
-		// didUseLike가 무언가를 반환할 때 에러를 발생
-		if (didUseLike) {
+		// didUserLiked가 무언가를 반환할 때 에러를 발생
+		if (didUserLiked) {
 			throw new Error("system.error.alreadyLiked");
 		}
 
@@ -146,18 +174,25 @@ class communityService {
 	};
 
 	static removeLike = async ({ articleId, currentUserId }) => {
+		const propSchema = Joi.object().keys({
+			articleId: Joi.string().required(),
+			currentUserId: Joi.string().required(),
+		});
+
+		await propSchema.validateAsync({ articleId, currentUserId });
+
 		const isArticleExist = await communityModel.isArticleExist({ articleId });
 		if (!isArticleExist) {
 			throw new Error("system.error.noArticle");
 		}
 
-		const didUseLike = await communityModel.didUseLike({
+		const didUserLiked = await communityModel.didUserLiked({
 			articleId,
 			currentUserId,
 		});
 
-		// didUseLike가 무언가를 반환하지 않을 때 에러를 발생
-		if (!didUseLike) {
+		// didUserLiked가 무언가를 반환하지 않을 때 에러를 발생
+		if (!didUserLiked) {
 			throw new Error("system.error.noLiked");
 		}
 
@@ -170,4 +205,4 @@ class communityService {
 	};
 }
 
-export { communityService };
+export { CommunityService };

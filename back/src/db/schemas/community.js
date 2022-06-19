@@ -1,5 +1,4 @@
-import pkg from "mongoose";
-const { Schema, model } = pkg;
+import { Schema, model } from "mongoose";
 
 const CommunitySchema = new Schema(
 	{
@@ -33,12 +32,12 @@ const CommunitySchema = new Schema(
 			required: true,
 		},
 		likedUsers: {
-			type: Array,
+			type: [String],
 			default: [],
 			index: true,
 		},
 		saveFileName: {
-			type: Array,
+			type: [String],
 			default: [],
 		},
 	},
