@@ -47,8 +47,10 @@ const ReviewForm = () => {
       </HeaderContainer>
       <InputForm value={body} onChange={(e) => setBody(e.target.value)} />
       <Footer>
-        <Button color="secondary">리뷰 등록</Button>
         <div>{body.length}/1000</div>
+        <Button color="deepblue" disabled>
+          리뷰 등록
+        </Button>
       </Footer>
     </>
   );
