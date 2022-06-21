@@ -1,6 +1,6 @@
 import { useQuery } from "react-query";
-import http from "libs/apiController";
 
+import http from "libs/apiController";
 export const useGetReviews = () => {
   return useQuery(["reviews"], async () => {
     const res = await http.get("/recommend/reviews");
