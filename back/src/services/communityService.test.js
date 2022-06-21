@@ -9,21 +9,17 @@ describe("insert", () => {
   let db;
 
   beforeAll(async () => {
-    connection = await MongoClient.connect(
-      "mongodb+srv://admin:1234@cluster0.6alrt.mongodb.net/ai_8",
-      {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-      },
-    );
-    db = await connection.db();
+    connection = await MongoClient.connect(DB_URL, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    db = await connection.db("jest");
   });
 
   afterAll(async () => {
     await connection.close();
-  });
-
-  test("1 is 1", () => {
-    expect(1).toBe(1);
+    if (db.close) {
+      await db.close();
+    }
   });
 });

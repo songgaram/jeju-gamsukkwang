@@ -2,6 +2,7 @@ import { userModel } from "./models/userModel";
 import { tourModel } from "./models/tourModel";
 import { reviewModel } from "./models/reviewModel";
 import { communityModel } from "./models/communityModel";
+import "dotenv/config";
 
 import mongoose from "mongoose";
 
@@ -12,7 +13,7 @@ const db = mongoose.connection;
 
 db.on("connected", () => console.log(`MongoDB 연결 성공 : ${DB_URL}`));
 db.on("error", (err) =>
-	console.error(`MongoDB 연결 실패 : ${DB_URL}` + "\n" + err)
+  console.error(`MongoDB 연결 실패 : ${DB_URL}` + "\n" + err),
 );
 
 export { userModel };
