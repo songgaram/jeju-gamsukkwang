@@ -86,7 +86,11 @@ class ReviewService {
     const propSchema = Joi.object().keys({
       loginUserId: Joi.string().trim().empty().required(),
       reviewId: Joi.string().trim().empty().required(),
-      toUpdate: Joi.any().required(),
+      toUpdate: Joi.object({
+        content: Joi.string().trim().empty().required(),
+        rating: Joi.number().valid(5, 4, 3, 2, 1).required(),
+        imgFile: Joi.any(),
+      }).required(),
     });
 
     await propSchema.validateAsync({ loginUserId, reviewId, toUpdate });
