@@ -42,7 +42,7 @@ const Dropdown = () => {
   ));
 
   return (
-    <DropdownContainer ref={outsideRef}>
+    <DropdownBox ref={outsideRef}>
       <DropdownButton onClick={handleSelectedClick}>
         <Input type="text" value={selected} readOnly />
         <ArrowButton />
@@ -52,13 +52,13 @@ const Dropdown = () => {
           <ul>{dropdownList}</ul>
         </MenuWrapper>
       )}
-    </DropdownContainer>
+    </DropdownBox>
   );
 };
 
 export default Dropdown;
 
-const DropdownContainer = styled.div`
+const DropdownBox = styled.div`
   position: relative;
   width: 120px;
   margin-bottom: 10px;
