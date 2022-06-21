@@ -8,7 +8,7 @@ class CommunityService {
     const propSchema = Joi.object().keys({
       page: Joi.number().required(),
       limit: Joi.number().required(),
-      head: Joi.string().trim().empty().valid("", "free", "info", "question"),
+      head: Joi.string().valid("", "free", "info", "question"),
     });
 
     await propSchema.validateAsync(getArticles);
@@ -106,7 +106,12 @@ class CommunityService {
     const propSchema = Joi.object().keys({
       loginUserId: Joi.string().trim().empty().required(),
       articleId: Joi.string().trim().empty().required(),
-      toUpdate: Joi.any().required(),
+      toUpdate: Joi.object({
+        title: Joi.string().trim().empty().required(),
+        content: Joi.string().trim().empty().required(),
+        head: Joi.string().valid("free", "info", "question").required(),
+        saveFileName: Joi.any(),
+      }).required(),
     });
 
     await propSchema.validateAsync({ loginUserId, articleId, toUpdate });
