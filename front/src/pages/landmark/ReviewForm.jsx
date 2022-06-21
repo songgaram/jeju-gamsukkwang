@@ -3,11 +3,24 @@ import styled from "styled-components";
 import { BsStarFill } from "react-icons/bs";
 import theme from "styles/Theme";
 import Button from "components/Button";
+import registerValidation from "./utils";
 
 const ReviewForm = () => {
   const [hovered, setHovered] = useState(null);
   const [clicked, setClicked] = useState(null);
-  const [body, setBody] = useState("");
+  const [content, setContent] = useState("");
+  const [rating, setRating] = useState(undefined);
+
+  const { isRatingValid, isContentValid } = registerValidation(rating, content);
+  const isActive = isRatingValid && isContentValid;
+
+  const handleOnSubmit = () => {
+    if (!isActive) {
+      alert("별점 혹은 리뷰를 필수로 입력해주세요.");
+      return;
+    }
+    alert("제출!");
+  };
 
   return (
     <>
@@ -28,7 +41,10 @@ const ReviewForm = () => {
             size={theme.fontSizes.titleSize}
             onMouseEnter={() => setHovered(el)}
             onMouseLeave={() => setHovered(null)}
-            onClick={() => setClicked(el)}
+            onClick={() => {
+              setClicked(el);
+              setRating(el);
+            }}
             style={{ cursor: "pointer" }}
           />
         ))}
@@ -45,10 +61,10 @@ const ReviewForm = () => {
         <Title>다른 여행객을 위한 후기와 팁</Title>
         <Required>필수</Required>
       </HeaderContainer>
-      <InputForm value={body} onChange={(e) => setBody(e.target.value)} />
+      <InputForm value={content} onChange={(e) => setContent(e.target.value)} />
       <Footer>
-        <div>{body.length}/1000</div>
-        <Button color="deepblue" disabled>
+        <div>{content.length}/1000</div>
+        <Button color="deepblue" disabled={!isActive} onClick={handleOnSubmit}>
           리뷰 등록
         </Button>
       </Footer>
