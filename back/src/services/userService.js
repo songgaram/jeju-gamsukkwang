@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 import jwt from "jsonwebtoken";
 import * as Joi from 'joi'
 import { privateKey } from '../config/jwt'
+import { idValidator } from '../validators'
 import { joiPassword } from "joi-password";
 
 import { db, userModel, tourModel } from "../db";
@@ -11,8 +12,7 @@ class UserService {
 	// 회원 정보 찾기 기능
 	static findUser = async ({ userId }) => {
 		// 데이터의 유효성 체크
-		const userIdValidator = Joi.string().trim().empty().required()
-		await userIdValidator.validateAsync(userId)
+		await idValidator.validateAsync(userId)
 
 		const foundUser = await userModel.findById({ userId });
 
@@ -29,7 +29,7 @@ class UserService {
 	static addUser = async ({ email, password, nickname }) => {
 		// 데이터의 유효성 체크
 		const registerValidator = Joi.object({
-			email: Joi.string().trim().empty().email({ minDomainAtoms: 2 }).required(),
+			email: Joi.string().trim().empty().email({ minDomainSegments: 2 }).required(),
 			password: joiPassword.string().noWhiteSpaces().min(8).required(),
 			nickname: Joi.string().trim().empty().min(2).required(),
 		})
@@ -114,8 +114,7 @@ class UserService {
 	// 회원 탈퇴 기능
 	static withdrawUser = async ({ userId }) => {
 		// 데이터의 유효성 체크
-		const userIdValidator = Joi.string().trim().empty().required()
-		await userIdValidator.validateAsync(userId)
+		await idValidator.validateAsync(userId)
 
 		// 유저 ID로 DB에 있는 회원 정보 확인
 		const user = await userModel.findById({ userId });

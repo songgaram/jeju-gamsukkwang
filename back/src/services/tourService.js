@@ -1,5 +1,6 @@
 import { db, tourModel } from "../db";
 import * as Joi from 'joi'
+import { idValidator } from '../validators'
 
 class TourService {
 	static getAllLandmarks = async () => {
@@ -10,8 +11,7 @@ class TourService {
 
 	static getLandmark = async ({ id }) => {
 		// 데이터의 유효성 체크
-		const tourIdValidator = Joi.string().trim().empty().required()
-		await tourIdValidator.validateAsync(id)
+		await idValidator.validateAsync(id)
 
 		const isLandmarkExist = await tourModel.isLandmarkExist({ id });
 		if (!isLandmarkExist) {

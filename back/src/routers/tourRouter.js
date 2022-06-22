@@ -3,6 +3,7 @@ import { TourService } from "../services/TourService";
 
 import { Router } from "express";
 import * as Joi from 'joi'
+import { idValidator } from '../validators'
 
 const tourRouter = Router();
 
@@ -21,8 +22,7 @@ tourRouter.get("/tour", async (req, res, next) => {
 tourRouter.get("/tour/:id", async (req, res, next) => {
 	try {
 
-		const tourIdValidator = Joi.string().empty().required();
-		const id = await tourIdValidator.validateAsync(req.params.id)
+		const id = await idValidator.validateAsync(req.params.id)
 
 		const landmark = await TourService.getLandmark({ id });
 
@@ -38,8 +38,7 @@ tourRouter.put("/tour/:id/like", loginRequired, async (req, res, next) => {
 
 		const userId = req.currentUserId;
 
-		const tourIdValidator = Joi.string().empty().required();
-		const id = await tourIdValidator.validateAsync(req.params.id)
+		const id = await idValidator.validateAsync(req.params.id)
 
 		const addLiketoLandmark = await TourService.addLike({
 			id,
@@ -58,8 +57,7 @@ tourRouter.put("/tour/:id/dislike", loginRequired, async (req, res, next) => {
 
 		const userId = req.currentUserId;
 
-		const tourIdValidator = Joi.string().empty().required();
-		const id = await tourIdValidator.validateAsync(req.params.id)
+		const id = await idValidator.validateAsync(req.params.id)
 
 		const removeLikefromLandmark = await TourService.removeLike({
 			id,

@@ -1,18 +1,18 @@
 import { Router } from "express";
+import { loginRequired, s3Single } from "../middlewares";
 import { UserService } from "../services/UserService";
-import { loginRequired } from "../middlewares/";
-import { s3Single } from "../middlewares/multerS3";
+
 import * as Joi from "joi";
 import { joiPassword } from "joi-password";
+import { idValidator } from '../validators'
+
 const userRouter = Router();
 
 // 회원 정보 가져오기 기능
 userRouter.get("/account/:id", async (req, res, next) => {
 	try {
-
 		// userId의 유효성을 체크
-		const userIdValidator = Joi.string().trim().empty().required()
-		const userId = await userIdValidator.validateAsync(req.params.id);
+		const userId = await idValidator.validateAsync(req.params.id);
 
 		const user = await UserService.findUser({ userId });
 
@@ -25,10 +25,9 @@ userRouter.get("/account/:id", async (req, res, next) => {
 // 회원 등록 기능 (프로필 이미지는 기본 이미지로 설정됨)
 userRouter.post("/account/register", async (req, res, next) => {
 	try {
-
 		// 입력한 데이터의 유효성을 체크
 		const registerValidator = Joi.object({
-			email: Joi.string().trim().empty().email({ minDomainAtoms: 2 }).required(),
+			email: Joi.string().trim().empty().email({ minDomainSegments: 2 }).required(),
 			password: joiPassword.string().noWhiteSpaces().min(8).required(),
 			nickname: Joi.string().trim().empty().min(2).required(),
 		})
@@ -49,7 +48,6 @@ userRouter.post("/account/register", async (req, res, next) => {
 // 회원 로그인 기능
 userRouter.post("/account/login", async (req, res, next) => {
 	try {
-
 		// 입력한 데이터의 유효성을 체크
 		const loginValidator = Joi.object({
 			email: Joi.string().trim().empty().required(),
@@ -68,7 +66,6 @@ userRouter.post("/account/login", async (req, res, next) => {
 // 회원 탈퇴 기능
 userRouter.delete("/user", loginRequired, async (req, res, next) => {
 	try {
-
 		// req에서 데이터 가져오기
 		const userId = req.currentUserId;
 
@@ -108,8 +105,7 @@ userRouter.post("/user/stamp", loginRequired, async (req, res, next) => {
 		const userId = req.currentUserId;
 
 		// tourId의 유효성을 체크
-		const tourIdValidator = Joi.string().trim().empty().required()
-		const tourId = await tourIdValidator.validateAsync(req.body.tourId);
+		const tourId = await idValidator.validateAsync(req.body.tourId);
 
 		const tourIntoStamp = await UserService.addStamp({
 			userId,
