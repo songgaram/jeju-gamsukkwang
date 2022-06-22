@@ -34,7 +34,7 @@ const ReviewSection = ({ id }) => {
         </CountsContainer>
       </RatingContainer>
       <ReviewList id={id} />
-      <ReviewForm />
+      <ReviewForm id={id} />
     </ReviewContainer>
   );
 };

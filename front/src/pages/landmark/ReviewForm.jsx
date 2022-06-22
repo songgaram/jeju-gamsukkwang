@@ -4,6 +4,7 @@ import { BsStarFill } from "react-icons/bs";
 import theme from "styles/Theme";
 import Button from "components/Button";
 import registerValidation from "./utils";
+import { usePostReview } from "queries/reviewQuery";
 
 const textList = [
   "별로예요",
@@ -13,18 +14,29 @@ const textList = [
   "최고예요",
 ];
 
-const ReviewForm = () => {
+const ReviewForm = ({ id }) => {
   const [hovered, setHovered] = useState(null);
   const [clicked, setClicked] = useState(null);
-  const [content, setContent] = useState("");
+  const [curContent, setCurContent] = useState("");
   const [rating, setRating] = useState(undefined);
 
-  const { isRatingValid, isContentValid } = registerValidation(rating, content);
+  const { isRatingValid, isContentValid } = registerValidation(
+    rating,
+    curContent,
+  );
   const isActive = isRatingValid && isContentValid;
+  const postReview = usePostReview();
 
   const submitReview = (e) => {
     e.preventDefault();
-    alert("클릭!");
+    const review = {
+      tourId: id,
+      content: curContent,
+      rating,
+    };
+    // console.log(review);
+    postReview.mutate(review);
+    setCurContent("");
   };
 
   return (
@@ -66,9 +78,13 @@ const ReviewForm = () => {
         <Title>다른 여행객을 위한 후기와 팁</Title>
         <Required>필수</Required>
       </HeaderContainer>
-      <InputForm value={content} onChange={(e) => setContent(e.target.value)} />
+      <InputForm
+        maxlength="1000"
+        value={curContent}
+        onChange={(e) => setCurContent(e.target.value)}
+      />
       <Footer>
-        <div>{content.length}/1000</div>
+        <div>{curContent.length}/1000</div>
         <Button
           color="deepblue"
           type="submit"
@@ -82,7 +98,7 @@ const ReviewForm = () => {
   );
 };
 
-const ReviewFormContainer = styled.from`
+const ReviewFormContainer = styled.form`
   width: 100%;
 `;
 

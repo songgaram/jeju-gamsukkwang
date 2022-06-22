@@ -34,7 +34,7 @@ export const usePostReview = () => {
   const queryClient = useQueryClient();
   return useMutation(
     async (review) => {
-      await http.post(`review`, review);
+      await http.post("review", review);
     },
     {
       onSuccess: () => {
