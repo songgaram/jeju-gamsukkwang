@@ -74,7 +74,7 @@ communityRouter.put(
       await bodySchema.validateAsync(req.body);
 
       const loginUserId = req.currentUserId;
-      const articleId = req.params.id;
+      const { id: articleId } = req.params;
       const { title, content, head } = req.body;
 
       let toUpdate = { title, content, head };
@@ -109,7 +109,7 @@ communityRouter.get("/community/:id", loginRequired, async (req, res, next) => {
 
     await paramSchema.validateAsync(req.params);
 
-    const articleId = req.params.id;
+    const { articleId } = req.params;
     const article = await CommunityService.getArticle({ articleId });
 
     res.status(200).json(article);
@@ -162,7 +162,7 @@ communityRouter.delete(
       await paramSchema.validateAsync(req.params);
 
       const loginUserId = req.currentUserId;
-      const articleId = req.params.id;
+      const { id: articleId } = req.params;
 
       const deletedArticle = await CommunityService.deleteArticle({
         articleId,
@@ -192,7 +192,7 @@ communityRouter.put(
 
       // req에서 데이터 가져오기
       const userId = req.currentUserId;
-      const articleId = req.params.id;
+      const { id: articleId } = req.params;
 
       const addLiketoArticle = await CommunityService.addLike({
         articleId,
@@ -222,7 +222,7 @@ communityRouter.put(
 
       // req에서 데이터 가져오기
       const userId = req.currentUserId;
-      const articleId = req.params.id;
+      const { id: articleId } = req.params;
 
       const removeLikefromArticle = await CommunityService.removeLike({
         articleId,

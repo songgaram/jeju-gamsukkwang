@@ -20,7 +20,6 @@ reviewRouter.post(
         rating: Joi.number().integer().min(1).max(5).required(),
         imgFile: Joi.any(),
       });
-
       const idSchema = Joi.string().empty().required();
 
       await bodySchema.validateAsync(req.body);
@@ -53,7 +52,6 @@ reviewRouter.get("/review/:tourId/list", async (req, res, next) => {
     const paramSchema = Joi.object().keys({
       tourId: Joi.string().trim().empty().required(),
     });
-
     const querySchema = Joi.object().keys({
       page: Joi.number().integer().min(1),
       limit: Joi.number().integer().min(1),
@@ -108,13 +106,11 @@ reviewRouter.put(
       const paramSchema = Joi.object().keys({
         id: Joi.string().trim().empty().required(),
       });
-
       const bodySchema = Joi.object().keys({
         content: Joi.string().trim().empty().required(),
         rating: Joi.number().integer().min(1).max(5).required(),
         imgFile: Joi.any(),
       });
-
       const idSchema = Joi.string().empty().required();
 
       await idSchema.validateAsync(req.currentUserId);
@@ -122,7 +118,7 @@ reviewRouter.put(
       await bodySchema.validateAsync(req.body);
 
       const loginUserId = req.currentUserId;
-      const reviewId = req.params.id;
+      const { id: reviewId } = req.params;
 
       let toUpdate = req.body;
 
