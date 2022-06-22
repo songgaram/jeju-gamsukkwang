@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { loginRequired, s3Single } from "../middlewares";
 import { UserService } from "../services/UserService";
+import { loginRequired, s3Single } from "../middlewares";
 
 import * as Joi from "joi";
 import { joiPassword } from "joi-password";
@@ -66,10 +66,8 @@ userRouter.post("/account/login", async (req, res, next) => {
 // 회원 탈퇴 기능
 userRouter.delete("/user", loginRequired, async (req, res, next) => {
 	try {
-		// req에서 데이터 가져오기
 		const userId = req.currentUserId;
 
-		// 위 데이터로 회원 탈퇴 시도
 		const user = await UserService.withdrawUser({ userId });
 
 		res.status(200).send(user);
@@ -81,10 +79,9 @@ userRouter.delete("/user", loginRequired, async (req, res, next) => {
 //회원 수정 기능
 userRouter.put("/user", loginRequired, async (req, res, next) => {
 	try {
-		// req에서 데이터 가져오기
 		const userId = req.currentUserId;
 
-		// nickname만 수정할 수 있게 체크
+		// nickname만 수정할 수 있게 체크 (이메일, 비밀번호는 수정하면 안됨)
 		const editValidator = Joi.object({
 			nickname: Joi.string().trim().empty().min(2).required()
 		}).length(1);
@@ -101,7 +98,6 @@ userRouter.put("/user", loginRequired, async (req, res, next) => {
 // 회원 스탬프 추가 기능
 userRouter.post("/user/stamp", loginRequired, async (req, res, next) => {
 	try {
-
 		const userId = req.currentUserId;
 
 		// tourId의 유효성을 체크
@@ -149,7 +145,7 @@ userRouter.put(
 			const imageName = location.split("amazonaws.com/")[1];
 			const toUpdate = { profileImgUrl: imageName };
 
-			const updatedUser = await UserService.setUser({ userId, toUpdate });
+			const updatedUser = await UserService.setProfileImg({ userId, toUpdate });
 
 			res.status(201).json(updatedUser);
 		} catch (err) {

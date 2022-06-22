@@ -1,22 +1,21 @@
-import bcrypt from "bcrypt";
+import { userModel, tourModel } from "../db";
 import { v4 as uuidv4 } from "uuid";
+import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import * as Joi from 'joi'
 import { privateKey } from '../config/jwt'
-import { idValidator } from '../validators'
-import { joiPassword } from "joi-password";
 
-import { db, userModel, tourModel } from "../db";
+import * as Joi from 'joi'
+import { joiPassword } from "joi-password";
+import { idValidator } from '../validators'
 
 class UserService {
 	// 회원 정보 찾기 기능
 	static findUser = async ({ userId }) => {
-		// 데이터의 유효성 체크
+		// userId의 유효성 체크
 		await idValidator.validateAsync(userId)
 
 		const foundUser = await userModel.findById({ userId });
 
-		// 해당 회원이 없을 경우 error
 		if (!foundUser) {
 			throw new Error("system.error.noUser");
 		}
@@ -37,12 +36,14 @@ class UserService {
 
 		// 이메일 중복 확인
 		const isEmailExist = await userModel.isEmailExist({ email });
+
 		if (!isEmailExist) {
 			throw new Error("system.error.duplicatedEmail");
 		}
 
 		// 닉네임 중복 확인
 		const isNicknameExist = await userModel.isNicknameExist({ nickname });
+
 		if (!isNicknameExist) {
 			throw new Error("system.error.duplicatedNickname");
 		}
@@ -74,20 +75,16 @@ class UserService {
 		})
 		await loginValidator.validateAsync({ email, password })
 
-		// 이메일로 회원이 DB에 있는지 확인
 		const foundUser = await userModel.findByEmail({ email });
 
-		// 해당 회원이 없을 경우 error
 		if (!foundUser) {
 			throw new Error("system.error.noUser");
 		}
 
 		const { id, nickname, hashedPassword } = foundUser;
 
-		// 비밀번호 일치 여부 확인
 		const isPasswordSame = await bcrypt.compare(password, hashedPassword);
 
-		// 비밀번호가 일치하지 않을 경우 Error
 		if (!isPasswordSame) {
 			throw new Error("system.error.differentPassword");
 		}
@@ -95,12 +92,12 @@ class UserService {
 		if (!privateKey) {
 			throw new Error("system.error.noPrivateKey");
 		}
+
 		const token = jwt.sign({ userId: id }, privateKey, {
 			algorithm: 'RS256',
 			expiresIn: "24h",
 		});
 
-		// loginUser 객체에 반환할 데이터 설정
 		const loginUser = {
 			token,
 			id,
@@ -116,16 +113,15 @@ class UserService {
 		// 데이터의 유효성 체크
 		await idValidator.validateAsync(userId)
 
-		// 유저 ID로 DB에 있는 회원 정보 확인
 		const user = await userModel.findById({ userId });
 
-		// 해당 회원이 없을 경우 error
 		if (!user) {
 			throw new Error("system.error.noUser");
 		}
 
 		try {
 			const withdrawResult = await userModel.deleteById({ userId });
+			
 			if (!withdrawResult) {
 				throw new Error("system.error.fail");
 			}
@@ -146,15 +142,12 @@ class UserService {
 		})
 		await editValidator.validateAsync({ userId, toUpdate })
 
-		// 유저 ID로 DB에 있는 회원 정보 확인
 		let user = await userModel.findById({ userId });
 
-		// 해당 회원이 없을 경우 error
 		if (!user) {
 			throw new Error("system.error.noUser");
 		}
 
-		// nickname 중복확인
 		const isNicknameExist = await userModel.isNicknameExist({
 			nickname: toUpdate.nickname,
 		});
@@ -167,6 +160,26 @@ class UserService {
 		return user;
 	};
 
+	// 프로필 이미지 변경 기능
+	static setProfileImg = async ({ userId, toUpdate }) => {
+		const editValidator = Joi.object({
+			userId: Joi.string().trim().empty().required(),
+			toUpdate: Joi.object({
+				profileImgUrl: Joi.string().trim().empty().required()
+			}).length(1)
+		})
+		await editValidator.validateAsync({ userId, toUpdate })
+
+		let user = await userModel.findById({ userId });
+
+		if (!user) {
+			throw new Error("system.error.noUser");
+		}
+
+		user = await userModel.update({ userId, data: toUpdate });
+		return user;
+	}
+
 	// 회원 스탬프 추가 기능
 	static addStamp = async ({ userId, tourId }) => {
 		// 데이터 유효성 체크
@@ -178,12 +191,12 @@ class UserService {
 
 		const foundUser = await userModel.findById({ userId });
 
-		// 해당 회원이 없을 경우 error
 		if (!foundUser) {
 			throw new Error("system.error.noUser");
 		}
 
 		const isTourExist = await tourModel.isLandmarkExist({ id: tourId })
+
 		if(!isTourExist) {
 			throw new Error("system.error.noSuchTourId")
 		}
@@ -201,7 +214,6 @@ class UserService {
 			userId, 
 			tourId
 		});
-
 		return addStamp;
 	};
 
