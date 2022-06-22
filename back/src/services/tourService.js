@@ -99,7 +99,7 @@ class TourService {
 
 	static sortByLiked = async ({}) => {
 		const sortLandmarks = await tourModel.sortByLiked({});
-
+		
 		return sortLandmarks;
 	};
 
