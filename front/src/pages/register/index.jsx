@@ -49,7 +49,7 @@ const Register = () => {
     e.preventDefault();
 
     try {
-      await http.post("user/register", { email, password, nickname });
+      await http.post("account/register", { email, password, nickname });
       setUserInputData(INIT_USER_DATA);
       navigate("/login");
     } catch (error) {

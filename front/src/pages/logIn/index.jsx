@@ -45,7 +45,7 @@ const LogIn = () => {
     e.preventDefault();
 
     try {
-      const res = await http.post("user/login", {
+      const res = await http.post("account/login", {
         email,
         password,
       });

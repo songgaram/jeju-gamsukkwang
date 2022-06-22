@@ -6,7 +6,7 @@ import Register from "pages/register";
 import Landmark from "pages/landmark";
 import LogIn from "pages/logIn";
 import Layout from "components/layout";
-import Tour from "pages/tour";
+import Tour from "pages/recommend";
 
 const App = () => {
   return (
