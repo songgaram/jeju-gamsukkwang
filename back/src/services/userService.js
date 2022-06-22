@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 import jwt from "jsonwebtoken";
 import * as Joi from 'joi'
 import { privateKey } from '../config/jwt'
+import { joiPassword } from "joi-password";
 
 import { db, userModel, tourModel } from "../db";
 
@@ -28,9 +29,8 @@ class UserService {
 	static addUser = async ({ email, password, nickname }) => {
 		// 데이터의 유효성 체크
 		const registerValidator = Joi.object({
-			email: Joi.string().trim().empty().required()
-				.email({ minDomainSegments: 2, tlds: { allow: ["com", "net", "kr", "io"] } } ),
-				password: Joi.string().trim().empty().pattern(new RegExp('^[a-zA-Z0-9~`!@#$%^&*()-=+?]{8,}$')).required(),
+			email: Joi.string().trim().empty().email({ minDomainAtoms: 2 }).required(),
+			password: joiPassword.string().noWhiteSpaces().min(8).required(),
 			nickname: Joi.string().trim().empty().min(2).required(),
 		})
 		await registerValidator.validateAsync({ email, password, nickname })
@@ -70,7 +70,7 @@ class UserService {
 		// 데이터의 유효성 체크
 		const loginValidator = Joi.object({
 			email: Joi.string().trim().empty().required(),
-			password: Joi.string().trim().empty().min(8).required(),
+			password: joiPassword.string().noWhiteSpaces().min(8).required(),
 		})
 		await loginValidator.validateAsync({ email, password })
 
