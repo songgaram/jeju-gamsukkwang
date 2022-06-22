@@ -1,4 +1,4 @@
-import { db, tourModel } from "../db";
+import { tourModel, userModel } from "../db";
 import * as Joi from 'joi'
 import { idValidator } from '../validators'
 
@@ -31,6 +31,12 @@ class TourService {
 		})
 		await dataValidator.validateAsync({ id, currentUserId })
 
+		const user = await userModel.findById({ userId: currentUserId });
+
+		if (!user) {
+			throw new Error("system.error.noUser");
+		}
+
 		const isLandmarkExist = await tourModel.isLandmarkExist({ id });
 		if (!isLandmarkExist) {
 			throw new Error("system.error.noLandmark");
@@ -61,6 +67,12 @@ class TourService {
 			currentUserId: Joi.string().trim().empty().required()
 		})
 		await dataValidator.validateAsync({ id, currentUserId })
+
+		const user = await userModel.findById({ userId: currentUserId });
+
+		if (!user) {
+			throw new Error("system.error.noUser");
+		}
 
 		const isLandmarkExist = await tourModel.isLandmarkExist({ id });
 		if (!isLandmarkExist) {
