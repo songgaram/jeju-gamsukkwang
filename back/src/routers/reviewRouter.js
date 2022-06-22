@@ -17,11 +17,14 @@ reviewRouter.post(
       const bodySchema = Joi.object().keys({
         tourId: Joi.string().trim().empty().required(),
         content: Joi.string().trim().empty().required(),
-        rating: Joi.number().valid(5, 4, 3, 2, 1).required(),
+        rating: Joi.number().integer().min(1).max(5).required(),
         imgFile: Joi.any(),
       });
 
+      const idSchema = Joi.string().empty().required();
+
       await bodySchema.validateAsync(req.body);
+      await idSchema.validateAsync(req.currentUserId);
 
       const loginUserId = req.currentUserId;
       const { tourId, content, rating } = req.body;
@@ -38,7 +41,6 @@ reviewRouter.post(
       });
 
       res.status(201).json(newReview);
-      return;
     } catch (err) {
       next(err);
     }
@@ -53,8 +55,8 @@ reviewRouter.get("/review/:tourId/list", async (req, res, next) => {
     });
 
     const querySchema = Joi.object().keys({
-      page: Joi.number(),
-      limit: Joi.number(),
+      page: Joi.number().integer().min(1),
+      limit: Joi.number().integer().min(1),
     });
 
     await paramSchema.validateAsync(req.params);
@@ -73,7 +75,6 @@ reviewRouter.get("/review/:tourId/list", async (req, res, next) => {
     const reviews = await ReviewService.getReviews({ getReviews });
 
     res.status(200).json(reviews);
-    return;
   } catch (err) {
     next(err);
   }
@@ -92,7 +93,6 @@ reviewRouter.get("/review/:tourId/info", async (req, res, next) => {
     const reviewInfo = await ReviewService.getReviewInfo({ tourId });
 
     res.status(200).json(reviewInfo);
-    return;
   } catch (err) {
     next(err);
   }
@@ -111,10 +111,13 @@ reviewRouter.put(
 
       const bodySchema = Joi.object().keys({
         content: Joi.string().trim().empty().required(),
-        rating: Joi.number().valid(5, 4, 3, 2, 1).required(),
+        rating: Joi.number().integer().min(1).max(5).required(),
         imgFile: Joi.any(),
       });
 
+      const idSchema = Joi.string().empty().required();
+
+      await idSchema.validateAsync(req.currentUserId);
       await paramSchema.validateAsync(req.params);
       await bodySchema.validateAsync(req.body);
 
@@ -137,7 +140,6 @@ reviewRouter.put(
       });
 
       res.status(201).json(editedReview);
-      return;
     } catch (err) {
       next(err);
     }
@@ -150,11 +152,13 @@ reviewRouter.delete("/review/:id", loginRequired, async (req, res, next) => {
     const paramSchema = Joi.object().keys({
       id: Joi.string().trim().empty().required(),
     });
+    const idSchema = Joi.string().empty().required();
 
+    await idSchema.validateAsync(req.currentUserId);
     await paramSchema.validateAsync(req.params);
 
     const loginUserId = req.currentUserId;
-    const reviewId = req.params.id;
+    const { id: reviewId } = req.params;
 
     const deleteResult = await ReviewService.deleteReview({
       loginUserId,
@@ -162,7 +166,6 @@ reviewRouter.delete("/review/:id", loginRequired, async (req, res, next) => {
     });
 
     res.status(200).send(deleteResult);
-    return;
   } catch (err) {
     next(err);
   }

@@ -25,7 +25,9 @@ communityRouter.post(
           .required(),
         imgFile: Joi.any(),
       });
+      const idSchema = Joi.string().empty().required();
 
+      await idSchema.validateAsync(req.currentUserId);
       await bodySchema.validateAsync(req.body);
 
       const loginUserId = req.currentUserId;
@@ -43,7 +45,6 @@ communityRouter.post(
       });
 
       res.status(201).json(newArticle);
-      return;
     } catch (err) {
       next(err);
     }
@@ -67,7 +68,9 @@ communityRouter.put(
           .required(),
         imgFile: Joi.any(),
       });
+      const idSchema = Joi.string().empty().required();
 
+      await idSchema.validateAsync(req.currentUserId);
       await bodySchema.validateAsync(req.body);
 
       const loginUserId = req.currentUserId;
@@ -91,7 +94,6 @@ communityRouter.put(
       });
 
       res.status(201).json(editedArticle);
-      return;
     } catch (err) {
       next(err);
     }
@@ -111,7 +113,6 @@ communityRouter.get("/community/:id", loginRequired, async (req, res, next) => {
     const article = await CommunityService.getArticle({ articleId });
 
     res.status(200).json(article);
-    return;
   } catch (err) {
     next(err);
   }
@@ -121,8 +122,8 @@ communityRouter.get("/community/:id", loginRequired, async (req, res, next) => {
 communityRouter.get("/community", async (req, res, next) => {
   try {
     const querySchema = Joi.object().keys({
-      page: Joi.number(),
-      limit: Joi.number(),
+      page: Joi.number().integer().min(1),
+      limit: Joi.number().integer().min(1),
       head: Joi.string().trim().empty().valid("", "free", "info", "question"),
     });
 
@@ -141,7 +142,6 @@ communityRouter.get("/community", async (req, res, next) => {
     const articles = await CommunityService.getArticles({ getArticles });
 
     res.status(200).send(articles);
-    return;
   } catch (err) {
     next(err);
   }
@@ -156,7 +156,9 @@ communityRouter.delete(
       const paramSchema = Joi.object().keys({
         id: Joi.string().trim().empty().required(),
       });
+      const idSchema = Joi.string().empty().required();
 
+      await idSchema.validateAsync(req.currentUserId);
       await paramSchema.validateAsync(req.params);
 
       const loginUserId = req.currentUserId;
@@ -168,7 +170,6 @@ communityRouter.delete(
       });
 
       res.status(200).send(deletedArticle);
-      return;
     } catch (err) {
       next(err);
     }
@@ -184,7 +185,9 @@ communityRouter.put(
       const paramSchema = Joi.object().keys({
         id: Joi.string().trim().empty().required(),
       });
+      const idSchema = Joi.string().empty().required();
 
+      await idSchema.validateAsync(req.currentUserId);
       await paramSchema.validateAsync(req.params);
 
       // req에서 데이터 가져오기
@@ -197,7 +200,6 @@ communityRouter.put(
       });
 
       res.status(200).json(addLiketoArticle);
-      return;
     } catch (err) {
       next(err);
     }
@@ -213,7 +215,9 @@ communityRouter.put(
       const paramSchema = Joi.object().keys({
         id: Joi.string().trim().empty().required(),
       });
+      const idSchema = Joi.string().empty().required();
 
+      await idSchema.validateAsync(req.currentUserId);
       await paramSchema.validateAsync(req.params);
 
       // req에서 데이터 가져오기
@@ -226,7 +230,6 @@ communityRouter.put(
       });
 
       res.status(200).json(removeLikefromArticle);
-      return;
     } catch (err) {
       next(err);
     }

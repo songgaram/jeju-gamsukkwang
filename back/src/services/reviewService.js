@@ -15,7 +15,7 @@ class ReviewService {
       loginUserId: Joi.string().trim().empty().required(),
       tourId: Joi.string().trim().empty().required(),
       content: Joi.string().trim().empty().required(),
-      rating: Joi.number().valid(5, 4, 3, 2, 1).required(),
+      rating: Joi.number().integer().min(1).max(5).required(),
       images: Joi.any(),
     });
 
@@ -59,8 +59,8 @@ class ReviewService {
   static getReviews = async ({ getReviews }) => {
     const propSchema = Joi.object().keys({
       tourId: Joi.string().trim().empty().required(),
-      page: Joi.number().required(),
-      limit: Joi.number().required(),
+      page: Joi.number().integer().min(1).required(),
+      limit: Joi.number().integer().min(1).required(),
     });
 
     await propSchema.validateAsync(getReviews);
@@ -88,7 +88,7 @@ class ReviewService {
       reviewId: Joi.string().trim().empty().required(),
       toUpdate: Joi.object({
         content: Joi.string().trim().empty().required(),
-        rating: Joi.number().valid(5, 4, 3, 2, 1).required(),
+        rating: Joi.number().integer().min(1).max(5).required(),
         imgFile: Joi.any(),
       }).required(),
     });

@@ -6,8 +6,8 @@ import { userModel, communityModel } from "../db";
 class CommunityService {
   static getArticles = async ({ getArticles }) => {
     const propSchema = Joi.object().keys({
-      page: Joi.number().required(),
-      limit: Joi.number().required(),
+      page: Joi.number().integer().min(1).required(),
+      limit: Joi.number().integer().min(1).required(),
       head: Joi.string().valid("", "free", "info", "question"),
     });
 
