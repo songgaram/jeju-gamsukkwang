@@ -43,3 +43,13 @@ export const usePostReview = () => {
     },
   );
 };
+
+export const useDeleteReview = () => {
+  const queryClient = useQueryClient();
+  return useMutation((reviewId) => http.delete(`review/${reviewId}`), {
+    onSuccess: () => {
+      queryClient.invalidateQueries("reviews");
+    },
+    onError: (err) => console.log(err),
+  });
+};
