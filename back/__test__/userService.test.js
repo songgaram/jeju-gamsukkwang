@@ -63,10 +63,20 @@ describe('User Service Logic', () => {
     })
     expect(updatedUser.nickname).toEqual('수정한 닉네임')
   })
+  
+  it("User의 프로필 이미지를 변경합니다.", async () => {
+    const updatedUser = await UserService.setProfileImg({ 
+      userId,
+      toUpdate: {
+        profileImgUrl: '20220622141454_210_lala.jpg'
+      }
+    })
+    expect(updatedUser.profileImgUrl).toEqual('20220622141454_210_lala.jpg')
+  })
 
   it('User가 인증한 랜드마크를 스탬프 배열에 넣어줍니다.', async () => {
     const stampAddUser = await UserService.addStamp({ userId, tourId })
-    expect(stampAddUser.stamp).toEqual(expect.arrayContaining([ tourId ]))
+    expect(stampAddUser.stamp).toContain( tourId )
   })
 
   it('User의 경험치를 업그레이드합니다.', async () => {
