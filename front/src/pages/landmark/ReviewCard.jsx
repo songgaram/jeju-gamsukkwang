@@ -1,5 +1,4 @@
 import styled, { css } from "styled-components";
-import theme from "styles/Theme";
 import { StarRatingWithEmpty } from "./StarRating";
 
 export const ReviewCard = ({ review, idx }) => {
@@ -21,7 +20,7 @@ export const ReviewCard = ({ review, idx }) => {
 const ReviewCardContainer = styled.div`
   width: 100%;
   border-top: ${(props) =>
-    props.idx === 0 ? "none" : `1px dashed ${theme.colors.secondary}`};
+    props.idx === 0 ? "none" : `1px dashed ${props.theme.colors.secondary}`};
 `;
 
 const CardHeader = styled.div`

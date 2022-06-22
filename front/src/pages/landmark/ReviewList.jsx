@@ -6,8 +6,6 @@ import styled from "styled-components";
 
 const ReviewList = ({ id }) => {
   const { data, fetchNextPage } = useGetReviewList(id);
-  const [isShow, setIsShow] = React.useState();
-
   const clickHandler = () => {
     fetchNextPage();
   };
