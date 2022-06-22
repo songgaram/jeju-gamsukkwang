@@ -40,11 +40,11 @@ describe("Community MVP Test : 정상 작동 시", () => {
   let initialQuestions;
 
   beforeAll(async () => {
-    connection = await MongoClient.connect(DB_URL, {
+    connection = await MongoClient.connect(global.__MONGO_URI__, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
-    db = await connection.db("jest");
+    db = await connection.db(global.__MONGO_DB_NAME__);
     initialArticles = await CommunityService.getArticles({
       getArticles: getMock1,
     });

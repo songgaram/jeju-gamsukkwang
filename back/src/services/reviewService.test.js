@@ -20,11 +20,11 @@ describe("Review MVP Test : 정상 작동 시", () => {
   let initialReviewInfo;
 
   beforeAll(async () => {
-    connection = await MongoClient.connect(DB_URL, {
+    connection = await MongoClient.connect(global.__MONGO_URI__, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
-    db = await connection.db("jest");
+    db = await connection.db(global.__MONGO_DB_NAME__);
     initialReviews = await ReviewService.getReviews({ getReviews: getMock });
     initialReviewInfo = await ReviewService.getReviewInfo({
       tourId: mockTourId,
