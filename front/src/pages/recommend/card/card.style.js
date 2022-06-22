@@ -6,7 +6,7 @@ const Card = styled.div`
   width: 250px;
   height: 230px;
   margin: 20px;
-  background: white;
+  background: ${({ theme }) => theme.colors.white};
   border-radius: 5px;
   box-shadow: 0px 3px 12px rgba(0, 0, 0, 6%);
   cursor: pointer;

@@ -1,20 +1,21 @@
 import { useNavigate } from "react-router-dom";
-import { useRecoilValue } from "recoil";
 
-import { filterStatus } from "../states";
-import { useGetLikes } from "queries/recommendQuery";
+import { useGetList } from "queries/recommendQuery";
 
 import { Card, TextBox, ImgBox, Img } from "./card.style";
 
-const RecommendCard = () => {
+const RecommendCard = ({ isSelected }) => {
   const navigate = useNavigate();
-  const filter = useRecoilValue(filterStatus);
 
-  const List = useGetLikes();
+  const List = useGetList(isSelected);
 
   const handleClick = (tourId) => {
     navigate(`/landmark/detail/${tourId}`);
   };
+
+  /**
+   * TODO 리스트 로딩중일 때 로딩 스피너 나오도록 구현
+   */
 
   if (!List.data) return <div>데이터가 없습니다</div>;
 
