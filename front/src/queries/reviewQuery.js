@@ -11,7 +11,7 @@ export const useGetRatingInfo = (postId) => {
 export const useGetReviewList = (postId) => {
   const fetchReviewList = async ({ pageParam = 1 }) => {
     const res = await http.get(
-      `review/${postId}/list?page=${pageParam}&limit=5`,
+      `review/${postId}/list?page=${pageParam}&limit=10`,
     );
     const { reviews, totalPage } = res.data;
     return { reviews, totalPage, pageParam, nextPage: pageParam + 1 };
@@ -21,6 +21,6 @@ export const useGetReviewList = (postId) => {
     staleTime: 50000,
     cacheTime: 120000,
     getNextPageParam: (lastPage) =>
-      lastPage.totalPage === lastPage.pageParam ? lastPage.nextPage : undefined,
+      lastPage.totalPage === lastPage.pageParam ? undefined : lastPage.nextPage,
   });
 };

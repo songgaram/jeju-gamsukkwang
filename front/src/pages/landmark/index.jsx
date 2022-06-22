@@ -97,6 +97,7 @@ const DetailHighlight = styled.p`
 const DetailContent = styled.div`
   display: table;
   width: 100%;
+  border-spacing: 10px;
 `;
 
 const DetailTabRow = styled.div`
