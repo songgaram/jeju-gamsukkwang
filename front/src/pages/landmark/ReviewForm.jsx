@@ -5,6 +5,14 @@ import theme from "styles/Theme";
 import Button from "components/Button";
 import registerValidation from "./utils";
 
+const textList = [
+  "별로예요",
+  "그저 그래요",
+  "보통이에요",
+  "좋아요",
+  "최고예요",
+];
+
 const ReviewForm = () => {
   const [hovered, setHovered] = useState(null);
   const [clicked, setClicked] = useState(null);
@@ -14,16 +22,13 @@ const ReviewForm = () => {
   const { isRatingValid, isContentValid } = registerValidation(rating, content);
   const isActive = isRatingValid && isContentValid;
 
-  const handleOnSubmit = () => {
-    if (!isActive) {
-      alert("별점 혹은 리뷰를 필수로 입력해주세요.");
-      return;
-    }
-    alert("제출!");
+  const submitReview = (e) => {
+    e.preventDefault();
+    alert("클릭!");
   };
 
   return (
-    <>
+    <ReviewFormContainer onSubmit={submitReview}>
       <HeaderContainer align="center" justify="center">
         <Title>랜드마크를 평가해주세요!</Title>
         <Required>필수</Required>
@@ -64,21 +69,22 @@ const ReviewForm = () => {
       <InputForm value={content} onChange={(e) => setContent(e.target.value)} />
       <Footer>
         <div>{content.length}/1000</div>
-        <Button color="deepblue" disabled={!isActive} onClick={handleOnSubmit}>
+        <Button
+          color="deepblue"
+          type="submit"
+          disabled={!isActive}
+          onSubmit={submitReview}
+        >
           리뷰 등록
         </Button>
       </Footer>
-    </>
+    </ReviewFormContainer>
   );
 };
 
-const textList = [
-  "별로예요",
-  "그저 그래요",
-  "보통이에요",
-  "좋아요",
-  "최고예요",
-];
+const ReviewFormContainer = styled.from`
+  width: 100%;
+`;
 
 const StarContainer = styled.div`
   text-align: center;
@@ -132,7 +138,6 @@ const InputForm = styled.textarea`
   height: 300px;
   margin: 1% 0;
   resize: none;
-  maxlength: 100;
 `;
 
 export default ReviewForm;

@@ -1,4 +1,9 @@
-import { useQuery, useInfiniteQuery } from "react-query";
+import {
+  useQuery,
+  useInfiniteQuery,
+  useQueryClient,
+  useMutation,
+} from "react-query";
 import http from "libs/apiController";
 
 export const useGetRatingInfo = (postId) => {
@@ -23,4 +28,20 @@ export const useGetReviewList = (postId) => {
     getNextPageParam: (lastPage) =>
       lastPage.totalPage === lastPage.pageParam ? undefined : lastPage.nextPage,
   });
+};
+
+export const usePostReview = () => {
+  const queryClient = useQueryClient();
+  return useMutation(
+    async (review) => {
+      await http.post(`review`, review);
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("reviews");
+      },
+
+      onError: (err) => console.log(err),
+    },
+  );
 };
