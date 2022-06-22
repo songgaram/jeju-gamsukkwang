@@ -3,7 +3,7 @@ import "dotenv/config";
 import { MongoClient } from "mongodb";
 
 const DB_URL = process.env.MONGODB_URL;
-const mockUserId = "840b5c0f-a165-4010-9309-53663c873e72";
+const mockUserId = "f26ea3b5-8e4e-4c0e-930f-882507f48538";
 
 const getMock1 = {
   page: 1,
@@ -72,6 +72,8 @@ describe("Community MVP Test : 정상 작동 시", () => {
     });
 
     expect(getArticles.total).toEqual(initialArticles.total);
+    expect(getArticles.totalPage).toEqual(initialArticles.totalPage);
+    expect(getArticles.articles).toEqual(initialArticles.articles);
   });
 
   it("/GET : 말머리가 free인 게시글 목록 획득", async () => {
@@ -80,6 +82,8 @@ describe("Community MVP Test : 정상 작동 시", () => {
     });
 
     expect(getArticles.total).toEqual(initialFrees.total);
+    expect(getArticles.totalPage).toEqual(initialFrees.totalPage);
+    expect(getArticles.articles).toEqual(initialFrees.articles);
   });
 
   it("/GET : 말머리가 info인 게시글 목록 획득", async () => {
@@ -88,6 +92,8 @@ describe("Community MVP Test : 정상 작동 시", () => {
     });
 
     expect(getArticles.total).toEqual(initialInfos.total);
+    expect(getArticles.totalPage).toEqual(initialInfos.totalPage);
+    expect(getArticles.articles).toEqual(initialInfos.articles);
   });
 
   it("/GET : 말머리가 question인 게시글 목록 획득", async () => {
@@ -96,6 +102,8 @@ describe("Community MVP Test : 정상 작동 시", () => {
     });
 
     expect(getArticles.total).toEqual(initialQuestions.total);
+    expect(getArticles.totalPage).toEqual(initialQuestions.totalPage);
+    expect(getArticles.articles).toEqual(initialQuestions.articles);
   });
 
   it("/POST : 게시글을 작성", async () => {
