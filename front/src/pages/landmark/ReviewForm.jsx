@@ -5,6 +5,8 @@ import theme from "styles/Theme";
 import Button from "components/Button";
 import registerValidation from "./utils";
 import { usePostReview } from "queries/reviewQuery";
+import Modal from "components/modal";
+import ModalPortal from "components/modal/modalPortal";
 
 const textList = [
   "별로예요",
@@ -14,12 +16,14 @@ const textList = [
   "최고예요",
 ];
 
+const MODAL_MESSAGE = "이미 리뷰를 작성하셨어요!";
+
 const ReviewForm = ({ id }) => {
   const [hovered, setHovered] = useState(null);
   const [clicked, setClicked] = useState(null);
   const [curContent, setCurContent] = useState("");
   const [rating, setRating] = useState(undefined);
-
+  const [isOpenModal, setIsOpenModal] = useState(false);
   const { isRatingValid, isContentValid } = registerValidation(
     rating,
     curContent,
@@ -34,67 +38,81 @@ const ReviewForm = ({ id }) => {
       content: curContent,
       rating,
     };
-    // console.log(review);
-    postReview.mutate(review);
+    postReview.mutate(review, {
+      onError: (err) => {
+        if (err.response.data.errormessage === "system.error.alreadyPosting") {
+          setIsOpenModal(true);
+          return;
+        }
+        console.log(err);
+      },
+    });
     setCurContent("");
   };
 
   return (
-    <ReviewFormContainer onSubmit={submitReview}>
-      <HeaderContainer align="center" justify="center">
-        <Title>랜드마크를 평가해주세요!</Title>
-        <Required>필수</Required>
-      </HeaderContainer>
+    <>
+      <ReviewFormContainer onSubmit={submitReview}>
+        <HeaderContainer align="center" justify="center">
+          <Title>랜드마크를 평가해주세요!</Title>
+          <Required>필수</Required>
+        </HeaderContainer>
 
-      <StarContainer>
-        {[1, 2, 3, 4, 5].map((el) => (
-          <BsStarFill
-            color={
-              (clicked >= el) | (hovered >= el)
-                ? theme.colors.secondary
-                : theme.colors.gray02
-            }
-            key={el}
-            size={theme.fontSizes.titleSize}
-            onMouseEnter={() => setHovered(el)}
-            onMouseLeave={() => setHovered(null)}
-            onClick={() => {
-              setClicked(el);
-              setRating(el);
-            }}
-            style={{ cursor: "pointer" }}
-          />
-        ))}
-      </StarContainer>
-      <div style={{ position: "relative" }}>
-        {[1, 2, 3, 4, 5].map((num) => (
-          <HiddenText key={num} show={hovered === num}>
-            {textList[num - 1]}
-          </HiddenText>
-        ))}
-      </div>
+        <StarContainer>
+          {[1, 2, 3, 4, 5].map((el) => (
+            <BsStarFill
+              color={
+                (clicked >= el) | (hovered >= el)
+                  ? theme.colors.secondary
+                  : theme.colors.gray02
+              }
+              key={el}
+              size={theme.fontSizes.titleSize}
+              onMouseEnter={() => setHovered(el)}
+              onMouseLeave={() => setHovered(null)}
+              onClick={() => {
+                setClicked(el);
+                setRating(el);
+              }}
+              style={{ cursor: "pointer" }}
+            />
+          ))}
+        </StarContainer>
+        <div style={{ position: "relative" }}>
+          {[1, 2, 3, 4, 5].map((num) => (
+            <HiddenText key={num} show={hovered === num}>
+              {textList[num - 1]}
+            </HiddenText>
+          ))}
+        </div>
 
-      <HeaderContainer align="center">
-        <Title>다른 여행객을 위한 후기와 팁</Title>
-        <Required>필수</Required>
-      </HeaderContainer>
-      <InputForm
-        maxlength="1000"
-        value={curContent}
-        onChange={(e) => setCurContent(e.target.value)}
-      />
-      <Footer>
-        <div>{curContent.length}/1000</div>
-        <Button
-          color="deepblue"
-          type="submit"
-          disabled={!isActive}
-          onSubmit={submitReview}
-        >
-          리뷰 등록
-        </Button>
-      </Footer>
-    </ReviewFormContainer>
+        <HeaderContainer align="center">
+          <Title>다른 여행객을 위한 후기와 팁</Title>
+          <Required>필수</Required>
+        </HeaderContainer>
+        <InputForm
+          maxlength="1000"
+          value={curContent}
+          onChange={(e) => setCurContent(e.target.value)}
+        />
+        <Footer>
+          <div>{curContent.length}/1000</div>
+          <Button
+            color="deepblue"
+            type="submit"
+            disabled={!isActive}
+            onSubmit={submitReview}
+          >
+            리뷰 등록
+          </Button>
+        </Footer>
+      </ReviewFormContainer>
+      <ModalPortal>
+        {isOpenModal && (
+          <Modal setIsOpenModal={setIsOpenModal} modalMessage={MODAL_MESSAGE} />
+        )}
+      </ModalPortal>
+    </>
   );
 };
 

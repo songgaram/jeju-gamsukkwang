@@ -40,8 +40,6 @@ export const usePostReview = () => {
       onSuccess: () => {
         queryClient.invalidateQueries("reviews");
       },
-
-      onError: (err) => console.log(err),
     },
   );
 };
