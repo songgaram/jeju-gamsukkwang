@@ -12,16 +12,6 @@ const ReviewList = ({ id }) => {
 
   return (
     <div>
-      {/* {data?.pages?.map((page, idx) => (
-        <React.Fragment key={idx}>
-          {page.reviews?.flatMap((review, idx) => (
-            <React.Fragment key={review._id}>
-              <ReviewCard review={review} idx={idx} />
-            </React.Fragment>
-          ))}
-        </React.Fragment>
-      ))} */}
-
       {data?.pages
         ?.flatMap((page) => {
           return page.reviews;
