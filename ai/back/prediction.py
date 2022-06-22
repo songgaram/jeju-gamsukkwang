@@ -8,13 +8,13 @@ from PIL import Image
 
 def predictImage(imageURL):
 
-  model = tf.keras.models.load_model('./model')
+  model = tf.keras.models.load_model('model/efficientModel.h5')
 
-  res = urllib.request.urlopen(imageURL)
-
+  res = urllib.request.urlopen(imageURL) 
   img = Image.open(res)
+  # img = load_img('./test.jpg', target_size=(224,224))
+
   img = img.resize((224,224))
-  # img = load_img(imageURL, target_size=(224,224))
   img = img_to_array(img)
   img = img/255.0
 
