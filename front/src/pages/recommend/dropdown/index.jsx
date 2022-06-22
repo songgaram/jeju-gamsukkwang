@@ -1,15 +1,13 @@
 import { useState, useRef } from "react";
 import { useClickAway } from "react-use";
-import { useRecoilState } from "recoil";
 
-import { filterStatus } from "../states";
 import { DROP_DOWN_LIST } from "./data";
 
 import styled from "styled-components";
 import { ArrowButton } from "assets/svgs";
 
-const Dropdown = () => {
-  const [selected, setSelected] = useRecoilState(filterStatus);
+const Dropdown = ({ dropDownFunction }) => {
+  const [selected, setSelected] = useState("좋아요 순");
   const [isListOpen, setIsListOpen] = useState(false);
   const outsideRef = useRef(null);
 
@@ -19,8 +17,10 @@ const Dropdown = () => {
 
   const handleItemClick = (e) => {
     const item = e.currentTarget.title;
+    const itemValue = e.currentTarget.value;
 
     setSelected(item);
+    dropDownFunction(itemValue);
     setIsListOpen(false);
   };
 
