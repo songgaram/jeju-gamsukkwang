@@ -1,34 +1,27 @@
 import { CommunityService } from "./communityService";
-import "dotenv/config";
 import { MongoClient } from "mongodb";
 
-const DB_URL = process.env.MONGODB_URL;
 const mockUserId = "f26ea3b5-8e4e-4c0e-930f-882507f48538";
-
 const getMock1 = {
   page: 1,
   limit: 10,
   head: "",
 };
-
 const getMock2 = {
   page: 1,
   limit: 10,
   head: "free",
 };
-
 const getMock3 = {
   page: 1,
   limit: 10,
   head: "info",
 };
-
 const getMock4 = {
   page: 1,
   limit: 10,
   head: "question",
 };
-
 let mockArticleId = "";
 
 describe("Community MVP Test : 정상 작동 시", () => {

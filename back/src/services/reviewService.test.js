@@ -1,8 +1,5 @@
 import { ReviewService } from "./reviewService";
-import "dotenv/config";
 import { MongoClient } from "mongodb";
-
-const DB_URL = process.env.MONGODB_URL;
 
 const mockUserId = "f26ea3b5-8e4e-4c0e-930f-882507f48538";
 const mockTourId = "46748ca6-4a6d-4ed7-bef7-4f40452f6fa0";
