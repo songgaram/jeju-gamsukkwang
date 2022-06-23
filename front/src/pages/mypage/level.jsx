@@ -1,11 +1,14 @@
 import styled from "styled-components";
+import { Icon } from "assets/svgs/index";
 
 const Level = () => {
   return (
     <LevelBox>
       <FigureBox>
-        <Desc>12 until Next Level</Desc>
-        <ProgressBar value="8" max="20"></ProgressBar>
+        <Desc>
+          12 <Icon /> until Next Level
+        </Desc>
+        <ProgressBar value="8" max="20" />
       </FigureBox>
       <Number>
         <Emphasized>8</Emphasized> / 20
@@ -27,8 +30,8 @@ const FigureBox = styled.div`
 
   progress[value] {
     appearance: none;
-    width: 35rem;
-    height: 20px;
+    width: 25rem;
+    height: 25px;
 
     ::-webkit-progress-bar {
       background-color: #dedede;
@@ -45,11 +48,12 @@ const FigureBox = styled.div`
 const Desc = styled.div`
   color: ${({ theme }) => theme.colors.orange};
   font-weight: bold;
-  font-size: 3rem;
+  font-size: 2.5rem;
   margin-bottom: 15px;
 `;
 
 const Number = styled.div`
+  width: 150px;
   color: ${({ theme }) => theme.colors.orange};
   font-size: 2.5rem;
   font-weight: bold;
