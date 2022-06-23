@@ -3,7 +3,7 @@ import styled from "styled-components";
 const RegisterContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   height: calc(100vh - 70px);
   letter-spacing: 0.5px;
