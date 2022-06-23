@@ -2,8 +2,16 @@ import { userModel } from "./models/userModel";
 import { tourModel } from "./models/tourModel";
 import { reviewModel } from "./models/reviewModel";
 import { communityModel } from "./models/communityModel";
-import "dotenv/config"
+import dotenv from 'dotenv'
+import path from 'path'
 import mongoose from "mongoose";
+
+if(process.env.NODE_ENV == 'test'){
+	dotenv.config({ path: path.join(__dirname, '../../.env.test')})
+}
+
+// console.log(process.env.NODE_ENV)
+// console.log(process.env.MONGODB_URL)
 
 const DB_URL = process.env.MONGODB_URL || "MongoDB 서버 주소를 설정해주세요.";
 
