@@ -53,3 +53,17 @@ export const useDeleteReview = () => {
     onError: (err) => console.log(err),
   });
 };
+
+export const useUpdateReview = () => {
+  const queryClient = useQueryClient();
+  return useMutation(
+    async (review) =>
+      await http.put(`reviews/${review.id}`, {
+        content: review.content,
+      }),
+    {
+      onSuccess: () => queryClient.invalidateQueries("reviews"),
+      onError: (err) => console.log(err),
+    },
+  );
+};
