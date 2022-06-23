@@ -1,6 +1,7 @@
 import styled, { css } from "styled-components";
 import { StarRatingWithEmpty } from "./StarRating";
 import { AiFillDelete } from "react-icons/ai";
+import { RiEdit2Fill } from "react-icons/ri";
 import { useDeleteReview } from "queries/reviewQuery";
 
 export const ReviewCard = ({ review, idx }) => {
@@ -17,7 +18,10 @@ export const ReviewCard = ({ review, idx }) => {
         <StarRatingWithEmpty number={rating} />
         <CardText>{userNickName}</CardText>
         <CardText color="gray03">{createdAt.slice(0, 10)}</CardText>
-        <TrashBox size="1.7rem" onClick={deleteReviewHandler} />
+        <IconContainer>
+          <RiEdit2Fill size="1.7rem" cursor="pointer" />
+          <TrashBox size="1.7rem" onClick={deleteReviewHandler} />
+        </IconContainer>
       </CardHeader>
       <CardContent>
         <CardText>{content}</CardText>
@@ -55,9 +59,14 @@ const CardText = styled.p`
   margin-left: 1%;
 `;
 
-const TrashBox = styled(AiFillDelete)`
+const IconContainer = styled.div`
   margin-left: auto;
+  width: auto;
+`;
+
+const TrashBox = styled(AiFillDelete)`
   cursor: pointer;
+  margin-left: 5px;
 `;
 
 export default ReviewCard;
