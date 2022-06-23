@@ -36,6 +36,9 @@ tourRouter.get("/tour/search", async (req, res, next) => {
 
 tourRouter.post("/tour/image", s3Single(), async (req, res, next) => {
   try {
+    const fileValidator = Joi.any().empty().required();
+    await fileValidator.validateAsync(req.file);
+
     const { location } = req.file;
     const imageName = location.split("amazonaws.com/")[1];
 

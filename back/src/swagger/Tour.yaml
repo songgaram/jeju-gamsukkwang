@@ -142,13 +142,15 @@ paths:
         description: 업로드할 이미지를 req.body로 받습니다.
         content:
           multipart/form-data:
-            schema: object
+            schema:
+              type: object
               properties:
                 imgFile:
                   type: string
                   format: binary
+            allowEmptyValue: false
       responses:
-        "201": 
+        "201":
           description: 요청 성공
         "400":
           description: 잘못된 요청이 있을 때 오류가 발생합니다.
