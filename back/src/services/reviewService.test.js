@@ -1,5 +1,8 @@
 import { ReviewService } from "./reviewService";
 import { MongoClient } from "mongodb";
+import "dotenv/config";
+
+const DB_URL = process.env.MONGODB_URL;
 
 const mockUserId = "f26ea3b5-8e4e-4c0e-930f-882507f48538";
 const mockTourId = "46748ca6-4a6d-4ed7-bef7-4f40452f6fa0";
@@ -17,11 +20,11 @@ describe("Review MVP Test : 정상 작동 시", () => {
   let initialReviewInfo;
 
   beforeAll(async () => {
-    connection = await MongoClient.connect(global.__MONGO_URI__, {
+    connection = await MongoClient.connect(DB_URL, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
-    db = await connection.db(global.__MONGO_DB_NAME__);
+    db = await connection.db("jest");
     initialReviews = await ReviewService.getReviews({ getReviews: getMock });
     initialReviewInfo = await ReviewService.getReviewInfo({
       tourId: mockTourId,

@@ -1,5 +1,8 @@
 import { CommunityService } from "./communityService";
 import { MongoClient } from "mongodb";
+import "dotenv/config";
+
+const DB_URL = process.env.MONGODB_URL;
 
 const mockUserId = "f26ea3b5-8e4e-4c0e-930f-882507f48538";
 const getMock1 = {
@@ -33,11 +36,11 @@ describe("Community MVP Test : 정상 작동 시", () => {
   let initialQuestions;
 
   beforeAll(async () => {
-    connection = await MongoClient.connect(global.__MONGO_URI__, {
+    connection = await MongoClient.connect(DB_URL, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
-    db = await connection.db(global.__MONGO_DB_NAME__);
+    db = await connection.db("jest");
     initialArticles = await CommunityService.getArticles({
       getArticles: getMock1,
     });
