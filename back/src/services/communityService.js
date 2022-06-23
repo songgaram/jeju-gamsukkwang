@@ -16,7 +16,7 @@ class CommunityService {
     if (!getArticles.head) {
       const result = await communityModel.findAll({ getArticles });
 
-      if (!result) {
+      if (result.total === 0) {
         throw new Error("system.error.noArticles");
       }
 
@@ -24,7 +24,7 @@ class CommunityService {
     }
     const result = await communityModel.findHead({ getArticles });
 
-    if (!result) {
+    if (result.total === 0) {
       throw new Error("system.error.noArticles");
     }
 
@@ -51,10 +51,7 @@ class CommunityService {
     }
 
     try {
-      const deleteResult = await communityModel.deleteById({ articleId });
-      if (!deleteResult) {
-        throw new Error("system.error.fail");
-      }
+      await communityModel.deleteById({ articleId });
 
       return "system.success";
     } catch (err) {

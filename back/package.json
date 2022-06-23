@@ -1,8 +1,8 @@
 {
   "scripts": {
     "start": "nodemon index.js --exec babel-node",
-    "test": "jest --forceExit",
-    "coverage": "jest --coverage"
+    "test": "cross-env NODE_ENV=test jest --forceExit",
+    "coverage": "cross-env NODE_ENV=test jest --coverage"
   },
   "dependencies": {
     "@sindresorhus/is": "^4.6.0",
@@ -25,11 +25,13 @@
     "@babel/node": "^7.17.10",
     "@babel/plugin-transform-runtime": "^7.18.2",
     "@babel/preset-env": "^7.18.2",
+    "cross-env": "^7.0.3",
     "dotenv": "^16.0.1",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
     "jest": "^28.1.1",
     "nodemon": "^2.0.16",
+    "path": "^0.12.7",
     "prettier": "^2.7.1",
     "swagger-jsdoc": "^6.2.1",
     "swagger-ui-express": "^4.4.0"
