@@ -124,4 +124,21 @@ export const tourModel = {
 
     return newArray;
   },
+
+  searchByName: async ({ name }) => {
+    const condition = [
+      {
+        $search: {
+          index: "searchByName",
+          text: {
+            query: name,
+            path: "krTitle",
+          },
+        },
+      },
+    ];
+    const searchLandmark = await Tour.aggregate(condition);
+
+    return searchLandmark;
+  },
 };

@@ -114,6 +114,23 @@ paths:
         "400":
           description: 잘못된 요청이 있을 때 오류가 발생합니다.
 
+  /tour/search:
+    get:
+      tags:
+        - Tour
+      summary: 이름으로 랜드마크 검색
+      description: /tour/search?name={name}으로 name이라는 텍스트가 포함된 랜드마크 목록을 불러옵니다.
+      parameters:
+        - name: name
+          in: query
+          required: true
+          description: 최소 2글자 이상 입력해야 합니다.
+      responses:
+        "200":
+          description: 요청 성공
+        "400":
+          description: 잘못된 요청이 있을 때 오류가 발생합니다.
+
   /landmark:
     post:
       tags:
