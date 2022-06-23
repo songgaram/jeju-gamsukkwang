@@ -1,122 +1,137 @@
-import { db, userModel, reviewModel } from "../db";
+import { userModel, reviewModel } from "../db";
+import Joi from "joi";
 
 import { v4 as uuidv4 } from "uuid";
 
 class ReviewService {
-	static addReview = async ({ loginUserId, tourId, content, rating }) => {
-		const user = await userModel.findById({ userId: loginUserId });
-		const userNickName = user.nickname;
-		const id = uuidv4();
+  static addReview = async ({ loginUserId, tourId, content, rating }) => {
+    const propSchema = Joi.object().keys({
+      loginUserId: Joi.string().required(),
+      tourId: Joi.string().required(),
+      content: Joi.string().required(),
+      rating: Joi.number().valid(5, 4, 3, 2, 1).required(),
+    });
 
-		const newReview = {
-			id,
-			tourId,
-			userId: loginUserId,
-			userNickName,
-			content,
-			rating,
-		};
+    await propSchema.validateAsync({
+      loginUserId,
+      tourId,
+      content,
+      rating,
+    });
 
-		// 이미 리뷰를 쓴 상태라면 { _id } 객체를 반환, 아니라면 null을 반환
-		const didPostReview = await reviewModel.isPosted({
-			tourId,
-			userId: loginUserId,
-		});
+    const user = await userModel.findById({ userId: loginUserId });
+    const userNickName = user.nickname;
+    const id = uuidv4();
 
-		if (didPostReview) {
-			throw new Error("system.error.alreadyPosting");
-		}
+    const newReview = {
+      id,
+      tourId,
+      userId: loginUserId,
+      userNickName,
+      content,
+      rating,
+    };
 
-		const createdNewReview = await reviewModel.create({ newReview });
-		return createdNewReview;
-	};
+    // 이미 리뷰를 쓴 상태라면 { _id } 객체를 반환, 아니라면 null을 반환
+    const didPostReview = await reviewModel.isPosted({
+      tourId,
+      userId: loginUserId,
+    });
 
-	static addReviewWithImages = async ({
-		loginUserId,
-		tourId,
-		content,
-		rating,
-		images,
-	}) => {
-		const user = await userModel.findById({ userId: loginUserId });
-		const userNickName = user.nickname;
-		const id = uuidv4();
+    if (didPostReview) {
+      throw new Error("system.error.alreadyPosting");
+    }
 
-		const newReview = {
-			id,
-			tourId,
-			userId: loginUserId,
-			userNickName,
-			content,
-			rating,
-			saveFileName: images,
-		};
+    const createdNewReview = await reviewModel.create({ newReview });
+    return createdNewReview;
+  };
 
-		// 이미 리뷰를 쓴 상태라면 { _id } 객체를 반환, 아니라면 null을 반환
-		const didPostReview = await reviewModel.isPosted({
-			tourId,
-			userId: loginUserId,
-		});
+  // 리뷰 목록 불러오기
+  static getReviews = async ({ getReviews }) => {
+    const propSchema = Joi.object().keys({
+      tourId: Joi.string().required(),
+      page: Joi.number(),
+      limit: Joi.number(),
+    });
 
-		if (didPostReview) {
-			throw new Error("system.error.alreadyPosting");
-		}
+    await propSchema.validateAsync(getReviews);
 
-		const createdNewReview = await reviewModel.create({ newReview });
-		return createdNewReview;
-	};
+    const reviews = await reviewModel.findByTourId({ getReviews });
+    return reviews;
+  };
 
-	// 리뷰 목록 불러오기
-	static getReviews = async ({ tourId }) => {
-		const reviews = await reviewModel.findByTourId({ tourId });
-		return reviews;
-	};
+  // 리뷰 요약 정보 불러오기
+  static getReviewInfo = async ({ tourId }) => {
+    const propSchema = Joi.object().keys({
+      tourId: Joi.string().required(),
+    });
 
-	// 본인 리뷰인지 확인하고 수정하기
-	static setReview = async ({ loginUserId, reviewId, toUpdate }) => {
-		const currentReview = await reviewModel.findById({ reviewId });
+    await propSchema.validateAsync({ tourId });
 
-		if (!currentReview) {
-			throw new Error("system.error.noReview");
-		}
+    const reviewInfo = await reviewModel.findReviewData({ tourId });
+    return reviewInfo;
+  };
 
-		const userId = currentReview.userId;
+  // 본인 리뷰인지 확인하고 수정하기
+  static setReview = async ({ loginUserId, reviewId, toUpdate }) => {
+    const propSchema = Joi.object().keys({
+      loginUserId: Joi.string().required(),
+      reviewId: Joi.string().required(),
+      toUpdate: Joi.any().required(),
+    });
 
-		// 현재 로그인한 사용자와 리뷰 작성자가 같아야 수정 가능
-		if (userId === loginUserId) {
-			const updatedReview = await reviewModel.update({
-				reviewId,
-				data: toUpdate,
-			});
-			return updatedReview;
-		} else {
-			throw new Error("system.error.unAuthorized");
-		}
-	};
+    await propSchema.validateAsync({ loginUserId, reviewId, toUpdate });
 
-	// 리뷰 삭제하기
-	static deleteReview = async ({ loginUserId, reviewId }) => {
-		const currentReview = await reviewModel.findById({ reviewId });
+    const currentReview = await reviewModel.findById({ reviewId });
 
-		if (!currentReview) {
-			throw new Error("system.error.noReview");
-		}
+    if (!currentReview) {
+      throw new Error("system.error.noReview");
+    }
 
-		const userId = currentReview.userId;
+    const userId = currentReview.userId;
 
-		// 현재 로그인한 사용자와 리뷰 작성자가 같아야 수정 가능
-		if (userId === loginUserId) {
-			const isDeleted = await reviewModel.deleteById({ reviewId });
+    // 현재 로그인한 사용자와 리뷰 작성자가 같아야 수정 가능
+    if (userId === loginUserId) {
+      const updatedReview = await reviewModel.update({
+        reviewId,
+        data: toUpdate,
+      });
+      return updatedReview;
+    } else {
+      throw new Error("system.error.unAuthorized");
+    }
+  };
 
-			if (isDeleted.deletedCount !== 1) {
-				throw new Error("system.error.fail");
-			}
+  // 리뷰 삭제하기
+  static deleteReview = async ({ loginUserId, reviewId }) => {
+    const propSchema = Joi.object().keys({
+      loginUserId: Joi.string().required(),
+      reviewId: Joi.string().required(),
+    });
 
-			return "system.success";
-		} else {
-			throw new Error("system.error.unAuthorized");
-		}
-	};
+    await propSchema.validateAsync({ loginUserId, reviewId });
+
+    const currentReview = await reviewModel.findById({ reviewId });
+
+    if (!currentReview) {
+      throw new Error("system.error.noReview");
+    }
+
+    const { userId } = currentReview;
+
+    // 현재 로그인한 사용자와 리뷰 작성자가 같아야 수정 가능
+    if (userId === loginUserId) {
+      const isDeleted = await reviewModel.deleteById({ reviewId });
+
+      if (isDeleted.deletedCount !== 1) {
+        throw new Error("system.error.fail");
+      }
+
+      return "system.success";
+    } else {
+      throw new Error("system.error.unAuthorized");
+    }
+  };
 }
 
 export { ReviewService };

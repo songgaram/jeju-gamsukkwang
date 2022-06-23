@@ -1,50 +1,36 @@
-import styled, { css } from "styled-components";
-import StarRating from "./StarRating";
-import theme from "styles/Theme";
+import ReviewCard from "./ReviewCard";
+import { useGetReviewList } from "queries/reviewQuery";
+import React from "react";
+import { MdExpandMore } from "react-icons/md";
+import styled from "styled-components";
 
-const ReviewList = () => {
+const ReviewList = ({ id }) => {
+  const { data, fetchNextPage } = useGetReviewList(id);
+  const clickHandler = () => {
+    fetchNextPage();
+  };
+
   return (
-    <ReviewCard>
-      <CardHeader>
-        <StarRating number={5} color={theme.colors.secondary} />
-        <CardText>가라미</CardText>
-        <CardText color="gray03">2022-02-20</CardText>
-      </CardHeader>
-      <CardContent>
-        <CardText>
-          유익한 시간이었구 제주도는 정말 오랜만이었는데 힐링되고 자연이 최고
-          인거 같습니다~ 추천해요!
-        </CardText>
-      </CardContent>
-    </ReviewCard>
+    <div>
+      {data?.pages
+        ?.flatMap((page) => {
+          return page.reviews;
+        })
+        .map((review, idx) => (
+          <ReviewCard review={review} idx={idx} key={review._id} />
+        ))}
+
+      {Number(data?.pages?.length) < Number(data?.pages?.[0].totalPage) && (
+        <MoreReview onClick={clickHandler}>
+          후기 더 보기 <MdExpandMore />{" "}
+        </MoreReview>
+      )}
+    </div>
   );
 };
 
-const ReviewCard = styled.div`
-  width: 100%;
-`;
-
-const CardHeader = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin: 5% 1% 0 0;
-`;
-
-const CardContent = styled.div`
-  width: 100%;
-  padding: 5% 0;
-`;
-
-const CardText = styled.p`
-  ${(props) => {
-    const selected = props.theme.colors[props.color];
-    return css`
-      color: ${selected};
-    `;
-  }}
-  margin-left: 1%;
+const MoreReview = styled.div`
+  cursor: pointer;
 `;
 
 export default ReviewList;

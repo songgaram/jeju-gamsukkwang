@@ -1,25 +1,40 @@
 import bcrypt from "bcrypt";
 import { v4 as uuidv4 } from "uuid";
 import jwt from "jsonwebtoken";
+import * as Joi from 'joi'
+import { privateKey } from '../config/jwt'
 
-import { db, userModel } from "../db";
+import { db, userModel, tourModel } from "../db";
 
 class UserService {
 	// 회원 정보 찾기 기능
 	static findUser = async ({ userId }) => {
-		const user = await userModel.findById({ userId });
+		// 데이터의 유효성 체크
+		const userIdValidator = Joi.string().trim().empty().required()
+		await userIdValidator.validateAsync(userId)
+
+		const foundUser = await userModel.findById({ userId });
 
 		// 해당 회원이 없을 경우 error
-		if (!user) {
+		if (!foundUser) {
 			throw new Error("system.error.noUser");
 		}
 
-		const foundUser = await userModel.findById({ userId });
-		return foundUser;
+		const user = await userModel.findById({ userId });
+		return user;
 	};
 
 	// 회원 등록 기능
 	static addUser = async ({ email, password, nickname }) => {
+		// 데이터의 유효성 체크
+		const registerValidator = Joi.object({
+			email: Joi.string().trim().empty().required()
+				.email({ minDomainSegments: 2, tlds: { allow: ["com", "net", "kr", "io"] } } ),
+				password: Joi.string().trim().empty().pattern(new RegExp('^[a-zA-Z0-9~`!@#$%^&*()-=+?]{8,}$')).required(),
+			nickname: Joi.string().trim().empty().min(2).required(),
+		})
+		await registerValidator.validateAsync({ email, password, nickname })
+
 		// 이메일 중복 확인
 		const isEmailExist = await userModel.isEmailExist({ email });
 		if (!isEmailExist) {
@@ -37,7 +52,12 @@ class UserService {
 
 		// id에 유니크 값 부여
 		const id = uuidv4();
-		const newUser = { id, email, hashedPassword, nickname };
+		const newUser = { 
+			id, 
+			email, 
+			hashedPassword, 
+			nickname
+		};
 
 		// db에 저장
 		const createdNewUser = await userModel.create({ newUser });
@@ -47,14 +67,22 @@ class UserService {
 
 	// 회원 로그인 기능
 	static loginUser = async ({ email, password }) => {
+		// 데이터의 유효성 체크
+		const loginValidator = Joi.object({
+			email: Joi.string().trim().empty().required(),
+			password: Joi.string().trim().empty().min(8).required(),
+		})
+		await loginValidator.validateAsync({ email, password })
+
 		// 이메일로 회원이 DB에 있는지 확인
-		const user = await userModel.findByEmail({ email });
-		const { id, nickname, hashedPassword } = user;
+		const foundUser = await userModel.findByEmail({ email });
 
 		// 해당 회원이 없을 경우 error
-		if (!user) {
+		if (!foundUser) {
 			throw new Error("system.error.noUser");
 		}
+
+		const { id, nickname, hashedPassword } = foundUser;
 
 		// 비밀번호 일치 여부 확인
 		const isPasswordSame = await bcrypt.compare(password, hashedPassword);
@@ -64,13 +92,12 @@ class UserService {
 			throw new Error("system.error.differentPassword");
 		}
 
-		// 로그인 성공 => jwt 생성
-		const secretKey = process.env.JWT_SECRET_KEY;
-		if (!secretKey) {
-			throw new Error("system.error.noSecretKey");
+		if (!privateKey) {
+			throw new Error("system.error.noPrivateKey");
 		}
-		const token = jwt.sign({ userId: id }, secretKey, {
-			expiresIn: "1 days",
+		const token = jwt.sign({ userId: id }, privateKey, {
+			algorithm: 'RS256',
+			expiresIn: "24h",
 		});
 
 		// loginUser 객체에 반환할 데이터 설정
@@ -86,6 +113,10 @@ class UserService {
 
 	// 회원 탈퇴 기능
 	static withdrawUser = async ({ userId }) => {
+		// 데이터의 유효성 체크
+		const userIdValidator = Joi.string().trim().empty().required()
+		await userIdValidator.validateAsync(userId)
+
 		// 유저 ID로 DB에 있는 회원 정보 확인
 		const user = await userModel.findById({ userId });
 
@@ -108,6 +139,14 @@ class UserService {
 
 	//회원 수정 기능
 	static setUser = async ({ userId, toUpdate }) => {
+		const editValidator = Joi.object({
+			userId: Joi.string().trim().empty().required(),
+			toUpdate: Joi.object({
+				nickname: Joi.string().trim().empty().min(2).required()
+			}).length(1)
+		})
+		await editValidator.validateAsync({ userId, toUpdate })
+
 		// 유저 ID로 DB에 있는 회원 정보 확인
 		let user = await userModel.findById({ userId });
 
@@ -131,31 +170,59 @@ class UserService {
 
 	// 회원 스탬프 추가 기능
 	static addStamp = async ({ userId, tourId }) => {
-		const user = await userModel.findById({ userId });
+		// 데이터 유효성 체크
+		const dataValidator = Joi.object({
+			userId: Joi.string().trim().empty().required(),
+			tourId: Joi.string().trim().empty().required()
+		})
+		await dataValidator.validateAsync({ userId, tourId })
+
+		const foundUser = await userModel.findById({ userId });
 
 		// 해당 회원이 없을 경우 error
-		if (!user) {
+		if (!foundUser) {
 			throw new Error("system.error.noUser");
 		}
 
-		const isStampExist = await userModel.isStampExist({ userId, tourId });
+		const isTourExist = await tourModel.isLandmarkExist({ id: tourId })
+		if(!isTourExist) {
+			throw new Error("system.error.noSuchTourId")
+		}
+
+		const isStampExist = await userModel.isStampExist({ 
+			userId, 
+			tourId
+		});
+
 		if (isStampExist) {
 			throw new Error("system.error.alreadyStamped");
 		}
 
-		const addStamp = await userModel.addStamp({ userId, tourId });
+		const addStamp = await userModel.addStamp({ 
+			userId, 
+			tourId
+		});
 
 		return addStamp;
 	};
 
 	static addExp = async ({ userId, point }) => {
+		const dataValidator = Joi.object({
+			userId: Joi.string().trim().empty().required(),
+			point: Joi.number().min(-100).max(100).empty().required()
+		})
+		await dataValidator.validateAsync({ userId, point })
+
 		let user = await userModel.findById({ userId });
 
 		if (!user) {
 			throw new Error("system.error.noUser");
 		}
 
-		user = await userModel.updateExp({ userId, point });
+		user = await userModel.updateExp({ 
+			userId, 
+			point
+		});
 		return user;
 	};
 }

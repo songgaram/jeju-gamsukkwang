@@ -10,7 +10,7 @@ paths:
       requestBody:
         description: 랜드마크 id, 리뷰 내용, 별점을 필수 req.body로 받습니다.
         content:
-          multipart/form-data:
+          application/json:
             schema:
               type: object
               properties:
@@ -26,11 +26,6 @@ paths:
                   type: integer
                   required: true
                   default: 4
-                imgFile:
-                  type: array
-                  items:
-                    type: string
-                    format: binary
       responses:
         "201":
           description: 리뷰 등록 성공
@@ -44,8 +39,6 @@ paths:
       tags:
         - Review
       summary: 해당 랜드마크의 리뷰 목록
-      security:
-        - Authorization: []
       description: /review/:tourId/list로 해당 랜드마크의 리뷰 목록을 요청합니다.
       parameters:
         - name: tourId
@@ -54,13 +47,46 @@ paths:
           schema:
             type: string
           description: 해당 랜드마크의 id를 입력해주세요.
+          default: 1d4ec9e9-fef7-4204-8527-10fa21e9e851
+        - name: page
+          in: query
+          required: true
+          schema:
+            type: number
+          description: 현재 page입니다.
+          default: 1
+        - name: limit
+          in: query
+          required: true
+          schema:
+            type: number
+          description: 페이지 당 출력되는 리뷰 수입니다. 아무 것도 넣지 않을 경우, 기본 10으로 설정됩니다.
+          default: 10
       responses:
         "200":
           description: 랜드마크의 리뷰 목록 불러오기 성공
         "400":
           description: tourId를 입력하지 않을 시 오류가 발생합니다.
-        "403":
-          description: 로그인되어 있지 않을 때 오류가 발생합니다.
+
+  /review/{tourId}/info:
+    get:
+      tags:
+        - Review
+      summary: 해당 랜드마크의 리뷰 요약
+      description: /review/:tourId/info로 해당 랜드마크의 리뷰 요약을 요청합니다.
+      parameters:
+        - name: tourId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: 해당 랜드마크의 id를 입력해주세요.
+          default: 1d4ec9e9-fef7-4204-8527-10fa21e9e851
+      responses:
+        "200":
+          description: 랜드마크의 리뷰 목록 불러오기 성공
+        "400":
+          description: tourId를 입력하지 않을 시 오류가 발생합니다.
 
   /review/{id}:
     put:
@@ -80,7 +106,7 @@ paths:
       requestBody:
         description: 리뷰 내용, 별점을 필수 req.body로 받습니다.
         content:
-          multipart/form-data:
+          application/json:
             schema:
               type: object
               properties:
@@ -96,11 +122,6 @@ paths:
                   type: integer
                   required: true
                   default: 2
-                imgFile:
-                  type: array
-                  items:
-                    type: string
-                    format: binary
       responses:
         "201":
           description: 리뷰 수정 성공

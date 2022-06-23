@@ -1,88 +1,120 @@
 import { db, tourModel } from "../db";
+import * as Joi from "joi";
 
 class TourService {
-	static getAllLandmarks = async () => {
-		const allLandmarks = await tourModel.findAll({});
+  static getAllLandmarks = async () => {
+    const allLandmarks = await tourModel.findAll({});
 
-		return allLandmarks;
-	};
+    return allLandmarks;
+  };
 
-	static getLandmark = async ({ id }) => {
-		const isLandmarkExist = await tourModel.isLandmarkExist({ id });
-		if (!isLandmarkExist) {
-			throw new Error("system.error.noLandmark");
-		}
+  static getLandmark = async ({ id }) => {
+    // 데이터의 유효성 체크
+    const tourIdValidator = Joi.string().trim().empty().required();
+    await tourIdValidator.validateAsync(id);
 
-		const landmark = await tourModel.findById({ id });
+    const isLandmarkExist = await tourModel.isLandmarkExist({ id });
+    if (!isLandmarkExist) {
+      throw new Error("system.error.noLandmark");
+    }
 
-		return landmark;
-	};
+    const landmark = await tourModel.findById({ id });
 
-	static addLike = async ({ id, currentUserId }) => {
-		const isLandmarkExist = await tourModel.isLandmarkExist({ id });
-		if (!isLandmarkExist) {
-			throw new Error("system.error.noLandmark");
-		}
+    return landmark;
+  };
 
-		const didUserLiked = await tourModel.didUserLiked({
-			id,
-			currentUserId,
-		});
+  static addLike = async ({ id, currentUserId }) => {
+    // 데이터의 유효성 체크
+    const dataValidator = Joi.object({
+      id: Joi.string().trim().empty().required(),
+      currentUserId: Joi.string().trim().empty().required(),
+    });
+    await dataValidator.validateAsync({ id, currentUserId });
 
-		// didUserLiked가 무언가를 반환할 때 에러를 발생
-		if (didUserLiked) {
-			throw new Error("system.error.alreadyLiked");
-		}
+    const isLandmarkExist = await tourModel.isLandmarkExist({ id });
+    if (!isLandmarkExist) {
+      throw new Error("system.error.noLandmark");
+    }
 
-		const addLiketoLandmark = tourModel.addLike({
-			id,
-			currentUserId,
-		});
+    const didUserLiked = await tourModel.didUserLiked({
+      id,
+      currentUserId,
+    });
 
-		return addLiketoLandmark;
-	};
+    // didUserLiked가 무언가를 반환할 때 에러를 발생
+    if (didUserLiked) {
+      throw new Error("system.error.alreadyLiked");
+    }
 
-	static removeLike = async ({ id, currentUserId }) => {
-		const isLandmarkExist = await tourModel.isLandmarkExist({ id });
-		if (!isLandmarkExist) {
-			throw new Error("system.error.noLandmark");
-		}
+    const addLiketoLandmark = tourModel.addLike({
+      id,
+      currentUserId,
+    });
 
-		const didUserLiked = await tourModel.didUserLiked({
-			id,
-			currentUserId,
-		});
+    return addLiketoLandmark;
+  };
 
-		// didUserLiked가 무언가를 반환하지 않을 때 에러를 발생
-		if (!didUserLiked) {
-			throw new Error("system.error.noLiked");
-		}
+  static removeLike = async ({ id, currentUserId }) => {
+    // 데이터의 유효성 체크
+    const dataValidator = Joi.object({
+      id: Joi.string().trim().empty().required(),
+      currentUserId: Joi.string().trim().empty().required(),
+    });
+    await dataValidator.validateAsync({ id, currentUserId });
 
-		const removeLikefromLandmark = tourModel.removeLike({
-			id,
-			currentUserId,
-		});
+    const isLandmarkExist = await tourModel.isLandmarkExist({ id });
+    if (!isLandmarkExist) {
+      throw new Error("system.error.noLandmark");
+    }
 
-		return removeLikefromLandmark;
-	};
+    const didUserLiked = await tourModel.didUserLiked({
+      id,
+      currentUserId,
+    });
 
-	static sortByLiked = async ({}) => {
-		const sortLandmarks = await tourModel.sortByLiked({});
+    // didUserLiked가 무언가를 반환하지 않을 때 에러를 발생
+    if (!didUserLiked) {
+      throw new Error("system.error.noLiked");
+    }
 
-		return sortLandmarks;
-	};
+    const removeLikefromLandmark = tourModel.removeLike({
+      id,
+      currentUserId,
+    });
 
-	static sortByReviews = async ({}) => {
-		const sortLandmarks = await tourModel.sortByReviews({});
+    return removeLikefromLandmark;
+  };
 
-		return sortLandmarks;
-	};
+  static sortByLiked = async ({}) => {
+    const sortLandmarks = await tourModel.sortByLiked({});
 
-	static sortByRating = async ({}) => {
-		const sortLandmarks = await tourModel.sortByRating({});
+    return sortLandmarks;
+  };
 
-		return sortLandmarks;
-	};
+  static sortByReviews = async ({}) => {
+    const sortLandmarks = await tourModel.sortByReviews({});
+
+    return sortLandmarks;
+  };
+
+  static sortByRating = async ({}) => {
+    const sortLandmarks = await tourModel.sortByRating({});
+
+    return sortLandmarks;
+  };
+
+  static searchLandmark = async ({ name }) => {
+    const dataValidator = Joi.string().trim().empty().min(2).required();
+    await dataValidator.validateAsync(name);
+
+    const searchLandmark = await tourModel.searchByName({ name });
+
+    if (!searchLandmark) {
+      throw new Error("system.error.noLandmark");
+    }
+
+    return searchLandmark;
+  };
 }
 
 export { TourService };
