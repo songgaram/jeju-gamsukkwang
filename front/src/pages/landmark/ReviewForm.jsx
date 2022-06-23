@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { InputForm, Footer } from "./landmark.style";
+import { ReviewFormContainer, InputForm, Footer } from "./landmark.style";
 import { BsStarFill } from "react-icons/bs";
 import theme from "styles/Theme";
 import Button from "components/Button";
@@ -20,7 +20,7 @@ const ReviewForm = ({ id }) => {
   const isActive = isRatingValid && isContentValid;
   const postReview = usePostReview();
 
-  const submitReview = (e) => {
+  const handleSubmitReview = (e) => {
     e.preventDefault();
     const review = {
       tourId: id,
@@ -41,7 +41,7 @@ const ReviewForm = ({ id }) => {
 
   return (
     <>
-      <ReviewFormContainer onSubmit={submitReview}>
+      <ReviewFormContainer onSubmit={handleSubmitReview}>
         <HeaderContainer align="center" justify="center">
           <Title>랜드마크를 평가해주세요!</Title>
           <Required>필수</Required>
@@ -90,7 +90,7 @@ const ReviewForm = ({ id }) => {
             color="deepblue"
             type="submit"
             disabled={!isActive}
-            onSubmit={submitReview}
+            onSubmit={handleSubmitReview}
           >
             리뷰 등록
           </Button>
@@ -104,10 +104,6 @@ const ReviewForm = ({ id }) => {
     </>
   );
 };
-
-const ReviewFormContainer = styled.form`
-  width: 100%;
-`;
 
 const StarContainer = styled.div`
   text-align: center;

@@ -1,5 +1,9 @@
 import styled from "styled-components";
 
+const ReviewFormContainer = styled.form`
+  width: 100%;
+`;
+
 const InputForm = styled.textarea`
   width: 100%;
   height: 300px;
@@ -16,4 +20,4 @@ const Footer = styled.div`
   height: 50px;
 `;
 
-export { InputForm, Footer };
+export { ReviewFormContainer, InputForm, Footer };

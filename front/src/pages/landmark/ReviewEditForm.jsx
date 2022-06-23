@@ -1,27 +1,29 @@
 import styled from "styled-components";
-import { InputForm, Footer } from "./landmark.style";
+import { useState } from "react";
+import { ReviewFormContainer, InputForm, Footer } from "./landmark.style";
 import Button from "components/Button";
 
 const ReviewEditForm = () => {
+  const [content, setContent] = useState("");
+
+  const handleSubmitReview = (e) => {
+    e.preventDefault();
+  };
+
   return (
-    <>
+    <ReviewFormContainer onSubmit={handleSubmitReview}>
       <InputForm
         maxlength="1000"
-        // value={curContent}
-        // onChange={(e) => setCurContent(e.target.value)}
+        value={content}
+        onChange={(e) => setContent(e.target.value)}
       />
       <Footer>
-        {/* <div>{curContent.length}/1000</div> */}
-        <Button
-          color="deepblue"
-          type="submit"
-          //   disabled={!isActive}
-          //   onSubmit={submitReview}
-        >
+        <div>{content.length}/1000</div>
+        <Button color="deepblue" type="submit" onSubmit={handleSubmitReview}>
           리뷰 등록
         </Button>
       </Footer>
-    </>
+    </ReviewFormContainer>
   );
 };
 

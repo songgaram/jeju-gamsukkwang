@@ -8,7 +8,7 @@ export const ReviewCard = ({ review, idx }) => {
   const { userNickName, content, rating, createdAt, id } = review;
   const deleteReview = useDeleteReview();
 
-  const deleteReviewHandler = () => {
+  const handleDeleteReview = () => {
     deleteReview.mutate(id);
   };
 
@@ -20,7 +20,7 @@ export const ReviewCard = ({ review, idx }) => {
         <CardText color="gray03">{createdAt.slice(0, 10)}</CardText>
         <IconContainer>
           <RiEdit2Fill size="1.7rem" cursor="pointer" />
-          <TrashBox size="1.7rem" onClick={deleteReviewHandler} />
+          <TrashBox size="1.7rem" onClick={handleDeleteReview} />
         </IconContainer>
       </CardHeader>
       <CardContent>
