@@ -2,6 +2,9 @@ import { useNavigate } from "react-router-dom";
 
 import TextSearch from "./textSearch";
 
+// import { useRecoilValue } from "recoil";
+// import { filteredSearchList } from "../home/textSearch/state";
+
 import {
   HomeContainer,
   ContentsBox,
@@ -11,6 +14,9 @@ import {
 
 const Home = () => {
   const navigate = useNavigate();
+
+  // const filterList = useRecoilValue(filteredSearchList);
+  // console.log(filterList);
 
   return (
     <HomeContainer>
