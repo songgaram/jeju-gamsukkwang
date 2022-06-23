@@ -13,13 +13,10 @@ import ModalPortal from "components/modal/modalPortal";
 const ReviewForm = ({ id }) => {
   const [hovered, setHovered] = useState(null);
   const [clicked, setClicked] = useState(null);
-  const [curContent, setCurContent] = useState("");
+  const [content, setContent] = useState("");
   const [rating, setRating] = useState(undefined);
   const [isOpenModal, setIsOpenModal] = useState(false);
-  const { isRatingValid, isContentValid } = registerValidation(
-    rating,
-    curContent,
-  );
+  const { isRatingValid, isContentValid } = registerValidation(rating, content);
   const isActive = isRatingValid && isContentValid;
   const postReview = usePostReview();
 
@@ -27,7 +24,7 @@ const ReviewForm = ({ id }) => {
     e.preventDefault();
     const review = {
       tourId: id,
-      content: curContent,
+      content,
       rating,
     };
     postReview.mutate(review, {
@@ -39,7 +36,7 @@ const ReviewForm = ({ id }) => {
         console.log(err);
       },
     });
-    setCurContent("");
+    setContent("");
   };
 
   return (
@@ -66,7 +63,7 @@ const ReviewForm = ({ id }) => {
                 setClicked(el);
                 setRating(el);
               }}
-              style={{ cursor: "pointer" }}
+              cursor="pointer"
             />
           ))}
         </StarContainer>
@@ -84,11 +81,11 @@ const ReviewForm = ({ id }) => {
         </HeaderContainer>
         <InputForm
           maxlength="1000"
-          value={curContent}
-          onChange={(e) => setCurContent(e.target.value)}
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
         />
         <Footer>
-          <div>{curContent.length}/1000</div>
+          <div>{content.length}/1000</div>
           <Button
             color="deepblue"
             type="submit"
