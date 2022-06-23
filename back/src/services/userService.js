@@ -89,10 +89,6 @@ class UserService {
 			throw new Error("system.error.differentPassword");
 		}
 
-		if (!privateKey) {
-			throw new Error("system.error.noPrivateKey");
-		}
-
 		const token = jwt.sign({ userId: id }, privateKey, {
 			algorithm: 'RS256',
 			expiresIn: "24h",
@@ -120,11 +116,7 @@ class UserService {
 		}
 
 		try {
-			const withdrawResult = await userModel.deleteById({ userId });
-			
-			if (!withdrawResult) {
-				throw new Error("system.error.fail");
-			}
+			await userModel.deleteById({ userId });
 
 			return "system.success";
 		} catch (err) {

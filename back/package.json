@@ -1,7 +1,8 @@
 {
 	"scripts": {
 		"start": "nodemon index.js --exec babel-node",
-		"test": "cross-env NODE_ENV=test jest --forceExit"
+		"test": "cross-env NODE_ENV=test jest --runInBand --forceExit",
+		"coverage": "cross-env NODE_ENV=test jest --coverage"
 	},
 	"dependencies": {
 		"@sindresorhus/is": "^4.6.0",

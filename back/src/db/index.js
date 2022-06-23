@@ -10,9 +10,6 @@ if(process.env.NODE_ENV == 'test'){
 	dotenv.config({ path: path.join(__dirname, '../../.env.test')})
 }
 
-// console.log(process.env.NODE_ENV)
-// console.log(process.env.MONGODB_URL)
-
 const DB_URL = process.env.MONGODB_URL || "MongoDB 서버 주소를 설정해주세요.";
 
 mongoose.connect(DB_URL);
@@ -22,6 +19,7 @@ db.on("connected", () => console.log(`MongoDB 연결 성공 : ${DB_URL}`));
 db.on("error", (err) =>
 	console.error(`MongoDB 연결 실패 : ${DB_URL}` + "\n" + err)
 );
+
 
 export { userModel };
 export { tourModel };
