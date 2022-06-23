@@ -1,5 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
+import { InputForm, Footer } from "./landmark.style";
 import { BsStarFill } from "react-icons/bs";
 import theme from "styles/Theme";
 import Button from "components/Button";
@@ -145,15 +146,6 @@ const Required = styled.p`
   font-weight: bold;
 `;
 
-const Footer = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: flex-start;
-  height: 50px;
-`;
-
 const HiddenText = styled.p`
   position: absolute;
   top: 10px;
@@ -165,13 +157,6 @@ const HiddenText = styled.p`
   color: ${theme.colors.gray03};
   font-size: ${theme.fontSizes.lg};
   ${({ show }) => (show ? `display:block` : `display: none`)}
-`;
-
-const InputForm = styled.textarea`
-  width: 100%;
-  height: 300px;
-  margin: 1% 0;
-  resize: none;
 `;
 
 export default ReviewForm;
