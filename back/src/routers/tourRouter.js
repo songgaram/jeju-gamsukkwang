@@ -1,8 +1,10 @@
 import { loginRequired } from "../middlewares/";
 import { TourService } from "../services/TourService";
+import { s3Single } from "../middlewares/multerS3";
 
 import { Router } from "express";
 import * as Joi from "joi";
+import axios from "axios";
 
 const tourRouter = Router();
 
@@ -27,6 +29,23 @@ tourRouter.get("/tour/search", async (req, res, next) => {
     const searchLandmark = await TourService.searchLandmark({ name });
 
     res.status(200).send(searchLandmark);
+  } catch (err) {
+    next(err);
+  }
+});
+
+tourRouter.post("/tour/image", s3Single(), async (req, res, next) => {
+  try {
+    const { location } = req.file;
+    const imageName = location.split("amazonaws.com/")[1];
+
+    // const sendImage = await axios.post("url", imageName, {
+    // 	headers: {
+    // 		'content-type': 'application/json'
+    // 	}
+    // })
+
+    res.status(201).send("system.success");
   } catch (err) {
     next(err);
   }
