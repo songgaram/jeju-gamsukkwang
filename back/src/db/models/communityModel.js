@@ -35,11 +35,19 @@ export const communityModel = {
 
 		const limit = getArticles.limit;
 		const offset = (getArticles.page - 1) * limit;
+		let totalPage = 0;
+
+		totalPage = Math.floor(total / limit);
+
+		if (total % limit !== 0) {
+			totalPage = Math.floor(total / limit) + 1;
+		}
 
 		const articles = await Community.find({}).limit(limit).skip(offset);
 
 		const sendArticles = {
-			total: total,
+			total,
+			totalPage,
 			articles,
 		};
 
@@ -53,11 +61,19 @@ export const communityModel = {
 
 		const limit = getArticles.limit;
 		const offset = (getArticles.page - 1) * limit;
+		let totalPage = 0;
+
+		totalPage = Math.floor(total / limit);
+
+		if (total % limit !== 0) {
+			totalPage = Math.floor(total / limit) + 1;
+		}
 
 		const articles = await Community.find({ head }).limit(limit).skip(offset);
 
 		const sendArticles = {
-			total: total,
+			total,
+			totalPage,
 			articles,
 		};
 

@@ -1,21 +1,4 @@
-import RecommendCard from "./card";
 import styled from "styled-components";
-
-const Tour = () => {
-  return (
-    <TourPage>
-      <ContentBox>
-        <h1>감귤이가 추천하는 제주도 랜드마크 BEST 30</h1>
-        <p>랜드마크를 클릭하면 상세 정보와 후기를 볼 수 있어요 :)</p>
-      </ContentBox>
-      <CardsContainer>
-        <RecommendCard />
-      </CardsContainer>
-    </TourPage>
-  );
-};
-
-export default Tour;
 
 const TourPage = styled.div`
   display: flex;
@@ -39,8 +22,17 @@ const ContentBox = styled.div`
   }
 `;
 
+const DropdownBox = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  margin-right: 10%;
+`;
+
 const CardsContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
 `;
+
+export { TourPage, ContentBox, CardsContainer, DropdownBox };

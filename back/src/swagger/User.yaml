@@ -39,7 +39,7 @@ paths:
                 password:
                   type: string
                   required: true
-                  default: 1234
+                  default: "!234abcd"
                 nickname:
                   type: string
                   required: true
@@ -71,7 +71,7 @@ paths:
                 password:
                   type: string
                   required: true
-                  default: 1234
+                  default: "!234abcd"
       responses:
         "201":
           description: 로그인 성공

@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import { publicKey } from "../config/jwt";
 
 const loginRequired = async (req, res, next) => {
 	// request 헤더로부터 authorization bearer 토큰을 받음.
@@ -12,8 +13,9 @@ const loginRequired = async (req, res, next) => {
 
 	// 해당 token이 정상적인 token인지 확인하기 위해 토큰에 담긴 userId 정보 추출
 	try {
-		const secretKey = process.env.JWT_SECRET_KEY;
-		const jwtDecoded = jwt.verify(userToken, secretKey);
+		const jwtDecoded = jwt.verify(userToken, publicKey, {
+			algorithm: ['RS256']
+		});
 		const userId = jwtDecoded.userId;
 
 		req.currentUserId = userId;
