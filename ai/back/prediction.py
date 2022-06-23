@@ -1,3 +1,5 @@
+from ast import expr_context
+from urllib.error import URLError
 import tensorflow as tf
 from keras.utils import img_to_array
 from keras.models import load_model
@@ -7,10 +9,16 @@ from PIL import Image
 
 def predictImage(imageURL):
 
-  model = load_model('model/epoch_0027.h5')
+  try:
+    model = load_model('model/epoch_0027.h5')
+  except:
+    return 500
 
-  res = urllib.request.urlopen(imageURL) 
-  img = Image.open(res)
+  try:
+    res = urllib.request.urlopen(imageURL) 
+    img = Image.open(res)
+  except:
+    return 404
 
   img = img.resize((224,224))
   img = img_to_array(img)
