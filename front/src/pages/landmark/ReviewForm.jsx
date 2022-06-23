@@ -1,8 +1,12 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { ReviewFormContainer, InputForm, Footer } from "./landmark.style";
+import {
+  ReviewFormContainer,
+  InputForm,
+  Footer,
+  StarContainer,
+} from "./landmark.style";
 import { BsStarFill } from "react-icons/bs";
-import theme from "styles/Theme";
 import Button from "components/Button";
 import registerValidation from "./utils";
 import { usePostReview } from "queries/reviewQuery";
@@ -50,13 +54,9 @@ const ReviewForm = ({ id }) => {
         <StarContainer>
           {[1, 2, 3, 4, 5].map((el) => (
             <BsStarFill
-              color={
-                (clicked >= el) | (hovered >= el)
-                  ? theme.colors.secondary
-                  : theme.colors.gray02
-              }
+              color={(clicked >= el) | (hovered >= el) ? "#AAD8FE" : "#dedede"}
               key={el}
-              size={theme.fontSizes.titleSize}
+              size={`${50 / 16}rem`}
               onMouseEnter={() => setHovered(el)}
               onMouseLeave={() => setHovered(null)}
               onClick={() => {
@@ -105,12 +105,6 @@ const ReviewForm = ({ id }) => {
   );
 };
 
-const StarContainer = styled.div`
-  text-align: center;
-  border: none;
-  padding: 3% 1%;
-`;
-
 const HeaderContainer = styled.div`
   display: flex;
   justify-content: ${(props) => props.justify};
@@ -119,14 +113,14 @@ const HeaderContainer = styled.div`
 `;
 
 const Title = styled.div`
-  font-size: ${theme.fontSizes.xxxl};
+  font-size: ${({ theme }) => theme.fontSizes.xxxl};
   font-weight: bold;
   margin-right: 0.5%;
 `;
 
 const Required = styled.p`
-  font-size: ${theme.fontSizes.base};
-  color: ${theme.colors.secondary};
+  font-size: ${({ theme }) => theme.fontSizes.base};
+  color: ${({ theme }) => theme.colors.secondary};
   font-weight: bold;
 `;
 
@@ -138,8 +132,8 @@ const HiddenText = styled.p`
   width: 130px;
   height: 30px;
   transform: translate(-50%, -50%);
-  color: ${theme.colors.gray03};
-  font-size: ${theme.fontSizes.lg};
+  color: ${({ theme }) => theme.colors.gray03};
+  font-size: ${({ theme }) => theme.fontSizes.lg};
   ${({ show }) => (show ? `display:block` : `display: none`)}
 `;
 

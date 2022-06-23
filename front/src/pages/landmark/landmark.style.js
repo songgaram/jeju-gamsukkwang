@@ -20,4 +20,10 @@ const Footer = styled.div`
   height: 50px;
 `;
 
-export { ReviewFormContainer, InputForm, Footer };
+const StarContainer = styled.div`
+  text-align: center;
+  border: none;
+  padding: 3% 1%;
+`;
+
+export { ReviewFormContainer, InputForm, Footer, StarContainer };
