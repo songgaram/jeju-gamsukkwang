@@ -23,7 +23,7 @@ def post():
     summaryJson = json.dumps(summary)
 
     return Response(summaryJson, mimetype='application/json'), 200
-    
+
 
 if __name__ == '__main__':
   app.run(port=5001, debug=True)
