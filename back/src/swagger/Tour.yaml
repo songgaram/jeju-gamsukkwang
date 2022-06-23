@@ -147,6 +147,11 @@ paths:
                 imgFile:
                   type: string
                   format: binary
+      responses:
+        "201": 
+          description: 요청 성공
+        "400":
+          description: 잘못된 요청이 있을 때 오류가 발생합니다.
 
   /landmark:
     post:
