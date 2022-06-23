@@ -6,18 +6,9 @@ import theme from "styles/Theme";
 import Button from "components/Button";
 import registerValidation from "./utils";
 import { usePostReview } from "queries/reviewQuery";
+import { TEXT_LIST, MODAL_MESSAGE } from "./constants";
 import Modal from "components/modal";
 import ModalPortal from "components/modal/modalPortal";
-
-const textList = [
-  "별로예요",
-  "그저 그래요",
-  "보통이에요",
-  "좋아요",
-  "최고예요",
-];
-
-const MODAL_MESSAGE = "이미 리뷰를 작성하셨어요!";
 
 const ReviewForm = ({ id }) => {
   const [hovered, setHovered] = useState(null);
@@ -82,7 +73,7 @@ const ReviewForm = ({ id }) => {
         <div style={{ position: "relative" }}>
           {[1, 2, 3, 4, 5].map((num) => (
             <HiddenText key={num} show={hovered === num}>
-              {textList[num - 1]}
+              {TEXT_LIST[num - 1]}
             </HiddenText>
           ))}
         </div>
