@@ -148,7 +148,6 @@ paths:
                 imgFile:
                   type: string
                   format: binary
-            allowEmptyValue: false
       responses:
         "201":
           description: 요청 성공
