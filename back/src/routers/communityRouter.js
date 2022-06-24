@@ -1,4 +1,3 @@
-import is from "@sindresorhus/is";
 import Joi from "joi";
 
 import { Router } from "express";
