@@ -21,7 +21,6 @@ db.on("error", (err) =>
   console.error(`MongoDB 연결 실패 : ${DB_URL}` + "\n" + err),
 );
 
-
 export { userModel };
 export { tourModel };
 export { reviewModel };
