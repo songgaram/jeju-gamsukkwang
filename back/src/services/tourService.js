@@ -121,7 +121,7 @@ class TourService {
 
     const searchLandmark = await tourModel.searchByName({ name });
 
-    if (!searchLandmark) {
+    if (searchLandmark.length == 0) {
       throw new Error("system.error.noLandmark");
     }
 

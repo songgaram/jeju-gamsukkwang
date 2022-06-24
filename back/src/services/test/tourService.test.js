@@ -175,4 +175,22 @@ describe("Tour Service Logic", () => {
     expect(sortByRatingLandmarks.length).toEqual(3)
     expect(sortArray).toEqual(ratingArray)
   }) 
+
+  it("이름으로 랜드마크를 검색합니다.", async () => {
+    const searchLandmark = await TourService.searchLandmark({ name: "제주" })
+    
+    console.log(searchLandmark)
+
+    const landmarkName = searchLandmark.map(ele => ele.krTitle)
+    expect(landmarkName).toContain("제주돌문화공원")
+    expect(landmarkName).toContain("제주유리의성")
+  })
+
+  it("검색하고자 한 랜드마크가 존재하지 않다면 에러가 발생합니다.", async () => {
+    try{
+      await TourService.searchLandmark({ name: "서울" })
+    }catch(err){
+      expect(err.message).toBe("system.error.noLandmark")
+    }
+  })
 })
