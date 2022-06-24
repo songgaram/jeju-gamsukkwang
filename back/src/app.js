@@ -1,9 +1,9 @@
 import {
-	userRouter,
-	getLandmark,
-	tourRouter,
-	reviewRouter,
-	communityRouter,
+  userRouter,
+  getLandmark,
+  tourRouter,
+  reviewRouter,
+  communityRouter,
 } from "./routers/";
 import { errorMiddleware, badRequest } from "./middlewares/";
 import { swaggerUi, specs } from "./swagger/";
@@ -20,11 +20,10 @@ app.use(express.urlencoded({ extended: false }));
 
 // swagger api
 app.use(
-	"/api-docs",
-	swaggerUi.serve,
-	swaggerUi.setup(specs, { explorer: true })
+  "/api-docs",
+  swaggerUi.serve,
+  swaggerUi.setup(specs, { explorer: true }),
 );
-
 
 // routers
 app.use(userRouter);

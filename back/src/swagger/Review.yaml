@@ -10,14 +10,14 @@ paths:
       requestBody:
         description: 랜드마크 id, 리뷰 내용, 별점을 필수 req.body로 받습니다.
         content:
-          multipart/form-data:
+          application/json:
             schema:
               type: object
               properties:
                 tourId:
                   type: string
                   required: true
-                  default: 1d4ec9e9-fef7-4204-8527-10fa21e9e851
+                  default: 46748ca6-4a6d-4ed7-bef7-4f40452f6fa0
                 content:
                   type: string
                   required: true
@@ -26,11 +26,6 @@ paths:
                   type: integer
                   required: true
                   default: 4
-                imgFile:
-                  type: array
-                  items:
-                    type: string
-                    format: binary
       responses:
         "201":
           description: 리뷰 등록 성공
@@ -52,7 +47,7 @@ paths:
           schema:
             type: string
           description: 해당 랜드마크의 id를 입력해주세요.
-          default: 1d4ec9e9-fef7-4204-8527-10fa21e9e851
+          default: 46748ca6-4a6d-4ed7-bef7-4f40452f6fa0
         - name: page
           in: query
           required: true
@@ -86,7 +81,7 @@ paths:
           schema:
             type: string
           description: 해당 랜드마크의 id를 입력해주세요.
-          default: 1d4ec9e9-fef7-4204-8527-10fa21e9e851
+          default: 46748ca6-4a6d-4ed7-bef7-4f40452f6fa0
       responses:
         "200":
           description: 랜드마크의 리뷰 목록 불러오기 성공
@@ -111,14 +106,14 @@ paths:
       requestBody:
         description: 리뷰 내용, 별점을 필수 req.body로 받습니다.
         content:
-          multipart/form-data:
+          application/json:
             schema:
               type: object
               properties:
                 tourId:
                   type: string
                   required: true
-                  default: 1d4ec9e9-fef7-4204-8527-10fa21e9e851
+                  default: 46748ca6-4a6d-4ed7-bef7-4f40452f6fa0
                 content:
                   type: string
                   required: true
@@ -127,11 +122,6 @@ paths:
                   type: integer
                   required: true
                   default: 2
-                imgFile:
-                  type: array
-                  items:
-                    type: string
-                    format: binary
       responses:
         "201":
           description: 리뷰 수정 성공

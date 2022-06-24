@@ -1,127 +1,125 @@
 import { Community } from "../schemas/community";
 
 export const communityModel = {
-	create: async ({ newArticle }) => {
-		const createdNewArticle = await Community.create(newArticle);
-		return createdNewArticle;
-	},
+  create: async ({ newArticle }) => {
+    const createdNewArticle = await Community.create(newArticle);
+    return createdNewArticle;
+  },
 
-	deleteById: async ({ articleId }) => {
-		const deletedArticle = await Community.deleteOne({ id: articleId });
+  deleteById: async ({ articleId }) => {
+    const deletedArticle = await Community.deleteOne({ id: articleId });
 
-		return deletedArticle;
-	},
+    return deletedArticle;
+  },
 
-	findById: async ({ articleId }) => {
-		const foundArticle = await Community.findOne({ id: articleId });
+  findById: async ({ articleId }) => {
+    const foundArticle = await Community.findOne({ id: articleId });
 
-		return foundArticle;
-	},
+    return foundArticle;
+  },
 
-	update: async ({ articleId, data }) => {
-		const filter = { id: articleId };
-		const update = { $set: data };
-		const option = { returnOriginal: false };
-		const updatedArticle = await Community.findOneAndUpdate(
-			filter,
-			update,
-			option
-		);
-		return updatedArticle;
-	},
+  update: async ({ articleId, data }) => {
+    const filter = { id: articleId };
+    const update = { $set: data };
+    const option = { returnOriginal: false };
+    const updatedArticle = await Community.findOneAndUpdate(
+      filter,
+      update,
+      option,
+    );
+    return updatedArticle;
+  },
 
-	findAll: async ({ getArticles }) => {
-		const total = await Community.countDocuments({});
+  findAll: async ({ getArticles }) => {
+    const total = await Community.countDocuments({});
 
-		const limit = getArticles.limit;
-		const offset = (getArticles.page - 1) * limit;
-		let totalPage = 0;
+    const limit = getArticles.limit;
+    const offset = (getArticles.page - 1) * limit;
+    let totalPage = Math.floor(total / limit);
 
-		totalPage = Math.floor(total / limit);
+    if (total % limit !== 0) {
+      totalPage = Math.floor(total / limit) + 1;
+    }
 
-		if (total % limit !== 0) {
-			totalPage = Math.floor(total / limit) + 1;
-		}
+    const articles = await Community.find({}).limit(limit).skip(offset);
 
-		const articles = await Community.find({}).limit(limit).skip(offset);
+    const sendArticles = {
+      total,
+      totalPage,
+      articles,
+    };
 
-		const sendArticles = {
-			total,
-			totalPage,
-			articles,
-		};
+    return sendArticles;
+  },
 
-		return sendArticles;
-	},
+  findHead: async ({ getArticles }) => {
+    const head = getArticles.head;
 
-	findHead: async ({ getArticles }) => {
-		const head = getArticles.head;
+    const total = await Community.countDocuments({ head });
 
-		const total = await Community.countDocuments({ head });
+    const limit = getArticles.limit;
+    const offset = (getArticles.page - 1) * limit;
+    let totalPage = 0;
 
-		const limit = getArticles.limit;
-		const offset = (getArticles.page - 1) * limit;
-		let totalPage = 0;
+    totalPage = Math.floor(total / limit);
 
-		totalPage = Math.floor(total / limit);
+    if (total % limit !== 0) {
+      totalPage = Math.floor(total / limit) + 1;
+    }
 
-		if (total % limit !== 0) {
-			totalPage = Math.floor(total / limit) + 1;
-		}
+    const articles = await Community.find({ head }).limit(limit).skip(offset);
 
-		const articles = await Community.find({ head }).limit(limit).skip(offset);
+    const sendArticles = {
+      total,
+      totalPage,
+      articles,
+    };
 
-		const sendArticles = {
-			total,
-			totalPage,
-			articles,
-		};
+    return sendArticles;
+  },
+  addLike: async ({ articleId, currentUserId }) => {
+    const filter = { id: articleId };
+    const update = {
+      $push: { likedUsers: currentUserId },
+    };
+    const option = { returnOriginal: false };
 
-		return sendArticles;
-	},
-	addLike: async ({ articleId, currentUserId }) => {
-		const filter = { id: articleId };
-		const update = {
-			$push: { likedUsers: currentUserId },
-		};
-		const option = { returnOriginal: false };
+    const addLikeCount = await Community.findOneAndUpdate(
+      filter,
+      update,
+      option,
+    );
 
-		const addLikeCount = await Community.findOneAndUpdate(
-			filter,
-			update,
-			option
-		);
+    return addLikeCount;
+  },
 
-		return addLikeCount;
-	},
+  removeLike: async ({ articleId, currentUserId }) => {
+    const filter = { id: articleId };
+    const update = {
+      $pull: { likedUsers: currentUserId },
+    };
+    const option = { returnOriginal: false };
 
-	removeLike: async ({ articleId, currentUserId }) => {
-		const filter = { id: articleId };
-		const update = {
-			$pull: { likedUsers: currentUserId },
-		};
-		const option = { returnOriginal: false };
+    const removeLikeCount = await Community.findOneAndUpdate(
+      filter,
+      update,
+      option,
+    );
 
-		const removeLikeCount = await Community.findOneAndUpdate(
-			filter,
-			update,
-			option
-		);
+    return removeLikeCount;
+  },
 
-		return removeLikeCount;
-	},
+  didUserLiked: async ({ articleId, currentUserId }) => {
+    const didUserLiked = await Community.exists({
+      $and: [{ id: articleId }, { likedUsers: currentUserId }],
+    });
 
-	didUserLiked: async ({ articleId, currentUserId }) => {
-		const didUserLiked = await Community.exists({
-			$and: [{ id: articleId }, { likedUsers: currentUserId }],
-		});
+    return didUserLiked;
+  },
 
-		return didUserLiked;
-	},
+  isArticleExist: async ({ articleId }) => {
+    const isArticleExist = await Community.exists({ id: articleId });
 
-	isArticleExist: async ({ articleId }) => {
-		const isArticleExist = await Community.exists({ id: articleId });
-
-		return isArticleExist;
-	},
+    return isArticleExist;
+  },
 };
