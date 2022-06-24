@@ -1,6 +1,6 @@
 import Joi from "joi";
-
 import { Router } from "express";
+
 import { CommunityService } from "../services/CommunityService";
 import { loginRequired } from "../middlewares/";
 import { s3Multi } from "../middlewares/multerS3";
@@ -31,6 +31,7 @@ communityRouter.post(
 
       const loginUserId = req.currentUserId;
       const { title, content, head } = req.body;
+      // 이미지의 전체 url이 아닌 이미지의 이름만 가져온다.
       const images = req.files.map(
         (image) => image.location.split("amazonaws.com/")[1],
       );
@@ -78,6 +79,7 @@ communityRouter.put(
 
       let toUpdate = { title, content, head };
 
+      // 이미지의 전체 url이 아닌 이미지의 이름만 가져온다.
       if (req.files) {
         const images = req.files.map(
           (image) => image.location.split("amazonaws.com/")[1],
@@ -99,7 +101,7 @@ communityRouter.put(
   },
 );
 
-// 특정 게시글 불러오기
+// 특정 게시글 정보 가져오기
 communityRouter.get("/community/:id", loginRequired, async (req, res, next) => {
   try {
     const paramSchema = Joi.object().keys({
@@ -117,12 +119,16 @@ communityRouter.get("/community/:id", loginRequired, async (req, res, next) => {
   }
 });
 
-// 게시글 불러오기
+// 전체 혹은 모든 말머리 게시글 정보 불러오기
+// total: 전체 혹은 모든 말머리 게시글 갯수
+// totalPage: 전체 혹은 모든 말머리 페이지 갯수
+// articles: 실제 게시글 정보
 communityRouter.get("/community", async (req, res, next) => {
   try {
     const querySchema = Joi.object().keys({
       page: Joi.number().integer().min(1),
       limit: Joi.number().integer().min(1),
+      // 말머리가 공란일 경우, 전체 게시글을 불러온다.
       head: Joi.string().trim().empty().valid("", "free", "info", "question"),
     });
 
@@ -175,7 +181,7 @@ communityRouter.delete(
   },
 );
 
-// 게시글 좋아요 추가
+// 해당 게시글에 좋아요 추가
 communityRouter.put(
   "/community/:id/like",
   loginRequired,
@@ -189,7 +195,6 @@ communityRouter.put(
       await idSchema.validateAsync(req.currentUserId);
       await paramSchema.validateAsync(req.params);
 
-      // req에서 데이터 가져오기
       const userId = req.currentUserId;
       const { id: articleId } = req.params;
 
@@ -205,7 +210,7 @@ communityRouter.put(
   },
 );
 
-// 게시글 싫어요 추가
+// 해당 게시글에 좋아요 삭제
 communityRouter.put(
   "/community/:id/dislike",
   loginRequired,
@@ -219,7 +224,6 @@ communityRouter.put(
       await idSchema.validateAsync(req.currentUserId);
       await paramSchema.validateAsync(req.params);
 
-      // req에서 데이터 가져오기
       const userId = req.currentUserId;
       const { id: articleId } = req.params;
 

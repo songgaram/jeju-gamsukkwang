@@ -4,6 +4,7 @@ import Joi from "joi";
 import { userModel, communityModel } from "../db";
 
 class CommunityService {
+  // 전체 혹은 모든 말머리 게시글 정보 불러오기
   static getArticles = async ({ getArticles }) => {
     const propSchema = Joi.object().keys({
       page: Joi.number().integer().min(1).required(),
@@ -31,6 +32,7 @@ class CommunityService {
     return result;
   };
 
+  // 게시글 삭제
   static deleteArticle = async ({ loginUserId, articleId }) => {
     const propSchema = Joi.object().keys({
       loginUserId: Joi.string().trim().empty().required(),
@@ -59,6 +61,7 @@ class CommunityService {
     }
   };
 
+  // 게시글 작성
   static addArticle = async ({ loginUserId, title, content, head, images }) => {
     const propSchema = Joi.object().keys({
       loginUserId: Joi.string().trim().empty().required(),
@@ -98,7 +101,7 @@ class CommunityService {
     return createdNewArticle;
   };
 
-  // 본인 게시글만 수정 가능
+  // 게시글 수정
   static setArticle = async ({ loginUserId, articleId, toUpdate }) => {
     const propSchema = Joi.object().keys({
       loginUserId: Joi.string().trim().empty().required(),
@@ -117,10 +120,8 @@ class CommunityService {
     if (!currentArticle) {
       throw new Error("system.error.noArticle");
     }
-
     const { userId } = currentArticle;
 
-    //현재 로그인한 사용자와 게시글 작성자가 같아야 수정 가능
     if (userId !== loginUserId) {
       throw new Error("system.error.unAuthorized");
     }
@@ -132,6 +133,7 @@ class CommunityService {
     return updatedArticle;
   };
 
+  // 특정 게시글 정보 가져오기
   static getArticle = async ({ articleId }) => {
     const propSchema = Joi.object().keys({
       articleId: Joi.string().trim().empty().required(),
@@ -148,6 +150,7 @@ class CommunityService {
     return article;
   };
 
+  // 해당 게시글에 좋아요 추가
   static addLike = async ({ articleId, currentUserId }) => {
     const propSchema = Joi.object().keys({
       articleId: Joi.string().trim().empty().required(),
@@ -161,12 +164,11 @@ class CommunityService {
       throw new Error("system.error.noArticle");
     }
 
+    // 좋아요는 한 사용자가 게시글 당 1회만 가능
     const didUserLiked = await communityModel.didUserLiked({
       articleId,
       currentUserId,
     });
-
-    // didUserLiked가 무언가를 반환할 때 에러를 발생
     if (didUserLiked) {
       throw new Error("system.error.alreadyLiked");
     }
@@ -179,6 +181,7 @@ class CommunityService {
     return addLiketoArticle;
   };
 
+  // 해당 게시글 좋아요 삭제
   static removeLike = async ({ articleId, currentUserId }) => {
     const propSchema = Joi.object().keys({
       articleId: Joi.string().trim().empty().required(),
@@ -192,12 +195,11 @@ class CommunityService {
       throw new Error("system.error.noArticle");
     }
 
+    // 좋아요를 하지 않으면 좋아요를 삭제할 수 없음
     const didUserLiked = await communityModel.didUserLiked({
       articleId,
       currentUserId,
     });
-
-    // didUserLiked가 무언가를 반환하지 않을 때 에러를 발생
     if (!didUserLiked) {
       throw new Error("system.error.noLiked");
     }

@@ -1,13 +1,13 @@
 import Joi from "joi";
+import { Router } from "express";
 
 import { loginRequired } from "../middlewares/";
 import { ReviewService } from "../services/ReviewService.js";
 import { s3Multi } from "../middlewares/multerS3";
-import { Router } from "express";
 
 const reviewRouter = Router();
 
-// 리뷰 작성하기
+// 리뷰 작성
 reviewRouter.post(
   "/review",
   loginRequired,
@@ -35,14 +35,16 @@ reviewRouter.post(
       });
 
       res.status(201).json(newReview);
-      return;
     } catch (err) {
       next(err);
     }
   },
 );
 
-// 해당 랜드마크의 리뷰 목록 불러오기
+// 해당 랜드마크의 전체 리뷰 목록 가져오기
+// total: 전체 리뷰 갯수
+// totalPage: 전체 페이지 갯수
+// reviews: 실제 리뷰 정보
 reviewRouter.get("/review/:tourId/list", async (req, res, next) => {
   try {
     const paramSchema = Joi.object().keys({
@@ -70,13 +72,15 @@ reviewRouter.get("/review/:tourId/list", async (req, res, next) => {
     const reviews = await ReviewService.getReviews({ getReviews });
 
     res.status(200).json(reviews);
-    return;
   } catch (err) {
     next(err);
   }
 });
 
-// 해당 랜드마크 리뷰 관련 요약 데이터 가져오기
+// 해당 랜드마크 리뷰 요약 정보 가져오기
+// totalReview : 전체 리뷰 갯수
+// avgRating : 평점 평균
+// starRating : 각 평점 별 리뷰 갯수
 reviewRouter.get("/review/:tourId/info", async (req, res, next) => {
   try {
     const paramSchema = Joi.object().keys({
@@ -94,7 +98,7 @@ reviewRouter.get("/review/:tourId/info", async (req, res, next) => {
   }
 });
 
-// 리뷰 수정하기
+// 리뷰 수정
 reviewRouter.put(
   "/review/:id",
   loginRequired,
@@ -132,7 +136,7 @@ reviewRouter.put(
   },
 );
 
-// 리뷰 삭제하기
+// 리뷰 삭제
 reviewRouter.delete("/review/:id", loginRequired, async (req, res, next) => {
   try {
     const paramSchema = Joi.object().keys({
