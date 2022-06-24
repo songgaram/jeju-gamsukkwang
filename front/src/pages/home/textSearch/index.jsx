@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useRecoilState } from "recoil";
 
-import Input from "components/input";
+import Input from "components/Input";
 import useDebounce from "./useDebounce";
 import { useGetTourList } from "queries/searchQuery";
 import { tourList } from "./state";
@@ -32,7 +32,7 @@ const TextSearch = () => {
         placeholder="검색어를 입력해주세요."
         value={searchWord}
         onChange={onChangeHandle}
-        autocomplete="false"
+        autoComplete="off"
       />
       <span type="submit">🔍</span>
     </InputBox>
