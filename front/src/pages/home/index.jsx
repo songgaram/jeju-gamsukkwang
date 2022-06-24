@@ -1,16 +1,12 @@
 import { useNavigate } from "react-router-dom";
 
 import TextSearch from "./textSearch";
+import ImageSearch from "./imageSearch";
 
 // import { useRecoilValue } from "recoil";
 // import { filteredSearchList } from "../home/textSearch/state";
 
-import {
-  HomeContainer,
-  ContentsBox,
-  Button,
-  TextButtonBox,
-} from "./home.style";
+import { HomeContainer, ContentsBox, TextButtonBox } from "./home.style";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -26,7 +22,7 @@ const Home = () => {
         <span>AI 서비스 감귤이가 사진 속 장소를 찾아드려요.</span>
       </ContentsBox>
       <TextSearch />
-      <Button>📷 이미지로 검색하기</Button>
+      <ImageSearch />
       <TextButtonBox>
         <span>제주도의 다양한 랜드마크가 궁금하다면</span>
         <span type="button" onClick={() => navigate("/tour")}>
