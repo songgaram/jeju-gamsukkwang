@@ -40,15 +40,21 @@ tourRouter.post("/tour/image", s3Single(), async (req, res, next) => {
     await fileValidator.validateAsync(req.file);
 
     const { location } = req.file;
-    const imageName = location.split("amazonaws.com/")[1];
 
-    // const sendImage = await axios.post("url", imageName, {
-    // 	headers: {
-    // 		'content-type': 'application/json'
-    // 	}
-    // })
+    // const sendImage = await axios.post(
+    //   "/prediction",
+    //   {
+    //     imageURL: location,
+    //   },
+    //   {
+    //     headers: {
+    //       "content-type": "application/json",
+    //     },
+    //   },
+    // );
 
     res.status(201).send("system.success");
+    // res.status(201).json(sendImage)
   } catch (err) {
     next(err);
   }
