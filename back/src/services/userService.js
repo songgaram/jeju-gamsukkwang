@@ -21,13 +21,11 @@ class UserService {
 		await registerValidator.validateAsync({ email, password, nickname })
 
 		const isEmailExist = await userModel.isEmailExist({ email });
-
 		if (!isEmailExist) {
 			throw new Error("system.error.duplicatedEmail");
 		}
 
 		const isNicknameExist = await userModel.isNicknameExist({ nickname });
-
 		if (!isNicknameExist) {
 			throw new Error("system.error.duplicatedNickname");
 		}
@@ -53,7 +51,6 @@ class UserService {
 		await idValidator.validateAsync(userId)
 
 		const foundUser = await userModel.findById({ userId });
-
 		if (!foundUser) {
 			throw new Error("system.error.noUser");
 		}
@@ -72,7 +69,6 @@ class UserService {
 		await loginValidator.validateAsync({ email, password })
 
 		const foundUser = await userModel.findByEmail({ email });
-
 		if (!foundUser) {
 			throw new Error("system.error.noUser");
 		}
@@ -80,7 +76,6 @@ class UserService {
 		const { id, nickname, hashedPassword } = foundUser;
 		
 		const isPasswordSame = await bcrypt.compare(password, hashedPassword);
-
 		if (!isPasswordSame) {
 			throw new Error("system.error.differentPassword");
 		}
@@ -113,7 +108,6 @@ class UserService {
 		await editValidator.validateAsync({ userId, toUpdate })
 
 		let user = await userModel.findById({ userId });
-
 		if (!user) {
 			throw new Error("system.error.noUser");
 		}
@@ -121,7 +115,6 @@ class UserService {
 		const isNicknameExist = await userModel.isNicknameExist({
 			nickname: toUpdate.nickname,
 		});
-
 		if (!isNicknameExist) {
 			throw new Error("system.error.duplicatedNickname");
 		}
@@ -136,7 +129,6 @@ class UserService {
 		await idValidator.validateAsync(userId)
 
 		const user = await userModel.findById({ userId });
-
 		if (!user) {
 			throw new Error("system.error.noUser");
 		}
@@ -162,7 +154,6 @@ class UserService {
 		await editValidator.validateAsync({ userId, toUpdate })
 
 		let user = await userModel.findById({ userId });
-
 		if (!user) {
 			throw new Error("system.error.noUser");
 		}
@@ -181,13 +172,11 @@ class UserService {
 		await dataValidator.validateAsync({ userId, tourId })
 
 		const foundUser = await userModel.findById({ userId });
-
 		if (!foundUser) {
 			throw new Error("system.error.noUser");
 		}
 
 		const isTourExist = await tourModel.isLandmarkExist({ id: tourId })
-
 		if(!isTourExist) {
 			throw new Error("system.error.noSuchTourId")
 		}
@@ -196,7 +185,6 @@ class UserService {
 			userId, 
 			tourId
 		});
-
 		if (isStampExist) {
 			throw new Error("system.error.alreadyStamped");
 		}
@@ -218,7 +206,6 @@ class UserService {
 		await dataValidator.validateAsync({ userId, point })
 
 		let user = await userModel.findById({ userId });
-
 		if (!user) {
 			throw new Error("system.error.noUser");
 		}

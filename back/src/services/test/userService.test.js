@@ -15,7 +15,7 @@ let userId = ""
 
 describe("User Service Logic", () => {
 
-  // user 생성 기능 관련 테스트
+  // 생성 기능 관련 테스트
   it("새로운 User를 생성해야 합니다.", async () => {
     const newUser = await UserService.addUser(mockUser)
     userId = newUser.id
@@ -42,7 +42,7 @@ describe("User Service Logic", () => {
     }
   })
 
-  // user 조회 기능 관련 테스트
+  // 조회 기능 관련 테스트
   it("해당 User의 상세 정보를 조회해야 합니다.", async () => {
     const foundUser = await UserService.findUser({ userId })
 
@@ -91,7 +91,7 @@ describe("User Service Logic", () => {
     }
   })
 
-  // user 수정 기능 관련 테스트
+  // 수정 기능 관련 테스트
   it("해당 User의 닉네임을 수정해야 합니다.", async () => {
     const updatedUser = await UserService.setUser({ 
       userId,
@@ -197,7 +197,7 @@ describe("User Service Logic", () => {
     }    
   })
 
-  // user 삭제 기능 관련 테스트
+  // 삭제 기능 관련 테스트
   it("삭제하려는 User가 존재하지 않다면 에러를 발생해야 합니다.", async () => {
     try{
       await UserService.withdrawUser({ userId: "notExistingId" })

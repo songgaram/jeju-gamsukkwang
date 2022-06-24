@@ -104,6 +104,9 @@ userRouter.put(
 		try {
 			const userId = req.currentUserId;
 
+			const fileValidator = Joi.any().empty().required();
+			await fileValidator.validateAsync(req.file);
+
 			const { location } = req.file;
 
 			const imageName = location.split("amazonaws.com/")[1];
