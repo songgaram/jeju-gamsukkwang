@@ -1,4 +1,25 @@
+import { useRef } from "react";
+import { useClickAway } from "react-use";
+
+import { LogoIcon } from "assets/svgs";
+
 import styled, { keyframes } from "styled-components";
+
+const Loading = () => {
+  const outsideRef = useRef(null);
+
+  return (
+    <ModalBackground>
+      <ModalBox ref={outsideRef}>
+        <LogoBox>
+          <LogoIcon width={100} />
+        </LogoBox>
+      </ModalBox>
+    </ModalBackground>
+  );
+};
+
+export default Loading;
 
 const fadeIn = keyframes`
  from {
@@ -8,18 +29,6 @@ const fadeIn = keyframes`
   to {
     background: rgba(0, 0, 0, 30%);
     backdrop-filter: blur(5px);
-  }
-`;
-
-const slideUp = keyframes`
-  from {
-    opacity: 0;
-    transform: scale(0.8) translateY(100%);
-  }
-
-  to {
-    opacity: 1;
-    transform: scale(1) translateY(0);
   }
 `;
 
@@ -40,6 +49,18 @@ const ModalBackground = styled.div`
   }
 `;
 
+const slideUp = keyframes`
+  from {
+    opacity: 0;
+    transform: scale(0.8) translateY(100%);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+`;
+
 const ModalBox = styled.div`
   display: flex;
   flex-direction: column;
@@ -53,11 +74,13 @@ const ModalBox = styled.div`
   animation: ${slideUp} 0.4s cubic-bezier(0.5, 0, 0, 0.8) forwards;
 `;
 
-const ModalButton = styled.button`
-  padding: 10px 20px;
-  background-color: #e5e5f1;
-  border-radius: 10px;
-  border: none;
+const rotateImage = keyframes`
+  100% {
+        transform: rotate(360deg);
+    }
 `;
 
-export { ModalBackground, ModalBox, ModalButton };
+const LogoBox = styled.div`
+  animation: ${rotateImage} 1.8s linear infinite;
+  transform-origin: 50% 50%;
+`;
