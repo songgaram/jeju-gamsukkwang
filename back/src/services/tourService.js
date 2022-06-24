@@ -1,6 +1,6 @@
 import { tourModel, userModel } from "../db";
-import * as Joi from "joi"
-import { idValidator } from "../validators"
+import * as Joi from "joi";
+import { idValidator } from "../validators";
 
 class TourService {
   static getAllLandmarks = async () => {
@@ -9,9 +9,9 @@ class TourService {
     return allLandmarks;
   };
 
-	static getLandmark = async ({ id }) => {
-		// 데이터의 유효성 체크
-		await idValidator.validateAsync(id)
+  static getLandmark = async ({ id }) => {
+    // 데이터의 유효성 체크
+    await idValidator.validateAsync(id);
 
     const isLandmarkExist = await tourModel.isLandmarkExist({ id });
     if (!isLandmarkExist) {
@@ -31,16 +31,16 @@ class TourService {
     });
     await dataValidator.validateAsync({ id, currentUserId });
 
-		const user = await userModel.findById({ userId: currentUserId });
+    const user = await userModel.findById({ userId: currentUserId });
 
-		if (!user) {
-			throw new Error("system.error.noUser");
-		}
+    if (!user) {
+      throw new Error("system.error.noUser");
+    }
 
-		const isLandmarkExist = await tourModel.isLandmarkExist({ id });
-		if (!isLandmarkExist) {
-			throw new Error("system.error.noLandmark");
-		}
+    const isLandmarkExist = await tourModel.isLandmarkExist({ id });
+    if (!isLandmarkExist) {
+      throw new Error("system.error.noLandmark");
+    }
 
     const didUserLiked = await tourModel.didUserLiked({
       id,
@@ -68,16 +68,16 @@ class TourService {
     });
     await dataValidator.validateAsync({ id, currentUserId });
 
-		const user = await userModel.findById({ userId: currentUserId });
+    const user = await userModel.findById({ userId: currentUserId });
 
-		if (!user) {
-			throw new Error("system.error.noUser");
-		}
+    if (!user) {
+      throw new Error("system.error.noUser");
+    }
 
-		const isLandmarkExist = await tourModel.isLandmarkExist({ id });
-		if (!isLandmarkExist) {
-			throw new Error("system.error.noLandmark");
-		}
+    const isLandmarkExist = await tourModel.isLandmarkExist({ id });
+    if (!isLandmarkExist) {
+      throw new Error("system.error.noLandmark");
+    }
 
     const didUserLiked = await tourModel.didUserLiked({
       id,
@@ -121,7 +121,7 @@ class TourService {
 
     const searchLandmark = await tourModel.searchByName({ name });
 
-    if (searchLandmark.length == 0) {
+    if (searchLandmark.length === 0) {
       throw new Error("system.error.noLandmark");
     }
 
