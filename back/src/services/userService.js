@@ -2,11 +2,11 @@ import { userModel, tourModel } from "../db";
 import { v4 as uuidv4 } from "uuid";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { privateKey } from '../config/jwt'
+import { privateKey } from "../config/jwt"
 
-import * as Joi from 'joi'
+import * as Joi from "joi"
 import { joiPassword } from "joi-password";
-import { idValidator } from '../validators'
+import { idValidator } from "../validators"
 
 class UserService {
 	// 회원 정보 찾기 기능
@@ -90,7 +90,7 @@ class UserService {
 		}
 
 		const token = jwt.sign({ userId: id }, privateKey, {
-			algorithm: 'RS256',
+			algorithm: "RS256",
 			expiresIn: "24h",
 		});
 

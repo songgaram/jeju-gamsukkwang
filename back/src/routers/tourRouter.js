@@ -2,8 +2,8 @@ import { loginRequired } from "../middlewares/";
 import { TourService } from "../services/TourService";
 
 import { Router } from "express";
-import * as Joi from 'joi'
-import { idValidator } from '../validators'
+import * as Joi from "joi"
+import { idValidator } from "../validators"
 
 const tourRouter = Router();
 

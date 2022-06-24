@@ -4,7 +4,7 @@ import { loginRequired, s3Single } from "../middlewares";
 
 import * as Joi from "joi";
 import { joiPassword } from "joi-password";
-import { idValidator } from '../validators'
+import { idValidator } from "../validators"
 
 const userRouter = Router();
 

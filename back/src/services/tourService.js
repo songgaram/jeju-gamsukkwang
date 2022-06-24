@@ -1,6 +1,6 @@
 import { tourModel, userModel } from "../db";
-import * as Joi from 'joi'
-import { idValidator } from '../validators'
+import * as Joi from "joi"
+import { idValidator } from "../validators"
 
 class TourService {
 	static getAllLandmarks = async () => {
