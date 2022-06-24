@@ -1,88 +1,78 @@
 import { User } from "../schemas/user";
 
 export const userModel = {
-	create: async ({ newUser }) => {
-		const createdNewUser = await User.create(newUser);
-		return createdNewUser;
-	},
+  create: async ({ newUser }) => {
+    const createdNewUser = await User.create(newUser);
+    return createdNewUser;
+  },
 
-	isNicknameExist: async ({ nickname }) => {
-		const isNicknameExist = await User.exists({ nickname });
-		if (isNicknameExist) {
-			return false;
-		}
-		return true;
-	},
+  isNicknameExist: async ({ nickname }) => {
+    const isNicknameExist = await User.exists({ nickname });
+    if (isNicknameExist) {
+      return false;
+    }
+    return true;
+  },
 
-	isEmailExist: async ({ email }) => {
-		const isEmailExist = await User.exists({ email });
-		if (isEmailExist) {
-			return false;
-		}
-		return true;
-	},
+  isEmailExist: async ({ email }) => {
+    const isEmailExist = await User.exists({ email });
+    if (isEmailExist) {
+      return false;
+    }
+    return true;
+  },
 
-	findByEmail: async ({ email }) => {
-		const user = await User.findOne({ email });
-		return user;
-	},
+  findByEmail: async ({ email }) => {
+    const user = await User.findOne({ email });
+    return user;
+  },
 
-	findById: async ({ userId }) => {
-		const user = await User.findOne({ id: userId });
-		return user;
-	},
+  findById: async ({ userId }) => {
+    const user = await User.findOne({ id: userId });
+    return user;
+  },
 
-	findByNickname: async ({ nickname }) => {
-		const user = await User.findOne({ nickname });
-		return user;
-	},
+  update: async ({ userId, data }) => {
+    const filter = { id: userId };
+    const update = { $set: data };
+    const option = { returnOriginal: false };
 
-	findAll: async () => {
-		const users = await User.find({});
-		return users;
-	},
+    const updatedUser = await User.findOneAndUpdate(filter, update, option);
 
-	update: async ({ userId, data }) => {
-		const filter = { id: userId };
-		const update = { $set: data };
-		const option = { returnOriginal: false };
+    return updatedUser;
+  },
 
-		const updatedUser = await User.findOneAndUpdate(filter, update, option);
+  deleteById: async ({ userId }) => {
+    const user = await User.deleteOne({ id: userId });
+    return user;
+  },
 
-		return updatedUser;
-	},
+  addStamp: async ({ userId, tourId }) => {
+    const filter = { id: userId };
+    const update = {
+      $push: { stamp: tourId },
+    };
+    const option = { returnOriginal: false };
 
-	deleteById: async ({ userId }) => {
-		const user = await User.deleteOne({ id: userId });
-		return user;
-	},
+    const addStamp = await User.findOneAndUpdate(filter, update, option);
 
-	addStamp: async ({ userId, tourId }) => {
-		const filter = { id: userId };
-		const update = {
-			$push: { stamp: tourId },
-		};
-		const option = { returnOriginal: false };
+    return addStamp;
+  },
 
-		const addStamp = await User.findOneAndUpdate(filter, update, option);
+  isStampExist: async ({ userId, tourId }) => {
+    const isStampExist = await User.exists({
+      $and: [{ id: userId }, { stamp: tourId }],
+    });
 
-		return addStamp;
-	},
+    return isStampExist;
+  },
 
-	isStampExist: async ({ userId, tourId }) => {
-		const isStampExist = await User.exists({
-			$and: [{ id: userId }, { stamp: tourId }],
-		});
+  updateExp: async ({ userId, point }) => {
+    const filter = { id: userId };
+    const update = { $inc: { experience: point } };
+    const option = { returnOriginal: false };
 
-		return isStampExist;
-	},
-
-	updateExp: async ({ userId, point }) => {
-		const filter = { id: userId };
-		const update = { $inc: { experience: point } };
-		const option = { returnOriginal: false };
-
-		const upgradeUser = await User.findOneAndUpdate(filter, update, option);
-		return upgradeUser;
-	},
+    const upgradeUser = await User.findOneAndUpdate(filter, update, option);
+    return upgradeUser;
+  },
 };
