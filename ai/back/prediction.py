@@ -1,5 +1,3 @@
-from ast import expr_context
-from urllib.error import URLError
 import tensorflow as tf
 from keras.utils import img_to_array
 from keras.models import load_model
