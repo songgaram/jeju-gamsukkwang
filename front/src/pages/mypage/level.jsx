@@ -34,7 +34,7 @@ const FigureBox = styled.div`
     height: 25px;
 
     ::-webkit-progress-bar {
-      background-color: #dedede;
+      background-color: ${({ theme }) => theme.colors.gray02};
       border-radius: 20px;
     }
 
