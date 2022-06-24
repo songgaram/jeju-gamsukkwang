@@ -1,5 +1,6 @@
 # venv
 /aiWebProject
+/back/.flask
 
 # compile
 /back/__pycache__
