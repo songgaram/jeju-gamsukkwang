@@ -179,8 +179,6 @@ describe("Tour Service Logic", () => {
   it("이름으로 랜드마크를 검색합니다.", async () => {
     const searchLandmark = await TourService.searchLandmark({ name: "제주" })
     
-    console.log(searchLandmark)
-
     const landmarkName = searchLandmark.map(ele => ele.krTitle)
     expect(landmarkName).toContain("제주돌문화공원")
     expect(landmarkName).toContain("제주유리의성")

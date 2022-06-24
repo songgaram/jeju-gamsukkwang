@@ -1,5 +1,5 @@
+import { userModel } from "../../db"
 import { UserService } from "../userService";
-import { db, userModel } from "../../db"
 
 const mockUser = { 
   email: "mockRacer2@elice.io", 
@@ -7,32 +7,24 @@ const mockUser = {
   nickname: "mockRacer2"
 };
 
-const realFunction = userModel.deleteById
+const realFunction = userModel.deleteById // mock 함수로 변경됐을 경우를 대비해 원래 기능을 상수로 저장
 
 const tourId = "81cd8ae4-044e-42bc-ba1f-6108d192edc3" // 여미지 식물원
 const point = 30
 let userId = ""
 
 describe("User Service Logic", () => {
-  
-  beforeAll(async () => {
 
-  });
-
-  afterAll(async () => {
-    if(db.close){
-      await db.close();
-    }
-  })
-
+  // user 생성 기능 관련 테스트
   it("새로운 User를 생성해야 합니다.", async () => {
     const newUser = await UserService.addUser(mockUser)
     userId = newUser.id
+
     expect(newUser.email).toEqual("mockRacer2@elice.io")
     expect(newUser.nickname).toEqual("mockRacer2")
   });
 
-  it("중복된 이메일을 가진 user를 생성할 수 없습니다.", async () => {
+  it("중복된 이메일을 가진 user는 생성할 수 없습니다.", async () => {
     try{
       await UserService.addUser(mockUser)
     } catch(err) {
@@ -40,8 +32,9 @@ describe("User Service Logic", () => {
     }
   })
 
-  it("중복된 닉네임을 가진 user를 생성할 수 없습니다.", async () => {
+  it("중복된 닉네임을 가진 user는 생성할 수 없습니다.", async () => {
     userModel.isEmailExist = jest.fn().mockResolvedValue(true)
+
     try{
       await UserService.addUser(mockUser)
     } catch(err) {
@@ -49,13 +42,15 @@ describe("User Service Logic", () => {
     }
   })
 
+  // user 조회 기능 관련 테스트
   it("해당 User의 상세 정보를 조회해야 합니다.", async () => {
     const foundUser = await UserService.findUser({ userId })
+
     expect(foundUser.email).toEqual("mockRacer2@elice.io")
     expect(foundUser.nickname).toEqual("mockRacer2")
   })
 
-  it("조회하려는 User가 존재하지 않으면 에러를 발생시켜야 합니다.", async () => {
+  it("조회하려는 User가 존재하지 않으면 에러가 발생해야 합니다.", async () => {
     try{
       await UserService.findUser({ userId: "notExistingId" })
     } catch(err){
@@ -63,6 +58,7 @@ describe("User Service Logic", () => {
     }
   })
 
+  // 로그인 기능 관련 테스트
   it("로그인이 성공하면 토큰을 발급해야 합니다.", async () => {
     const loginResult = await UserService.loginUser({ 
       email: "mockRacer2@elice.io",
@@ -91,11 +87,11 @@ describe("User Service Logic", () => {
         password: "incorrectPassword"
       })
     } catch(err){
-      // expect(err.status).toBe(400)
       expect(err.message).toBe("system.error.differentPassword")
     }
   })
 
+  // user 수정 기능 관련 테스트
   it("해당 User의 닉네임을 수정해야 합니다.", async () => {
     const updatedUser = await UserService.setUser({ 
       userId,
@@ -103,10 +99,11 @@ describe("User Service Logic", () => {
         nickname: "수정한 닉네임"
       }
     })
+
     expect(updatedUser.nickname).toEqual("수정한 닉네임")
   })
 
-  it("수정하려는 User가 존재하지 않다면 에러를 발생해야 합니다.", async () => {
+  it("수정하려는 User가 존재하지 않다면 에러가 발생해야 합니다.", async () => {
     try{
       await UserService.setUser({
         userId: "notExistingId",
@@ -132,6 +129,7 @@ describe("User Service Logic", () => {
     }
   })
   
+  // 프로필 이미지 변경 기능 관련 테스트
   it("해당 User의 프로필 이미지를 변경해야 합니다.", async () => {
     const updatedUser = await UserService.setProfileImg({ 
       userId,
@@ -155,6 +153,7 @@ describe("User Service Logic", () => {
     }
   })
 
+  // 스탬프 추가 기능 관련 테스트
   it("해당 User가 인증한 랜드마크를 스탬프에 넣어줘야 합니다.", async () => {
     const stampAddUser = await UserService.addStamp({ userId, tourId })
     expect(stampAddUser.stamp).toContain( tourId )
@@ -184,6 +183,7 @@ describe("User Service Logic", () => {
     }
   })
 
+  // 경험치 증가 기능 관련 테스트
   it("해당 User의 경험치를 증가시켜야 합니다.", async () => {
     const upgradeUser = await UserService.addExp({ userId, point })
     expect(upgradeUser.experience).toEqual(30)
@@ -197,6 +197,7 @@ describe("User Service Logic", () => {
     }    
   })
 
+  // user 삭제 기능 관련 테스트
   it("삭제하려는 User가 존재하지 않다면 에러를 발생해야 합니다.", async () => {
     try{
       await UserService.withdrawUser({ userId: "notExistingId" })
