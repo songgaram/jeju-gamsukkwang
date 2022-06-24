@@ -1,18 +1,18 @@
 import { Router } from "express";
 import { UserService } from "../services/UserService";
-import { loginRequired } from "../middlewares/";
-import { s3Single } from "../middlewares/multerS3";
+import { loginRequired, s3Single } from "../middlewares";
+
 import * as Joi from "joi";
+import { joiPassword } from "joi-password";
+import { idValidator } from "../validators"
 
 const userRouter = Router();
 
 // 회원 정보 가져오기 기능
 userRouter.get("/account/:id", async (req, res, next) => {
 	try {
-
 		// userId의 유효성을 체크
-		const userIdValidator = Joi.string().trim().empty().required()
-		const userId = await userIdValidator.validateAsync(req.params.id);
+		const userId = await idValidator.validateAsync(req.params.id);
 
 		const user = await UserService.findUser({ userId });
 
@@ -25,13 +25,10 @@ userRouter.get("/account/:id", async (req, res, next) => {
 // 회원 등록 기능 (프로필 이미지는 기본 이미지로 설정됨)
 userRouter.post("/account/register", async (req, res, next) => {
 	try {
-
 		// 입력한 데이터의 유효성을 체크
-
 		const registerValidator = Joi.object({
-			email: Joi.string().trim().empty().required()
-				.email({ minDomainSegments: 2, tlds: { allow: ["com", "net", "kr", "io"] } } ),
-			password: Joi.string().trim().empty().pattern(new RegExp('^[a-zA-Z0-9~`!@#$%^&*()-=+?]{8,}$')).required(),
+			email: Joi.string().trim().empty().email({ minDomainSegments: 2 }).required(),
+			password: joiPassword.string().noWhiteSpaces().min(8).required(),
 			nickname: Joi.string().trim().empty().min(2).required(),
 		})
 		const { email, password, nickname } = await registerValidator.validateAsync(req.body);
@@ -51,7 +48,6 @@ userRouter.post("/account/register", async (req, res, next) => {
 // 회원 로그인 기능
 userRouter.post("/account/login", async (req, res, next) => {
 	try {
-
 		// 입력한 데이터의 유효성을 체크
 		const loginValidator = Joi.object({
 			email: Joi.string().trim().empty().required(),
@@ -70,11 +66,8 @@ userRouter.post("/account/login", async (req, res, next) => {
 // 회원 탈퇴 기능
 userRouter.delete("/user", loginRequired, async (req, res, next) => {
 	try {
-
-		// req에서 데이터 가져오기
 		const userId = req.currentUserId;
 
-		// 위 데이터로 회원 탈퇴 시도
 		const user = await UserService.withdrawUser({ userId });
 
 		res.status(200).send(user);
@@ -86,10 +79,9 @@ userRouter.delete("/user", loginRequired, async (req, res, next) => {
 //회원 수정 기능
 userRouter.put("/user", loginRequired, async (req, res, next) => {
 	try {
-		// req에서 데이터 가져오기
 		const userId = req.currentUserId;
 
-		// nickname만 수정할 수 있게 체크
+		// nickname만 수정할 수 있게 체크 (이메일, 비밀번호는 수정하면 안됨)
 		const editValidator = Joi.object({
 			nickname: Joi.string().trim().empty().min(2).required()
 		}).length(1);
@@ -106,12 +98,10 @@ userRouter.put("/user", loginRequired, async (req, res, next) => {
 // 회원 스탬프 추가 기능
 userRouter.post("/user/stamp", loginRequired, async (req, res, next) => {
 	try {
-
 		const userId = req.currentUserId;
 
 		// tourId의 유효성을 체크
-		const tourIdValidator = Joi.string().trim().empty().required()
-		const tourId = await tourIdValidator.validateAsync(req.body.tourId);
+		const tourId = await idValidator.validateAsync(req.body.tourId);
 
 		const tourIntoStamp = await UserService.addStamp({
 			userId,
@@ -155,7 +145,7 @@ userRouter.put(
 			const imageName = location.split("amazonaws.com/")[1];
 			const toUpdate = { profileImgUrl: imageName };
 
-			const updatedUser = await UserService.setUser({ userId, toUpdate });
+			const updatedUser = await UserService.setProfileImg({ userId, toUpdate });
 
 			res.status(201).json(updatedUser);
 		} catch (err) {

@@ -1,5 +1,6 @@
-import { db, tourModel } from "../db";
-import * as Joi from 'joi'
+import { tourModel, userModel } from "../db";
+import * as Joi from "joi"
+import { idValidator } from "../validators"
 
 class TourService {
 	static getAllLandmarks = async () => {
@@ -10,8 +11,7 @@ class TourService {
 
 	static getLandmark = async ({ id }) => {
 		// 데이터의 유효성 체크
-		const tourIdValidator = Joi.string().trim().empty().required()
-		await tourIdValidator.validateAsync(id)
+		await idValidator.validateAsync(id)
 
 		const isLandmarkExist = await tourModel.isLandmarkExist({ id });
 		if (!isLandmarkExist) {
@@ -30,6 +30,12 @@ class TourService {
 			currentUserId: Joi.string().trim().empty().required()
 		})
 		await dataValidator.validateAsync({ id, currentUserId })
+
+		const user = await userModel.findById({ userId: currentUserId });
+
+		if (!user) {
+			throw new Error("system.error.noUser");
+		}
 
 		const isLandmarkExist = await tourModel.isLandmarkExist({ id });
 		if (!isLandmarkExist) {
@@ -62,6 +68,12 @@ class TourService {
 		})
 		await dataValidator.validateAsync({ id, currentUserId })
 
+		const user = await userModel.findById({ userId: currentUserId });
+
+		if (!user) {
+			throw new Error("system.error.noUser");
+		}
+
 		const isLandmarkExist = await tourModel.isLandmarkExist({ id });
 		if (!isLandmarkExist) {
 			throw new Error("system.error.noLandmark");
@@ -87,7 +99,7 @@ class TourService {
 
 	static sortByLiked = async ({}) => {
 		const sortLandmarks = await tourModel.sortByLiked({});
-
+		
 		return sortLandmarks;
 	};
 
