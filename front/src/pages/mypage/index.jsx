@@ -2,6 +2,7 @@ import styled from "styled-components";
 import Profile from "./profile";
 import Level from "./level";
 import Navs from "./Navs";
+import { Outlet } from "react-router-dom";
 
 const MyPage = () => {
   return (
@@ -11,7 +12,9 @@ const MyPage = () => {
         <Level />
       </InfoContainer>
       <Navs />
-      <OutletContainer />
+      <OutletContainer>
+        <Outlet />
+      </OutletContainer>
     </>
   );
 };
@@ -31,7 +34,7 @@ const OutletContainer = styled.div`
   background-color: ${({ theme }) => theme.colors.skyblue};
   width: 100%;
   border-radius: 45px 45px 0 0;
-  height: 300px;
+  height: auto;
 `;
 
 export default MyPage;
