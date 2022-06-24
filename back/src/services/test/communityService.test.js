@@ -250,7 +250,13 @@ describe("Community MVP Test", () => {
   });
 
   it("예기치 못한 오류가 발생할 경우, 에러가 발생한다", async () => {
-    communityModel.deleteById = jest.fn().mockResolvedValue(null);
+    communityModel.findById = jest.fn().mockResolvedValue({
+      id: mockArticleId,
+      userId: mockUserId,
+    });
+    communityModel.deleteById = jest
+      .fn()
+      .mockImplementation(() => Promise.reject("오류 발생"));
 
     try {
       await CommunityService.deleteArticle({

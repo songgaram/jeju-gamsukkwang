@@ -7,14 +7,19 @@ const getMock = {
   page: 1,
   limit: 10,
 };
+const getMock2 = {
+  tourId: "123",
+  page: 1,
+  limit: 10,
+};
 let mockReviewId = "";
 
 describe("Review MVP Test", () => {
   it("특정 랜드마크의 리뷰를 가지고 온다.", async () => {
     const getReviews = await ReviewService.getReviews({ getReviews: getMock });
 
-    expect(getReviews.total).toEqual(0);
-    expect(getReviews.totalPage).toEqual(0);
+    expect(getReviews.total).toEqual(4);
+    expect(getReviews.totalPage).toEqual(1);
   });
 
   it("특정 랜드마크의 리뷰 요약 정보를 가지고 온다.", async () => {
@@ -22,8 +27,8 @@ describe("Review MVP Test", () => {
       tourId: mockTourId,
     });
 
-    expect(getReviewInfo.totalReview).toEqual(0);
-    expect(getReviewInfo.avgRating).toEqual("0.0");
+    expect(getReviewInfo.totalReview).toEqual(4);
+    expect(getReviewInfo.avgRating).toEqual("2.5");
   });
 
   it("랜드마크의 리뷰를 작성한다. 그 랜드마크의 리뷰 목록을 재호출하고, 리뷰 갯수가 늘어났음을 확인한다.", async () => {
@@ -37,9 +42,27 @@ describe("Review MVP Test", () => {
     const getReviews = await ReviewService.getReviews({ getReviews: getMock });
     mockReviewId = addReview.id;
 
-    expect(getReviews.total).toEqual(1);
+    expect(getReviews.total).toEqual(5);
     expect(addReview.content).toEqual("isTesting");
     expect(addReview.rating).toEqual(5);
+  });
+
+  it("특정 랜드마크의 리뷰가 평점 별로 각각 1개 이상 있을 때의 요약 정보를 가지고 온다.", async () => {
+    const getReviewInfo = await ReviewService.getReviewInfo({
+      tourId: mockTourId,
+    });
+
+    expect(getReviewInfo.totalReview).toEqual(5);
+    expect(getReviewInfo.avgRating).toEqual("3.0");
+  });
+
+  it("특정 랜드마크의 리뷰가 하나도 없을 때의 요약 정보를 가지고 온다.", async () => {
+    const getReviewInfo = await ReviewService.getReviewInfo({
+      tourId: "1",
+    });
+
+    expect(getReviewInfo.totalReview).toEqual(0);
+    expect(getReviewInfo.avgRating).toEqual("0.0");
   });
 
   it("이미 리뷰를 작성한 랜드마크에 다시 리뷰를 작성하려 할 경우, 에러가 발생한다.", async () => {
@@ -134,5 +157,12 @@ describe("Review MVP Test", () => {
     });
 
     expect(res).toEqual("system.success");
+  });
+
+  it("특정 랜드마크의 리뷰가 아무 것도 없을 때의 정보를 가지고 온다.", async () => {
+    const getReviews = await ReviewService.getReviews({ getReviews: getMock2 });
+
+    expect(getReviews.total).toEqual(0);
+    expect(getReviews.totalPage).toEqual(0);
   });
 });
