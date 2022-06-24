@@ -1,4 +1,4 @@
-import { userModel } from "../../db"
+import { userModel } from "../.."
 
 const nickname = "mockRacer"
 
