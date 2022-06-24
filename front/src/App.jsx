@@ -1,12 +1,12 @@
 import { Route, Routes } from "react-router-dom";
 
-import Home from "pages/home";
+import Home from "pages/Home";
 import Intro from "pages/intro";
-import Register from "pages/register";
+import Register from "pages/Register";
 import Landmark from "pages/landmark";
-import LogIn from "pages/logIn";
-import Layout from "components/layout";
-import Tour from "pages/recommend";
+import LogIn from "pages/LogIn";
+import Layout from "components/Layout";
+import Tour from "pages/Recommend";
 
 const App = () => {
   return (

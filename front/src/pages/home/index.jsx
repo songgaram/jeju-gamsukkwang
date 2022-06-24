@@ -1,15 +1,22 @@
 import { useNavigate } from "react-router-dom";
 
-import TextSearch from "./textSearch";
-import ImageSearch from "./imageSearch";
+import TextSearch from "./TextSearch";
+import ImageSearch from "./ImageSearch";
 
-// import { useRecoilValue } from "recoil";
-// import { filteredSearchList } from "../home/textSearch/state";
+import { useRecoilValue } from "recoil";
+import { filteredSearchList } from "./TextSearch/state";
 
 import { HomeContainer, ContentsBox, TextButtonBox } from "./home.style";
+import Loading from "./Loding";
+import { useEffect } from "react";
 
 const Home = () => {
   const navigate = useNavigate();
+  const filteredList = useRecoilValue(filteredSearchList);
+
+  useEffect(() => {
+    console.log(filteredList);
+  }, [filteredList]);
 
   // const filterList = useRecoilValue(filteredSearchList);
   // console.log(filterList);

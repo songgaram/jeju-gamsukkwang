@@ -1,6 +1,6 @@
 import { useState } from "react";
-import RecommendCard from "./card";
-import Dropdown from "./dropdown";
+import RecommendCard from "./Card";
+import Dropdown from "./Dropdown";
 
 import {
   TourPage,
