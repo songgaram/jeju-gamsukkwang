@@ -1,5 +1,4 @@
 import { TourService } from "../TourService";
-import { db } from "../../db";
 
 const tourId = "81cd8ae4-044e-42bc-ba1f-6108d192edc3" // 여미지 식물원
 const userId = "b4f9ab8c-43fa-4bd9-8f82-27a979f7a3a9" // mockRacer
@@ -8,22 +7,14 @@ let currentLikeCount
 
 describe("Tour Service Logic", () => {
 
-  beforeAll(async () => {
-
-  });
-
-  afterAll(async () => {
-    if(db.close){
-      await db.close();
-    }
-  })
-
+  // 목록 기능 관련 테스트
   it("전체 랜드마크 목록을 가져옵니다.", async () => {
     const allLandmarks = await TourService.getAllLandmarks({})
 
     expect(allLandmarks.length).toEqual(3)
   })
 
+  // 조회 기능 관련 테스트
   it("랜드마크 id를 가지고 랜드마크의 상세 정보를 가져옵니다.", async () => {
     const landmark = await TourService.getLandmark({ id: tourId })
 
@@ -43,18 +34,7 @@ describe("Tour Service Logic", () => {
     }
   })
 
-  it("랜드마크 id를 가지고 랜드마크의 상세 정보를 가져옵니다.", async () => {
-    const landmark = await TourService.getLandmark({ id: tourId })
-
-    expect(landmark.id).toEqual(tourId)
-    expect(landmark.krTitle).toEqual("여미지식물원")
-    expect(landmark.address).toEqual("제주특별자치도 서귀포시 중문관광로 93")
-    expect(landmark.description).toEqual("마음의 안식을 주는 동양 최대의 온실 식물원")
-
-    currentLikeCount = landmark.likeCount
-  })
-
-  // 좋아요 추가
+  // 좋아요 추가 기능 관련 테스트
   it("랜드마크에 좋아요를 추가합니다.", async () => {
     const addResult = await TourService.addLike({
       id: tourId,
@@ -71,7 +51,7 @@ describe("Tour Service Logic", () => {
     try{
       await TourService.addLike({
         id: tourId,
-        currentUserId: "noExistingId"
+        currentUserId: "notExistingId"
       })
     }catch(err){
       expect(err.message).toBe("system.error.noUser")
@@ -81,7 +61,7 @@ describe("Tour Service Logic", () => {
   it("좋아요를 추가하려는 랜드마크가 존재하지 않다면 에러를 발생시켜야 합니다.", async () => {
     try{
       await TourService.addLike({
-        id: "noExistingId",
+        id: "notExistingId",
         currentUserId: userId
       })
     }catch(err){
@@ -100,12 +80,12 @@ describe("Tour Service Logic", () => {
     }
   })
 
-  // 좋아요 삭제
+  // 좋아요 삭제 기능 관련 테스트
   it("좋아요를 삭제하려는 User가 존재하지 않는 유저라면 에러를 발생시켜야 합니다.", async () => {
     try{
       await TourService.removeLike({
         id: tourId,
-        currentUserId: "noExistingId"
+        currentUserId: "notExistingId"
       })
     }catch(err){
       expect(err.message).toBe("system.error.noUser")
@@ -115,7 +95,7 @@ describe("Tour Service Logic", () => {
   it("좋아요를 삭제하려는 랜드마크가 존재하지 않다면 에러를 발생시켜야 합니다.", async () => {
     try{
       await TourService.removeLike({
-        id: "noExistingId",
+        id: "notExistingId",
         currentUserId: userId
       })
     }catch(err){
@@ -146,6 +126,7 @@ describe("Tour Service Logic", () => {
     }
   })
 
+  // 목록 정렬 기능 관련 테스트
   it("좋아요 순으로 랜드마크 목록을 정렬합니다.", async () => {
     const sortByLikeLandmarks = await TourService.sortByLiked({});
     
@@ -176,12 +157,11 @@ describe("Tour Service Logic", () => {
     expect(sortArray).toEqual(ratingArray)
   }) 
 
+  // 검색 기능 관련 테스트
   it("이름으로 랜드마크를 검색합니다.", async () => {
     const searchLandmark = await TourService.searchLandmark({ name: "제주" })
-    
-    console.log(searchLandmark)
-
     const landmarkName = searchLandmark.map(ele => ele.krTitle)
+    
     expect(landmarkName).toContain("제주돌문화공원")
     expect(landmarkName).toContain("제주유리의성")
   })
