@@ -21,7 +21,7 @@ const loginRequired = async (req, res, next) => {
 		req.currentUserId = userId;
 		next();
 	} catch (err) {
-		res.status(400).send("system.error.unvalidToken");
+		res.status(401).send("system.error.unvalidToken");
 		return;
 	}
 };

@@ -17,7 +17,7 @@ paths:
                 tourId:
                   type: string
                   required: true
-                  default: 1d4ec9e9-fef7-4204-8527-10fa21e9e851
+                  default: 46748ca6-4a6d-4ed7-bef7-4f40452f6fa0
                 content:
                   type: string
                   required: true
@@ -47,7 +47,7 @@ paths:
           schema:
             type: string
           description: 해당 랜드마크의 id를 입력해주세요.
-          default: 1d4ec9e9-fef7-4204-8527-10fa21e9e851
+          default: 46748ca6-4a6d-4ed7-bef7-4f40452f6fa0
         - name: page
           in: query
           required: true
@@ -81,7 +81,7 @@ paths:
           schema:
             type: string
           description: 해당 랜드마크의 id를 입력해주세요.
-          default: 1d4ec9e9-fef7-4204-8527-10fa21e9e851
+          default: 46748ca6-4a6d-4ed7-bef7-4f40452f6fa0
       responses:
         "200":
           description: 랜드마크의 리뷰 목록 불러오기 성공
@@ -113,7 +113,7 @@ paths:
                 tourId:
                   type: string
                   required: true
-                  default: 1d4ec9e9-fef7-4204-8527-10fa21e9e851
+                  default: 46748ca6-4a6d-4ed7-bef7-4f40452f6fa0
                 content:
                   type: string
                   required: true

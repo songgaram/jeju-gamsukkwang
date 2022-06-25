@@ -169,7 +169,7 @@ paths:
                 tourId:
                   type: string
                   required: true
-                  default: 011bcd14-2cc7-4195-9ec9-747e4fb1838a
+                  default: 46748ca6-4a6d-4ed7-bef7-4f40452f6fa0
       responses:
         "201":
           description: 스탬프 추가 성공
