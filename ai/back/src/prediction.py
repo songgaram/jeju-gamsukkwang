@@ -8,6 +8,7 @@ from PIL import Image
 def predictImage(imageURL):
 
   MODELPATH = '../public/model/model.h5'
+  CATEGORYPATH = '../public/categoryList.csv'
 
   try:
     model = load_model(MODELPATH)
@@ -27,7 +28,7 @@ def predictImage(imageURL):
   pred = model.predict(img.reshape((1, 224,224,3)))
   probsArgsort = tf.argsort(pred, direction='DESCENDING')
   
-  category = pd.read_csv('categoryList.csv', encoding='cp949')
+  category = pd.read_csv(CATEGORYPATH, encoding='cp949')
 
   summary = {}
   categoryDict = {}
