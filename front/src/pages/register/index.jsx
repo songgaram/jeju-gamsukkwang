@@ -107,8 +107,10 @@ const Register = () => {
               onChange={handleOnChange}
               required
             />
+
             {isInValid.nickname && <p>{ERROR_MESSAGE.nickname}</p>}
           </InputBox>
+
           <RegisterButton
             type="submit"
             onClick={handleOnSubmit}

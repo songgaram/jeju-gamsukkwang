@@ -4,9 +4,11 @@ import Home from "pages/Home";
 import Intro from "pages/intro";
 import Register from "pages/Register";
 import Landmark from "pages/landmark";
-import LogIn from "pages/LogIn";
-import Layout from "components/Layout";
-import Tour from "pages/Recommend";
+import LogIn from "pages/logIn";
+import Layout from "components/layout";
+import MyPage from "pages/mypage";
+import Tour from "pages/recommend";
+import MyMap from "pages/mypage/MyMap";
 
 const App = () => {
   return (
@@ -18,6 +20,9 @@ const App = () => {
         <Route path="/intro" element={<Intro />} />
         <Route path="/landmark/detail/:id" element={<Landmark />} />
         <Route path="/tour" element={<Tour />} />
+        <Route path="/mypage" element={<MyPage />}>
+          <Route path="mymap" element={<MyMap />} />
+        </Route>
       </Route>
     </Routes>
   );

@@ -21,25 +21,25 @@ const Landmark = () => {
 
           <DetailContent>
             <DetailTabRow>
-              <DetailTabCell>
+              <DetailTabHead>
                 <DetailHighlight>주소</DetailHighlight>
-              </DetailTabCell>
+              </DetailTabHead>
               <DetailTabCell>
                 <p>{data?.landmark?.address}</p>
               </DetailTabCell>
             </DetailTabRow>
             <DetailTabRow>
-              <DetailTabCell>
+              <DetailTabHead>
                 <DetailHighlight>소개</DetailHighlight>
-              </DetailTabCell>
+              </DetailTabHead>
               <DetailTabCell>
                 <p>{data?.landmark?.description}</p>
               </DetailTabCell>
             </DetailTabRow>
             <DetailTabRow>
-              <DetailTabCell>
+              <DetailTabHead>
                 <DetailHighlight>연락처</DetailHighlight>
-              </DetailTabCell>
+              </DetailTabHead>
               <DetailTabCell>
                 <p>{data?.landmark?.phoneNo}</p>
               </DetailTabCell>
@@ -69,7 +69,11 @@ const ImgContainer = styled.div`
 
 const DetailContainer = styled.div`
   width: 50%;
-  padding: 10% 8%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 5%;
 `;
 
 const DetailTitle = styled.div`
@@ -93,15 +97,21 @@ const DetailHighlight = styled.p`
 const DetailContent = styled.div`
   display: table;
   width: 100%;
+  border-spacing: 10px;
 `;
 
 const DetailTabRow = styled.div`
   display: table-row;
-  height: 30px;
 `;
 
 const DetailTabCell = styled.div`
   display: table-cell;
+  width: 80%;
+`;
+
+const DetailTabHead = styled.div`
+  display: table-cell;
+  width: 20%;
 `;
 
 export default Landmark;
