@@ -31,18 +31,14 @@ def predictImage(imageURL):
   category = pd.read_csv(CATEGORYPATH, encoding='cp949')
 
   summary = {}
-  categoryDict = {}
   categoriesList = []
   for i in range(5):
     index = int(probsArgsort[0][i])
 
-    categoryDict['ranking'] = int(probsArgsort[0][i])
-    categoryDict['categoryName'] = category[category['categoryNumber']==index]['categoryName'].values[0]
-    categoryDict['percentage'] = round(pred[0][[probsArgsort[0][i]]]*100, 2)
     categoriesList.append({
                             'ranking': i+1,
                             'categoryName':category[category['categoryNumber']==index]['categoryName'].values[0],
-                            'percentage':round(pred[0][[probsArgsort[0][i]]]*100, 2)
+                            'percentage':round(pred[0][probsArgsort[0][i]]*100, 2)
                           })
   
   summary['summary'] = categoriesList
