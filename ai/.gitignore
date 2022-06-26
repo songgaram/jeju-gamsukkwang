@@ -11,7 +11,7 @@
 # models
 /checkpoints
 /model/savedModels
-/back/public/model
+/back/public/model/model.h5
 /logs
 
 # test
