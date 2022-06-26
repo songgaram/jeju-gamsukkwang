@@ -22,10 +22,17 @@ const ContentBox = styled.div`
   }
 `;
 
+const DropdownBox = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  margin-right: 10%;
+`;
+
 const CardsContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
 `;
 
-export { TourPage, ContentBox, CardsContainer };
+export { TourPage, ContentBox, CardsContainer, DropdownBox };

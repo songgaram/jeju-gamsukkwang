@@ -49,7 +49,11 @@ export const tourModel = {
       $and: [{ id }, { likedUsers: currentUserId }],
     });
 
-    return didUserLiked;
+    if(didUserLiked) {
+      return true
+    }
+    
+    return false
   },
 
   sortByLiked: async ({}) => {
