@@ -11,6 +11,12 @@
     "react/jsx-key": "warn",
     "react/self-closing-comp": "warn",
     "react/jsx-curly-brace-presence": "warn",
-    "no-extra-semi": "error"
+    "no-extra-semi": "error",
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ]
   }
 }

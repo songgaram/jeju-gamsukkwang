@@ -1,15 +1,27 @@
 import styled, { css } from "styled-components";
-import theme from "styles/Theme";
 import { StarRatingWithEmpty } from "./StarRating";
+import { AiFillDelete } from "react-icons/ai";
+import { RiEdit2Fill } from "react-icons/ri";
+import { useDeleteReview } from "queries/reviewQuery";
 
 export const ReviewCard = ({ review, idx }) => {
-  const { userNickName, content, rating, createdAt } = review;
+  const { userNickName, content, rating, createdAt, id } = review;
+  const deleteReview = useDeleteReview();
+
+  const handleDeleteReview = () => {
+    deleteReview.mutate(id);
+  };
+
   return (
     <ReviewCardContainer idx={idx}>
       <CardHeader>
         <StarRatingWithEmpty number={rating} />
         <CardText>{userNickName}</CardText>
         <CardText color="gray03">{createdAt.slice(0, 10)}</CardText>
+        <IconContainer>
+          <RiEdit2Fill size="1.7rem" cursor="pointer" />
+          <TrashBox size="1.7rem" onClick={handleDeleteReview} />
+        </IconContainer>
       </CardHeader>
       <CardContent>
         <CardText>{content}</CardText>
@@ -21,7 +33,7 @@ export const ReviewCard = ({ review, idx }) => {
 const ReviewCardContainer = styled.div`
   width: 100%;
   border-top: ${(props) =>
-    props.idx === 0 ? "none" : `1px dashed ${theme.colors.secondary}`};
+    props.idx === 0 ? "none" : `1px dashed ${props.theme.colors.secondary}`};
 `;
 
 const CardHeader = styled.div`
@@ -45,6 +57,16 @@ const CardText = styled.p`
     `;
   }}
   margin-left: 1%;
+`;
+
+const IconContainer = styled.div`
+  margin-left: auto;
+  width: auto;
+`;
+
+const TrashBox = styled(AiFillDelete)`
+  cursor: pointer;
+  margin-left: 5px;
 `;
 
 export default ReviewCard;

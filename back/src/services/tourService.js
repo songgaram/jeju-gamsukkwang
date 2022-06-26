@@ -1,107 +1,138 @@
-import { db, tourModel } from "../db";
-import * as Joi from 'joi'
+import * as Joi from "joi";
+
+import { tourModel, userModel } from "../db";
+import { idValidator } from "../validators"; // id가 혹시 비어있는지 또는 누락됐는지를 검사
 
 class TourService {
-	static getAllLandmarks = async () => {
-		const allLandmarks = await tourModel.findAll({});
 
-		return allLandmarks;
-	};
+	// 전체 랜드마크 정보 가져오기
+  static getAllLandmarks = async () => {
+    const allLandmarks = await tourModel.findAll({});
 
-	static getLandmark = async ({ id }) => {
-		// 데이터의 유효성 체크
-		const tourIdValidator = Joi.string().trim().empty().required()
-		await tourIdValidator.validateAsync(id)
+    return allLandmarks;
+  };
 
-		const isLandmarkExist = await tourModel.isLandmarkExist({ id });
-		if (!isLandmarkExist) {
-			throw new Error("system.error.noLandmark");
-		}
+  // 이름으로 랜드마크 검색하기
+  static searchLandmark = async ({ name }) => {
 
-		const landmark = await tourModel.findById({ id });
+    // atlas search index 사용해서 한국어 검색 시 최소 2글자를 입력해야 함
+    const dataValidator = Joi.string().trim().empty().min(2).required();
+    await dataValidator.validateAsync(name);
 
-		return landmark;
-	};
+    const searchLandmark = await tourModel.searchByName({ name });
+    if (searchLandmark.length === 0) {
+      throw new Error("system.error.noLandmark");
+    }
 
-	static addLike = async ({ id, currentUserId }) => {
-		// 데이터의 유효성 체크
+    return searchLandmark;
+  };
+
+	// 랜드마크 ID로 특정 랜드마크 정보 가져오기
+  static getLandmark = async ({ id }) => {
+    await idValidator.validateAsync(id);
+
+    const isLandmarkExist = await tourModel.isLandmarkExist({ id });
+    if (!isLandmarkExist) {
+      throw new Error("system.error.noLandmark");
+    }
+
+    const landmark = await tourModel.findById({ id });
+
+    return landmark;
+  };
+
+	// 랜드마크에 좋아요 추가하기
+  static addLike = async ({ id, currentUserId }) => {
+
 		const dataValidator = Joi.object({
-			id: Joi.string().trim().empty().required(),
-			currentUserId: Joi.string().trim().empty().required()
-		})
-		await dataValidator.validateAsync({ id, currentUserId })
+      id: Joi.string().trim().empty().required(),
+      currentUserId: Joi.string().trim().empty().required(),
+    });
+    await dataValidator.validateAsync({ id, currentUserId });
 
-		const isLandmarkExist = await tourModel.isLandmarkExist({ id });
-		if (!isLandmarkExist) {
-			throw new Error("system.error.noLandmark");
-		}
+    const user = await userModel.findById({ userId: currentUserId });
+    if (!user) {
+      throw new Error("system.error.noUser");
+    }
 
-		const didUserLiked = await tourModel.didUserLiked({
-			id,
-			currentUserId,
-		});
+    const isLandmarkExist = await tourModel.isLandmarkExist({ id });
+    if (!isLandmarkExist) {
+      throw new Error("system.error.noLandmark");
+    }
 
-		// didUserLiked가 무언가를 반환할 때 에러를 발생
-		if (didUserLiked) {
-			throw new Error("system.error.alreadyLiked");
-		}
+    const didUserLiked = await tourModel.didUserLiked({
+      id,
+      currentUserId,
+    });
+    // 이미 좋아요를 추가한 상태임을 의미 (boolean 타입 리턴)
+    if (didUserLiked) {
+      throw new Error("system.error.alreadyLiked");
+    }
 
-		const addLiketoLandmark = tourModel.addLike({
-			id,
-			currentUserId,
-		});
+    const addLiketoLandmark = tourModel.addLike({
+      id,
+      currentUserId,
+    });
 
-		return addLiketoLandmark;
-	};
+    return addLiketoLandmark;
+  };
 
-	static removeLike = async ({ id, currentUserId }) => {
-		// 데이터의 유효성 체크
+	// 랜드마크에 좋아요 삭제하기
+  static removeLike = async ({ id, currentUserId }) => {
+
 		const dataValidator = Joi.object({
-			id: Joi.string().trim().empty().required(),
-			currentUserId: Joi.string().trim().empty().required()
-		})
-		await dataValidator.validateAsync({ id, currentUserId })
+      id: Joi.string().trim().empty().required(),
+      currentUserId: Joi.string().trim().empty().required(),
+    });
+    await dataValidator.validateAsync({ id, currentUserId });
 
-		const isLandmarkExist = await tourModel.isLandmarkExist({ id });
-		if (!isLandmarkExist) {
-			throw new Error("system.error.noLandmark");
-		}
+    const user = await userModel.findById({ userId: currentUserId });
+    if (!user) {
+      throw new Error("system.error.noUser");
+    }
 
-		const didUserLiked = await tourModel.didUserLiked({
-			id,
-			currentUserId,
-		});
+    const isLandmarkExist = await tourModel.isLandmarkExist({ id });
+    if (!isLandmarkExist) {
+      throw new Error("system.error.noLandmark");
+    }
 
-		// didUserLiked가 무언가를 반환하지 않을 때 에러를 발생
-		if (!didUserLiked) {
-			throw new Error("system.error.noLiked");
-		}
+    const didUserLiked = await tourModel.didUserLiked({
+      id,
+      currentUserId,
+    });
+		// 삭제할 좋아요가 없음을 의미 (boolean 타입 리턴)
+    if (!didUserLiked) {
+      throw new Error("system.error.noLiked");
+    }
 
-		const removeLikefromLandmark = tourModel.removeLike({
-			id,
-			currentUserId,
-		});
+    const removeLikefromLandmark = tourModel.removeLike({
+      id,
+      currentUserId,
+    });
 
-		return removeLikefromLandmark;
-	};
+    return removeLikefromLandmark;
+  };
 
-	static sortByLiked = async ({}) => {
-		const sortLandmarks = await tourModel.sortByLiked({});
+	// 랜드마크 좋아요 높은 순으로 정렬하기
+  static sortByLiked = async ({}) => {
+    const sortLandmarks = await tourModel.sortByLiked({});
 
-		return sortLandmarks;
-	};
+    return sortLandmarks;
+  };
 
-	static sortByReviews = async ({}) => {
-		const sortLandmarks = await tourModel.sortByReviews({});
+	// 랜드마크 리뷰수 많은 순으로 정렬하기
+  static sortByReviews = async ({}) => {
+    const sortLandmarks = await tourModel.sortByReviews({});
 
-		return sortLandmarks;
-	};
+    return sortLandmarks;
+  };
 
-	static sortByRating = async ({}) => {
-		const sortLandmarks = await tourModel.sortByRating({});
+	// 랜드마크 평점 평균 높은 순으로 정렬하기
+  static sortByRating = async ({}) => {
+    const sortLandmarks = await tourModel.sortByRating({});
 
-		return sortLandmarks;
-	};
+    return sortLandmarks;
+  };
 }
 
 export { TourService };

@@ -1,5 +1,5 @@
 paths:
-  /community?page={page}&limit={limit}:
+  /community?page={page}&limit={limit}&head={head}:
     get:
       tags:
         - Community
@@ -20,6 +20,17 @@ paths:
             type: integer
             default: 10
           description: 페이지 당 나타낼 게시글 수를 의미합니다. 따로 쿼리에 적지 않을 경우 기본 10입니다.
+        - name: head
+          in: query
+          schema:
+            type: string
+          allowEmptyValue: true
+          description:
+            게시글의 말머리입니다. 말머리 종류는 아래와 같습니다. <br>
+            question = 질문 <br>
+            info = 정보 <br>
+            free = 잡담 <br>
+            빈 string을 보낼 시 = 전체 글 요청
       responses:
         "200":
           description: 게시글 요청 성공
@@ -48,43 +59,6 @@ paths:
           description: 잘못된 요청을 보냈을 때 오류가 발생합니다.
         "403":
           description: 로그인되어 있지 않을 때 오류가 발생합니다.
-
-  /community?page={page}&limit={limit}&head={head}:
-    get:
-      tags:
-        - Community
-      summary: 특정 말머리 게시글 요청
-      description: /community?page={page}&limit={limit}&head={head}로 특정 말머리 게시글 목록을 요청합니다.
-      parameters:
-        - name: page
-          in: query
-          required: true
-          schema:
-            type: integer
-            default: 1
-          description: 현재 페이지를 의미합니다. ex) 1페이지, 2페이지, ...
-        - name: limit
-          in: query
-          required: true
-          schema:
-            type: integer
-            default: 10
-          description: 페이지 당 나타낼 게시글 수를 의미합니다. 따로 쿼리에 적지 않을 경우 기본 10입니다.
-        - name: head
-          in: query
-          required: true
-          schema:
-            type: string
-          description:
-            게시글의 말머리입니다. 말머리 종류는 아래와 같습니다. <br>
-            question = 질문 <br>
-            info = 정보 <br>
-            free = 잡담
-      responses:
-        "200":
-          description: 특정 말머리 게시글 요청 성공
-        "400":
-          description: 해당 말머리로 글이 검색되지 않을 때, 잘못된 요청이 올 때 오류가 발생합니다.
 
   /community:
     post:

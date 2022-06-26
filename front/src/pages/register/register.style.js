@@ -3,7 +3,7 @@ import styled from "styled-components";
 const RegisterContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   height: calc(100vh - 70px);
   letter-spacing: 0.5px;
@@ -14,7 +14,7 @@ const RegisterContainer = styled.div`
 `;
 
 const Title = styled.h2`
-  margin: 20px 0;
+  margin: 40px 0 20px;
   font-size: 22px;
   font-weight: 600;
   color: ${({ theme }) => theme.colors.primary};

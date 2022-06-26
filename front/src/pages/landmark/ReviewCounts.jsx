@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import theme from "styles/Theme";
 import { StarRating } from "./StarRating";
 
 const ReviewCounts = ({ data, totalReview }) => {
@@ -8,11 +7,13 @@ const ReviewCounts = ({ data, totalReview }) => {
   return (
     <CountsDeatil>
       <DetailTabCell align="right" width="20">
-        <StarRating number={star} color={theme.colors.secondary} />
+        <StarRating number={star} color="secondary" />
       </DetailTabCell>
       <DetailTabCell width="60" align="center">
         <BarContainer>
-          <Bar width={((reviews / totalReview) * 100).toFixed()} />
+          <Bar
+            width={((Number(reviews) / Number(totalReview)) * 100).toFixed()}
+          />
         </BarContainer>
       </DetailTabCell>
       <DetailTabCell align="left" width="20">

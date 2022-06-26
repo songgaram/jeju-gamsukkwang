@@ -37,6 +37,11 @@ const StyledButton = styled.button`
   & + & {
     margin-left: 1rem;
   }
+  &:disabled {
+    background: ${({ theme }) => theme.colors.gray03};
+    color: ${({ theme }) => theme.colors.white};
+    border: none;
+  }
 `;
 
 function Button({ children, ...rest }) {
