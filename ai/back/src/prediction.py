@@ -7,8 +7,10 @@ from PIL import Image
 
 def predictImage(imageURL):
 
+  MODELPATH = '../public/model/model.h5'
+
   try:
-    model = load_model('model/model.h5')
+    model = load_model(MODELPATH)
   except:
     return 500
 
