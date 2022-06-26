@@ -8,7 +8,7 @@ from PIL import Image
 def predictImage(imageURL):
 
   try:
-    model = load_model('model/epoch_0027.h5')
+    model = load_model('model/model.h5')
   except:
     return 500
 
