@@ -1,5 +1,5 @@
 import { useState } from "react";
-import styled from "styled-components";
+import styled, { useTheme } from "styled-components";
 import {
   ReviewFormContainer,
   InputForm,
@@ -23,6 +23,7 @@ const ReviewForm = ({ id }) => {
   const { isRatingValid, isContentValid } = registerValidation(rating, content);
   const isActive = isRatingValid && isContentValid;
   const postReview = usePostReview();
+  const theme = useTheme();
 
   const handleSubmitReview = (e) => {
     e.preventDefault();
@@ -54,7 +55,11 @@ const ReviewForm = ({ id }) => {
         <StarContainer>
           {[1, 2, 3, 4, 5].map((el) => (
             <BsStarFill
-              color={(clicked >= el) | (hovered >= el) ? "#AAD8FE" : "#dedede"}
+              color={
+                (clicked >= el) | (hovered >= el)
+                  ? theme.colors.secondary
+                  : theme.colors.gray02
+              }
               key={el}
               size={`${50 / 16}rem`}
               onMouseEnter={() => setHovered(el)}

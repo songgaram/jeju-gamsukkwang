@@ -33,8 +33,8 @@ const InfoContainer = styled.div`
 const OutletContainer = styled.div`
   background-color: ${({ theme }) => theme.colors.skyblue};
   width: 100%;
-  border-radius: 45px 45px 0 0;
   height: auto;
+  border-radius: 45px 45px 0 0;
 `;
 
 export default MyPage;
