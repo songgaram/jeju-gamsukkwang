@@ -1,8 +1,7 @@
 import styled from "styled-components";
+import { LEVEL_LIST } from "./constants";
 
-const Profile = ({ data }) => {
-  const { email, nickname, experience } = data?.userState || {};
-
+const Profile = ({ email, nickname, level }) => {
   return (
     <ProfileBox>
       <ProfileImg src="https://dev-team8-bucket.s3.ap-northeast-2.amazonaws.com/profileImg.png" />
@@ -11,7 +10,7 @@ const Profile = ({ data }) => {
         <NickName>{nickname}</NickName>
         <Email>{email}</Email>
         <Level>
-          Lv. <Coloring>감귤</Coloring>
+          Lv. <Coloring>{LEVEL_LIST[level].level}</Coloring>
         </Level>
       </InfoBox>
     </ProfileBox>

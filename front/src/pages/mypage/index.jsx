@@ -2,6 +2,7 @@ import styled from "styled-components";
 import Profile from "./Profile";
 import Level from "./Level";
 import Navs from "./Navs";
+import { useState, useEffect } from "react";
 import { Outlet, useParams } from "react-router-dom";
 import { useGetUserState } from "queries/userQuery";
 
@@ -9,17 +10,26 @@ const MyPage = () => {
   const params = useParams();
   const id = params.id;
   const { data } = useGetUserState(id);
+  const { email, nickname, experience } = data?.userState || {};
+  const [level, setLevel] = useState(0);
 
+  useEffect(() => {
+    if (experience) {
+      setLevel(parseInt(parseInt(experience) / 10));
+    }
+  }, [experience]);
+
+  useEffect(() => {
+    console.log("idex에서 level: ", level);
+  });
   return (
     <>
       <InfoContainer>
-        <Profile data={data} />
-        <Level data={data} />
+        <Profile email={email} nickname={nickname} level={level} />
+        <Level experience={experience} />
       </InfoContainer>
       <Navs />
-      <OutletContainer>
-        <Outlet />
-      </OutletContainer>
+      <OutletContainer>{level && <Outlet level={level} />}</OutletContainer>
     </>
   );
 };

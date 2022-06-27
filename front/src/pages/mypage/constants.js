@@ -18,7 +18,7 @@ const LEVEL_LIST = [
   },
   {
     id: 1,
-    level: "흑돼지",
+    level: "도야지",
   },
   {
     id: 2,

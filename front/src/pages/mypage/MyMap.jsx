@@ -15,16 +15,18 @@ import {
   StampImgLv6,
 } from "./mypage.style";
 
-const MyMap = () => {
+const MyMap = ({ level }) => {
+  console.log("outlet 에서 level:", level);
+
   return (
     <MapContainer>
       <MapBackground src={MapImg} />
-      <StampImgLv1 src={StampLv1} />
-      <StampImgLv2 src={StampLv2} />
-      <StampImgLv3 src={StampLv3} />
-      <StampImgLv4 src={StampLv4} />
-      <StampImgLv5 src={StampLv5} />
-      <StampImgLv6 src={StampLv6} />
+      <StampImgLv1 level={level} src={StampLv1} />
+      <StampImgLv2 level={level} src={StampLv2} />
+      <StampImgLv3 level={level} src={StampLv3} />
+      <StampImgLv4 level={level} src={StampLv4} />
+      <StampImgLv5 level={level} src={StampLv5} />
+      <StampImgLv6 level={level} src={StampLv6} />
     </MapContainer>
   );
 };

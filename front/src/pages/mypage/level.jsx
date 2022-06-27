@@ -2,8 +2,7 @@ import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Icon } from "assets/svgs/index";
 
-const Level = ({ data }) => {
-  const { experience } = data?.userState || {};
+const Level = ({ experience }) => {
   const [leftExp, setLeftExp] = useState(10);
   const [curExp, setCurExp] = useState(0);
 
@@ -53,7 +52,6 @@ const FigureBox = styled.div`
 
     ::-webkit-progress-value {
       background-color: ${({ theme }) => theme.colors.orange};
-
       border-radius: 20px;
     }
   }
