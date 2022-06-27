@@ -1,9 +1,12 @@
 import { Icon } from "assets/svgs/index";
 import { useEffect } from "react";
 import styled from "styled-components";
+import { stampList } from "./state";
+import { useRecoilValue } from "recoil";
 
 const MyStamp = () => {
   const newArr = new Array(60).fill(true);
+  const stampedList = useRecoilValue(stampList);
 
   useEffect(() => {});
 
