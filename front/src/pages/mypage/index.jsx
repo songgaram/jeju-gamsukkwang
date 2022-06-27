@@ -5,7 +5,7 @@ import Navs from "./Navs";
 import { useEffect } from "react";
 import { Outlet, useParams } from "react-router-dom";
 import { useGetUserState } from "queries/userQuery";
-import { levelState, stampList } from "./state";
+import { levelState, stampListState } from "./state";
 import { useSetRecoilState } from "recoil";
 
 const MyPage = () => {
@@ -14,12 +14,12 @@ const MyPage = () => {
   const { data } = useGetUserState(id);
   const { email, nickname, experience, stamp } = data?.userState || {};
   const setLevel = useSetRecoilState(levelState);
-  const setStampedList = useSetRecoilState(stampList);
+  const setStampedList = useSetRecoilState(stampListState);
 
   useEffect(() => {
     if (experience) {
       setLevel(parseInt(parseInt(experience) / 10));
-      setStampedList([...stamp]);
+      setStampedList(stamp);
     }
   }, [experience]);
 

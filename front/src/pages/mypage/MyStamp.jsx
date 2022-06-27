@@ -1,20 +1,24 @@
 import { Icon } from "assets/svgs/index";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
-import { stampList } from "./state";
+import { stampListState } from "./state";
 import { useRecoilValue } from "recoil";
 
 const MyStamp = () => {
-  const newArr = new Array(60).fill(true);
-  const stampedList = useRecoilValue(stampList);
+  const newArr = new Array(60).fill(false);
+  const stampList = useRecoilValue(stampListState);
+  const stampCount = stampList.length;
+  const [stampedList, setStampedList] = useState(newArr);
 
-  useEffect(() => {});
+  useEffect(() => {
+    setStampedList([...stampList, ...newArr.slice(stampCount)]);
+  }, []);
 
   return (
     <Container>
       <IconContainer>
-        {newArr.map((stamping, idx) => (
-          <Stamp key={idx} stamping={stamping} />
+        {stampedList.map((tourId, idx) => (
+          <Stamp key={idx} tourId={tourId} />
         ))}
       </IconContainer>
     </Container>
@@ -35,7 +39,7 @@ const IconContainer = styled.div`
 
 const Stamp = styled(Icon)`
   -webkit-filter: grayscale(100%);
-  filter: ${(props) => (props.stamping ? "grayscale(0)" : "grayscale(100%)")};
+  filter: ${(props) => (props.tourId ? "grayscale(0)" : "grayscale(100%)")};
 `;
 
 export default MyStamp;

@@ -5,7 +5,7 @@ export const levelState = atom({
   default: 0,
 });
 
-export const stampList = atom({
-  key: "#stampList",
+export const stampListState = atom({
+  key: "#stampListState",
   default: [],
 });
