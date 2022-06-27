@@ -1,17 +1,30 @@
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Icon } from "assets/svgs/index";
 
-const Level = () => {
+const Level = ({ data }) => {
+  const { experience } = data?.userState || {};
+  const [leftExp, setLeftExp] = useState(10);
+  const [curExp, setCurExp] = useState(0);
+
+  useEffect(() => {
+    if (experience) {
+      const currentExp = parseInt(experience) % 10;
+      setCurExp(parseInt(experience) % 10);
+      setLeftExp(10 - currentExp);
+    }
+  }, [experience]);
+
   return (
     <LevelBox>
       <FigureBox>
         <Desc>
-          12 <Icon /> until Next Level
+          {leftExp} <Icon /> until Next Level
         </Desc>
         <ProgressBar value="8" max="20" />
       </FigureBox>
       <Number>
-        <Emphasized>8</Emphasized> / 20
+        <Emphasized>{curExp}</Emphasized> / 10
       </Number>
     </LevelBox>
   );

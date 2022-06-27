@@ -2,14 +2,19 @@ import styled from "styled-components";
 import Profile from "./Profile";
 import Level from "./Level";
 import Navs from "./Navs";
-import { Outlet } from "react-router-dom";
+import { Outlet, useParams } from "react-router-dom";
+import { useGetUserState } from "queries/userQuery";
 
 const MyPage = () => {
+  const params = useParams();
+  const id = params.id;
+  const { data } = useGetUserState(id);
+
   return (
     <>
       <InfoContainer>
-        <Profile />
-        <Level />
+        <Profile data={data} />
+        <Level data={data} />
       </InfoContainer>
       <Navs />
       <OutletContainer>

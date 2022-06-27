@@ -1,13 +1,15 @@
 import styled from "styled-components";
 
-const Profile = () => {
+const Profile = ({ data }) => {
+  const { email, nickname, experience } = data?.userState || {};
+
   return (
     <ProfileBox>
       <ProfileImg src="https://dev-team8-bucket.s3.ap-northeast-2.amazonaws.com/profileImg.png" />
 
       <InfoBox>
-        <NickName>송가람</NickName>
-        <Email>pager1234@gmail.com</Email>
+        <NickName>{nickname}</NickName>
+        <Email>{email}</Email>
         <Level>
           Lv. <Coloring>감귤</Coloring>
         </Level>
