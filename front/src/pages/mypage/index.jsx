@@ -35,6 +35,7 @@ const OutletContainer = styled.div`
   width: 100%;
   height: auto;
   border-radius: 45px 45px 0 0;
+  padding: 7% 0;
 `;
 
 export default MyPage;

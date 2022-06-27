@@ -21,6 +21,7 @@ const App = () => {
         <Route path="/landmark/detail/:id" element={<Landmark />} />
         <Route path="/tour" element={<Tour />} />
         <Route path="/mypage" element={<MyPage />}>
+          <Route index element={<MyMap />} />
           <Route path="mymap" element={<MyMap />} />
         </Route>
       </Route>
