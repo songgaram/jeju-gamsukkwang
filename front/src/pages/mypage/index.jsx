@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import Profile from "./profile";
-import Level from "./level";
+import Profile from "./Profile";
+import Level from "./Level";
 import Navs from "./Navs";
 import { Outlet } from "react-router-dom";
 
