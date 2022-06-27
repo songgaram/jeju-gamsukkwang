@@ -21,7 +21,7 @@ const Level = ({ data }) => {
         <Desc>
           {leftExp} <Icon /> until Next Level
         </Desc>
-        <ProgressBar value="8" max="20" />
+        <ProgressBar value={curExp} max="10" />
       </FigureBox>
       <Number>
         <Emphasized>{curExp}</Emphasized> / 10
@@ -53,6 +53,7 @@ const FigureBox = styled.div`
 
     ::-webkit-progress-value {
       background-color: ${({ theme }) => theme.colors.orange};
+
       border-radius: 20px;
     }
   }
