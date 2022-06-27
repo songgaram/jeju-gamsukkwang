@@ -3,26 +3,26 @@ from flask_cors import CORS
 import json
 import prediction
 
-app = Flask(__name__)
-cors = CORS(app)
+application = Flask(__name__)
+cors = CORS(application)
 
-@app.errorhandler(400)
+@application.errorhandler(400)
 def resource_not_found(e):
     return jsonify(messager=str(e), code=e.code), 400
 
-@app.errorhandler(404)
+@application.errorhandler(404)
 def resource_not_found(e):
     return jsonify(messager=str(e), code=e.code), 404
 
-@app.errorhandler(500)
+@application.errorhandler(500)
 def resource_not_found(e):
     return jsonify(messager=str(e), code=e.code), 500
 
-@app.route('/')
+@application.route('/')
 def index():
-    return 'Hello, World!'
+    return 'Hello World!'
 
-@app.route('/prediction', methods=['POST'])
+@application.route('/prediction', methods=['POST'])
 def post():
   if request.method == 'POST':
     req = request.get_json()
@@ -48,4 +48,4 @@ def post():
 
 
 if __name__ == '__main__':
-  app.run(host='0.0.0.0', port=5003)
+  application.run(host='0.0.0.0', port=5003)
