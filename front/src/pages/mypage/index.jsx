@@ -2,16 +2,18 @@ import styled from "styled-components";
 import Profile from "./Profile";
 import Level from "./Level";
 import Navs from "./Navs";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { Outlet, useParams } from "react-router-dom";
 import { useGetUserState } from "queries/userQuery";
+import { levelState } from "./state";
+import { useSetRecoilState } from "recoil";
 
 const MyPage = () => {
   const params = useParams();
   const id = params.id;
   const { data } = useGetUserState(id);
   const { email, nickname, experience } = data?.userState || {};
-  const [level, setLevel] = useState(0);
+  const setLevel = useSetRecoilState(levelState);
 
   useEffect(() => {
     if (experience) {
@@ -19,17 +21,16 @@ const MyPage = () => {
     }
   }, [experience]);
 
-  useEffect(() => {
-    console.log("idex에서 level: ", level);
-  });
   return (
     <>
       <InfoContainer>
-        <Profile email={email} nickname={nickname} level={level} />
+        <Profile email={email} nickname={nickname} />
         <Level experience={experience} />
       </InfoContainer>
       <Navs />
-      <OutletContainer>{level && <Outlet level={level} />}</OutletContainer>
+      <OutletContainer>
+        <Outlet />
+      </OutletContainer>
     </>
   );
 };

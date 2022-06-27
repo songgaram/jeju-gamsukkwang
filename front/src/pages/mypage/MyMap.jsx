@@ -14,9 +14,11 @@ import {
   StampImgLv5,
   StampImgLv6,
 } from "./mypage.style";
+import { levelState } from "./state";
+import { useRecoilValue } from "recoil";
 
-const MyMap = ({ level }) => {
-  console.log("outlet 에서 level:", level);
+const MyMap = () => {
+  const level = useRecoilValue(levelState);
 
   return (
     <MapContainer>

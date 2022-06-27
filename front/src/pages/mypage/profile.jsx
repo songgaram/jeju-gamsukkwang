@@ -1,7 +1,11 @@
 import styled from "styled-components";
 import { LEVEL_LIST } from "./constants";
+import { levelState } from "./state";
+import { useRecoilValue } from "recoil";
 
-const Profile = ({ email, nickname, level }) => {
+const Profile = ({ email, nickname }) => {
+  const level = useRecoilValue(levelState);
+
   return (
     <ProfileBox>
       <ProfileImg src="https://dev-team8-bucket.s3.ap-northeast-2.amazonaws.com/profileImg.png" />
