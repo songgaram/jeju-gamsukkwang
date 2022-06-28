@@ -2,7 +2,7 @@ import Joi from "joi";
 import { Router } from "express";
 
 import { loginRequired } from "../middlewares/";
-import { ReviewService } from "../services/ReviewService.js";
+import { ReviewService } from "../services/reviewService.js";
 import { s3Multi } from "../middlewares/multerS3";
 
 const reviewRouter = Router();

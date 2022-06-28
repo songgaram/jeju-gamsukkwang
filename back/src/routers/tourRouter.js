@@ -2,7 +2,7 @@ import { Router } from "express";
 import * as Joi from "joi";
 import axios from "axios";
 
-import { TourService } from "../services/TourService";
+import { TourService } from "../services/tourService";
 import { loginRequired, s3Single } from "../middlewares/";
 import { idValidator } from "../validators"; // id가 혹시 비어있는지 또는 누락됐는지를 검사
 
