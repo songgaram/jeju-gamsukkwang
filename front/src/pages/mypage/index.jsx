@@ -40,7 +40,6 @@ const MyPage = () => {
 const InfoContainer = styled.div`
   width: 100%;
   position: relative;
-  z-index: -1;
   display: grid;
   grid-template-columns: 1.5fr 2fr;
   column-gap: 10%;
