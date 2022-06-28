@@ -3,9 +3,10 @@ import styled from "styled-components";
 const HomeContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
   height: calc(100vh - 70px);
+  margin-top: 70px;
 `;
 
 const ContentsBox = styled.div`
