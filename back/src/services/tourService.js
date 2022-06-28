@@ -1,4 +1,5 @@
 import { db, tourModel } from "../db";
+import * as Joi from 'joi'
 
 class TourService {
 	static getAllLandmarks = async () => {
@@ -8,6 +9,10 @@ class TourService {
 	};
 
 	static getLandmark = async ({ id }) => {
+		// 데이터의 유효성 체크
+		const tourIdValidator = Joi.string().trim().empty().required()
+		await tourIdValidator.validateAsync(id)
+
 		const isLandmarkExist = await tourModel.isLandmarkExist({ id });
 		if (!isLandmarkExist) {
 			throw new Error("system.error.noLandmark");
@@ -19,6 +24,13 @@ class TourService {
 	};
 
 	static addLike = async ({ id, currentUserId }) => {
+		// 데이터의 유효성 체크
+		const dataValidator = Joi.object({
+			id: Joi.string().trim().empty().required(),
+			currentUserId: Joi.string().trim().empty().required()
+		})
+		await dataValidator.validateAsync({ id, currentUserId })
+
 		const isLandmarkExist = await tourModel.isLandmarkExist({ id });
 		if (!isLandmarkExist) {
 			throw new Error("system.error.noLandmark");
@@ -43,6 +55,13 @@ class TourService {
 	};
 
 	static removeLike = async ({ id, currentUserId }) => {
+		// 데이터의 유효성 체크
+		const dataValidator = Joi.object({
+			id: Joi.string().trim().empty().required(),
+			currentUserId: Joi.string().trim().empty().required()
+		})
+		await dataValidator.validateAsync({ id, currentUserId })
+
 		const isLandmarkExist = await tourModel.isLandmarkExist({ id });
 		if (!isLandmarkExist) {
 			throw new Error("system.error.noLandmark");
