@@ -42,6 +42,11 @@ tourRouter.post("/tour/image", s3Single(), async (req, res, next) => {
     await fileValidator.validateAsync(req.file);
     const { location } = req.file;
 
+    const pattern = "\.jpg$"
+    const extensionValidator = Joi.string().pattern(new RegExp(pattern))
+      .error(new Error("extension only must be JPG"))
+    await extensionValidator.validateAsync(location)
+
     const sendImage = await axios.post(
       "http://kdt-ai4-team08.elicecoding.com:5003/prediction",
       {
