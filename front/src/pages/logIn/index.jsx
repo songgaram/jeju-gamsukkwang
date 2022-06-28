@@ -4,9 +4,9 @@ import { useNavigate } from "react-router-dom";
 import http from "libs/apiController";
 import logInValidation from "./utils";
 import { LOGIN_INIT_DATA, ERROR_MESSAGE, MODAL_MESSAGE } from "./constants";
-import Input from "components/Input";
-import Modal from "components/Modal";
-import ModalPortal from "components/Modal/modalPortal";
+import Input from "components/input";
+import Modal from "components/modal";
+import ModalPortal from "components/modal/modalPortal";
 
 import {
   LogInContainer,

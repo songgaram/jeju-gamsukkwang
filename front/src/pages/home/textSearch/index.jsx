@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useRecoilState } from "recoil";
 
-import Input from "components/Input";
+import Input from "components/input";
 import useDebounce from "./useDebounce";
 import { useGetTourList } from "queries/searchQuery";
 import { tourList } from "./state";

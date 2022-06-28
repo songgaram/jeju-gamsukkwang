@@ -1,10 +1,10 @@
 import { useNavigate } from "react-router-dom";
 
-import TextSearch from "./TextSearch";
-import ImageSearch from "./ImageSearch";
+import TextSearch from "./textSearch";
+import ImageSearch from "./imageSearch";
 
 import { useRecoilValue } from "recoil";
-import { filteredSearchList } from "./TextSearch/state";
+import { filteredSearchList } from "./textSearch/state";
 
 import { HomeContainer, ContentsBox, TextButtonBox } from "./home.style";
 import Loading from "./Loding";

@@ -1,15 +1,33 @@
 import styled from "styled-components";
-import Profile from "./profile";
-import Level from "./level";
+import Profile from "./Profile";
+import Level from "./Level";
 import Navs from "./Navs";
-import { Outlet } from "react-router-dom";
+import { useEffect } from "react";
+import { Outlet, useParams } from "react-router-dom";
+import { useGetUserState } from "queries/userQuery";
+import { levelState, stampListState } from "./state";
+import { useSetRecoilState } from "recoil";
 
 const MyPage = () => {
+  const params = useParams();
+  const id = params.id;
+  const { data } = useGetUserState(id);
+  const { email, nickname, experience, stamp } = data?.userState || {};
+  const setLevel = useSetRecoilState(levelState);
+  const setStampedList = useSetRecoilState(stampListState);
+
+  useEffect(() => {
+    if (experience) {
+      setLevel(parseInt(parseInt(experience) / 10));
+      setStampedList(stamp);
+    }
+  }, [experience]);
+
   return (
     <>
       <InfoContainer>
-        <Profile />
-        <Level />
+        <Profile email={email} nickname={nickname} />
+        <Level experience={experience} />
       </InfoContainer>
       <Navs />
       <OutletContainer>
@@ -35,6 +53,7 @@ const OutletContainer = styled.div`
   width: 100%;
   height: auto;
   border-radius: 45px 45px 0 0;
+  padding: 7% 0;
 `;
 
 export default MyPage;
