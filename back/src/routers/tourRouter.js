@@ -135,32 +135,14 @@ tourRouter.put("/tour/:id/dislike", loginRequired, async (req, res, next) => {
   }
 });
 
-// 랜드마크 좋아요 높은 순으로 정렬하기
-tourRouter.get("/recommend/likes", async (req, res, next) => {
+// 압력한 정렬 기준(criteria)대로 랜드마크 정렬하기 
+// like: 좋아요순, review: 리뷰수 순, rating: 평점 평균 순
+tourRouter.get("/recommend/:criteria", async (req, res, next) => {
   try {
-    const sortedLandmarks = await TourService.sortByLiked({});
+    const paramsValidator = Joi.string().valid("like", "review", "rating").trim().empty().required()
+    const criteria = await paramsValidator.validateAsync(req.params.criteria)
 
-    res.status(200).json(sortedLandmarks);
-  } catch (err) {
-    next(err);
-  }
-});
-
-// 랜드마크 리뷰수 많은 순으로 정렬하기
-tourRouter.get("/recommend/reviews", async (req, res, next) => {
-  try {
-    const sortedLandmarks = await TourService.sortByReviews({});
-
-    res.status(200).json(sortedLandmarks);
-  } catch (err) {
-    next(err);
-  }
-});
-
-// 랜드마크 평점 평균 높은 순으로 정렬하기
-tourRouter.get("/recommend/rating", async (req, res, next) => {
-  try {
-    const sortedLandmarks = await TourService.sortByRating({});
+    const sortedLandmarks = await TourService.sortBy({ criteria });
 
     res.status(200).json(sortedLandmarks);
   } catch (err) {
