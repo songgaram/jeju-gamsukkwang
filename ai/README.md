@@ -22,7 +22,7 @@
     * 데이터셋 폴더 구조
         ```
         ./dataSet/
-            ├── images
+            └── images
                 ├── 감귤박물관
                 │   ├── 제주감귤 박물관_038_38969881.jpg
                 │   ├── 제주감귤 박물관_039_38969882.jpg
@@ -57,6 +57,7 @@
             아래 표는 18층, 34층, 50층, 101층, 152층의 ResNet의 구조 요약   
             ![resnet18~152](./wiki/img/resnet18~152.png)   
             ResNet은 [ILSVRC](https://www.image-net.org/challenges/LSVRC/)(ImageNet Large Scale Visual Recognition Challenge) 2015에서 우승한 모델로 이미지 분류 인식 오류율 3.8%로 1등을 차지한 모델.   
+               
             논문 : [Deep Residual Learning for Image Recognition](https://arxiv.org/abs/1512.03385)
 
         <br>
