@@ -34,6 +34,11 @@ const TextSearchResultBox = styled.div`
       font-size: 14px;
       font-weight: 400;
       cursor: pointer;
+      color: ${({ theme }) => theme.colors.black};
+    }
+
+    & :hover {
+      color: ${({ theme }) => theme.colors.primary};
     }
   }
 `;
