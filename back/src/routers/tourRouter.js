@@ -1,14 +1,12 @@
 import { Router } from "express";
 import * as Joi from "joi";
 import axios from "axios";
-import os from "os";
 
 import { TourService } from "../services/TourService";
 import { loginRequired, s3Single } from "../middlewares/";
 import { idValidator } from "../validators"; // id가 혹시 비어있는지 또는 누락됐는지를 검사
 
 const tourRouter = Router();
-const hostname = os.hostname();
 
 // 전체 랜드마크 정보 가져오기
 tourRouter.get("/tour", async (req, res, next) => {
@@ -45,7 +43,7 @@ tourRouter.post("/tour/image", s3Single(), async (req, res, next) => {
     const { location } = req.file;
 
     const sendImage = await axios.post(
-      `http://${hostname}:5003/prediction`,
+      "http://kdt-ai4-team08.elicecoding.com:5003/prediction",
       {
         imageURL: location, // s3에 저장된 이미지 url을 ai로 보내기
       },
@@ -55,7 +53,7 @@ tourRouter.post("/tour/image", s3Single(), async (req, res, next) => {
         },
       },
     );
-    res.status(201).json(sendImage);
+    res.status(201).json(sendImage.data);
   } catch (err) {
     next(err);
   }
