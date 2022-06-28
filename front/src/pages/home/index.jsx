@@ -1,7 +1,9 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useClickAway } from "react-use";
 import { useNavigate } from "react-router-dom";
+import { useRecoilValue } from "recoil";
 
+import { searchKeyword } from "./textSearch/state";
 import TextSearch from "./textSearch";
 import ImageSearch from "./imageSearch";
 import TextSearchResult from "./textSearchResult";
@@ -11,11 +13,16 @@ import { HomeContainer, ContentsBox, TextButtonBox } from "./home.style";
 const Home = () => {
   const navigate = useNavigate();
   const outsideRef = useRef(null);
+  const [isClosed, setIsClosed] = useState(false);
+  const keywordState = useRecoilValue(searchKeyword);
 
   useClickAway(outsideRef, () => {
-    console.log("외부 영역 클릭");
-    console.log(!outsideRef);
+    setIsClosed(true);
   });
+
+  useEffect(() => {
+    setIsClosed(false);
+  }, [keywordState]);
 
   return (
     <HomeContainer>
@@ -26,7 +33,7 @@ const Home = () => {
       </ContentsBox>
       <div ref={outsideRef}>
         <TextSearch />
-        <TextSearchResult />
+        {!isClosed && <TextSearchResult />}
       </div>
       <ImageSearch />
       <TextButtonBox>
