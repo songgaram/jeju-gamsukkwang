@@ -43,11 +43,17 @@ tourRouter.post("/tour/image", s3Single(), async (req, res, next) => {
     await fileValidator.validateAsync(req.file);
     const { location } = req.file;
 
-    const pattern = ".jpg$";
+    const pattern1 = ".jpg$";
     const extensionValidator = Joi.string()
-      .pattern(new RegExp(pattern))
-      .error(new Error("extension only must be JPG"));
+      .pattern(new RegExp(pattern1))
+      .error(new Error("extension should be JPG"));
     await extensionValidator.validateAsync(location);
+
+    const pattern2 = "(?![^ㄱ-ㅎ|ㅏ-ㅣ|가-힣$]).jpg$";
+    const fileNameValidator = Joi.string()
+      .pattern(new RegExp(pattern2))
+      .error(new Error("fileName should not have Korean"));
+    await fileNameValidator.validateAsync(location);
 
     let { latitude, longitude } = (await exifr.gps(location)) ?? {
       latitude: 0,

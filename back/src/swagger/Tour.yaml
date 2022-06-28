@@ -136,7 +136,7 @@ paths:
       tags:
         - Tour
       summary: 이미지로 랜드마크 검색
-      description: /tour/image로 이미지를 업로드하고, 업로드된 이미지와 가장 비슷한 랜드마크 예측 결과를 불러옵니다.
+      description: /tour/image로 이미지를 업로드하고, 업로드된 이미지와 가장 비슷한 랜드마크 예측 결과, 위도와 경도를 불러옵니다. 단, 파일에 exif가 따로 없을 경우, 위도와 경도는 0으로 표현됩니다.
       requestBody:
         required: true
         description: 업로드할 이미지를 req.body로 받습니다. 단, 반드시 jpg 파일만 받아야 합니다.
