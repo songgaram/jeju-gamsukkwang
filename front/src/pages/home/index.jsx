@@ -1,25 +1,28 @@
+import { useEffect, useRef, useState } from "react";
+import { useClickAway } from "react-use";
 import { useNavigate } from "react-router-dom";
+import { useRecoilValue } from "recoil";
 
+import { searchKeyword } from "./textSearch/state";
 import TextSearch from "./textSearch";
 import ImageSearch from "./imageSearch";
-
-import { useRecoilValue } from "recoil";
-import { filteredSearchList } from "./textSearch/state";
+import TextSearchResult from "./textSearchResult";
 
 import { HomeContainer, ContentsBox, TextButtonBox } from "./home.style";
-// import Loading from "./loding";
-import { useEffect } from "react";
 
 const Home = () => {
   const navigate = useNavigate();
-  const filteredList = useRecoilValue(filteredSearchList);
+  const outsideRef = useRef(null);
+  const [isClosed, setIsClosed] = useState(false);
+  const keywordState = useRecoilValue(searchKeyword);
+
+  useClickAway(outsideRef, () => {
+    setIsClosed(true);
+  });
 
   useEffect(() => {
-    console.log(filteredList);
-  }, [filteredList]);
-
-  // const filterList = useRecoilValue(filteredSearchList);
-  // console.log(filterList);
+    setIsClosed(false);
+  }, [keywordState]);
 
   return (
     <HomeContainer>
@@ -28,7 +31,10 @@ const Home = () => {
         <span>검색어를 입력하거나, 궁금한 장소의 이미지를 올려주세요.</span>
         <span>AI 서비스 감귤이가 사진 속 장소를 찾아드려요.</span>
       </ContentsBox>
-      <TextSearch />
+      <div ref={outsideRef}>
+        <TextSearch />
+        {!isClosed && <TextSearchResult />}
+      </div>
       <ImageSearch />
       <TextButtonBox>
         <span>제주도의 다양한 랜드마크가 궁금하다면</span>

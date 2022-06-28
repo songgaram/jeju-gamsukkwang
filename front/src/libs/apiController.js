@@ -15,9 +15,10 @@ http.interceptors.request.use(
   async (config) => {
     const accessToken = localStorage.getItem("accessToken");
 
+    console.log(config);
+
     // config에 header 설정
-    config.headers["Content-Type"] =
-      "application/json; charset=utf-8" || "multipart/form-data";
+    config.headers["Content-Type"] = "application/json; charset=utf-8";
     accessToken && (config.headers["Authorization"] = `Bearer ${accessToken}`);
 
     return config;

@@ -4,7 +4,7 @@ import http from "libs/apiController";
 
 export const loginState = atom({
   key: "#loginState",
-  default: false,
+  default: localStorage.getItem("accessToken"),
 });
 
 export const userState = selector({
