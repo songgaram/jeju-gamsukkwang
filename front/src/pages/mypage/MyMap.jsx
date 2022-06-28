@@ -14,11 +14,13 @@ import {
   StampImgLv5,
   StampImgLv6,
 } from "./mypage.style";
-import { levelState } from "./state";
+import { userState } from "states";
 import { useRecoilValue } from "recoil";
 
 const MyMap = () => {
-  const level = useRecoilValue(levelState);
+  const curUserState = useRecoilValue(userState);
+  const { experience } = curUserState || {};
+  const level = parseInt(parseInt(experience) / 10);
 
   return (
     <MapContainer>

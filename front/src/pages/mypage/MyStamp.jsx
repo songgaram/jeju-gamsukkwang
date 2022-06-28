@@ -1,23 +1,24 @@
 import { TangerineIcon } from "assets/svgs/index";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
-import { stampListState } from "./state";
+import { userState } from "states";
 import { useRecoilValue } from "recoil";
 
 const MyStamp = () => {
   const newArr = new Array(60).fill(false);
-  const stampList = useRecoilValue(stampListState);
-  const stampCount = stampList.length;
-  const [stampedList, setStampedList] = useState(newArr);
+  const curUserState = useRecoilValue(userState);
+  const { stamp } = curUserState || {};
+  const stampCount = stamp.length;
+  const [stampList, setStampedList] = useState(newArr);
 
   useEffect(() => {
-    setStampedList([...stampList, ...newArr.slice(stampCount)]);
+    setStampedList([...stamp, ...newArr.slice(stampCount)]);
   }, []);
 
   return (
     <Container>
       <IconContainer>
-        {stampedList.map((tourId, idx) => (
+        {stampList.map((tourId, idx) => (
           <div key={idx}>
             <Stamp key={idx} tourId={tourId} />
           </div>

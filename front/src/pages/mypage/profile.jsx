@@ -1,11 +1,9 @@
 import styled from "styled-components";
 import { LEVEL_LIST } from "./constants";
-import { levelState } from "./state";
-import { useRecoilValue } from "recoil";
 import Button from "components/Button";
 
-const Profile = ({ email, nickname }) => {
-  const level = useRecoilValue(levelState);
+const Profile = ({ email, nickname, experience }) => {
+  const level = parseInt(parseInt(experience) / 10);
 
   const handleClick = () => {
     return;

@@ -2,29 +2,18 @@ import styled from "styled-components";
 import Profile from "./Profile";
 import Level from "./Level";
 import Navs from "./Navs";
-import { useEffect, Suspense } from "react";
 import { Outlet } from "react-router-dom";
-import { userState } from "../../states";
+import { userState } from "states";
 import { useRecoilValue } from "recoil";
 
 const MyPage = () => {
   const curUserState = useRecoilValue(userState);
-  console.log(curUserState);
-  const { email, nickname, experience, stamp } = curUserState || {};
-  // const setLevel = useSetRecoilState(levelState);
-  // const setStampedList = useSetRecoilState(stampListState);
-
-  // useEffect(() => {
-  //   if (experience) {
-  //     setLevel(parseInt(parseInt(experience) / 10));
-  //     setStampedList(stamp);
-  //   }
-  // }, [experience]);
+  const { email, nickname, experience } = curUserState || {};
 
   return (
     <>
       <InfoContainer>
-        <Profile email={email} nickname={nickname} />
+        <Profile email={email} nickname={nickname} experience={experience} />
         <Level experience={experience} />
       </InfoContainer>
       <Navs />
