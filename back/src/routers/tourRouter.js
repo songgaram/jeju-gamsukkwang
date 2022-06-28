@@ -1,6 +1,7 @@
 import { Router } from "express";
 import * as Joi from "joi";
 import axios from "axios";
+import exifr from "exifr";
 
 import { TourService } from "../services/tourService";
 import { loginRequired, s3Single } from "../middlewares/";
@@ -47,6 +48,9 @@ tourRouter.post("/tour/image", s3Single(), async (req, res, next) => {
       .pattern(new RegExp(pattern))
       .error(new Error("extension only must be JPG"));
     await extensionValidator.validateAsync(location);
+
+    const gps = exifr.gps(req.file) || null;
+    console.log(gps);
 
     const sendImage = await axios.post(
       "http://kdt-ai4-team08.elicecoding.com:5003/prediction",
