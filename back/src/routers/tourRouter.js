@@ -43,14 +43,26 @@ tourRouter.post("/tour/image", s3Single(), async (req, res, next) => {
     await fileValidator.validateAsync(req.file);
     const { location } = req.file;
 
-    const pattern = ".jpg$";
+    const pattern1 = ".jpg$";
     const extensionValidator = Joi.string()
-      .pattern(new RegExp(pattern))
+      .pattern(new RegExp(pattern1))
       .error(new Error("extension only must be JPG"));
     await extensionValidator.validateAsync(location);
 
-    const {latitude, longitude} = await exifr.gps(location) 
-    console.log(latitude, longitude);
+    const pattern2 = "(?![^ㄱ-ㅎ|ㅏ-ㅣ|가-힣$]).jpg$";
+    const fileNameValidator = Joi.string()
+      .pattern(new RegExp(pattern2))
+      .error(new Error("fileName must not have Korean"));
+    await fileNameValidator.validateAsync(location); 
+
+    let { latitude, longitude } = await exifr.gps(location) ?? {
+      latitude: 0,
+      longitude: 0
+    }
+    if (latitude && longitude) {
+      latitude = Number(latitude.toFixed(2));
+      longitude = Number(longitude.toFixed(2));
+    }
 
     const sendImage = await axios.post(
       "http://kdt-ai4-team08.elicecoding.com:5003/prediction",
@@ -63,7 +75,15 @@ tourRouter.post("/tour/image", s3Single(), async (req, res, next) => {
         },
       },
     );
-    res.status(201).json(sendImage.data);
+
+    const { data } = sendImage;
+    const result = {
+      latitude,
+      longitude,
+      data,
+    };
+
+    res.status(201).json(result);
   } catch (err) {
     next(err);
   }
