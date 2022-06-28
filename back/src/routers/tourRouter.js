@@ -41,19 +41,19 @@ tourRouter.post("/tour/image", s3Single(), async (req, res, next) => {
   try {
     const fileValidator = Joi.any().empty().required();
     await fileValidator.validateAsync(req.file);
-    const { location } = req.file;
+    const { location, originalname } = req.file;
 
-    const pattern1 = ".jpg$";
-    const extensionValidator = Joi.string()
-      .pattern(new RegExp(pattern1))
-      .error(new Error("extension only must be JPG"));
-    await extensionValidator.validateAsync(location);
+    // ai로 보내는 이미지 확장자가 jpg가 아니라면 에러 띄우기
+    const checkExtension = /.jpg$/
+    if(!checkExtension.test(originalname)){
+      throw new Error("extension only must be JPG")
+    }
 
-    const pattern2 = "(?![^ㄱ-ㅎ|ㅏ-ㅣ|가-힣$]).jpg$";
-    const fileNameValidator = Joi.string()
-      .pattern(new RegExp(pattern2))
-      .error(new Error("fileName must not have Korean"));
-    await fileNameValidator.validateAsync(location); 
+    // exifr이 한글 파일명은 인식하지 못하므로 한글이 들어가면 에러 띄우기
+    const checkName = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/
+    if(checkName.test(originalname)){
+      throw new Error("fileName must not have Korean")
+    }
 
     let { latitude, longitude } = await exifr.gps(location) ?? {
       latitude: 0,
