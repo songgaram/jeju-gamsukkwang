@@ -42,15 +42,17 @@ tourRouter.post("/tour/image", s3Single(), async (req, res, next) => {
     const fileValidator = Joi.any().empty().required();
     await fileValidator.validateAsync(req.file);
     const { location } = req.file;
+    let { latitude, longitude } = (await exifr.gps(location)) || null;
+    if (latitude && longitude) {
+      latitude = Number(latitude.toFixed(2));
+      longitude = Number(longitude.toFixed(2));
+    }
 
     const pattern = ".jpg$";
     const extensionValidator = Joi.string()
       .pattern(new RegExp(pattern))
       .error(new Error("extension only must be JPG"));
     await extensionValidator.validateAsync(location);
-
-    const gps = exifr.gps(req.file) || null;
-    console.log(gps);
 
     const sendImage = await axios.post(
       "http://kdt-ai4-team08.elicecoding.com:5003/prediction",
