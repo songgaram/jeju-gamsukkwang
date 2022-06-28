@@ -1,8 +1,8 @@
 ## 학습 weight 다운로드   
 1. 저장 위치   
-```
-$ cd back/public/model
-```   
+    ```
+    $ cd back/public/model
+    ```   
 
 2. 다운로드 방법   
     - Windows   
