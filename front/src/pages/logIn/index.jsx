@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import http from "libs/apiController";
 import logInValidation from "./utils";
 import { useSetRecoilState } from "recoil";
-import { loginState } from "../../state";
+import { loginState } from "../../states";
 
 import { LOGIN_INIT_DATA, ERROR_MESSAGE, MODAL_MESSAGE } from "./constants";
 import Input from "components/input";

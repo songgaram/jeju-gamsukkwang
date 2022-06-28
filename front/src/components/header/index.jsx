@@ -3,7 +3,7 @@ import { useRecoilState } from "recoil";
 
 import Button from "components/Button";
 import { NAV_LIST } from "./constants";
-import { loginState } from "../../state";
+import { loginState } from "../../states";
 
 import { Logo } from "assets/svgs/index";
 import { HeaderContainer, HeaderWrapper, Nav } from "./header.style";
