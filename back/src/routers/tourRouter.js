@@ -4,7 +4,7 @@ import axios from "axios";
 
 import { TourService } from "../services/TourService";
 import { loginRequired, s3Single } from "../middlewares/";
-import { idValidator } from "../validators" // id가 혹시 비어있는지 또는 누락됐는지를 검사
+import { idValidator } from "../validators"; // id가 혹시 비어있는지 또는 누락됐는지를 검사
 
 const tourRouter = Router();
 
@@ -22,8 +22,8 @@ tourRouter.get("/tour", async (req, res, next) => {
 // 텍스트로 검색한 랜드마크 정보 불러오기
 tourRouter.get("/tour/search", async (req, res, next) => {
   try {
-		// atlas search index 사용해서 한국어 검색 시 최소 2글자를 입력해야 함
-    const queryValidator = Joi.string().trim().empty().min(2).required(); 
+    // atlas search index 사용해서 한국어 검색 시 최소 2글자를 입력해야 함
+    const queryValidator = Joi.string().trim().empty().min(2).required();
     await queryValidator.validateAsync(req.query.name);
 
     const { name } = req.query;
@@ -40,23 +40,22 @@ tourRouter.post("/tour/image", s3Single(), async (req, res, next) => {
   try {
     const fileValidator = Joi.any().empty().required();
     await fileValidator.validateAsync(req.file);
+    const { location } = req.file;
 
-    const { location } = req.file; 
+    const sendImage = await axios.post(
+      `http://localhost:5003/prediction`,
+      {
+        imageURL: location, // s3에 저장된 이미지 url을 ai로 보내기
+      },
+      {
+        headers: {
+          "content-type": "application/json",
+        },
+      },
+    );
 
-    // const sendImage = await axios.post(
-    //   "/prediction",
-    //   {
-    //     imageURL: location, // s3에 저장된 이미지 url을 ai로 보내기
-    //   },
-    //   {
-    //     headers: {
-    //       "content-type": "application/json",
-    //     },
-    //   },
-    // );
-
-    res.status(201).send("system.success");
-    // res.status(201).json(sendImage)
+    // res.status(201).send("system.success");
+    res.status(201).json(sendImage);
   } catch (err) {
     next(err);
   }
@@ -65,7 +64,7 @@ tourRouter.post("/tour/image", s3Single(), async (req, res, next) => {
 // 랜드마크 ID로 특정 랜드마크 정보 가져오기
 tourRouter.get("/tour/:id", async (req, res, next) => {
   try {
-		const id = await idValidator.validateAsync(req.params.id)
+    const id = await idValidator.validateAsync(req.params.id);
     const landmark = await TourService.getLandmark({ id });
 
     res.status(200).send(landmark);
@@ -79,7 +78,7 @@ tourRouter.put("/tour/:id/like", loginRequired, async (req, res, next) => {
   try {
     const userId = req.currentUserId;
 
-		const id = await idValidator.validateAsync(req.params.id)
+    const id = await idValidator.validateAsync(req.params.id);
     const addLiketoLandmark = await TourService.addLike({
       id,
       currentUserId: userId,
@@ -96,7 +95,7 @@ tourRouter.put("/tour/:id/dislike", loginRequired, async (req, res, next) => {
   try {
     const userId = req.currentUserId;
 
-		const id = await idValidator.validateAsync(req.params.id)
+    const id = await idValidator.validateAsync(req.params.id);
     const removeLikefromLandmark = await TourService.removeLike({
       id,
       currentUserId: userId,
