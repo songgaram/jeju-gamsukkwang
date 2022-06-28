@@ -1,8 +1,10 @@
 # 제주도 랜드마크 이미지 예측 모델
-1. [ResNet101을 이용한 모델 학습](#1.-ResNet101을-이용한-모델-학습)
-2. [Flask를 이용한 랜드마크 이미지 예측 API](#2.-Flask를-이용한-랜드마크-이미지-예측-API)
+## content
+1. [ResNet101을 이용한 모델 학습](#1-resnet101을-이용한-모델-학습)
+2. [Flask를 이용한 랜드마크 이미지 예측 API](#2-flask를-이용한-랜드마크-이미지-예측-api)
 
 ---
+<br>
 
 ## 1. ResNet101을 이용한 모델 학습
 
@@ -50,9 +52,9 @@
     * ResNet101 + custum FC-layer   
         다양한 모델 테스트 과정과 [ILSVRC](https://www.image-net.org/challenges/LSVRC/), [DACORN-랜드마크 분류 AI 경진대회](https://dacon.io/competitions/official/235585/overview/description)의 우승 경력을 고려하여 ResNet101 모델을 제주도 랜드마크 이미지 분류 학습을 위한 모델로 선정.
         * ResNet   
-            ResNet은 기본적으로 VGG-19의 구조를 뼈대로 함. 컨볼루션 층들을 추가해 깊게 만든 후, shortcut들을 추가한 구조.
-            ![resnet-architecture](./wiki/img/resnet.png)   
-            아래 표는 18층, 34층, 50층, 101층, 152층의 ResNet의 구조 요약
+            ResNet은 기본적으로 VGG-19의 구조를 뼈대로 함. 컨볼루션 층들을 추가해 깊게 만든 후, shortcut들을 추가한 구조.   
+            ![resnet-architecture](./wiki/img/resnet.png)    
+            아래 표는 18층, 34층, 50층, 101층, 152층의 ResNet의 구조 요약   
             ![resnet18~152](./wiki/img/resnet18~152.png)   
             ResNet은 [ILSVRC](https://www.image-net.org/challenges/LSVRC/)(ImageNet Large Scale Visual Recognition Challenge) 2015에서 우승한 모델로 이미지 분류 인식 오류율 3.8%로 1등을 차지한 모델.   
             논문 : [Deep Residual Learning for Image Recognition](https://arxiv.org/abs/1512.03385)
