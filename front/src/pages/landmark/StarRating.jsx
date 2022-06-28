@@ -1,14 +1,13 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { BsStarFill } from "react-icons/bs";
-import theme from "styles/Theme";
 
 export const StarRating = ({ number, color }) => {
-  const Stars = new Array(number).fill(undefined);
+  const stars = new Array(number).fill(undefined);
 
   return (
     <StarContainer>
-      {Stars.map((e, idx) => (
-        <BsStarFill key={idx} color={color} />
+      {stars.map((e, idx) => (
+        <Stars key={idx} color={color} />
       ))}
     </StarContainer>
   );
@@ -20,11 +19,7 @@ export const StarRatingWithEmpty = ({ number }) => {
   return (
     <StarContainer>
       {FiveStar.map((el, idx) => (
-        <BsStarFill
-          key={idx}
-          color={number >= el ? theme.colors.secondary : theme.colors.gray02}
-          number={number}
-        />
+        <StarswithEmpty key={idx} number={number} el={el} />
       ))}
     </StarContainer>
   );
@@ -33,4 +28,20 @@ export const StarRatingWithEmpty = ({ number }) => {
 const StarContainer = styled.div`
   width: auto;
   height: auto;
+`;
+
+const Stars = styled(BsStarFill)`
+  ${(props) => {
+    const selected = props.theme.colors[props.color];
+    return css`
+      color: ${selected};
+    `;
+  }}
+`;
+
+const StarswithEmpty = styled(BsStarFill)`
+  color: ${(props) =>
+    props.number >= props.el
+      ? props.theme.colors.secondary
+      : props.theme.colors.gray02};
 `;

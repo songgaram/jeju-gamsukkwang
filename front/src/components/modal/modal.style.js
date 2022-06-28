@@ -6,7 +6,7 @@ const fadeIn = keyframes`
   }
 
   to {
-    background rgba(0, 0, 0, 30%);
+    background: rgba(0, 0, 0, 30%);
     backdrop-filter: blur(5px);
   }
 `;

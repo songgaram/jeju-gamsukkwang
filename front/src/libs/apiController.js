@@ -1,5 +1,5 @@
 import axios from "axios";
-// import { errorController } from "./errorController";
+import { useNavigate } from "react-router-dom";
 
 const SERVER_PORT_NUMBER = process.env.REACT_APP_SERVER_PORT;
 const SERVER_URL = `http://${window.location.hostname}:${SERVER_PORT_NUMBER}/`;
@@ -14,6 +14,8 @@ const http = axios.create({
 http.interceptors.request.use(
   async (config) => {
     const accessToken = localStorage.getItem("accessToken");
+
+    console.log(config);
 
     // config에 header 설정
     config.headers["Content-Type"] = "application/json; charset=utf-8";
@@ -36,6 +38,14 @@ http.interceptors.response.use(
   function (error) {
     // 오류 처리를 위한 별도 errorController
     console.log("🚀 ~ response error : ", error);
+
+    if (error.response.status === 401) {
+      localStorage.removeItem("accessToken");
+      const navigate = useNavigate();
+
+      return navigate("/login");
+    }
+
     return Promise.reject(error);
   },
 );

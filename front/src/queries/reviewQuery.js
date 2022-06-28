@@ -1,4 +1,9 @@
-import { useQuery, useInfiniteQuery } from "react-query";
+import {
+  useQuery,
+  useInfiniteQuery,
+  useQueryClient,
+  useMutation,
+} from "react-query";
 import http from "libs/apiController";
 
 export const useGetRatingInfo = (postId) => {
@@ -11,7 +16,7 @@ export const useGetRatingInfo = (postId) => {
 export const useGetReviewList = (postId) => {
   const fetchReviewList = async ({ pageParam = 1 }) => {
     const res = await http.get(
-      `review/${postId}/list?page=${pageParam}&limit=5`,
+      `review/${postId}/list?page=${pageParam}&limit=10`,
     );
     const { reviews, totalPage } = res.data;
     return { reviews, totalPage, pageParam, nextPage: pageParam + 1 };
@@ -21,6 +26,44 @@ export const useGetReviewList = (postId) => {
     staleTime: 50000,
     cacheTime: 120000,
     getNextPageParam: (lastPage) =>
-      lastPage.totalPage === lastPage.pageParam ? lastPage.nextPage : undefined,
+      lastPage.totalPage === lastPage.pageParam ? undefined : lastPage.nextPage,
   });
+};
+
+export const usePostReview = () => {
+  const queryClient = useQueryClient();
+  return useMutation(
+    async (review) => {
+      await http.post("review", review);
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("reviews");
+      },
+    },
+  );
+};
+
+export const useDeleteReview = () => {
+  const queryClient = useQueryClient();
+  return useMutation((reviewId) => http.delete(`review/${reviewId}`), {
+    onSuccess: () => {
+      queryClient.invalidateQueries("reviews");
+    },
+    onError: (err) => console.log(err),
+  });
+};
+
+export const useUpdateReview = () => {
+  const queryClient = useQueryClient();
+  return useMutation(
+    async (review) =>
+      await http.put(`reviews/${review.id}`, {
+        content: review.content,
+      }),
+    {
+      onSuccess: () => queryClient.invalidateQueries("reviews"),
+      onError: (err) => console.log(err),
+    },
+  );
 };

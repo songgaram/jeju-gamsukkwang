@@ -27,7 +27,7 @@ const Nav = styled.nav`
   align-items: center;
 
   ul {
-    display:flex;
+    display: flex;
 
     li {
       margin-right: 30px;
@@ -39,8 +39,8 @@ const Nav = styled.nav`
         color: ${({ theme }) => theme.colors.black};
         white-space: nowrap;
       }
+    }
   }
-  
 `;
 
 export { HeaderContainer, HeaderWrapper, Nav };

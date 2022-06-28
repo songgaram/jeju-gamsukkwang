@@ -8,6 +8,7 @@ const colors = {
   secondary: "#AAD8FE",
   orange: "#F4AA19",
   skyblue: "#E3F1FB",
+  deepblue: "#6FB7F4",
 };
 
 const calcRem = (size) => `${size / 16}rem`;
