@@ -28,7 +28,9 @@ const TextSearchResult = () => {
       <ul>
         {filteredList.map((data) => {
           return (
-            <li onClick={() => handleItemClick(data.id)}>{data.krTitle}</li>
+            <li key={data.id} onClick={() => handleItemClick(data.id)}>
+              {data.krTitle}
+            </li>
           );
         })}
       </ul>
