@@ -1,28 +1,42 @@
 import styled from "styled-components";
+import { useState } from "react";
 import { LEVEL_LIST } from "./constants";
 import Button from "components/Button";
+import { InfoBox, NickName, Email, Level, Coloring } from "./mypage.style";
+import ProfileEditForm from "./ProfileEditForm";
 
 const Profile = ({ email, nickname, experience }) => {
   const level = parseInt(parseInt(experience) / 10);
+  const [editing, setEditing] = useState(false);
+  const [editNickname, setEditNickname] = useState(nickname || "");
 
   const handleClick = () => {
-    return;
+    setEditing(true);
   };
 
   return (
     <ProfileBox>
       <ProfileImg src="https://dev-team8-bucket.s3.ap-northeast-2.amazonaws.com/profileImg.png" />
-
-      <InfoBox>
-        <NickName>{nickname}</NickName>
-        <Email>{email}</Email>
-        <Level>
-          Lv. <Coloring>{LEVEL_LIST[level].level}</Coloring>
-        </Level>
-        <div>
-          <Button onClick={handleClick}>회원정보 수정</Button>
-        </div>
-      </InfoBox>
+      {editing ? (
+        <ProfileEditForm
+          email={email}
+          level={level}
+          setEditing={setEditing}
+          editNickname={editNickname}
+          setEditNickname={setEditNickname}
+        />
+      ) : (
+        <InfoBox>
+          <NickName>{editNickname}</NickName>
+          <Email>{email}</Email>
+          <Level>
+            Lv. <Coloring>{LEVEL_LIST[level].level}</Coloring>
+          </Level>
+          <div>
+            <Button onClick={handleClick}>회원정보 수정</Button>
+          </div>
+        </InfoBox>
+      )}
     </ProfileBox>
   );
 };
@@ -37,29 +51,6 @@ const ProfileImg = styled.img.attrs({ alt: "프로필 이미지" })`
   width: 10rem;
   height: 10rem;
   border-radius: 50%;
-`;
-
-const InfoBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-left: 2rem;
-  justify-content: space-evenly;
-`;
-
-const NickName = styled.div`
-  font-weight: bold;
-  font-size: ${({ theme }) => theme.fontSizes.xxl};
-`;
-const Email = styled.div`
-  font-size: ${({ theme }) => theme.fontSizes.xxl};
-`;
-const Level = styled.div`
-  font-size: ${({ theme }) => theme.fontSizes.xxl};
-  font-weight: bold;
-`;
-
-const Coloring = styled.span`
-  color: ${({ theme }) => theme.colors.orange};
 `;
 
 export default Profile;

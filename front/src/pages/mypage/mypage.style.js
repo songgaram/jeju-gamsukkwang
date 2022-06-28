@@ -47,6 +47,29 @@ const StampImgLv6 = styled.img`
   display: ${(props) => (props.level >= 5 ? "block" : "none")};
 `;
 
+const InfoBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-left: 2rem;
+  justify-content: space-evenly;
+`;
+
+const NickName = styled.div`
+  font-weight: bold;
+  font-size: ${({ theme }) => theme.fontSizes.xxl};
+`;
+const Email = styled.div`
+  font-size: ${({ theme }) => theme.fontSizes.xl};
+`;
+const Level = styled.div`
+  font-size: ${({ theme }) => theme.fontSizes.xl};
+  font-weight: bold;
+`;
+
+const Coloring = styled.span`
+  color: ${({ theme }) => theme.colors.orange};
+`;
+
 export {
   StampImgLv1,
   StampImgLv2,
@@ -54,4 +77,9 @@ export {
   StampImgLv4,
   StampImgLv5,
   StampImgLv6,
+  InfoBox,
+  NickName,
+  Email,
+  Level,
+  Coloring,
 };
