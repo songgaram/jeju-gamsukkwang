@@ -7,6 +7,10 @@ import Button from "components/Button";
 const Profile = ({ email, nickname }) => {
   const level = useRecoilValue(levelState);
 
+  const handleClick = () => {
+    return;
+  };
+
   return (
     <ProfileBox>
       <ProfileImg src="https://dev-team8-bucket.s3.ap-northeast-2.amazonaws.com/profileImg.png" />
@@ -18,7 +22,7 @@ const Profile = ({ email, nickname }) => {
           Lv. <Coloring>{LEVEL_LIST[level].level}</Coloring>
         </Level>
         <div>
-          <Button>회원정보 수정</Button>
+          <Button onClick={handleClick}>회원정보 수정</Button>
         </div>
       </InfoBox>
     </ProfileBox>
