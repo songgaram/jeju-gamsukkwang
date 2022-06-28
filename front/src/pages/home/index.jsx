@@ -7,7 +7,7 @@ import { useRecoilValue } from "recoil";
 import { filteredSearchList } from "./textSearch/state";
 
 import { HomeContainer, ContentsBox, TextButtonBox } from "./home.style";
-import Loading from "./Loding";
+import Loading from "./loding";
 import { useEffect } from "react";
 
 const Home = () => {

@@ -1,20 +1,24 @@
 import tensorflow as tf
-from keras.utils import load_img,img_to_array
+from keras.utils import img_to_array
 from keras.models import load_model
-import numpy as np
 import pandas as pd
 import urllib.request
 from PIL import Image
 
 def predictImage(imageURL):
 
-  model = tf.keras.models.load_model('./model')
+  try:
+    model = load_model('model/epoch_0027.h5')
+  except:
+    return 500
 
-  res = urllib.request.urlopen(imageURL)
+  try:
+    res = urllib.request.urlopen(imageURL) 
+    img = Image.open(res)
+  except:
+    return 404
 
-  img = Image.open(res)
   img = img.resize((224,224))
-  # img = load_img(imageURL, target_size=(224,224))
   img = img_to_array(img)
   img = img/255.0
 
