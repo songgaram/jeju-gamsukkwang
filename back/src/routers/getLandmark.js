@@ -38,7 +38,9 @@ getLandmark.post("/landmark", async (req, res, next) => {
   let { title, roadaddress, introduction, phoneno, latitude, longitude } =
     response.data.items[0];
 
-  if (phoneno.length < 6) {
+  if (phoneno === null) {
+    phoneno = "-";
+  } else if (phoneno.length < 6) {
     phoneno = "-";
   }
   latitude = Number(latitude.toFixed(2));
