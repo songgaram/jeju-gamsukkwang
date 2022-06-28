@@ -1,10 +1,10 @@
 ## 학습 weight 다운로드   
-  1. 저장 위치
+  1. 저장 위치   
     ```sh
     $ cd back/public/model
     ```
     
-  2. 다운로드 방법
+  2. 다운로드 방법   
     - Windows
       ```
       Google Drive Link - https://drive.google.com/file/d/1d_grGrFqUfF6AFpfu-JHFuPo6FK9rZHT/view?usp=sharing
