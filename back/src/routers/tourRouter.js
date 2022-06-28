@@ -49,8 +49,8 @@ tourRouter.post("/tour/image", s3Single(), async (req, res, next) => {
       .error(new Error("extension only must be JPG"));
     await extensionValidator.validateAsync(location);
 
-    const gps = exifr.gps(req.file) || null;
-    console.log(gps);
+    const {latitude, longitude} = await exifr.gps(location) 
+    console.log(latitude, longitude);
 
     const sendImage = await axios.post(
       "http://kdt-ai4-team08.elicecoding.com:5003/prediction",
