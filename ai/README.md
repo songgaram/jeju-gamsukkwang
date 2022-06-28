@@ -55,7 +55,7 @@
     <br>
 
     * Data Augmentation
-        * 데이터 특성상 유사도가 높은 이미지들이 많아 ```Tensorflow```의 ```ImageDataGenerator```를 이용해 validation 이미지를 제외한 나머지 이미지들을 증강
+        * 데이터 특성상 유사도가 높은 이미지들이 많아 ```Tensorflow```의 ```ImageDataGenerator```를 이용해 test 이미지를 제외한 나머지 이미지들을 증강
         * ImageDataGenerator config
             ```python
             ImageDataGenerator(rescale=1./255,
