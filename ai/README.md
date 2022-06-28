@@ -13,7 +13,7 @@
 
 ## - 제주도 랜드마크 예측 API 서버
 
-## - 서버 실행
+### - 서버 실행
 0. back 폴더로 진입
    ```sh
    $ cd back
@@ -41,7 +41,7 @@
     (.flask) $ cd src
     (.flask) $ python app.py
     ```
-## - WSGI서버 연결 실행 (Gunicorn)
+### - WSGI서버 연결 실행 (Gunicorn)
 1. Gunicorn 설치
     ```sh
     (.flask) $ pip gunicorn
