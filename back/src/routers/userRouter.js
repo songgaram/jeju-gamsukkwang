@@ -37,19 +37,6 @@ userRouter.post("/account/register", async (req, res, next) => {
   }
 });
 
-// 회원 정보 가져오기
-userRouter.get("/account/:id", async (req, res, next) => {
-  try {
-    const userId = await idValidator.validateAsync(req.params.id);
-
-    const user = await UserService.findUser({ userId });
-
-    res.status(200).json(user);
-  } catch (err) {
-    next(err);
-  }
-});
-
 // 회원 로그인하기
 userRouter.post("/account/login", async (req, res, next) => {
   try {
@@ -63,6 +50,19 @@ userRouter.post("/account/login", async (req, res, next) => {
     const user = await UserService.loginUser({ email, password });
 
     res.status(200).send(user);
+  } catch (err) {
+    next(err);
+  }
+});
+
+// 회원 정보 가져오기
+userRouter.get("/user", loginRequired, async (req, res, next) => {
+  try {
+    const userId = await idValidator.validateAsync(req.currentUserId);
+
+    const user = await UserService.findUser({ userId });
+
+    res.status(200).json(user);
   } catch (err) {
     next(err);
   }
