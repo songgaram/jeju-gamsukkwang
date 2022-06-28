@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const ImageUploadBox = styled.div`
+const ImageUploadBox = styled.label`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -26,4 +26,10 @@ const ImageUploadBox = styled.div`
   }
 `;
 
-export { ImageUploadBox };
+const Span = styled.span`
+  margin-top: 15px;
+  font-size: 12px;
+  color: ${({ theme }) => theme.colors.gray03};
+`;
+
+export { ImageUploadBox, Span };
