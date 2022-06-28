@@ -18,7 +18,9 @@ const MyStamp = () => {
     <Container>
       <IconContainer>
         {stampedList.map((tourId, idx) => (
-          <Stamp key={idx} tourId={tourId} />
+          <div key={idx}>
+            <Stamp key={idx} tourId={tourId} />
+          </div>
         ))}
       </IconContainer>
     </Container>
@@ -34,10 +36,17 @@ const IconContainer = styled.div`
   width: 1000px;
   display: flex;
   flex-wrap: wrap;
-  gap: 5%;
+  row-gap: 5%;
+
+  & > div {
+    position: relative;
+    width: 10%;
+    text-align: center;
+  }
 `;
 
 const Stamp = styled(TangerineIcon)`
+  max-width: 80%;
   -webkit-filter: grayscale(100%);
   filter: ${(props) => (props.tourId ? "grayscale(0)" : "grayscale(100%)")};
 `;

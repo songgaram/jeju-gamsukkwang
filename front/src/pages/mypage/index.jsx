@@ -2,26 +2,24 @@ import styled from "styled-components";
 import Profile from "./Profile";
 import Level from "./Level";
 import Navs from "./Navs";
-import { useEffect } from "react";
-import { Outlet, useParams } from "react-router-dom";
-import { useGetUserState } from "queries/userQuery";
-import { levelState, stampListState } from "./state";
-import { useSetRecoilState } from "recoil";
+import { useEffect, Suspense } from "react";
+import { Outlet } from "react-router-dom";
+import { userState } from "../../states";
+import { useRecoilValue } from "recoil";
 
 const MyPage = () => {
-  const params = useParams();
-  const id = params.id;
-  const { data } = useGetUserState(id);
-  const { email, nickname, experience, stamp } = data?.userState || {};
-  const setLevel = useSetRecoilState(levelState);
-  const setStampedList = useSetRecoilState(stampListState);
+  const curUserState = useRecoilValue(userState);
+  console.log(curUserState);
+  const { email, nickname, experience, stamp } = curUserState || {};
+  // const setLevel = useSetRecoilState(levelState);
+  // const setStampedList = useSetRecoilState(stampListState);
 
-  useEffect(() => {
-    if (experience) {
-      setLevel(parseInt(parseInt(experience) / 10));
-      setStampedList(stamp);
-    }
-  }, [experience]);
+  // useEffect(() => {
+  //   if (experience) {
+  //     setLevel(parseInt(parseInt(experience) / 10));
+  //     setStampedList(stamp);
+  //   }
+  // }, [experience]);
 
   return (
     <>
