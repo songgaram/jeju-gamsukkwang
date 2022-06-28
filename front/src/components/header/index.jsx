@@ -1,13 +1,22 @@
 import { useNavigate, NavLink } from "react-router-dom";
+import { useRecoilState } from "recoil";
 
 import Button from "components/Button";
 import { NAV_LIST } from "./constants";
+import { loginState } from "../../state";
 
 import { Logo } from "assets/svgs/index";
 import { HeaderContainer, HeaderWrapper, Nav } from "./header.style";
 
 const Header = () => {
   const navigate = useNavigate();
+  const [isLogin, setInLogin] = useRecoilState(loginState);
+
+  const handleLogoutClick = () => {
+    localStorage.removeItem("accessToken");
+    navigate("/");
+    setInLogin(false);
+  };
 
   return (
     <HeaderContainer>
@@ -30,9 +39,16 @@ const Header = () => {
               </li>
             ))}
           </ul>
-          <Button type="button" onClick={() => navigate("/login")}>
-            로그인
-          </Button>
+          {!isLogin && (
+            <Button type="button" onClick={() => navigate("/login")}>
+              로그인
+            </Button>
+          )}
+          {isLogin && (
+            <Button type="button" onClick={handleLogoutClick}>
+              로그아웃
+            </Button>
+          )}
         </Nav>
       </HeaderWrapper>
     </HeaderContainer>
