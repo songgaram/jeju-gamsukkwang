@@ -1,4 +1,4 @@
-import { Icon } from "assets/svgs/index";
+import { TangerineIcon } from "assets/svgs/index";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { stampListState } from "./state";
@@ -37,7 +37,7 @@ const IconContainer = styled.div`
   gap: 5%;
 `;
 
-const Stamp = styled(Icon)`
+const Stamp = styled(TangerineIcon)`
   -webkit-filter: grayscale(100%);
   filter: ${(props) => (props.tourId ? "grayscale(0)" : "grayscale(100%)")};
 `;

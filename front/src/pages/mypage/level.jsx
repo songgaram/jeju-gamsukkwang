@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
-import { Icon } from "assets/svgs/index";
+import { TangerineIcon } from "assets/svgs/index";
 
 const Level = ({ experience }) => {
   const [leftExp, setLeftExp] = useState(10);
@@ -18,7 +18,7 @@ const Level = ({ experience }) => {
     <LevelBox>
       <FigureBox>
         <Desc>
-          {leftExp} <Icon /> until Next Level
+          {leftExp} <TangerineIcon /> until Next Level
         </Desc>
         <ProgressBar value={curExp} max="10" />
       </FigureBox>
