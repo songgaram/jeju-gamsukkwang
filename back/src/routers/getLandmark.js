@@ -13,6 +13,8 @@ const addLandmark = async ({
   introduction,
   image,
   phoneno,
+  latitude,
+  longitude,
 }) => {
   const id = uuidv4();
   const newLandmark = await Tour.create({
@@ -21,7 +23,9 @@ const addLandmark = async ({
     address: roadaddress,
     description: introduction,
     image,
-    phoneNo: phoneno,
+    phoneno,
+    latitude,
+    longitude,
   });
   return newLandmark;
 };
@@ -33,9 +37,15 @@ getLandmark.post("/landmark", async (req, res, next) => {
   );
   let { title, roadaddress, introduction, phoneno, latitude, longitude } =
     response.data.items[0];
-  if (phoneno.length < 6) {
+
+  if (phoneno == null) {
     phoneno = "-";
   }
+  if(phoneno.length < 6){
+    phoneno = "-";
+  }
+
+
   latitude = Number(latitude.toFixed(2));
   longitude = Number(longitude.toFixed(2));
   let image = response.data.items[0].repPhoto.photoid.thumbnailpath;
@@ -45,7 +55,7 @@ getLandmark.post("/landmark", async (req, res, next) => {
     roadaddress,
     introduction,
     image,
-    phoneNo: phoneno,
+    phoneno,
     latitude,
     longitude,
   });

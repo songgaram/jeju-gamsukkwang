@@ -19,9 +19,10 @@ const TourSchema = new Schema({
   image: {
     type: String,
   },
-  phoneNo: {
+  phoneno: {
     type: String,
     index: true,
+    default: "-"
   },
   likeCount: {
     type: Number,
