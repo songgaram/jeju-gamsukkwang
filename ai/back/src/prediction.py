@@ -7,8 +7,11 @@ from PIL import Image
 
 def predictImage(imageURL):
 
+  MODELPATH = '../public/model/model.h5'
+  CATEGORYPATH = '../public/categoryList.csv'
+
   try:
-    model = load_model('model/epoch_0027.h5')
+    model = load_model(MODELPATH)
   except:
     return 500
 
@@ -25,21 +28,17 @@ def predictImage(imageURL):
   pred = model.predict(img.reshape((1, 224,224,3)))
   probsArgsort = tf.argsort(pred, direction='DESCENDING')
   
-  category = pd.read_csv('categoryList.csv', encoding='cp949')
+  category = pd.read_csv(CATEGORYPATH, encoding='cp949')
 
   summary = {}
-  categoryDict = {}
   categoriesList = []
   for i in range(5):
     index = int(probsArgsort[0][i])
 
-    categoryDict['ranking'] = int(probsArgsort[0][i])
-    categoryDict['categoryName'] = category[category['categoryNumber']==index]['categoryName'].values[0]
-    categoryDict['percentage'] = round(pred[0][[probsArgsort[0][i]]]*100, 2)
     categoriesList.append({
                             'ranking': i+1,
                             'categoryName':category[category['categoryNumber']==index]['categoryName'].values[0],
-                            'percentage':round(pred[0][[probsArgsort[0][i]]]*100, 2)
+                            'percentage':round(pred[0][probsArgsort[0][i]]*100, 2)
                           })
   
   summary['summary'] = categoriesList

@@ -1,23 +1,4 @@
 paths:
-  /account/{id}:
-    get:
-      tags:
-        - User
-      summary: 회원 정보 가져오기
-      description: /account/:id로부터 회원 정보를 불러옵니다.
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-          description: 회원의 고유 ID입니다.
-      responses:
-        "200":
-          description: 회원 정보 가져오기 성공
-        "400":
-          description: 잘못된 요청을 보냈을 때 오류가 발생합니다.
-
   /account/register:
     post:
       tags:
@@ -79,22 +60,18 @@ paths:
           description: 잘못된 이메일을 보내거나, 비밀번호가 DB와 일치하지 않으면 오류가 발생합니다.
 
   /user:
-    delete:
+    get:
       tags:
         - User
-      summary: 회원 탈퇴
+      summary: 회원 정보 가져오기
       security:
         - Authorization: []
-      description: /user로 회원 탈퇴 요청을 보냅니다. req.body에 어떤 것도 받지 않습니다. 단, 로그인된 사용자만 회원 탈퇴 기능을 사용할 수 있습니다.
+      description: /account로부터 회원 정보를 불러옵니다.
       responses:
         "200":
-          description: 회원 탈퇴 성공
+          description: 회원 정보 가져오기 성공
         "400":
-          description: DB에 없는 회원일 시 오류가 발생합니다.
-        "403":
-          description: 로그인되어 있지 않을 때 오류가 발생합니다.
-
-  /user/:
+          description: 잘못된 요청을 보냈을 때 오류가 발생합니다.
     put:
       tags:
         - User
@@ -119,6 +96,20 @@ paths:
           description: 회원 수정 성공
         "400":
           description: DB에 없는 회원이거나, 중복된 닉네임을 보낼 때 오류가 발생합니다.
+        "403":
+          description: 로그인되어 있지 않을 때 오류가 발생합니다.
+    delete:
+      tags:
+        - User
+      summary: 회원 탈퇴
+      security:
+        - Authorization: []
+      description: /user로 회원 탈퇴 요청을 보냅니다. req.body에 어떤 것도 받지 않습니다. 단, 로그인된 사용자만 회원 탈퇴 기능을 사용할 수 있습니다.
+      responses:
+        "200":
+          description: 회원 탈퇴 성공
+        "400":
+          description: DB에 없는 회원일 시 오류가 발생합니다.
         "403":
           description: 로그인되어 있지 않을 때 오류가 발생합니다.
 
