@@ -22,6 +22,7 @@ def resource_not_found(e):
 def index():
     return 'Hello World!'
 
+# 이미지 예측 결과를 순위별로 정렬해 반환
 @application.route('/prediction', methods=['POST'])
 def post():
   if request.method == 'POST':
@@ -32,6 +33,7 @@ def post():
       description = 'invalid request value (imageURL)'
       abort(400, description)
 
+    # image 예측
     summary = prediction.predictImage(imageURL)
     
     if summary == 404:
@@ -41,6 +43,7 @@ def post():
       description = 'predict model not found, pleas check modle file'
       abort(500, description)
 
+    # dictionary to Json
     summary['imageURL'] = imageURL
     summaryJson = json.dumps(summary)
 
