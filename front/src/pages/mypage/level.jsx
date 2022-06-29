@@ -71,7 +71,7 @@ const Level = ({ experience }) => {
       </LevelContainer>
       <ModalPortal>
         {isOpenModal && (
-          <Modal setIsOpenModal={setIsOpenModal} loadingOn={isLoading} />
+          <Modal setIsOpenModal={setIsOpenModal} isLoading={isLoading} />
         )}
       </ModalPortal>
     </>

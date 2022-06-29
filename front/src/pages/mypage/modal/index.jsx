@@ -1,10 +1,9 @@
 import { useRef } from "react";
 import { useClickAway } from "react-use";
+import { ModalBackground, ModalBox } from "./modal.style";
+import Loading from "./Loading";
 
-import { ExclamationIcon } from "assets/svgs";
-import { ModalBackground, ModalBox, ModalButton } from "./modal.style";
-
-const Modal = ({ setIsOpenModal, loadingOn }) => {
+const Modal = ({ setIsOpenModal, isLoading }) => {
   const outsideRef = useRef(null);
 
   const handleCloseButtonClick = () => {
@@ -18,9 +17,7 @@ const Modal = ({ setIsOpenModal, loadingOn }) => {
   return (
     <ModalBackground>
       <ModalBox ref={outsideRef}>
-        <ExclamationIcon width={80} height={80} />
-        {loadingOn ? "로딩" : "모달 등장"}
-        <ModalButton onClick={handleCloseButtonClick}>확인</ModalButton>
+        {isLoading ? <Loading /> : "모달 등장"}
       </ModalBox>
     </ModalBackground>
   );

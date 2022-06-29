@@ -43,11 +43,11 @@ const ModalBackground = styled.div`
 const ModalBox = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   width: 400px;
-  height: 300px;
-  padding: 50px;
+  height: 350px;
+  padding: 40px;
   background: ${({ theme }) => theme.colors.white};
   border-radius: 20px;
   animation: ${slideUp} 0.4s cubic-bezier(0.5, 0, 0, 0.8) forwards;
@@ -58,6 +58,7 @@ const ModalButton = styled.button`
   background-color: #e5e5f1;
   border-radius: 10px;
   border: none;
+  cursor: pointer;
 `;
 
 export { ModalBackground, ModalBox, ModalButton };
