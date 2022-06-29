@@ -3,10 +3,13 @@ import { useNavigate } from "react-router-dom";
 
 import http from "libs/apiController";
 import logInValidation from "./utils";
+import { useSetRecoilState } from "recoil";
+import { loginState } from "../../states";
+
 import { LOGIN_INIT_DATA, ERROR_MESSAGE, MODAL_MESSAGE } from "./constants";
-import Input from "components/Input";
-import Modal from "components/Modal";
-import ModalPortal from "components/Modal/modalPortal";
+import Input from "components/input";
+import Modal from "components/modal";
+import ModalPortal from "components/modal/modalPortal";
 
 import {
   LogInContainer,
@@ -20,6 +23,7 @@ const LogIn = () => {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [userInputData, setUserInputData] = useState(LOGIN_INIT_DATA);
   const { email, password } = userInputData;
+  const setIsLogin = useSetRecoilState(loginState);
 
   const navigate = useNavigate();
 
@@ -50,6 +54,7 @@ const LogIn = () => {
         password,
       });
       localStorage.setItem("accessToken", res.data.token);
+      setIsLogin(true);
       navigate("/");
     } catch (err) {
       setIsOpenModal(true);

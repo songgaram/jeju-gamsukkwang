@@ -3,16 +3,10 @@ import { useRef } from "react";
 
 import http from "libs/apiController";
 
-import { ImageUploadBox } from "./imageSearch.style";
+import { ImageUploadBox, Span } from "./imageSearch.style";
 
 const ImageSearch = () => {
   const photoInput = useRef(null);
-
-  const handleClick = useCallback(() => {
-    if (!photoInput.current) return;
-
-    photoInput.current.click();
-  }, []);
 
   const handleUploadImage = useCallback((e) => {
     if (!e.target.files) return;
@@ -28,15 +22,18 @@ const ImageSearch = () => {
   }, []);
 
   return (
-    <ImageUploadBox onClick={handleClick}>
-      📷 이미지로 검색하기
-      <input
-        type="file"
-        accept="image/*"
-        ref={photoInput}
-        onChange={handleUploadImage}
-      />
-    </ImageUploadBox>
+    <>
+      <ImageUploadBox>
+        📷 이미지로 검색하기
+        <input
+          type="file"
+          accept="image/*"
+          ref={photoInput}
+          onChange={handleUploadImage}
+        />
+      </ImageUploadBox>
+      <Span>이미지 검색 기능은 jpg 파일만 지원됩니다.</Span>
+    </>
   );
 };
 

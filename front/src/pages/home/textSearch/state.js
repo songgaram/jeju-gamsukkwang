@@ -21,8 +21,6 @@ export const filteredSearchList = selector({
     if (!keyword || !list) return [];
     let filteredResult = list.filter((item) => item.krTitle.includes(keyword));
 
-    console.log(filteredResult);
-
     return filteredResult;
   },
 });
