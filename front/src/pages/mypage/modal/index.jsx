@@ -2,13 +2,10 @@ import { useRef } from "react";
 import { useClickAway } from "react-use";
 import { ModalBackground, ModalBox } from "./modal.style";
 import Loading from "./Loading";
+import ImageAuth from "./ImageAuth";
 
-const Modal = ({ setIsOpenModal, isLoading }) => {
+const Modal = ({ setIsOpenModal, isLoading, data }) => {
   const outsideRef = useRef(null);
-
-  const handleCloseButtonClick = () => {
-    setIsOpenModal(false);
-  };
 
   useClickAway(outsideRef, () => {
     setIsOpenModal(false);
@@ -17,7 +14,7 @@ const Modal = ({ setIsOpenModal, isLoading }) => {
   return (
     <ModalBackground>
       <ModalBox ref={outsideRef}>
-        {isLoading ? <Loading /> : "모달 등장"}
+        {isLoading ? <Loading /> : <ImageAuth data={data} />}
       </ModalBox>
     </ModalBackground>
   );

@@ -1,15 +1,29 @@
 import styled from "styled-components";
+import { ModalButton, Span } from "./modal.style";
 
 const ImageAuth = ({ data }) => {
+  const handleCloseButtonClick = () => {
+    // setIsOpenModal(false);
+  };
+
   return (
-    <Card>
-      <ImgBox>
-        <Img src={data.image} alt="랜드마크 이미지" />
-      </ImgBox>
-      <TextBox>
-        <p>{data.krTitle}</p>
-      </TextBox>
-    </Card>
+    <>
+      <Span>
+        <p>지금 계신 곳이 여긴가요!</p>
+      </Span>
+      <Card>
+        <ImgBox>
+          <Img src={data.image} alt="랜드마크 이미지" />
+        </ImgBox>
+        <TextBox>
+          <p>{data.krTitle}</p>
+        </TextBox>
+      </Card>
+      <BtnContainer>
+        <ModalButton onClick={handleCloseButtonClick}>아니예요</ModalButton>
+        <ModalButton onClick={handleCloseButtonClick}>맞아요!</ModalButton>
+      </BtnContainer>
+    </>
   );
 };
 
@@ -49,4 +63,11 @@ const Img = styled.img`
   &:hover {
     transform: scale(1.05);
   }
+`;
+
+const BtnContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 `;

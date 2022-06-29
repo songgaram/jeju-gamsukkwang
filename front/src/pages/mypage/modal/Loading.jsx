@@ -1,5 +1,6 @@
 import { LogoIcon } from "assets/svgs";
 import styled, { keyframes } from "styled-components";
+import { Span } from "./modal.style";
 
 const Loading = () => {
   return (
@@ -23,9 +24,4 @@ const rotateImage = keyframes`
 const LogoBox = styled.div`
   animation: ${rotateImage} 1.8s linear infinite;
   transform-origin: 50% 50%;
-`;
-
-const Span = styled.span`
-  font-size: ${({ theme }) => theme.fontSizes.small};
-  color: ${({ theme }) => theme.colors.gray03};
 `;

@@ -13,6 +13,7 @@ const Level = ({ experience }) => {
   const [curExp, setCurExp] = useState(0);
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [data, setData] = useState([]);
   const photoInput = useRef(null);
 
   useEffect(() => {
@@ -33,16 +34,18 @@ const Level = ({ experience }) => {
       setIsOpenModal(true);
       setIsLoading(true);
       const res = await http.post("tour/image", formData);
-      console.log(res.data.data);
       setIsLoading(false);
+      const name = res.data.data.summary[0].categoryName;
+      const response = await http.get(`tour/search?name=${name}`);
+      setData(response.data[0]);
     } catch (error) {
       console.log(error);
     }
   }, []);
 
   useEffect(() => {
-    console.log(isLoading);
-  }, [isLoading]);
+    console.log("data", data);
+  }, [data]);
 
   return (
     <>
@@ -71,7 +74,11 @@ const Level = ({ experience }) => {
       </LevelContainer>
       <ModalPortal>
         {isOpenModal && (
-          <Modal setIsOpenModal={setIsOpenModal} isLoading={isLoading} />
+          <Modal
+            setIsOpenModal={setIsOpenModal}
+            isLoading={isLoading}
+            data={data}
+          />
         )}
       </ModalPortal>
     </>
