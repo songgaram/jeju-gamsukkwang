@@ -41,7 +41,10 @@ export const communityModel = {
       totalPage = Math.floor(total / limit) + 1;
     }
 
-    const articles = await Community.find({}).limit(limit).skip(offset);
+    const articles = await Community.find({})
+      .limit(limit)
+      .skip(offset)
+      .sort({ createdAt: -1 });
 
     const sendArticles = {
       total,

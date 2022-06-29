@@ -128,7 +128,7 @@ describe("Tour Service Logic", () => {
 
   // 목록 정렬 기능 관련 테스트
   it("좋아요 순으로 랜드마크 목록을 정렬합니다.", async () => {
-    const sortByLikeLandmarks = await TourService.sortByLiked({});
+    const sortByLikeLandmarks = await TourService.sortBy({ criteria: "like" });
     
     const likeArray = sortByLikeLandmarks.map(ele => ele.likeCount)
     const sortArray = likeArray.sort((a, b) => b - a)
@@ -138,7 +138,7 @@ describe("Tour Service Logic", () => {
   })
 
   it("리뷰 수 순으로 랜드마크 목록을 정렬합니다.", async () => {
-    const sortByReviewLandmarks = await TourService.sortByReviews({});
+    const sortByReviewLandmarks = await TourService.sortBy({ criteria: "review" });
     
     const reviewArray = sortByReviewLandmarks.map(ele => ele.totalReview)
     const sortArray = reviewArray.sort((a, b) => b - a)
@@ -148,7 +148,7 @@ describe("Tour Service Logic", () => {
   })
 
   it("평점 평균 순으로 랜드마크 목록을 정렬합니다.", async () => {
-    const sortByRatingLandmarks = await TourService.sortByRating({});
+    const sortByRatingLandmarks = await TourService.sortBy({ criteria: "rating" });
     
     const ratingArray = sortByRatingLandmarks.map(ele => ele.avgRating)
     const sortArray = ratingArray.sort((a, b) => b - a)
