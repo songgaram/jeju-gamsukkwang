@@ -1,4 +1,3 @@
-import { LogoIcon } from "assets/svgs";
 import LogoImg from "assets/images/LogoIcon.png";
 
 import styled, { keyframes } from "styled-components";
@@ -7,7 +6,7 @@ const Loader = () => {
   return (
     <Background>
       <LogoBox>
-        <img src={LogoImg} />
+        <img src={LogoImg} alt="logo-img" />
       </LogoBox>
       <TextBox>
         <span>L</span>
