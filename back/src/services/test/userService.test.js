@@ -33,7 +33,7 @@ describe("User Service Logic", () => {
   })
 
   it("중복된 닉네임을 가진 user는 생성할 수 없습니다.", async () => {
-    userModel.isEmailExist = jest.fn().mockResolvedValue(true)
+    userModel.isEmailExist = jest.fn().mockResolvedValue(false)
 
     try{
       await UserService.addUser(mockUser)
