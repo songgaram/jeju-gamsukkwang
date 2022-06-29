@@ -1,12 +1,12 @@
 export const DROP_DOWN_LIST = [
   {
     id: 1,
-    value: "likes",
+    value: "like",
     text: "좋아요 순",
   },
   {
     id: 2,
-    value: "reviews",
+    value: "review",
     text: "리뷰 순",
   },
   {
