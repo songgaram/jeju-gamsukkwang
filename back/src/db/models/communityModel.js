@@ -4,7 +4,9 @@ import Joi from "joi";
 export const communityModel = {
   create: async ({ newArticle }) => {
     const propSchema = Joi.object().keys({
-      loginUserId: Joi.string().trim().empty().required(),
+      id: Joi.string().trim().empty().required(),
+      userId: Joi.string().trim().empty().required(),
+      userNickName: Joi.string().trim().empty().required(),
       title: Joi.string().trim().empty().required(),
       content: Joi.string().trim().empty().required(),
       head: Joi.string()
@@ -12,7 +14,7 @@ export const communityModel = {
         .empty()
         .valid("free", "info", "question")
         .required(),
-      images: Joi.any(),
+      saveFileName: Joi.any(),
     });
     await propSchema.validateAsync(newArticle);
 
