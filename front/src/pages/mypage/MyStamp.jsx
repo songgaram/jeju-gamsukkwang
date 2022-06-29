@@ -1,19 +1,21 @@
 import { TangerineIcon } from "assets/svgs/index";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
-import { userState } from "states";
-import { useRecoilValue } from "recoil";
+import { useGetUserInfo } from "queries/userQuery";
+import Loader from "components/loader";
 
 const MyStamp = () => {
   const newArr = new Array(60).fill(false);
-  const curUserState = useRecoilValue(userState);
-  const { stamp } = curUserState || {};
+  const { data, status } = useGetUserInfo();
+  const { stamp } = data?.userState || {};
   const stampCount = stamp.length;
   const [stampList, setStampedList] = useState(newArr);
 
   useEffect(() => {
     setStampedList([...stamp, ...newArr.slice(stampCount)]);
   }, []);
+
+  if (status === "loading") return <Loader />;
 
   return (
     <Container>

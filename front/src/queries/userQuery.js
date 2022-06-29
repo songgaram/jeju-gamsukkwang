@@ -1,12 +1,12 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { get, post, put } from "utils/api";
+import http from "libs/apiController";
 
 //유저 정보 가져오기
 export function useGetUserInfo() {
   return useQuery(
     "userState",
     async () => {
-      const res = await get("user");
+      const res = await http.get("user");
       return { userState: res.data };
     },
     {
@@ -20,7 +20,7 @@ export function useGetUserInfo() {
 export const useChangeNickname = () => {
   const queryClient = useQueryClient();
 
-  return useMutation(async (nickname) => await put("user", nickname), {
+  return useMutation(async (nickname) => await http.put("user", nickname), {
     onSuccess: () => {
       queryClient.invalidateQueries("userState");
     },
@@ -32,7 +32,7 @@ export const useChangeNickname = () => {
 export const useIncreaseExp = () => {
   const queryClient = useQueryClient();
 
-  return useMutation(async (point) => await post("user/exp", point), {
+  return useMutation(async (point) => await http.post("user/exp", point), {
     onSuccess: () => {
       queryClient.invalidateQueries("userState");
     },
@@ -40,10 +40,11 @@ export const useIncreaseExp = () => {
   });
 };
 
+//스탬프 추가
 export const useAddStamp = () => {
   const queryClient = useQueryClient();
 
-  return useMutation(async (tourId) => await post("user/stamp", tourId), {
+  return useMutation(async (tourId) => await http.post("user/stamp", tourId), {
     onSuccess: () => {
       queryClient.invalidateQueries("userState");
     },

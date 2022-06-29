@@ -14,13 +14,15 @@ import {
   StampImgLv5,
   StampImgLv6,
 } from "./mypage.style";
-import { userState } from "states";
-import { useRecoilValue } from "recoil";
+import { useGetUserInfo } from "queries/userQuery";
+import Loader from "components/loader";
 
 const MyMap = () => {
-  const curUserState = useRecoilValue(userState);
-  const { experience } = curUserState || {};
+  const { data, status } = useGetUserInfo();
+  const { experience } = data?.userState || {};
   const level = parseInt(parseInt(experience) / 10);
+
+  if (status === "loading") return <Loader />;
 
   return (
     <MapContainer>

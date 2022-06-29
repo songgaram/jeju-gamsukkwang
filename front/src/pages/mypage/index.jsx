@@ -3,12 +3,13 @@ import Profile from "./Profile";
 import Level from "./Level";
 import Navs from "./Navs";
 import { Outlet } from "react-router-dom";
-import { userState } from "states";
-import { useRecoilValue } from "recoil";
+import { useGetUserInfo } from "queries/userQuery";
+import Loader from "components/loader";
 
 const MyPage = () => {
-  const curUserState = useRecoilValue(userState);
-  const { email, nickname, experience } = curUserState || {};
+  const { data, status } = useGetUserInfo();
+  const { email, nickname, experience } = data?.userState || {};
+  if (status === "loading") return <Loader />;
 
   return (
     <>

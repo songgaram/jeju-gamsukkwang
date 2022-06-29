@@ -14,7 +14,11 @@ const Modal = ({ setIsOpenModal, isLoading, data }) => {
   return (
     <ModalBackground>
       <ModalBox ref={outsideRef}>
-        {isLoading ? <Loading /> : <ImageAuth data={data} />}
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <ImageAuth data={data} setIsOpenModal={setIsOpenModal} />
+        )}
       </ModalBox>
     </ModalBackground>
   );

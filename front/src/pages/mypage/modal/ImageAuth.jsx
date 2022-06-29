@@ -1,9 +1,21 @@
 import styled from "styled-components";
 import { ModalButton, Span } from "./modal.style";
+import { useAddStamp } from "queries/userQuery";
 
-const ImageAuth = ({ data }) => {
+const ImageAuth = ({ data, setIsOpenModal }) => {
+  const addStamp = useAddStamp();
+
   const handleCloseButtonClick = () => {
-    // setIsOpenModal(false);
+    setIsOpenModal(false);
+    alert("사진을 다시 찍어주세요!");
+  };
+
+  const handleSuccessAuth = () => {
+    const tourId = {
+      tourId: data.id,
+    };
+    addStamp.mutate(tourId);
+    setIsOpenModal(false);
   };
 
   return (
@@ -21,7 +33,7 @@ const ImageAuth = ({ data }) => {
       </Card>
       <BtnContainer>
         <ModalButton onClick={handleCloseButtonClick}>아니예요</ModalButton>
-        <ModalButton onClick={handleCloseButtonClick}>맞아요!</ModalButton>
+        <ModalButton onClick={handleSuccessAuth}>맞아요!</ModalButton>
       </BtnContainer>
     </>
   );

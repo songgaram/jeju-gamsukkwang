@@ -43,10 +43,6 @@ const Level = ({ experience }) => {
     }
   }, []);
 
-  useEffect(() => {
-    console.log("data", data);
-  }, [data]);
-
   return (
     <>
       <LevelContainer>
