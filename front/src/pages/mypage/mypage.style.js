@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { darken } from "polished";
 
 const StampImgLv1 = styled.img`
   position: absolute;
@@ -70,6 +71,45 @@ const Coloring = styled.span`
   color: ${({ theme }) => theme.colors.orange};
 `;
 
+const ImgInputButton = styled.label`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  outline: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  transition: all 0.2s ease-in-out;
+  border: none;
+  font-weight: 600;
+
+  /*크기*/
+  height: 50px;
+  font-size: ${({ theme }) => theme.fontSizes.lg};
+
+  /*색상*/
+  background: ${({ theme }) => theme.colors.primary};
+  color: ${({ theme }) => theme.colors.white};
+
+  &:hover {
+    background: ${({ theme }) => darken(0.1, theme.colors.primary)};
+  }
+
+  &:active {
+    background: ${({ theme }) => darken(0.1, theme.colors.primary)};
+  }
+
+  /* 기타 */
+  & + & {
+    margin-left: 1rem;
+  }
+
+  & > input {
+    display: none;
+  }
+`;
+
 export {
   StampImgLv1,
   StampImgLv2,
@@ -82,4 +122,5 @@ export {
   Email,
   Level,
   Coloring,
+  ImgInputButton,
 };
