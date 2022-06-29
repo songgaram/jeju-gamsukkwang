@@ -7,7 +7,7 @@ const SERVER_URL = `http://${window.location.hostname}:${SERVER_PORT_NUMBER}/`;
 // axios 생성
 const http = axios.create({
   baseURL: SERVER_URL, // 데이터를 요청할 기본 주소
-  timeout: 5000,
+  timeout: 30000,
 });
 
 // axios request 처리
