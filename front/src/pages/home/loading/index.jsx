@@ -1,21 +1,20 @@
-import { useRef } from "react";
-import { useClickAway } from "react-use";
-
+import ModalPortal from "components/modal/modalPortal";
 import { LogoIcon } from "assets/svgs";
 
 import styled, { keyframes } from "styled-components";
 
 const Loading = () => {
-  const outsideRef = useRef(null);
-
   return (
-    <ModalBackground>
-      <ModalBox ref={outsideRef}>
-        <LogoBox>
-          <LogoIcon width={100} />
-        </LogoBox>
-      </ModalBox>
-    </ModalBackground>
+    <ModalPortal>
+      <ModalBackground>
+        <ModalBox>
+          <LogoBox>
+            <LogoIcon width={100} />
+          </LogoBox>
+          <span>감귤이가 장소를 찾고 있어요 :)</span>
+        </ModalBox>
+      </ModalBackground>
+    </ModalPortal>
   );
 };
 
