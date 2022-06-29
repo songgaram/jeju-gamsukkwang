@@ -41,19 +41,19 @@ tourRouter.post("/tour/image", s3Single(), async (req, res, next) => {
   try {
     const fileValidator = Joi.any().empty().required();
     await fileValidator.validateAsync(req.file);
-    const { location } = req.file;
+    const { location, originalname } = req.file;
 
-    const pattern1 = ".jpg$";
-    const extensionValidator = Joi.string()
-      .pattern(new RegExp(pattern1))
-      .error(new Error("extension should be JPG"));
-    await extensionValidator.validateAsync(location);
+    // ai로 보내는 이미지 확장자가 jpg가 아니라면 에러 띄우기
+    const checkExtension = /.jpg$/;
+    if (!checkExtension.test(originalname)) {
+      throw new Error("extension only must be JPG");
+    }
 
-    const pattern2 = "(?![^ㄱ-ㅎ|ㅏ-ㅣ|가-힣$]).jpg$";
-    const fileNameValidator = Joi.string()
-      .pattern(new RegExp(pattern2))
-      .error(new Error("fileName should not have Korean"));
-    await fileNameValidator.validateAsync(location);
+    // exifr이 한글 파일명은 인식하지 못하므로 한글이 들어가면 에러 띄우기
+    const checkName = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
+    if (checkName.test(originalname)) {
+      throw new Error("fileName must not have Korean");
+    }
 
     let { latitude, longitude } = (await exifr.gps(location)) ?? {
       latitude: 0,
@@ -134,32 +134,18 @@ tourRouter.put("/tour/:id/dislike", loginRequired, async (req, res, next) => {
   }
 });
 
-// 랜드마크 좋아요 높은 순으로 정렬하기
-tourRouter.get("/recommend/likes", async (req, res, next) => {
+// 압력한 정렬 기준(criteria)대로 랜드마크 정렬하기
+// like: 좋아요순, review: 리뷰수 순, rating: 평점 평균 순
+tourRouter.get("/recommend/:criteria", async (req, res, next) => {
   try {
-    const sortedLandmarks = await TourService.sortByLiked({});
+    const paramsValidator = Joi.string()
+      .valid("like", "review", "rating")
+      .trim()
+      .empty()
+      .required();
+    const criteria = await paramsValidator.validateAsync(req.params.criteria);
 
-    res.status(200).json(sortedLandmarks);
-  } catch (err) {
-    next(err);
-  }
-});
-
-// 랜드마크 리뷰수 많은 순으로 정렬하기
-tourRouter.get("/recommend/reviews", async (req, res, next) => {
-  try {
-    const sortedLandmarks = await TourService.sortByReviews({});
-
-    res.status(200).json(sortedLandmarks);
-  } catch (err) {
-    next(err);
-  }
-});
-
-// 랜드마크 평점 평균 높은 순으로 정렬하기
-tourRouter.get("/recommend/rating", async (req, res, next) => {
-  try {
-    const sortedLandmarks = await TourService.sortByRating({});
+    const sortedLandmarks = await TourService.sortBy({ criteria });
 
     res.status(200).json(sortedLandmarks);
   } catch (err) {

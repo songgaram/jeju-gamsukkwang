@@ -21,6 +21,7 @@ const TourSchema = new Schema({
   },
   phoneno: {
     type: String,
+    default: "-"
   },
   likeCount: {
     type: Number,
