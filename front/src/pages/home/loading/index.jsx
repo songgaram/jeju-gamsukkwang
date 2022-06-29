@@ -9,7 +9,7 @@ const Loading = () => {
       <ModalBackground>
         <ModalBox>
           <LogoBox>
-            <LogoIcon width={100} />
+            <LogoIcon width={80} />
           </LogoBox>
           <span>감귤이가 장소를 찾고 있어요 :)</span>
         </ModalBox>
