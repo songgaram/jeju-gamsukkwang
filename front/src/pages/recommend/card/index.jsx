@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { useGetList } from "queries/recommendQuery";
 
 import { Card, TextBox, ImgBox, Img } from "./card.style";
-import Loader from "components/loader";
 
 const RecommendCard = ({ isSelected }) => {
   const navigate = useNavigate();
