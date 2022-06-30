@@ -46,6 +46,10 @@ const ModalBox = styled.div`
   justify-content: center;
   align-items: center;
   animation: ${slideUp} 0.4s cubic-bezier(0.5, 0, 0, 0.8) forwards;
+
+  @media screen and ${({ theme }) => theme.breakPoint} {
+    flex-direction: column;
+  } ;
 `;
 
 const ContentsBox = styled.div`
@@ -67,12 +71,22 @@ const ContentsBox = styled.div`
     font-size: 22px;
     font-weight: 600;
   }
+
+  @media screen and ${({ theme }) => theme.breakPoint} {
+    width: 70%;
+    border-radius: 0;
+  } ;
 `;
 
 const Img = styled.img`
   width: 300px;
   height: 400px;
   border-radius: 10px 0 0 10px;
+
+  @media screen and ${({ theme }) => theme.breakPoint} {
+    width: 70%;
+    border-radius: 0;
+  } ;
 `;
 
 const RatingBox = styled.div`
@@ -103,6 +117,10 @@ const RatingBox = styled.div`
     font-size: 16px;
     text-align: center;
   }
+
+  @media screen and ${({ theme }) => theme.breakPoint} {
+    width: 100%;
+  } ;
 `;
 
 const ButtonBox = styled.div`
@@ -118,6 +136,11 @@ const ButtonBox = styled.div`
     border: none;
     cursor: pointer;
   }
+
+  @media screen and ${({ theme }) => theme.breakPoint} {
+    width: 100%;
+    justify-content: center;
+  } ;
 `;
 
 export { ModalBackground, ModalBox, Img, ContentsBox, RatingBox, ButtonBox };

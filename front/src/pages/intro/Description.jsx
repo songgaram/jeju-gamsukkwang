@@ -41,6 +41,11 @@ const DescContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: ${(props) => (props.number === 1 ? "row-reverse" : "row")};
+
+  @media screen and ${({ theme }) => theme.breakPoint} {
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 const ImgContainer = styled.div`
@@ -51,6 +56,11 @@ const ImgContainer = styled.div`
   justify-content: center;
   align-items: center;
   text-align: center;
+
+  @media screen and ${({ theme }) => theme.breakPoint} {
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 const DescrptionCard = styled.div`
@@ -61,6 +71,12 @@ const DescrptionCard = styled.div`
   flex-direction: column;
   justify-content: center;
   padding: 5%;
+
+  @media screen and ${({ theme }) => theme.breakPoint} {
+    width: 100%;
+    height: 100%;
+    min-height: 200px;
+  }
 `;
 
 const ContentContainer = styled.div`
@@ -68,18 +84,32 @@ const ContentContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: ${(props) => props.flex};
+
+  @media screen and ${({ theme }) => theme.breakPoint} {
+    text-align: center;
+    align-items: center;
+    line-height: 150%;
+  }
 `;
 
 const CardTitle = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.xxxl};
   font-weight: bold;
   margin-bottom: 3%;
+
+  @media screen and ${({ theme }) => theme.breakPoint} {
+    text-align: center;
+  }
 `;
 
 const CardSubtitle = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.base};
   font-weight: 300;
   margin-bottom: 1%;
+
+  @media screen and ${({ theme }) => theme.breakPoint} {
+    text-align: center;
+  }
 `;
 
 export default Descrption;
