@@ -6,7 +6,7 @@
 
 실행 : yarn start
 테스트 : yarn test
-무결성 %율 테스트 : yarn coverage
+코드 커버리지 테스트 : yarn coverage
 ```
 
 ### 코드 커버리지 현황
