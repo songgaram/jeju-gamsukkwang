@@ -11,6 +11,7 @@ import MyPage from "pages/mypage";
 import Recommend from "pages/recommend";
 import MyMap from "pages/mypage/MyMap";
 import MyStamp from "pages/mypage/MyStamp";
+import Map from "pages/map";
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
         <Route path="/intro" element={<Intro />} />
         <Route path="/landmark/detail/:id" element={<Landmark />} />
         <Route path="/recommend" element={<Recommend />} />
+        <Route path="/map" element={<Map />} />
         <Route path="/mypage" element={<MyPage />}>
           <Route index element={<MyMap />} />
           <Route path="mymap" element={<MyMap />} />
