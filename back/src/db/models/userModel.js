@@ -9,17 +9,17 @@ export const userModel = {
   isNicknameExist: async ({ nickname }) => {
     const isNicknameExist = await User.exists({ nickname });
     if (isNicknameExist) {
-      return false;
+      return true;
     }
-    return true;
+    return false;
   },
 
   isEmailExist: async ({ email }) => {
     const isEmailExist = await User.exists({ email });
     if (isEmailExist) {
-      return false;
+      return true;
     }
-    return true;
+    return false;
   },
 
   findByEmail: async ({ email }) => {

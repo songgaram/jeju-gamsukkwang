@@ -1,6 +1,6 @@
 import { useState } from "react";
-import RecommendCard from "./Card";
-import Dropdown from "./Dropdown";
+import RecommendCard from "./card";
+import Dropdown from "./dropdown";
 
 import {
   TourPage,
@@ -9,8 +9,8 @@ import {
   DropdownBox,
 } from "./recommend.style";
 
-const Tour = () => {
-  const [isSelected, setInSelected] = useState("likes");
+const Recommend = () => {
+  const [isSelected, setInSelected] = useState("like");
 
   const dropDownFunction = (itemValue) => {
     setInSelected(itemValue);
@@ -32,4 +32,4 @@ const Tour = () => {
   );
 };
 
-export default Tour;
+export default Recommend;

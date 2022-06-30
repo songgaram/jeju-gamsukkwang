@@ -1,15 +1,21 @@
 import styled from "styled-components";
-import Profile from "./profile";
-import Level from "./level";
+import Profile from "./Profile";
+import Level from "./Level";
 import Navs from "./Navs";
 import { Outlet } from "react-router-dom";
+import { useGetUserInfo } from "queries/userQuery";
+import Loader from "components/loader";
 
 const MyPage = () => {
+  const { data, status } = useGetUserInfo();
+  const { email, nickname, experience } = data?.userState || {};
+  if (status === "loading") return <Loader />;
+
   return (
     <>
       <InfoContainer>
-        <Profile />
-        <Level />
+        <Profile email={email} nickname={nickname} experience={experience} />
+        <Level experience={experience} />
       </InfoContainer>
       <Navs />
       <OutletContainer>
@@ -22,7 +28,6 @@ const MyPage = () => {
 const InfoContainer = styled.div`
   width: 100%;
   position: relative;
-  z-index: -1;
   display: grid;
   grid-template-columns: 1.5fr 2fr;
   column-gap: 10%;
@@ -35,6 +40,7 @@ const OutletContainer = styled.div`
   width: 100%;
   height: auto;
   border-radius: 45px 45px 0 0;
+  padding: 7% 0;
 `;
 
 export default MyPage;

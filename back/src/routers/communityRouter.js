@@ -1,7 +1,7 @@
 import Joi from "joi";
 import { Router } from "express";
 
-import { CommunityService } from "../services/CommunityService";
+import { CommunityService } from "../services/communityService";
 import { loginRequired } from "../middlewares/";
 import { s3Multi } from "../middlewares/multerS3";
 
