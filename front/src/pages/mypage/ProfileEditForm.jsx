@@ -1,6 +1,6 @@
 import { InfoBox, Email, Level, Coloring } from "./mypage.style";
 import styled from "styled-components";
-import Button from "components/Button";
+import Button from "components/button/Button";
 import { LEVEL_LIST } from "./constants";
 import http from "libs/apiController";
 

@@ -1,4 +1,4 @@
-import { ImgInputButton } from "./mypage.style";
+import { ImgInputButton } from "./imageAuth.style";
 
 const ImageAuthBtn = ({ photoInput, handleUploadImage }) => {
   return (

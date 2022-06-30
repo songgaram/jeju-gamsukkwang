@@ -1,7 +1,7 @@
 import { useNavigate, NavLink } from "react-router-dom";
 import { useRecoilState } from "recoil";
 
-import Button from "components/Button";
+import Button from "components/button/Button";
 import { NAV_LIST } from "./constants";
 import { loginState } from "../../states";
 

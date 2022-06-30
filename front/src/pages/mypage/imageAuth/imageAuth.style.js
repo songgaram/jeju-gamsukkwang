@@ -53,24 +53,6 @@ const ModalBox = styled.div`
   animation: ${slideUp} 0.4s cubic-bezier(0.5, 0, 0, 0.8) forwards;
 `;
 
-const ModalButton = styled.button`
-  padding: 10px 20px;
-  background-color: #e5e5f1;
-  border-radius: 10px;
-  border: none;
-  cursor: pointer;
-`;
-
-const Button = styled.button`
-  margin-top: 20px;
-  padding: 10px 20px;
-  color: ${({ theme }) => theme.colors.white};
-  background: ${({ theme }) => theme.colors.primary};
-  border-radius: 10px;
-  border: none;
-  cursor: pointer;
-`;
-
 const ImgInputButton = styled.label`
   display: flex;
   justify-content: center;
@@ -119,4 +101,4 @@ const Span = styled.span`
   }
 `;
 
-export { ModalBackground, ModalBox, ModalButton, Span, Button, ImgInputButton };
+export { ModalBackground, ModalBox, Span, ImgInputButton };

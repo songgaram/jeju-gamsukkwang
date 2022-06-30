@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useState } from "react";
 import { LEVEL_LIST } from "./constants";
-import Button from "components/Button";
+import Button from "components/button/Button";
 import { InfoBox, NickName, Email, Level, Coloring } from "./mypage.style";
 import ProfileEditForm from "./ProfileEditForm";
 

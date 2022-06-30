@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { ModalButton, Span, Button } from "./imageAuth.style";
+import { Span } from "./imageAuth.style";
+import ModalButton from "components/button/ModalButton";
 import { useAddStamp, useIncreaseExp } from "queries/userQuery";
 import { NoResultIcon } from "assets/svgs";
 import { useState } from "react";
@@ -29,7 +30,13 @@ const ImageAuth = ({ data, setIsOpenModal }) => {
         <>
           <NoResultIcon width={80} />
           <span>사진을 다시 업로드 해주세요! :(</span>
-          <Button onClick={() => setIsOpenModal(false)}>확인</Button>
+          <ModalButton
+            onClick={() => setIsOpenModal(false)}
+            color="primary"
+            mt="20px"
+          >
+            확인
+          </ModalButton>
         </>
       ) : (
         <>
@@ -45,8 +52,12 @@ const ImageAuth = ({ data, setIsOpenModal }) => {
             </TextBox>
           </Card>
           <BtnContainer>
-            <ModalButton onClick={handleFailAuth}>아니예요</ModalButton>
-            <ModalButton onClick={handleSuccessAuth}>맞아요!</ModalButton>
+            <ModalButton onClick={handleFailAuth} color="primary">
+              아니예요
+            </ModalButton>
+            <ModalButton onClick={handleSuccessAuth} color="primary">
+              맞아요!
+            </ModalButton>
           </BtnContainer>
         </>
       )}
