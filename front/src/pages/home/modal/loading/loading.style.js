@@ -1,25 +1,4 @@
-import { useRef } from "react";
-import { useClickAway } from "react-use";
-
-import { LogoIcon } from "assets/svgs";
-
 import styled, { keyframes } from "styled-components";
-
-const Loading = () => {
-  const outsideRef = useRef(null);
-
-  return (
-    <ModalBackground>
-      <ModalBox ref={outsideRef}>
-        <LogoBox>
-          <LogoIcon width={100} />
-        </LogoBox>
-      </ModalBox>
-    </ModalBackground>
-  );
-};
-
-export default Loading;
 
 const fadeIn = keyframes`
  from {
@@ -70,7 +49,7 @@ const ModalBox = styled.div`
   height: 300px;
   padding: 50px;
   background: ${({ theme }) => theme.colors.white};
-  border-radius: 20px;
+  border-radius: 10px;
   animation: ${slideUp} 0.4s cubic-bezier(0.5, 0, 0, 0.8) forwards;
 `;
 
@@ -81,6 +60,8 @@ const rotateImage = keyframes`
 `;
 
 const LogoBox = styled.div`
-  animation: ${rotateImage} 1.8s linear infinite;
+  animation: ${rotateImage} 2.5s linear infinite;
   transform-origin: 50% 50%;
 `;
+
+export { ModalBackground, ModalBox, LogoBox };

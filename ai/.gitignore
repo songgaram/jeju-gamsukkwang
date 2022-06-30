@@ -3,7 +3,7 @@
 /back/.flask
 
 # compile
-/back/__pycache__
+/back/src/__pycache__
 
 # 제주특별자치도 랜드마크 데이터셋
 /dataSet
@@ -11,7 +11,7 @@
 # models
 /checkpoints
 /model/savedModels
-/back/model
+/back/public/model/model.h5
 /logs
 
 # test

@@ -13,11 +13,7 @@ const RecommendCard = ({ isSelected }) => {
     navigate(`/landmark/detail/${tourId}`);
   };
 
-  /**
-   * TODO 리스트 로딩중일 때 로딩 스피너 나오도록 구현
-   */
-
-  if (!List.data) return <div>데이터가 없습니다</div>;
+  if (!List.data) return <span>loading...</span>;
 
   return (
     <>

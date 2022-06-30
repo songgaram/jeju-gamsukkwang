@@ -7,7 +7,7 @@ const SERVER_URL = `http://${window.location.hostname}:${SERVER_PORT_NUMBER}/`;
 // axios 생성
 const http = axios.create({
   baseURL: SERVER_URL, // 데이터를 요청할 기본 주소
-  timeout: 5000,
+  timeout: 30000,
 });
 
 // axios request 처리
@@ -15,7 +15,13 @@ http.interceptors.request.use(
   async (config) => {
     const accessToken = localStorage.getItem("accessToken");
 
-    console.log(config);
+    if (config.url === "tour/image") {
+      config.headers["Content-Type"] = "multipart/form-data";
+      accessToken &&
+        (config.headers["Authorization"] = `Bearer ${accessToken}`);
+
+      return config;
+    }
 
     // config에 header 설정
     config.headers["Content-Type"] = "application/json; charset=utf-8";

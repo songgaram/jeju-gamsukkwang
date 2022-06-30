@@ -1,0 +1,100 @@
+{
+  "openapi" : "3.0.0",
+  "info" : {
+    "description" : "랜드마크 이미즈를 학습된 모델을 통해 예측 결과를 반환",
+    "version" : "1.0.0",
+    "title" : "제주도 랜드마크 이미지 예측 API"
+  },
+  "servers":[
+    {
+      "url" : "/"
+    }
+  ],
+  "paths":{
+    "/prediction": {
+      "post":{
+        "tags":[
+          "예측 반환"
+        ],
+        "summary": "이미지를 받아 predict, 결과 값을 신뢰도 순으로 정렬 후 반환",
+        "requestBody":{
+          "description": "predict를 원하는 이미지 URL",
+          "required": true,
+          "content":{
+            "application/json": {
+              "schema":{
+                "type":"string"
+              },
+              "example":{
+                "imageURL":"http://www.k-heritage.tv/jnrepo/mig/upload/DataFolder/Upload/Photo/201211117146_133302003_0.jpg"
+              }
+            }
+          }
+
+        },
+        "produces":[
+          "application/json"
+        ],
+        "responses": {
+          "200" : {
+            "description" : "예측 성공, 상위 5개의 기대값을 가진 랜드마크를 반환",
+            "content":{
+              "application/json": {
+                "schema":{
+                  "type":"object",
+                  "properties":{
+                    "summary":{
+                      "type":"array"
+                    },
+                    "imageURL":{
+                      "type":"string"
+                    }
+                  }
+                },
+                "example":{
+                  "summary": [
+                    {
+                        "ranking": 1,
+                        "categoryName": "아침미소목장",
+                        "percentage": 91.63
+                    },
+                    {
+                        "ranking": 2,
+                        "categoryName": "서귀포치유의숲",
+                        "percentage": 1.89
+                    },
+                    {
+                        "ranking": 3,
+                        "categoryName": "천지연 폭포",
+                        "percentage": 1.63
+                    },
+                    {
+                        "ranking": 4,
+                        "categoryName": "협재굴(한림공원)",
+                        "percentage": 1.24
+                    },
+                    {
+                        "ranking": 5,
+                        "categoryName": "사려니숲길",
+                        "percentage": 1.08
+                    }
+                  ],
+                  "imageURL": "./test.jpg"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "예측 성공, 상위 5개의 기대값을 가진 랜드마크를 반환"
+          },
+          "404" : {
+            "description" : "URL 오류, 이미지를 찾을 수 없음"
+          },
+          "500" : {
+            "description" : "예측 과정의 오류, 예측 모델을 찾을 수 없거나 문제가 있음, 또는 기타 서버 문제"
+          }
+        }
+      }
+    }
+  }
+}

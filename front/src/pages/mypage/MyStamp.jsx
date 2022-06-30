@@ -1,24 +1,29 @@
-import { Icon } from "assets/svgs/index";
+import { TangerineIcon } from "assets/svgs/index";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
-import { stampListState } from "./state";
-import { useRecoilValue } from "recoil";
+import { useGetUserInfo } from "queries/userQuery";
+import Loader from "components/loader";
 
 const MyStamp = () => {
   const newArr = new Array(60).fill(false);
-  const stampList = useRecoilValue(stampListState);
-  const stampCount = stampList.length;
-  const [stampedList, setStampedList] = useState(newArr);
+  const { data, status } = useGetUserInfo();
+  const { stamp } = data?.userState || {};
+  const stampCount = stamp.length;
+  const [stampList, setStampedList] = useState(newArr);
 
   useEffect(() => {
-    setStampedList([...stampList, ...newArr.slice(stampCount)]);
+    setStampedList([...stamp, ...newArr.slice(stampCount)]);
   }, []);
+
+  if (status === "loading") return <Loader />;
 
   return (
     <Container>
       <IconContainer>
-        {stampedList.map((tourId, idx) => (
-          <Stamp key={idx} tourId={tourId} />
+        {stampList.map((tourId, idx) => (
+          <div key={idx}>
+            <Stamp key={idx} tourId={tourId} />
+          </div>
         ))}
       </IconContainer>
     </Container>
@@ -34,10 +39,17 @@ const IconContainer = styled.div`
   width: 1000px;
   display: flex;
   flex-wrap: wrap;
-  gap: 5%;
+  row-gap: 5%;
+
+  & > div {
+    position: relative;
+    width: 10%;
+    text-align: center;
+  }
 `;
 
-const Stamp = styled(Icon)`
+const Stamp = styled(TangerineIcon)`
+  max-width: 80%;
   -webkit-filter: grayscale(100%);
   filter: ${(props) => (props.tourId ? "grayscale(0)" : "grayscale(100%)")};
 `;

@@ -63,23 +63,16 @@ export const reviewModel = {
       { $group: { _id: "$rating", cnt: { $sum: 1 } } },
     ]);
 
-    let starRating = [];
+    const starDic = Object.assign({}, ...starCount.map((x) => ({[x._id]: x.cnt})))
+
+    const starRating = [];
 
     for (let i = 5; i > 0; i--) {
-      // starCount에 없는 별점은 0으로 초기화
+
       let starObj = {
-        star: 0,
-        reviews: 0,
+        star: i,
+        reviews: starDic[i] ?? 0,
       };
-
-      starObj.star = i;
-      starCount.map((item) => {
-        // starCount에서 해당하는 별점은 찾아서 각각 넣어주기
-        if (item._id === i) {
-          starObj.reviews = item?.cnt;
-        }
-      });
-
       starRating.push(starObj);
     }
 
