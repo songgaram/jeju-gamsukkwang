@@ -31,6 +31,9 @@ const ContentsBox = styled.div`
   span:last-child {
     background: linear-gradient(#fff 50%, rgba(255, 136, 29, 60%) 50%);
   }
+
+  @media screen and ${({ theme }) => theme.breakPoint} {
+  } ;
 `;
 
 const Button = styled.button`
