@@ -19,5 +19,13 @@ back
 │    │    │     ├── reviewModel.js
 │    │    │     ├── tourModel.js
 │    │    │     └── userModel.js
-│    │    ├──       
+│    │    ├── schemas
+│    │    │     ├── community.js
+│    │    │     ├── review.js
+│    │    │     ├── tour.js
+│    │    │     └── user.js
+│    │    └── index.js
+│    ├── middlewares
+│    │    ├── index.js
+│    │    ├── badRequest.js
 ```
