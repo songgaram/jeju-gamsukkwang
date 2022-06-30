@@ -11,7 +11,7 @@ import MyPage from "pages/mypage";
 import Recommend from "pages/recommend";
 import MyMap from "pages/mypage/MyMap";
 import MyStamp from "pages/mypage/MyStamp";
-import Map from "pages/map";
+import Map from "pages/kakaoMap";
 
 const App = () => {
   return (
