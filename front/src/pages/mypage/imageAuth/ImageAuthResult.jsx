@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { ModalButton, Span } from "./modal.style";
+import { ModalButton, Span } from "./imageAuth.style";
 import { useAddStamp } from "queries/userQuery";
 
 const ImageAuth = ({ data, setIsOpenModal }) => {

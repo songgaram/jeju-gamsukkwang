@@ -1,6 +1,6 @@
 import { LogoIcon } from "assets/svgs";
 import styled, { keyframes } from "styled-components";
-import { Span } from "./modal.style";
+import { Span } from "./imageAuth.style";
 
 const Loading = () => {
   return (

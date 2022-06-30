@@ -1,11 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import styled from "styled-components";
 import { TangerineIcon } from "assets/svgs/index";
 import { ImgInputButton } from "./mypage.style";
-import { useCallback } from "react";
-import { useRef } from "react";
 import http from "libs/apiController";
-import Modal from "./modal";
+import Modal from "./imageAuth/index";
 import ModalPortal from "components/modal/modalPortal";
 
 const Level = ({ experience }) => {
@@ -123,7 +121,7 @@ const Desc = styled.div`
 `;
 
 const Number = styled.div`
-  width: 120px;
+  width: 100px;
   color: ${({ theme }) => theme.colors.orange};
   font-size: 2.5rem;
   font-weight: bold;
