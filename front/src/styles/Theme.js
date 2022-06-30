@@ -24,9 +24,12 @@ const fontSizes = {
   subtitleSize: calcRem(40),
 };
 
+const breakpoint = "(max-width: 550px)";
+
 const theme = {
   colors,
   fontSizes,
+  breakpoint,
 };
 
 export default theme;
