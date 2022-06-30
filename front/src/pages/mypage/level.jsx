@@ -1,10 +1,10 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import styled from "styled-components";
 import { TangerineIcon } from "assets/svgs/index";
-import { ImgInputButton } from "./mypage.style";
 import http from "libs/apiController";
 import Modal from "./imageAuth/index";
 import ModalPortal from "components/modal/modalPortal";
+import ImageAuthBtn from "./imageAuth/ImageAuthBtn";
 
 const Level = ({ experience }) => {
   const [leftExp, setLeftExp] = useState(10);
@@ -56,15 +56,10 @@ const Level = ({ experience }) => {
           </Number>
         </LevelBox>
 
-        <ImgInputButton>
-          📷 랜드마크 인증하고 스탬프 찍기!
-          <input
-            type="file"
-            accept="image/*"
-            ref={photoInput}
-            onChange={handleUploadImage}
-          />
-        </ImgInputButton>
+        <ImageAuthBtn
+          photoInput={photoInput}
+          handleUploadImage={handleUploadImage}
+        />
       </LevelContainer>
       <ModalPortal>
         {isOpenModal && (
