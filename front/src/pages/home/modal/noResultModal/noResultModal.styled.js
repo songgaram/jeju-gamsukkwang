@@ -24,7 +24,6 @@ const ModalBackground = styled.div`
 
   * {
     font-weight: 600;
-    color: ${({ theme }) => theme.colors.black};
   }
 `;
 

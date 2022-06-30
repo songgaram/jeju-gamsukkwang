@@ -37,7 +37,6 @@ const ModalBackground = styled.div`
 
   * {
     font-weight: 600;
-    color: ${({ theme }) => theme.colors.black};
   }
 `;
 
@@ -93,11 +92,12 @@ const ImgInputButton = styled.label`
 `;
 
 const Span = styled.span`
-  font-size: ${({ theme }) => theme.fontSizes.small};
+  font-size: 12px;
   color: ${({ theme }) => theme.colors.gray03};
 
   & > p {
     background: linear-gradient(#fff 50%, rgba(255, 136, 29, 60%) 50%);
+    color: ${({ theme }) => theme.colors.black};
   }
 `;
 
