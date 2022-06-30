@@ -1,9 +1,17 @@
 /*global kakao*/
 import React, { useEffect } from "react";
+import { useParams } from "react-router-dom";
 import "./index.css";
 import styled from "styled-components";
+import { useGetLandmark } from "queries/landmarkQuery";
+import Loader from "components/loader";
 
 const Map = () => {
+  const params = useParams();
+  const tourId = params.id;
+  const { data, status } = useGetLandmark(tourId);
+  const { krTitle, address } = data?.landmark;
+
   useEffect(() => {
     const container = document.getElementById("map");
     const options = {
@@ -15,46 +23,45 @@ const Map = () => {
     // 주소-좌표 변환 객체를 생성합니다
     var geocoder = new kakao.maps.services.Geocoder();
 
-    geocoder.addressSearch(
-      "제주특별자치도 서귀포시 효돈순환로 441",
-      function (result, status) {
-        // 정상적으로 검색이 완료됐으면
-        if (status === kakao.maps.services.Status.OK) {
-          var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+    geocoder.addressSearch(address, function (result, status) {
+      // 정상적으로 검색이 완료됐으면
+      if (status === kakao.maps.services.Status.OK) {
+        const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
 
-          // 결과값으로 받은 위치를 마커로 표시합니다
-          var marker = new kakao.maps.Marker({
-            map: map,
-            position: coords,
-          });
+        // 결과값으로 받은 위치를 마커로 표시합니다
+        const marker = new kakao.maps.Marker({
+          map: map,
+          position: coords,
+        });
 
-          // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-          map.setCenter(coords);
+        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+        map.setCenter(coords);
 
-          // 커스텀 오버레이에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
-          var content =
-            '<div class="customoverlay">' +
-            `  <a href="https://map.kakao.com/link/map/${
-              result[0].y + "," + result[0].x
-            }" target="_blank">` +
-            '    <span class="title">감귤박물관</span>' +
-            "  </a>" +
-            "</div>";
+        // 커스텀 오버레이에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+        const content =
+          '<div class="customoverlay">' +
+          `  <a href="https://map.kakao.com/link/map/${
+            result[0].y + "," + result[0].x
+          }" target="_blank">` +
+          `    <span class="title">${krTitle}</span>` +
+          "  </a>" +
+          "</div>";
 
-          // 커스텀 오버레이가 표시될 위치입니다
-          var position = coords;
+        // 커스텀 오버레이가 표시될 위치입니다
+        const position = coords;
 
-          // 커스텀 오버레이를 생성합니다
-          var customOverlay = new kakao.maps.CustomOverlay({
-            map: map,
-            position: position,
-            content: content,
-            yAnchor: 1,
-          });
-        }
-      },
-    );
+        // 커스텀 오버레이를 생성합니다
+        const customOverlay = new kakao.maps.CustomOverlay({
+          map: map,
+          position: position,
+          content: content,
+          yAnchor: 1,
+        });
+      }
+    });
   }, []);
+
+  if (status === "loading") return <Loader />;
 
   return (
     <MapContainer>
