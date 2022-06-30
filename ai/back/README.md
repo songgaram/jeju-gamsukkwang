@@ -72,3 +72,7 @@
             (.flask) $ cd src
             (.flask) $ gunicorn --workers {workers} --timeout {sec} --bind 0.0.0.0:{port} wsgi:application
             ```
+            <br>
+
+    * API 명세서
+        * [api-docs](http://kdt-ai4-team08.elicecoding.com:5003/api-docs/)
