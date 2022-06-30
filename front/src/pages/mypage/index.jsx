@@ -33,6 +33,11 @@ const InfoContainer = styled.div`
   column-gap: 10%;
   justify-content: center;
   padding: 6rem 15rem;
+
+  @media screen and ${({ theme }) => theme.breakpoint} {
+    display: block;
+    padding: 6rem 2.5rem;
+  }
 `;
 
 const OutletContainer = styled.div`
@@ -41,6 +46,10 @@ const OutletContainer = styled.div`
   height: auto;
   border-radius: 45px 45px 0 0;
   padding: 7% 0;
+
+  @media screen and ${({ theme }) => theme.breakpoint} {
+    padding: 9% 0;
+  }
 `;
 
 export default MyPage;

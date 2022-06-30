@@ -45,6 +45,9 @@ const ProfileBox = styled.div`
   display: flex;
   flex-direction: row;
   padding-left: 15px;
+  @media screen and ${({ theme }) => theme.breakpoint} {
+    justify-content: space-evenly;
+  }
 `;
 
 const ProfileImg = styled.img.attrs({ alt: "프로필 이미지" })`
