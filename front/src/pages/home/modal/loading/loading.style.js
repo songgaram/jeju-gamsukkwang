@@ -49,7 +49,7 @@ const ModalBox = styled.div`
   height: 300px;
   padding: 50px;
   background: ${({ theme }) => theme.colors.white};
-  border-radius: 20px;
+  border-radius: 10px;
   animation: ${slideUp} 0.4s cubic-bezier(0.5, 0, 0, 0.8) forwards;
 `;
 
