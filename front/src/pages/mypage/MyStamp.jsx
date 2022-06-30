@@ -1,3 +1,4 @@
+/*eslint-disable*/
 import { TangerineIcon } from "assets/svgs/index";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
