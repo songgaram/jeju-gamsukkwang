@@ -15,6 +15,13 @@ export const reviewModel = {
     return isPosted;
   },
 
+  // 랜드마크에 대한 인증을 한 사람인지 확인
+  isStamped: async ({ user, tourId }) => {
+    const didAuth = user.stamp.find((item) => item === tourId)
+
+    return didAuth
+  },
+
   // 해당 랜드마크의 총 리뷰수, 평점 평균, 리뷰 목록 불러오기
   findByTourId: async ({ getReviews }) => {
     const { tourId, page, limit } = getReviews;
