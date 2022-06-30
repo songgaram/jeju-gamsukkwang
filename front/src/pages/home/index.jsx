@@ -38,7 +38,7 @@ const Home = () => {
       <ImageSearch />
       <TextButtonBox>
         <span>제주도의 다양한 랜드마크가 궁금하다면</span>
-        <span type="button" onClick={() => navigate("/tour")}>
+        <span type="button" onClick={() => navigate("/recommend")}>
           추천 장소 보러가기 〉
         </span>
       </TextButtonBox>
