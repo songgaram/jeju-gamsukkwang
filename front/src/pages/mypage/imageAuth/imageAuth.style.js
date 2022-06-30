@@ -92,13 +92,10 @@ const ImgInputButton = styled.label`
 `;
 
 const Span = styled.span`
+  margin-top: 15px;
   font-size: 12px;
+  text-align: center;
   color: ${({ theme }) => theme.colors.gray03};
-
-  & > p {
-    background: linear-gradient(#fff 50%, rgba(255, 136, 29, 60%) 50%);
-    color: ${({ theme }) => theme.colors.black};
-  }
 `;
 
 export { ModalBackground, ModalBox, Span, ImgInputButton };

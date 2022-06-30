@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { Span } from "./imageAuth.style";
 import ModalButton from "components/button/ModalButton";
 import { useAddStamp, useIncreaseExp } from "queries/userQuery";
 import { NoResultIcon } from "assets/svgs";
@@ -40,9 +39,7 @@ const ImageAuth = ({ data, setIsOpenModal }) => {
         </>
       ) : (
         <>
-          <Span>
-            <p>지금 계신 곳이 여긴가요!</p>
-          </Span>
+          <Span>지금 계신 곳이 여긴가요!</Span>
           <Card>
             <ImgBox>
               <Img src={data.image} alt="랜드마크 이미지" />
@@ -108,4 +105,10 @@ const BtnContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+`;
+
+const Span = styled.span`
+  background: linear-gradient(#fff 50%, rgba(255, 136, 29, 60%) 50%);
+  font-size: ${({ theme }) => theme.fontSizes.base};
+  font-weight: 400;
 `;

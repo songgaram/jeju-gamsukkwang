@@ -54,7 +54,7 @@ const Level = ({ experience }) => {
             <ProgressBar value={curExp} max="10" />
           </FigureBox>
           <Number>
-            <Emphasized>{curExp}</Emphasized> / 10
+            <span>{curExp}</span> / 10
           </Number>
         </LevelBox>
 
@@ -118,16 +118,16 @@ const Desc = styled.div`
 `;
 
 const Number = styled.div`
-  width: 100px;
+  width: 110px;
   color: ${({ theme }) => theme.colors.orange};
   font-size: 2.5rem;
   font-weight: bold;
-  margin-left: 25px;
-`;
+  margin: 20px 0 0 25px;
 
-const Emphasized = styled.span`
-  color: ${({ theme }) => theme.colors.black};
-  font-size: 3rem;
+  & > span {
+    color: ${({ theme }) => theme.colors.black};
+    font-size: 3rem;
+  }
 `;
 
 const ProgressBar = styled.progress``;
