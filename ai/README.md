@@ -102,6 +102,7 @@
     - Python
     - Flask
     - Gunicorn
+    - flask_swagger_ui
     - Tensorflow
     - Keras
     - Pandas
@@ -163,10 +164,14 @@
     * WSGI서버 연결 실행 - Gunicorn (Linux 환경에서만 가능)
         1. Gunicorn 설치
             ```sh
-            (.flask) $ pip gunicorn
+            (.flask) $ pip install gunicorn
             ```
         2. Gunicorn으로 app.py 실행
             ```sh
             (.flask) $ cd src
             (.flask) $ gunicorn --workers {workers} --timeout {sec} --bind 0.0.0.0:{port} wsgi:application
             ```
+            <br>
+
+    * API 명세서 (swagger)
+        * [api-docs](http://kdt-ai4-team08.elicecoding.com:5003/api-docs/)
