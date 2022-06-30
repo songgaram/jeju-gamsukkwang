@@ -13,6 +13,7 @@ const MyStamp = () => {
 
   useEffect(() => {
     setStampedList([...stamp, ...newArr.slice(stampCount)]);
+    // eslint-disable-next-line
   }, []);
 
   if (status === "loading") return <Loader />;
