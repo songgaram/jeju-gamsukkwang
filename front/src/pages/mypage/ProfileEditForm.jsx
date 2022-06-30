@@ -1,27 +1,19 @@
+import { useState } from "react";
 import { InfoBox, Email, Level, Coloring } from "./mypage.style";
 import styled from "styled-components";
 import Button from "components/button/Button";
 import { LEVEL_LIST } from "./constants";
-import http from "libs/apiController";
+import { useChangeNickname } from "queries/userQuery";
 
-const ProfileEditForm = ({
-  email,
-  level,
-  setEditing,
-  editNickname,
-  setEditNickname,
-}) => {
+const ProfileEditForm = ({ nickname, email, level, setEditing }) => {
+  const [editNickname, setEditNickname] = useState(nickname);
+  const changeNickname = useChangeNickname();
+  const data = { nickname: editNickname };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      await http.put("user", {
-        nickname: editNickname,
-      });
-      setEditNickname(editNickname);
-      setEditing(false);
-    } catch (err) {
-      console.log("user nickname 수정 실패", err);
-    }
+    changeNickname.mutate(data);
+    setEditing(false);
   };
 
   return (
@@ -46,6 +38,8 @@ const ProfileEditForm = ({
   );
 };
 
+export default ProfileEditForm;
+
 const StyledInput = styled.input`
   width: 90%;
   height: 35px;
@@ -60,5 +54,3 @@ const StyledInput = styled.input`
     border: 1px solid ${({ theme }) => theme.colors.primary};
   }
 `;
-
-export default ProfileEditForm;

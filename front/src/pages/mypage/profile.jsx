@@ -8,7 +8,6 @@ import ProfileEditForm from "./ProfileEditForm";
 const Profile = ({ email, nickname, experience }) => {
   const level = parseInt(parseInt(experience) / 10);
   const [editing, setEditing] = useState(false);
-  const [editNickname, setEditNickname] = useState(nickname || "");
 
   const handleClick = () => {
     setEditing(true);
@@ -19,15 +18,14 @@ const Profile = ({ email, nickname, experience }) => {
       <ProfileImg src="https://dev-team8-bucket.s3.ap-northeast-2.amazonaws.com/profileImg.png" />
       {editing ? (
         <ProfileEditForm
+          nickname={nickname}
           email={email}
           level={level}
           setEditing={setEditing}
-          editNickname={editNickname}
-          setEditNickname={setEditNickname}
         />
       ) : (
         <InfoBox>
-          <NickName>{editNickname}</NickName>
+          <NickName>{nickname}</NickName>
           <Email>{email}</Email>
           <Level>
             Lv. <Coloring>{LEVEL_LIST[level].level}</Coloring>
