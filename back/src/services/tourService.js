@@ -16,8 +16,8 @@ class TourService {
   static searchLandmark = async ({ name }) => {
 
     // atlas search index 사용해서 한국어 검색 시 최소 2글자를 입력해야 함
-    const dataValidator = Joi.string().trim().empty().min(2).required();
-    await dataValidator.validateAsync(name);
+    const propValidator = Joi.string().trim().empty().min(2).required();
+    await propValidator.validateAsync(name);
 
     const searchLandmark = await tourModel.searchByName({ name });
     if (searchLandmark.length === 0) {
@@ -44,11 +44,11 @@ class TourService {
 	// 랜드마크에 좋아요 추가하기
   static addLike = async ({ id, currentUserId }) => {
 
-		const dataValidator = Joi.object({
+		const propValidator = Joi.object({
       id: Joi.string().trim().empty().required(),
       currentUserId: Joi.string().trim().empty().required(),
     });
-    await dataValidator.validateAsync({ id, currentUserId });
+    await propValidator.validateAsync({ id, currentUserId });
 
     const user = await userModel.findById({ userId: currentUserId });
     if (!user) {
@@ -80,11 +80,11 @@ class TourService {
 	// 랜드마크에 좋아요 삭제하기
   static removeLike = async ({ id, currentUserId }) => {
 
-		const dataValidator = Joi.object({
+		const propValidator = Joi.object({
       id: Joi.string().trim().empty().required(),
       currentUserId: Joi.string().trim().empty().required(),
     });
-    await dataValidator.validateAsync({ id, currentUserId });
+    await propValidator.validateAsync({ id, currentUserId });
 
     const user = await userModel.findById({ userId: currentUserId });
     if (!user) {
@@ -113,26 +113,20 @@ class TourService {
     return removeLikefromLandmark;
   };
 
-	// 랜드마크 좋아요 높은 순으로 정렬하기
-  static sortByLiked = async ({}) => {
-    const sortLandmarks = await tourModel.sortByLiked({});
+  static sortBy = async ({ criteria }) => {
 
-    return sortLandmarks;
-  };
+    const propValidator = Joi.string().valid("like", "review", "rating").trim().empty().required()
+    const validatedCriteria = await propValidator.validateAsync(criteria)
 
-	// 랜드마크 리뷰수 많은 순으로 정렬하기
-  static sortByReviews = async ({}) => {
-    const sortLandmarks = await tourModel.sortByReviews({});
-
-    return sortLandmarks;
-  };
-
-	// 랜드마크 평점 평균 높은 순으로 정렬하기
-  static sortByRating = async ({}) => {
-    const sortLandmarks = await tourModel.sortByRating({});
-
-    return sortLandmarks;
-  };
+    switch (validatedCriteria){
+      case "like":
+        return await tourModel.sortByLiked({});
+      case "review":
+        return await tourModel.sortByReviews({});
+      case "rating":
+        return await tourModel.sortByRating({});
+    }
+  }
 }
 
 export { TourService };
