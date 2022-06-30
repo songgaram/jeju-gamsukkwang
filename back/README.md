@@ -56,6 +56,6 @@ back
 │    │    └── index.js
 │    ├── validators
 │    │    └── index.js
-│    └ app.js
-└ index.js
+│    └── app.js
+└── index.js
 ```
