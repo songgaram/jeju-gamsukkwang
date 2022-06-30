@@ -2,9 +2,30 @@ from flask import Flask, request, Response, jsonify, abort
 from flask_cors import CORS
 import json
 import prediction
+from flask_swagger_ui import get_swaggerui_blueprint
 
 application = Flask(__name__)
 cors = CORS(application)
+
+
+@app.route('/static/<path:path>')
+def send_static(path):
+    return send_from_directory('static', path)
+
+
+SWAGGER_URL = '/swagger'
+API_URL = '/static/swagger.json'
+swaggerui_blueprint = get_swaggerui_blueprint(
+    SWAGGER_URL,
+    API_URL,
+    config={
+        'app_name': "Seans-Python-Flask-REST-Biolerplate"
+    }
+)
+app.register_blueprint(swaggerui_blueprint, url_prefix=SWAGGER_URL)
+
+app.register_blueprint(request_api.get_blueprint())
+
 
 @application.errorhandler(400)
 def resource_not_found(e):
