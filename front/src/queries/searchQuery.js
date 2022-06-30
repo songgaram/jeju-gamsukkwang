@@ -9,3 +9,11 @@ export const useGetTourList = () => {
     return data;
   });
 };
+
+export const useGetTourSearch = (name) => {
+  return useQuery(["useGetTourSearch"], async () => {
+    const res = await http.get(`/tour/search?name=${name}`);
+    const data = res.data;
+    return data;
+  });
+};

@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { useGetList } from "queries/recommendQuery";
 
 import { Card, TextBox, ImgBox, Img } from "./card.style";
-import Loader from "components/loader";
 
 const RecommendCard = ({ isSelected }) => {
   const navigate = useNavigate();
@@ -14,16 +13,7 @@ const RecommendCard = ({ isSelected }) => {
     navigate(`/landmark/detail/${tourId}`);
   };
 
-  /**
-   * TODO 리스트 로딩중일 때 로딩 스피너 나오도록 구현
-   */
-
-  if (!List.data)
-    return (
-      <>
-        <Loader />
-      </>
-    );
+  if (!List.data) return <span>loading...</span>;
 
   return (
     <>

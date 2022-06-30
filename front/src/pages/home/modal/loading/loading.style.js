@@ -1,3 +1,4 @@
+<<<<<<< HEAD:front/src/pages/home/loading/index.jsx
 import ModalPortal from "components/modal/modalPortal";
 import { LogoIcon } from "assets/svgs";
 
@@ -20,6 +21,10 @@ const Loading = () => {
 
 export default Loading;
 
+=======
+import styled, { keyframes } from "styled-components";
+
+>>>>>>> e7da8d0d7176fcca6c0e9febb3eb95217e282d40:front/src/pages/home/modal/loading/loading.style.js
 const fadeIn = keyframes`
  from {
     background: rgba(0, 0, 0, 0%);
@@ -69,7 +74,7 @@ const ModalBox = styled.div`
   height: 300px;
   padding: 50px;
   background: ${({ theme }) => theme.colors.white};
-  border-radius: 20px;
+  border-radius: 10px;
   animation: ${slideUp} 0.4s cubic-bezier(0.5, 0, 0, 0.8) forwards;
 `;
 
@@ -80,6 +85,8 @@ const rotateImage = keyframes`
 `;
 
 const LogoBox = styled.div`
-  animation: ${rotateImage} 1.8s linear infinite;
+  animation: ${rotateImage} 2.5s linear infinite;
   transform-origin: 50% 50%;
 `;
+
+export { ModalBackground, ModalBox, LogoBox };
