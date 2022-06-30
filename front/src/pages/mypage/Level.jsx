@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
-import { TangerineIcon } from "assets/svgs/index";
+import { TangerineIcon, TangerineIconSm } from "assets/svgs/index";
 import { ImgInputButton } from "./mypage.style";
 import { useCallback } from "react";
 import { useRef } from "react";
 import http from "libs/apiController";
 import Modal from "./modal";
 import ModalPortal from "components/modal/modalPortal";
+import { useMediaQuery } from "react-responsive";
 
 const Level = ({ experience }) => {
   const [leftExp, setLeftExp] = useState(10);
@@ -15,6 +16,7 @@ const Level = ({ experience }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState([]);
   const photoInput = useRef(null);
+  const isMobile = useMediaQuery({ maxDeviceWidth: 550 });
 
   useEffect(() => {
     if (experience) {
@@ -49,7 +51,8 @@ const Level = ({ experience }) => {
         <LevelBox>
           <FigureBox>
             <Desc>
-              {leftExp} <TangerineIcon /> until Next Level
+              {leftExp} {isMobile ? <TangerineIconSm /> : <TangerineIcon />}
+              until Next Level
             </Desc>
             <ProgressBar value={curExp} max="10" />
           </FigureBox>
@@ -84,6 +87,10 @@ const Level = ({ experience }) => {
 const LevelContainer = styled.div`
   display: flex;
   flex-direction: column;
+
+  @media screen and ${({ theme }) => theme.breakpoint} {
+    margin-top: 4rem;
+  }
 `;
 
 const LevelBox = styled.div`
@@ -112,6 +119,10 @@ const FigureBox = styled.div`
       background-color: ${({ theme }) => theme.colors.orange};
       border-radius: 20px;
     }
+
+    @media screen and ${({ theme }) => theme.breakpoint} {
+      width: 22rem;
+    }
   }
 `;
 
@@ -120,19 +131,32 @@ const Desc = styled.div`
   font-weight: bold;
   font-size: 2.5rem;
   margin-bottom: 15px;
+
+  @media screen and ${({ theme }) => theme.breakpoint} {
+    font-size: 1.5rem;
+  }
 `;
 
 const Number = styled.div`
-  width: 100px;
+  width: 4em;
   color: ${({ theme }) => theme.colors.orange};
   font-size: 2.5rem;
   font-weight: bold;
-  margin-left: 25px;
+  margin-left: 3rem;
+
+  @media screen and ${({ theme }) => theme.breakpoint} {
+    margin-left: 1rem;
+    font-size: 1.5rem;
+  }
 `;
 
 const Emphasized = styled.span`
   color: ${({ theme }) => theme.colors.black};
   font-size: 3rem;
+
+  @media screen and ${({ theme }) => theme.breakpoint} {
+    font-size: 2rem;
+  }
 `;
 
 const ProgressBar = styled.progress``;
