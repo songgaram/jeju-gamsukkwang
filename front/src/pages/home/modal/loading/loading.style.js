@@ -1,5 +1,30 @@
+<<<<<<< HEAD:front/src/pages/home/loading/index.jsx
+import ModalPortal from "components/modal/modalPortal";
+import { LogoIcon } from "assets/svgs";
+
 import styled, { keyframes } from "styled-components";
 
+const Loading = () => {
+  return (
+    <ModalPortal>
+      <ModalBackground>
+        <ModalBox>
+          <LogoBox>
+            <LogoIcon width={100} />
+          </LogoBox>
+          <span>감귤이가 장소를 찾고 있어요</span>
+        </ModalBox>
+      </ModalBackground>
+    </ModalPortal>
+  );
+};
+
+export default Loading;
+
+=======
+import styled, { keyframes } from "styled-components";
+
+>>>>>>> e7da8d0d7176fcca6c0e9febb3eb95217e282d40:front/src/pages/home/modal/loading/loading.style.js
 const fadeIn = keyframes`
  from {
     background: rgba(0, 0, 0, 0%);

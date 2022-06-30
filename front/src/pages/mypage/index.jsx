@@ -2,31 +2,19 @@ import styled from "styled-components";
 import Profile from "./Profile";
 import Level from "./Level";
 import Navs from "./Navs";
-import { useEffect } from "react";
-import { Outlet, useParams } from "react-router-dom";
-import { useGetUserState } from "queries/userQuery";
-import { levelState, stampListState } from "./state";
-import { useSetRecoilState } from "recoil";
+import { Outlet } from "react-router-dom";
+import { useGetUserInfo } from "queries/userQuery";
+import Loader from "components/loader";
 
 const MyPage = () => {
-  const params = useParams();
-  const id = params.id;
-  const { data } = useGetUserState(id);
-  const { email, nickname, experience, stamp } = data?.userState || {};
-  const setLevel = useSetRecoilState(levelState);
-  const setStampedList = useSetRecoilState(stampListState);
-
-  useEffect(() => {
-    if (experience) {
-      setLevel(parseInt(parseInt(experience) / 10));
-      setStampedList(stamp);
-    }
-  }, [experience]);
+  const { data, status } = useGetUserInfo();
+  const { email, nickname, experience } = data?.userState || {};
+  if (status === "loading") return <Loader />;
 
   return (
     <>
       <InfoContainer>
-        <Profile email={email} nickname={nickname} />
+        <Profile email={email} nickname={nickname} experience={experience} />
         <Level experience={experience} />
       </InfoContainer>
       <Navs />
@@ -40,7 +28,6 @@ const MyPage = () => {
 const InfoContainer = styled.div`
   width: 100%;
   position: relative;
-  z-index: -1;
   display: grid;
   grid-template-columns: 1.5fr 2fr;
   column-gap: 10%;

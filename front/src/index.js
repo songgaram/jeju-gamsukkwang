@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
@@ -19,7 +19,9 @@ root.render(
       <RecoilRoot>
         <BrowserRouter>
           <ThemeProvider theme={theme}>
-            <App />
+            <Suspense fallback={<div>Loading...</div>}>
+              <App />
+            </Suspense>
           </ThemeProvider>
         </BrowserRouter>
       </RecoilRoot>

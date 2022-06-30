@@ -43,7 +43,7 @@ const App = () => {
         <Route path="/intro" element={<Intro />} />
         <Route path="/landmark/detail/:id" element={<Landmark />} />
         <Route path="/recommend" element={<Recommend />} />
-        <Route path="/mypage/:id" element={<MyPage />}>
+        <Route path="/mypage" element={<MyPage />}>
           <Route index element={<MyMap />} />
           <Route path="mymap" element={<MyMap />} />
           <Route path="mystamp" element={<MyStamp />} />

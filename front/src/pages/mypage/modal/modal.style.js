@@ -43,10 +43,9 @@ const ModalBackground = styled.div`
 const ModalBox = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  width: 400px;
-  height: 300px;
+
   padding: 50px;
   background: ${({ theme }) => theme.colors.white};
   border-radius: 20px;
@@ -58,6 +57,16 @@ const ModalButton = styled.button`
   background-color: #e5e5f1;
   border-radius: 10px;
   border: none;
+  cursor: pointer;
 `;
 
-export { ModalBackground, ModalBox, ModalButton };
+const Span = styled.span`
+  font-size: ${({ theme }) => theme.fontSizes.small};
+  color: ${({ theme }) => theme.colors.gray03};
+
+  & > p {
+    background: linear-gradient(#fff 50%, rgba(255, 136, 29, 60%) 50%);
+  }
+`;
+
+export { ModalBackground, ModalBox, ModalButton, Span };
