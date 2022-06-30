@@ -10,11 +10,13 @@ import { HeaderContainer, HeaderWrapper, Nav } from "./header.style";
 
 const Header = () => {
   const navigate = useNavigate();
+
   const [isLogin, setInLogin] = useRecoilState(loginState);
 
   const handleLogoutClick = () => {
     localStorage.removeItem("accessToken");
-    navigate("/");
+    window.location.replace("/");
+    // navigate("/");
     setInLogin(false);
   };
 
