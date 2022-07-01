@@ -1,16 +1,27 @@
 import { useGetPost } from "queries/communityQuery";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import ReactHtmlParser from "react-html-parser";
 
 import styled from "styled-components";
 
 const PostDetail = () => {
+  const navigate = useNavigate();
   const params = useParams();
   const postId = params.id;
   const postItem = useGetPost(postId);
 
   return (
     <PostDetailBox>
+      <div>
+        <button
+          type="button"
+          onClick={() => {
+            navigate("/community");
+          }}
+        >
+          뒤로가기
+        </button>
+      </div>
       <ContentBox>
         <h2>
           <span>[</span>
@@ -39,6 +50,19 @@ const PostDetailBox = styled.div`
   flex-direction: column;
   justify-content: center;
   margin: 50px 0;
+
+  div {
+    width: 800px;
+    margin: 0 auto;
+    button {
+      width: 100px;
+      padding: 7px 15px;
+      margin-bottom: 30px;
+      border: none;
+      border-radius: 10px;
+      font-size: 12px;
+    }
+  }
 `;
 
 const ContentBox = styled.div`
