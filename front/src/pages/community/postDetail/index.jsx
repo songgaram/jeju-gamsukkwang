@@ -1,7 +1,6 @@
 import { useGetPost } from "queries/communityQuery";
 import { useParams, useNavigate } from "react-router-dom";
 import ReactHtmlParser from "react-html-parser";
-
 import styled from "styled-components";
 
 const PostDetail = () => {
@@ -12,16 +11,6 @@ const PostDetail = () => {
 
   return (
     <PostDetailBox>
-      <div>
-        <button
-          type="button"
-          onClick={() => {
-            navigate("/community");
-          }}
-        >
-          뒤로가기
-        </button>
-      </div>
       <ContentBox>
         <h2>
           <span>[</span>
@@ -39,6 +28,16 @@ const PostDetail = () => {
         <hr />
         <div>{ReactHtmlParser(`${postItem?.data?.content}`)}</div>
       </ContentBox>
+      <section>
+        <button
+          type="button"
+          onClick={() => {
+            navigate("/community");
+          }}
+        >
+          뒤로가기
+        </button>
+      </section>
     </PostDetailBox>
   );
 };
@@ -51,10 +50,11 @@ const PostDetailBox = styled.div`
   justify-content: center;
   margin: 50px 0;
 
-<<<<<<< HEAD
-  div {
-    width: 800px;
-    margin: 0 auto;
+  section {
+    display: flex;
+    justify-content: flex-end;
+    width: 90%;
+    margin-top: 20px;
     button {
       width: 100px;
       padding: 7px 15px;
@@ -63,11 +63,20 @@ const PostDetailBox = styled.div`
       border-radius: 10px;
       font-size: 12px;
     }
-=======
+  }
+
   @media screen and ${({ theme }) => theme.breakPoint} {
     width: 100%;
     margin: 20px 0;
->>>>>>> b3ef8e9dfb27ee7530fa1fc51c3eb45068b53fee
+
+    section {
+      width: 100%;
+      margin-top: 15px;
+
+      button {
+        margin-right: 15px;
+      }
+    }
   }
 `;
 
