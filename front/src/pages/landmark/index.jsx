@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Button from "components/Button";
 import ReviewSection from "./ReviewSection";
@@ -8,6 +8,11 @@ const Landmark = () => {
   const params = useParams();
   const id = params.id;
   const { data } = useGetLandmark(id);
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(`/map/${data?.landmark?.id}`);
+  };
 
   return (
     <>
@@ -16,7 +21,9 @@ const Landmark = () => {
         <DetailContainer>
           <Header>
             <DetailTitle>{data?.landmark?.krTitle}</DetailTitle>
-            <Button color="gray03">길찾기</Button>
+            <Button color="gray03" onClick={handleClick}>
+              길찾기
+            </Button>
           </Header>
 
           <DetailContent>
