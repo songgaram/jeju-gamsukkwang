@@ -6,6 +6,8 @@ import Button from "components/Button";
 import CardSection from "./CardSection";
 import DescSection from "./DescSection";
 import { useScrollFadeIn } from "hooks/useScrollFadeIn";
+import theme from "../../styles/Theme";
+import { useMediaQuery } from "react-responsive";
 
 const Intro = () => {
   const animatedItem = {
@@ -13,17 +15,27 @@ const Intro = () => {
     1: useScrollFadeIn("up", 0.9, 0.5),
   };
 
+  const mediaQuery = useMediaQuery({ query: theme.breakPoint });
+
   return (
     <IntroContainer>
       <MainContainer>
         <ContentContainer {...animatedItem[0]}>
           <Title src={IntroTitle} alt="인트로 타이틀" />
-          <Subtitle>
-            <Highlighted>제주감수꽝</Highlighted>은 제주를 소개하고 다녀온
-            랜드마크를 <br />
-            인증할 수 있는 <Highlighted>공유 서비스</Highlighted>
-            입니다.
-          </Subtitle>
+          {!mediaQuery ? (
+            <Subtitle>
+              <Highlighted>제주감수꽝</Highlighted>은 제주를 소개하고 다녀온
+              랜드마크를 <br />
+              인증할 수 있는 <Highlighted>공유 서비스</Highlighted>
+              입니다.
+            </Subtitle>
+          ) : (
+            <Subtitle>
+              <Highlighted>제주감수꽝</Highlighted>은<br />
+              제주를 소개하고 다녀온 랜드마크를 <br />
+              인증할 수 있는 <Highlighted>공유 서비스</Highlighted>입니다.
+            </Subtitle>
+          )}
           <Button>로그인하고 시작하기</Button>
         </ContentContainer>
 
@@ -67,6 +79,9 @@ const Subtitle = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.xxxl};
   text-align: center;
   font-weight: 500;
+  @media screen and ${({ theme }) => theme.breakPoint} {
+    line-height: 150%;
+  }
 `;
 
 const Highlighted = styled.span`

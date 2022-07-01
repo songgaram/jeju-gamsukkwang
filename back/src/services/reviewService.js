@@ -33,6 +33,14 @@ class ReviewService {
       rating,
     };
 
+    // 리뷰 작성은 랜드마크에 대한 인증을 한 사람만 가능
+    const didAuth = await reviewModel.isStamped({
+      user, tourId
+    })
+    if (!didAuth) {
+      throw new Error("system.error.noAuthorized");
+    }
+
     // 리뷰 작성은 한 사용자가 랜드마크 당 1개까지만 작성 가능
     const didPostReview = await reviewModel.isPosted({
       tourId,

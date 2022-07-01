@@ -62,7 +62,7 @@ class CommunityService {
   };
 
   // 게시글 작성
-  static addArticle = async ({ loginUserId, title, content, head, images }) => {
+  static addArticle = async ({ loginUserId, title, content, head }) => {
     const propSchema = Joi.object().keys({
       loginUserId: Joi.string().trim().empty().required(),
       title: Joi.string().trim().empty().required(),
@@ -72,7 +72,6 @@ class CommunityService {
         .empty()
         .valid("free", "info", "question")
         .required(),
-      images: Joi.any(),
     });
 
     await propSchema.validateAsync({
@@ -80,7 +79,6 @@ class CommunityService {
       title,
       content,
       head,
-      images,
     });
 
     const user = await userModel.findById({ userId: loginUserId });
@@ -94,7 +92,6 @@ class CommunityService {
       title,
       content,
       head,
-      saveFileName: images,
     };
 
     const createdNewArticle = await communityModel.create({ newArticle });
@@ -110,7 +107,6 @@ class CommunityService {
         title: Joi.string().trim().empty().required(),
         content: Joi.string().trim().empty().required(),
         head: Joi.string().valid("free", "info", "question").required(),
-        saveFileName: Joi.any(),
       }).required(),
     });
 

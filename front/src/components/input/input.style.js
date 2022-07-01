@@ -13,9 +13,8 @@ const StyledInput = styled.input`
     border: 1px solid ${({ theme }) => theme.colors.primary};
   }
 
-  @media screen and (max-width: 540px) {
+  @media screen and ${({ theme }) => theme.breakPoint} {
     width: 300px;
-  }
 `;
 
 export { StyledInput };

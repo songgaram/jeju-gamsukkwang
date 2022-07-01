@@ -24,6 +24,10 @@ const ImageUploadBox = styled.label`
   input {
     display: none;
   }
+
+  @media screen and ${({ theme }) => theme.breakPoint} {
+    width: 340px;
+  }
 `;
 
 const Span = styled.span`
