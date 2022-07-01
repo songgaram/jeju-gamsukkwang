@@ -8,10 +8,10 @@ import PostList from "./postList";
 
 const Community = () => {
   const navigate = useNavigate();
-  const [isSelected, setInSelected] = useState("");
+  const [headSelected, setHeadSelected] = useState("");
 
   const dropDownFunction = (itemValue) => {
-    setInSelected(itemValue);
+    setHeadSelected(itemValue);
   };
 
   return (
@@ -21,7 +21,7 @@ const Community = () => {
         <Dropdown dropDownFunction={dropDownFunction} />
       </DropdownBox>
       <PostBox>
-        <PostList isSelected={isSelected} />
+        <PostList headSelected={headSelected} />
       </PostBox>
       <ButtonBox>
         <button type="button" onClick={() => navigate("/community/post")}>

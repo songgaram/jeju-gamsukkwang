@@ -1,7 +1,6 @@
 import { useGetPost } from "queries/communityQuery";
 import { useParams } from "react-router-dom";
 import ReactHtmlParser from "react-html-parser";
-import dayjs from "dayjs";
 
 import styled from "styled-components";
 

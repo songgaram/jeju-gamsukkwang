@@ -1,15 +1,15 @@
-// import { useState } from "react";
+import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { useGetPostList } from "queries/communityQuery";
 
 import styled from "styled-components";
 
-const PostList = ({ isSelected }) => {
+const PostList = ({ headSelected }) => {
   const navigate = useNavigate();
 
   // const [page, setPage] = useState(1);
-  const List = useGetPostList(isSelected);
+  const List = useGetPostList(headSelected);
 
   const handleClick = (postId) => {
     navigate(`/community/${postId}`);
