@@ -40,6 +40,11 @@ const PostDetailBox = styled.div`
   flex-direction: column;
   justify-content: center;
   margin: 50px 0;
+
+  @media screen and ${({ theme }) => theme.breakPoint} {
+    width: 100%;
+    margin: 20px 0;
+  }
 `;
 
 const ContentBox = styled.div`
@@ -69,5 +74,10 @@ const ContentBox = styled.div`
 
   * {
     margin-bottom: 10px;
+  }
+
+  @media screen and ${({ theme }) => theme.breakPoint} {
+    width: 100%;
+    padding: 20px;
   }
 `;
