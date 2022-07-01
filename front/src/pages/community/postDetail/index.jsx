@@ -66,6 +66,7 @@ const ContentBox = styled.div`
     margin: 50px 0;
 
     img {
+      max-width: 700px;
       @media screen and ${({ theme }) => theme.breakPoint} {
         max-width: 300px;
       }
