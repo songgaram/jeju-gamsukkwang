@@ -9,8 +9,8 @@ import LogIn from "pages/logIn";
 import Layout from "components/layout";
 import MyPage from "pages/mypage";
 import Recommend from "pages/recommend";
-import MyMap from "pages/mypage/MyMap";
-import MyStamp from "pages/mypage/MyStamp";
+import MyMap from "pages/mypage/nav/MyMap";
+import MyStamp from "pages/mypage/nav/MyStamp";
 import Map from "pages/kakaoMap";
 
 const App = () => {

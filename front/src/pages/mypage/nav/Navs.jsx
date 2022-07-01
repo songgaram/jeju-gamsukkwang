@@ -2,7 +2,7 @@ import styled, { useTheme } from "styled-components";
 import { darken } from "polished";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { NAV_LIST } from "./constants";
+import { NAV_LIST } from "../constants";
 
 const Navs = () => {
   const [isSelected, setIsSelected] = useState([true, false]);
