@@ -1,3 +1,4 @@
+/*eslint-disable*/
 import { TangerineIcon } from "assets/svgs/index";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
@@ -35,6 +36,10 @@ const Container = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
+
+  @media screen and ${({ theme }) => theme.breakPoint} {
+    padding: 10%;
+  }
 `;
 const IconContainer = styled.div`
   width: 1000px;

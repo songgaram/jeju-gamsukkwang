@@ -8,43 +8,55 @@ import { s3Multi } from "../middlewares/multerS3";
 const communityRouter = Router();
 
 // 게시글 작성
+communityRouter.post("/community", loginRequired, async (req, res, next) => {
+  try {
+    const bodySchema = Joi.object().keys({
+      title: Joi.string().trim().empty().required(),
+      content: Joi.string().trim().empty().required(),
+      head: Joi.string()
+        .trim()
+        .empty()
+        .valid("free", "info", "question")
+        .required(),
+    });
+    const idSchema = Joi.string().empty().required();
+
+    await idSchema.validateAsync(req.currentUserId);
+    await bodySchema.validateAsync(req.body);
+
+    const loginUserId = req.currentUserId;
+    const { title, content, head } = req.body;
+
+    const newArticle = await CommunityService.addArticle({
+      loginUserId,
+      title,
+      content,
+      head,
+    });
+
+    res.status(201).json(newArticle);
+  } catch (err) {
+    next(err);
+  }
+});
+
+// 게시글 이미지 파일 올리기
 communityRouter.post(
-  "/community",
+  "/community/image",
   loginRequired,
   s3Multi(),
   async (req, res, next) => {
     try {
-      const bodySchema = Joi.object().keys({
-        title: Joi.string().trim().empty().required(),
-        content: Joi.string().trim().empty().required(),
-        head: Joi.string()
-          .trim()
-          .empty()
-          .valid("free", "info", "question")
-          .required(),
-        imgFile: Joi.any(),
-      });
+      const fileSchema = Joi.any().empty().required();
       const idSchema = Joi.string().empty().required();
 
       await idSchema.validateAsync(req.currentUserId);
-      await bodySchema.validateAsync(req.body);
+      await fileSchema.validateAsync(req.files);
 
-      const loginUserId = req.currentUserId;
-      const { title, content, head } = req.body;
       // 이미지의 전체 url이 아닌 이미지의 이름만 가져온다.
-      const images = req.files.map(
-        (image) => image.location.split("amazonaws.com/")[1],
-      );
+      const images = req.files.map((image) => image.location);
 
-      const newArticle = await CommunityService.addArticle({
-        loginUserId,
-        title,
-        content,
-        head,
-        images,
-      });
-
-      res.status(201).json(newArticle);
+      res.status(201).json(images);
     } catch (err) {
       next(err);
     }
@@ -66,7 +78,6 @@ communityRouter.put(
           .empty()
           .valid("free", "info", "question")
           .required(),
-        imgFile: Joi.any(),
       });
       const idSchema = Joi.string().empty().required();
 
@@ -78,15 +89,6 @@ communityRouter.put(
       const { title, content, head } = req.body;
 
       let toUpdate = { title, content, head };
-
-      // 이미지의 전체 url이 아닌 이미지의 이름만 가져온다.
-      if (req.files) {
-        const images = req.files.map(
-          (image) => image.location.split("amazonaws.com/")[1],
-        );
-        toUpdate.saveFileName = images;
-        return;
-      }
 
       const editedArticle = await CommunityService.setArticle({
         loginUserId,
