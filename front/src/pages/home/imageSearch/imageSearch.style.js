@@ -38,6 +38,10 @@ const InfoBox = styled.div`
 
   p {
     cursor: pointer;
+
+    svg {
+      margin-right: 5px;
+    }
   }
 
   ul {
@@ -50,6 +54,7 @@ const InfoBox = styled.div`
     font-size: 12px;
     color: ${({ theme }) => theme.colors.gray03};
   }
+
   &:hover {
     ul {
       opacity: 1;
