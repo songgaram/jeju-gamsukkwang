@@ -1,5 +1,6 @@
 import React, { useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useMediaQuery } from "react-responsive";
 
 import ReactQuill from "react-quill";
 
@@ -8,9 +9,11 @@ import HeadDropdown from "./headDropdown";
 
 import styled from "styled-components";
 import "react-quill/dist/quill.snow.css";
+import theme from "../../../styles/Theme";
 
 const Post = () => {
   const navigate = useNavigate();
+  const mediaQuery = useMediaQuery({ query: theme.breakPoint });
 
   const imageRef = useRef();
   const quillRef = useRef();
@@ -109,7 +112,13 @@ const Post = () => {
 
   return (
     <PostBox>
-      <h2>✏️ 게시글 작성</h2>
+      {!mediaQuery ? (
+        <h2>✏️ 게시글 작성</h2>
+      ) : (
+        <section>
+          <h2>✏️ 게시글 작성</h2>
+        </section>
+      )}
       <FlexBox>
         <HeadDropdown headFunction={headFunction} />
         <TitleBox>
@@ -167,6 +176,12 @@ const PostBox = styled.div`
   @media screen and ${({ theme }) => theme.breakPoint} {
     width: 100%;
     align-items: center;
+
+    > section {
+      display: flex;
+      justify-content: flex-start;
+      width: 90%;
+    }
   }
 `;
 

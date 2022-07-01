@@ -77,7 +77,10 @@ const Header = () => {
                 </Button>
                 <DropdownMenu hidden={hidden} toggle={() => setHidden(!hidden)}>
                   {NAV_LIST.map((data) => (
-                    <DropdownItem key={`nav-link-${data.id}`}>
+                    <DropdownItem
+                      key={`nav-link-${data.id}`}
+                      style={{ margin: "15px 0" }}
+                    >
                       <NavLink
                         to={`${data.path}`}
                         style={({ isActive }) => ({
