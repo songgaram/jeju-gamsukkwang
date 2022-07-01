@@ -1,4 +1,3 @@
-import styled from "styled-components";
 import { useState } from "react";
 import {
   ReviewFormContainer,
@@ -8,42 +7,69 @@ import {
 } from "./landmark.style";
 import Button from "components/button/Button";
 import { BsStarFill } from "react-icons/bs";
+import { useUpdateReview } from "queries/reviewQuery";
+import { CardHeader, CardText } from "./landmark.style";
 
-const ReviewEditForm = () => {
-  const [content, setContent] = useState("");
+const ReviewEditForm = ({ review, setIsEditing }) => {
+  const { userNickName, content, rating, createdAt, id } = review;
+
+  const [editContent, setEditContent] = useState(content);
   const [hovered, setHovered] = useState(null);
-  const [clicked, setClicked] = useState(null);
-  const [rating, setRating] = useState(undefined);
-  const handleSubmitReview = (e) => {
+  const [clicked, setClicked] = useState(rating);
+  const [editRating, setEditRating] = useState(rating);
+
+  const updateReview = useUpdateReview(id);
+
+  const handleEditReview = (e) => {
     e.preventDefault();
+
+    const review = {
+      content: editContent,
+      rating: Number(editRating),
+    };
+
+    updateReview.mutate(review);
+    setIsEditing(false);
   };
 
   return (
-    <ReviewFormContainer onSubmit={handleSubmitReview}>
-      <StarContainer>
-        {[1, 2, 3, 4, 5].map((el) => (
-          <BsStarFill
-            color={(clicked >= el) | (hovered >= el) ? "#AAD8FE" : "#dedede"}
-            key={el}
-            onMouseEnter={() => setHovered(el)}
-            onMouseLeave={() => setHovered(null)}
-            onClick={() => {
-              setClicked(el);
-              setRating(el);
-            }}
-            cursor="pointer"
-          />
-        ))}
-      </StarContainer>
+    <ReviewFormContainer onSubmit={handleEditReview}>
+      <CardHeader>
+        <StarContainer>
+          {[1, 2, 3, 4, 5].map((el) => (
+            <BsStarFill
+              color={(clicked >= el) | (hovered >= el) ? "#AAD8FE" : "#dedede"}
+              key={el}
+              onMouseEnter={() => setHovered(el)}
+              onMouseLeave={() => setHovered(null)}
+              onClick={() => {
+                setClicked(el);
+                setEditRating(el);
+              }}
+              cursor="pointer"
+            />
+          ))}
+        </StarContainer>
+        <CardText>{userNickName}</CardText>
+        <CardText color="gray03">{createdAt.slice(0, 10)}</CardText>
+      </CardHeader>
+
       <InputForm
-        maxlength="1000"
-        value={content}
-        onChange={(e) => setContent(e.target.value)}
+        maxLength="1000"
+        value={editContent}
+        onChange={(e) => setEditContent(e.target.value)}
       />
       <Footer>
-        <div>{content.length}/1000</div>
-        <Button color="deepblue" type="submit" onSubmit={handleSubmitReview}>
-          리뷰 등록
+        <div>{editContent.length}/1000</div>
+        <Button
+          color="primary"
+          type="submit"
+          onSubmit={() => setIsEditing(false)}
+        >
+          취소
+        </Button>
+        <Button color="deepblue" type="submit" onSubmit={handleEditReview}>
+          수정 완료
         </Button>
       </Footer>
     </ReviewFormContainer>

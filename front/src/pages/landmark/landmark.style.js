@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 const ReviewFormContainer = styled.form`
   width: 100%;
@@ -6,7 +6,7 @@ const ReviewFormContainer = styled.form`
 
 const InputForm = styled.textarea`
   width: 100%;
-  height: 300px;
+  height: 200px;
   margin: 1% 0;
   resize: none;
   font-size: ${({ theme }) => theme.fontSizes.lg};
@@ -29,7 +29,38 @@ const Footer = styled.div`
 const StarContainer = styled.div`
   text-align: center;
   border: none;
-  padding: 3% 1%;
+
+  ${(props) => {
+    return css`
+      padding: ${props.padding};
+    `;
+  }}
 `;
 
-export { ReviewFormContainer, InputForm, Footer, StarContainer };
+const CardHeader = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 5% 1% 0 0;
+`;
+
+const CardText = styled.p`
+  ${(props) => {
+    const selected = props.theme.colors[props.color];
+    return css`
+      color: ${selected};
+    `;
+  }}
+  font-size: ${({ theme }) => theme.fontSizes.lg};
+  margin-left: 1%;
+`;
+
+export {
+  ReviewFormContainer,
+  InputForm,
+  Footer,
+  StarContainer,
+  CardHeader,
+  CardText,
+};

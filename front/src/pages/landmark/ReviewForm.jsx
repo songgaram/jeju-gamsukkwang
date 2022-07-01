@@ -68,7 +68,7 @@ const ReviewForm = ({ id }) => {
               <Required>필수</Required>
             </HeaderContainer>
 
-            <StarContainer>
+            <StarContainer padding="3% 1%">
               {[1, 2, 3, 4, 5].map((el) => (
                 <BsStarFill
                   color={

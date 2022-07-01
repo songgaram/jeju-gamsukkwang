@@ -13,8 +13,8 @@ const ImageAuthBtn = ({ photoInput, handleUploadImage }) => {
         />
       </ImgInputButton>
       <Span>
-        ✓ 이미지 검색 기능은 jpg 파일만 지원됩니다.
-        <br />✓ 건물 랜드마크일 경우에는 입구를 찍어주세요.
+        ✓ 건물일 경우 전체가 다 보이게, 테마공원의 경우 입구를 찍어주세요!
+        <br />✓ 이미지 검색 기능은 jpg 파일만 지원됩니다.
       </Span>
     </>
   );

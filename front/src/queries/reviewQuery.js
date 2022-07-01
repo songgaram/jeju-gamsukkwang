@@ -54,16 +54,10 @@ export const useDeleteReview = () => {
   });
 };
 
-export const useUpdateReview = () => {
+export const useUpdateReview = (id) => {
   const queryClient = useQueryClient();
-  return useMutation(
-    async (review) =>
-      await http.put(`reviews/${review.id}`, {
-        content: review.content,
-      }),
-    {
-      onSuccess: () => queryClient.invalidateQueries("reviews"),
-      onError: (err) => console.log(err),
-    },
-  );
+  return useMutation(async (review) => await http.put(`review/${id}`, review), {
+    onSuccess: () => queryClient.invalidateQueries("reviews"),
+    onError: (err) => console.log(err),
+  });
 };

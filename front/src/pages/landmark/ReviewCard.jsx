@@ -1,10 +1,15 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
+import { useState } from "react";
 import { StarRatingWithEmpty } from "./StarRating";
 import { AiFillDelete } from "react-icons/ai";
 import { RiEdit2Fill } from "react-icons/ri";
 import { useDeleteReview } from "queries/reviewQuery";
+import ReviewEditForm from "./ReviewEditForm";
+import { CardHeader, CardText } from "./landmark.style";
 
 export const ReviewCard = ({ review, idx }) => {
+  const [isEditing, setIsEditing] = useState(false);
+
   const { userNickName, content, rating, createdAt, id } = review;
   const deleteReview = useDeleteReview();
 
@@ -13,20 +18,31 @@ export const ReviewCard = ({ review, idx }) => {
   };
 
   return (
-    <ReviewCardContainer idx={idx}>
-      <CardHeader>
-        <StarRatingWithEmpty number={rating} />
-        <CardText>{userNickName}</CardText>
-        <CardText color="gray03">{createdAt.slice(0, 10)}</CardText>
-        <IconContainer>
-          <RiEdit2Fill size="1.7rem" cursor="pointer" />
-          <TrashBox size="1.7rem" onClick={handleDeleteReview} />
-        </IconContainer>
-      </CardHeader>
-      <CardContent>
-        <CardText>{content}</CardText>
-      </CardContent>
-    </ReviewCardContainer>
+    // eslint-disable-next-line react/jsx-no-useless-fragment
+    <>
+      {isEditing ? (
+        <ReviewEditForm review={review} setIsEditing={setIsEditing} />
+      ) : (
+        <ReviewCardContainer idx={idx}>
+          <CardHeader>
+            <StarRatingWithEmpty number={rating} />
+            <CardText>{userNickName}</CardText>
+            <CardText color="gray03">{createdAt.slice(0, 10)}</CardText>
+            <IconContainer>
+              <RiEdit2Fill
+                size="1.7rem"
+                cursor="pointer"
+                onClick={() => setIsEditing(true)}
+              />
+              <TrashBox size="1.7rem" onClick={handleDeleteReview} />
+            </IconContainer>
+          </CardHeader>
+          <CardContent>
+            <CardText>{content}</CardText>
+          </CardContent>
+        </ReviewCardContainer>
+      )}
+    </>
   );
 };
 
@@ -36,27 +52,9 @@ const ReviewCardContainer = styled.div`
     props.idx === 0 ? "none" : `1px dashed ${props.theme.colors.secondary}`};
 `;
 
-const CardHeader = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin: 5% 1% 0 0;
-`;
-
 const CardContent = styled.div`
   width: 100%;
   padding: 5% 0;
-`;
-
-const CardText = styled.p`
-  ${(props) => {
-    const selected = props.theme.colors[props.color];
-    return css`
-      color: ${selected};
-    `;
-  }}
-  margin-left: 1%;
 `;
 
 const IconContainer = styled.div`
