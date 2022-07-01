@@ -11,7 +11,7 @@ export const useGetTourList = () => {
 };
 
 export const useGetTourSearch = (name) => {
-  return useQuery(["useGetTourSearch"], async () => {
+  return useQuery(["useGetTourSearch", name], async () => {
     const res = await http.get(`/tour/search?name=${name}`);
     const data = res.data;
     return data;

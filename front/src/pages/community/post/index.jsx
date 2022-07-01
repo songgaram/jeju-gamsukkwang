@@ -20,7 +20,7 @@ const Post = () => {
 
   const [title, setTitle] = useState("");
   const [contents, setContents] = useState("");
-  const [isSelected, setInSelected] = useState("");
+  const [isSelected, setInSelected] = useState("info");
 
   const headFunction = (itemValue) => {
     setInSelected(itemValue);

@@ -1,17 +1,27 @@
 import { useGetPost } from "queries/communityQuery";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import ReactHtmlParser from "react-html-parser";
-import dayjs from "dayjs";
 
 import styled from "styled-components";
 
 const PostDetail = () => {
+  const navigate = useNavigate();
   const params = useParams();
   const postId = params.id;
   const postItem = useGetPost(postId);
 
   return (
     <PostDetailBox>
+      <div>
+        <button
+          type="button"
+          onClick={() => {
+            navigate("/community");
+          }}
+        >
+          뒤로가기
+        </button>
+      </div>
       <ContentBox>
         <h2>
           <span>[</span>
@@ -41,9 +51,23 @@ const PostDetailBox = styled.div`
   justify-content: center;
   margin: 50px 0;
 
+<<<<<<< HEAD
+  div {
+    width: 800px;
+    margin: 0 auto;
+    button {
+      width: 100px;
+      padding: 7px 15px;
+      margin-bottom: 30px;
+      border: none;
+      border-radius: 10px;
+      font-size: 12px;
+    }
+=======
   @media screen and ${({ theme }) => theme.breakPoint} {
     width: 100%;
     margin: 20px 0;
+>>>>>>> b3ef8e9dfb27ee7530fa1fc51c3eb45068b53fee
   }
 `;
 
@@ -70,6 +94,13 @@ const ContentBox = styled.div`
 
   div {
     margin: 50px 0;
+
+    img {
+      max-width: 700px;
+      @media screen and ${({ theme }) => theme.breakPoint} {
+        max-width: 300px;
+      }
+    }
   }
 
   * {
