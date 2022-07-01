@@ -125,7 +125,7 @@ const Post = () => {
         <ReactQuill
           ref={quillRef}
           name="postContents"
-          value={contents}
+          defaultValue={contents}
           onChange={onChangeContents}
           placeholder="내용을 입력해주세요"
           theme="snow"
