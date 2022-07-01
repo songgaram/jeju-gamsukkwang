@@ -1,41 +1,57 @@
 import styled from "styled-components";
 import { useState } from "react";
-import { LEVEL_LIST } from "./constants";
+import { LEVEL_LIST, AWS_URL } from "./constants";
 import Button from "components/button/Button";
-import { InfoBox, NickName, Email, Level, Coloring } from "./mypage.style";
+import {
+  InfoBox,
+  NickName,
+  Email,
+  Level,
+  Coloring,
+  ProfileImg,
+  ImgContainer,
+} from "./mypage.style";
 import ProfileEditForm from "./ProfileEditForm";
 
-const Profile = ({ email, nickname, experience }) => {
+const Profile = ({ email, nickname, experience, profileImgUrl }) => {
   const level = parseInt(parseInt(experience) / 10);
-  const [editing, setEditing] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  console.log(profileImgUrl);
 
   const handleClick = () => {
-    setEditing(true);
+    setIsEditing(true);
   };
 
   return (
-    <ProfileBox>
-      <ProfileImg src="https://dev-team8-bucket.s3.ap-northeast-2.amazonaws.com/profileImg.png" />
-      {editing ? (
+    // eslint-disable-next-line react/jsx-no-useless-fragment
+    <>
+      {isEditing ? (
         <ProfileEditForm
           nickname={nickname}
           email={email}
           level={level}
-          setEditing={setEditing}
+          setIsEditing={setIsEditing}
+          profileImgUrl={profileImgUrl}
         />
       ) : (
-        <InfoBox>
-          <NickName>{nickname}</NickName>
-          <Email>{email}</Email>
-          <Level>
-            Lv. <Coloring>{LEVEL_LIST[level].level}</Coloring>
-          </Level>
-          <div>
-            <Button onClick={handleClick}>회원정보 수정</Button>
-          </div>
-        </InfoBox>
+        <ProfileBox>
+          <ImgContainer>
+            <ProfileImg src={AWS_URL + profileImgUrl} />
+          </ImgContainer>
+
+          <InfoBox>
+            <NickName>{nickname}</NickName>
+            <Email>{email}</Email>
+            <Level>
+              Lv. <Coloring>{LEVEL_LIST[level].level}</Coloring>
+            </Level>
+            <div>
+              <Button onClick={handleClick}>회원정보 수정</Button>
+            </div>
+          </InfoBox>
+        </ProfileBox>
       )}
-    </ProfileBox>
+    </>
   );
 };
 
@@ -46,12 +62,6 @@ const ProfileBox = styled.div`
   @media screen and ${({ theme }) => theme.breakPoint} {
     justify-content: space-evenly;
   }
-`;
-
-const ProfileImg = styled.img.attrs({ alt: "프로필 이미지" })`
-  width: 10rem;
-  height: 10rem;
-  border-radius: 50%;
 `;
 
 export default Profile;
