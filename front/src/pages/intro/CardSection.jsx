@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import Card from "./Card";
 import { useScrollFadeIn } from "hooks/useScrollFadeIn";
+import theme from "../../styles/Theme";
+import { useMediaQuery } from "react-responsive";
 
 const content = [
   {
@@ -26,14 +28,35 @@ const CardSection = () => {
     2: useScrollFadeIn("up", 0.9, 0.4),
   };
 
+  const mediaQuery = useMediaQuery({ query: theme.breakPoint });
+
   return (
     <CardSectionContainer>
       <ContentContainer {...animatedItem[0]}>
-        <Title>
-          “내가 간 제주를 <Highlighted>저장</Highlighted>하고{" "}
-          <Highlighted>공유</Highlighted>하는 방법은 없을까?”
-        </Title>
-        <SubTitle>제주감수꽝은 두가지 니즈에서 출발하였습니다.</SubTitle>
+        {!mediaQuery ? (
+          <>
+            <Title>
+              “내가 간 제주를 <Highlighted>저장</Highlighted>하고{" "}
+              <Highlighted>공유</Highlighted>하는 방법은 없을까?”
+            </Title>
+            <SubTitle>제주감수꽝은 두가지 니즈에서 출발하였습니다.</SubTitle>
+          </>
+        ) : (
+          <>
+            <Title>
+              내가 간 제주를 <br />
+              <Highlighted>저장</Highlighted>하고{" "}
+              <Highlighted>공유</Highlighted>
+              하는
+              <br />
+              방법은 없을까?
+            </Title>
+            <SubTitle>
+              제주감수꽝은
+              <br /> 두가지 니즈에서 출발하였습니다.
+            </SubTitle>
+          </>
+        )}
       </ContentContainer>
 
       <CardContainer>
@@ -82,6 +105,10 @@ const CardContainer = styled.div`
   flex-direction: row;
   justify-content: center;
   margin-bottom: 12%;
+
+  @media screen and ${({ theme }) => theme.breakPoint} {
+    flex-direction: column;
+  }
 `;
 
 const InnerCardContainer = styled.div`
@@ -89,6 +116,10 @@ const InnerCardContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media screen and ${({ theme }) => theme.breakPoint} {
+    width: 100%;
+  }
 `;
 
 const Title = styled.div`
@@ -96,6 +127,10 @@ const Title = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.subtitleSize};
   text-align: center;
   font-weight: bold;
+
+  @media screen and ${({ theme }) => theme.breakPoint} {
+    line-height: 150%;
+  }
 `;
 
 const Highlighted = styled.span`
@@ -106,4 +141,8 @@ const SubTitle = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.xxxl};
   color: ${({ theme }) => theme.colors.gray03};
   text-align: center;
+
+  @media screen and ${({ theme }) => theme.breakPoint} {
+    line-height: 150%;
+  }
 `;
