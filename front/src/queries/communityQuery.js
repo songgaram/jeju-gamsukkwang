@@ -1,4 +1,4 @@
-import { useQuery } from "react-query";
+import { useQuery, useQueryClient, useMutation } from "react-query";
 
 import http from "libs/apiController";
 
@@ -15,5 +15,23 @@ export const useGetPost = (postId) => {
     const res = await http.get(`/community/${postId}`);
     const data = res.data;
     return data;
+  });
+};
+
+export const useDeletePost = () => {
+  const queryClient = useQueryClient();
+  return useMutation((id) => http.delete(`community/${id}`), {
+    onSuccess: () => {
+      queryClient.invalidateQueries("postId");
+    },
+    onError: (err) => console.log(err),
+  });
+};
+
+export const useUpdatePost = (id) => {
+  const queryClient = useQueryClient();
+  return useMutation(async (post) => await http.put(`community/${id}`, post), {
+    onSuccess: () => queryClient.invalidateQueries("postId"),
+    onError: (err) => console.log(err),
   });
 };
