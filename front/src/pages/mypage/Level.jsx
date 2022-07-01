@@ -1,12 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import styled from "styled-components";
 import { TangerineIcon, TangerineIconSm } from "assets/svgs/index";
-import { ImgInputButton } from "./mypage.style";
-import { useCallback } from "react";
-import { useRef } from "react";
 import http from "libs/apiController";
-import Modal from "./modal";
+import Modal from "./imageAuth/index";
 import ModalPortal from "components/modal/modalPortal";
+import ImageAuthBtn from "./imageAuth/ImageAuthBtn";
 import { useMediaQuery } from "react-responsive";
 
 const Level = ({ experience }) => {
@@ -33,13 +31,15 @@ const Level = ({ experience }) => {
     formData.append("imgFile", e.target.files[0]);
 
     try {
-      setIsOpenModal(true);
-      setIsLoading(true);
-      const res = await http.post("tour/image", formData);
-      setIsLoading(false);
-      const name = res.data.data.summary[0].categoryName;
-      const response = await http.get(`tour/search?name=${name}`);
-      setData(response.data[0]);
+      if (e.target.files) {
+        setIsOpenModal(true);
+        setIsLoading(true);
+        const res = await http.post("tour/image", formData);
+        setIsLoading(false);
+        const name = res.data.data.summary[0].categoryName;
+        const response = await http.get(`tour/search?name=${name}`);
+        setData(response.data[0]);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -61,15 +61,10 @@ const Level = ({ experience }) => {
           </Number>
         </LevelBox>
 
-        <ImgInputButton>
-          📷 랜드마크 인증하고 스탬프 찍기!
-          <input
-            type="file"
-            accept="image/*"
-            ref={photoInput}
-            onChange={handleUploadImage}
-          />
-        </ImgInputButton>
+        <ImageAuthBtn
+          photoInput={photoInput}
+          handleUploadImage={handleUploadImage}
+        />
       </LevelContainer>
       <ModalPortal>
         {isOpenModal && (
@@ -98,6 +93,9 @@ const LevelBox = styled.div`
   flex-direction: row;
   align-items: center;
   margin-bottom: 5%;
+  @media screen and ${({ theme }) => theme.breakPoint} {
+    flex-direction: column;
+  }
 `;
 
 const FigureBox = styled.div`
@@ -146,6 +144,7 @@ const Number = styled.div`
 
   @media screen and ${({ theme }) => theme.breakPoint} {
     margin-left: 1rem;
+    margin-bottom: 1rem;
     font-size: 1.5rem;
   }
 `;
