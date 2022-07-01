@@ -123,7 +123,7 @@ const Desc = styled.div`
 `;
 
 const Number = styled.div`
-  width: 120px;
+  width: 100px;
   color: ${({ theme }) => theme.colors.orange};
   font-size: 2.5rem;
   font-weight: bold;
