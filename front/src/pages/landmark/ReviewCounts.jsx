@@ -1,14 +1,23 @@
 import styled from "styled-components";
 import { StarRating } from "./StarRating";
+import theme from "../../styles/Theme";
+import { useMediaQuery } from "react-responsive";
 
 const ReviewCounts = ({ data, totalReview }) => {
   const { star, reviews } = data;
+  const mediaQuery = useMediaQuery({ query: theme.breakPoint });
 
   return (
     <CountsDeatil>
-      <DetailTabCell align="right" width="20">
-        <StarRating number={star} color="secondary" />
-      </DetailTabCell>
+      {!mediaQuery ? (
+        <DetailTabCell align="right" width="20">
+          <StarRating number={star} color="secondary" />
+        </DetailTabCell>
+      ) : (
+        <DetailTabCell align="right" width="30">
+          <StarRating number={star} color="secondary" />
+        </DetailTabCell>
+      )}
       <DetailTabCell width="60" align="center">
         <BarContainer>
           <Bar
@@ -16,9 +25,15 @@ const ReviewCounts = ({ data, totalReview }) => {
           />
         </BarContainer>
       </DetailTabCell>
-      <DetailTabCell align="left" width="20">
-        <CountsInfo>{reviews}</CountsInfo>
-      </DetailTabCell>
+      {!mediaQuery ? (
+        <DetailTabCell align="left" width="20">
+          <CountsInfo>{reviews}</CountsInfo>
+        </DetailTabCell>
+      ) : (
+        <DetailTabCell align="left" width="10">
+          <CountsInfo>{reviews}</CountsInfo>
+        </DetailTabCell>
+      )}
     </CountsDeatil>
   );
 };

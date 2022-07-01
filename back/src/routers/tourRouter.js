@@ -50,7 +50,7 @@ tourRouter.post("/tour/image", s3Single(), async (req, res, next) => {
     }
 
     // exifr이 한글 파일명은 인식하지 못하므로 영어, 숫자, 허용된 특수문자가 아닌 단어가 들어간다면 에러 띄우기
-    const checkName = /^[A-Za-z0-9~.-_]*$/;
+    const checkName = /^[A-Za-z0-9~.\-_]*$/;
     if (!checkName.test(originalname)) {
       throw new Error("fileName must not have Korean");
     }
