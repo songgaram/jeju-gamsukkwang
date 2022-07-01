@@ -9,7 +9,8 @@ const Landmark = () => {
   const params = useParams();
   const id = params.id;
   const { data, status } = useGetLandmark(id);
-  const { image, krTitle, address, description, phoneno } = data.landmark || {};
+  const { image, krTitle, address, description, phoneno } =
+    data?.landmark || {};
   const navigate = useNavigate();
 
   const handleClick = () => {

@@ -9,6 +9,12 @@ const InputForm = styled.textarea`
   height: 300px;
   margin: 1% 0;
   resize: none;
+  font-size: ${({ theme }) => theme.fontSizes.lg};
+  border: 1px solid ${({ theme }) => theme.colors.gray02};
+  outline-color: ${({ theme }) => theme.colors.secondary};
+  &:focus {
+    border: 1px solid ${({ theme }) => theme.colors.primary};
+  }
 `;
 
 const Footer = styled.div`

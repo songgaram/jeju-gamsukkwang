@@ -20,8 +20,11 @@ const ReviewForm = ({ id }) => {
   const [content, setContent] = useState("");
   const [rating, setRating] = useState(undefined);
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const [modalMessage, setModalMessage] = useState(undefined);
+
   const { isRatingValid, isContentValid } = registerValidation(rating, content);
   const isActive = isRatingValid && isContentValid;
+
   const postReview = usePostReview();
   const theme = useTheme();
 
@@ -34,14 +37,22 @@ const ReviewForm = ({ id }) => {
     };
     postReview.mutate(review, {
       onError: (err) => {
-        if (err.response.data.errormessage === "system.error.alreadyPosting") {
-          setIsOpenModal(true);
-          return;
+        switch (err.response.data.errormessage) {
+          case "system.error.alreadyPosting":
+            setModalMessage(MODAL_MESSAGE.case01);
+            return setIsOpenModal(true);
+
+          case "system.error.noAuthorized":
+            setModalMessage(MODAL_MESSAGE.case02);
+            return setIsOpenModal(true);
+
+          default:
+            return console.log(err);
         }
-        console.log(err);
       },
     });
     setContent("");
+    setClicked(null);
   };
 
   return (
@@ -85,12 +96,12 @@ const ReviewForm = ({ id }) => {
           <Required>필수</Required>
         </HeaderContainer>
         <InputForm
-          maxlength="1000"
+          maxLength="200"
           value={content}
           onChange={(e) => setContent(e.target.value)}
         />
         <Footer>
-          <div>{content.length}/1000</div>
+          <div>{content.length}/200</div>
           <Button
             color="deepblue"
             type="submit"
@@ -103,7 +114,7 @@ const ReviewForm = ({ id }) => {
       </ReviewFormContainer>
       <ModalPortal>
         {isOpenModal && (
-          <Modal setIsOpenModal={setIsOpenModal} modalMessage={MODAL_MESSAGE} />
+          <Modal setIsOpenModal={setIsOpenModal} modalMessage={modalMessage} />
         )}
       </ModalPortal>
     </>
