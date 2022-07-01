@@ -66,6 +66,10 @@ const DropdownBox = styled.div`
 const PostBox = styled.div`
   width: 800px;
   margin: 0 auto;
+
+  @media screen and ${({ theme }) => theme.breakPoint} {
+    width: 100%;
+  }
 `;
 
 const ButtonBox = styled.div`

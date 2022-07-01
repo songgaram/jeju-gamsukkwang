@@ -74,6 +74,19 @@ const Coloring = styled.span`
   color: ${({ theme }) => theme.colors.orange};
 `;
 
+const ProfileImg = styled.img.attrs({ alt: "프로필 이미지" })`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+`;
+
+const ImgContainer = styled.div`
+  width: 160px;
+  height: 160px;
+  border-radius: 70%;
+  overflow: hidden;
+`;
+
 export {
   StampImgLv1,
   StampImgLv2,
@@ -86,4 +99,6 @@ export {
   Email,
   Level,
   Coloring,
+  ProfileImg,
+  ImgContainer,
 };

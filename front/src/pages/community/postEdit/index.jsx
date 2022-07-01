@@ -240,10 +240,6 @@ const TitleBox = styled.div`
 const EditorBox = styled.div`
   width: 700px;
 
-  .quill > .ql-toolbar:first-child {
-    display: none !important;
-  }
-
   .ql-editor {
     height: 400px;
   }
