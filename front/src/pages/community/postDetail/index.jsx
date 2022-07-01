@@ -111,7 +111,7 @@ const PostDetailBox = styled.div`
     }
   }
 
-  @media screen and (${({ theme }) => theme.breakPoint}) {
+  @media screen and ${({ theme }) => theme.breakPoint} {
     width: 100%;
     margin: 20px 0;
 
@@ -152,7 +152,7 @@ const ContentBox = styled.div`
 
     img {
       max-width: 700px;
-      @media screen and (${({ theme }) => theme.breakPoint}) {
+      @media screen and ${({ theme }) => theme.breakPoint} {
         max-width: 300px;
       }
     }
@@ -162,8 +162,8 @@ const ContentBox = styled.div`
     margin-bottom: 10px;
   }
 
-  @media screen and (${({ theme }) => theme.breakPoint}) {
+  @media screen and ${({ theme }) => theme.breakPoint} {
     width: 100%;
-    padding: 20px;
+    padding: 40px;
   }
 `;
