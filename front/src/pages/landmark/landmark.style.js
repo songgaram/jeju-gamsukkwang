@@ -24,6 +24,14 @@ const Footer = styled.div`
   justify-content: space-between;
   align-items: flex-start;
   height: 50px;
+
+  section {
+    margin-right: auto;
+  }
+
+  @media screen and ${({ theme }) => theme.breakPoint} {
+    justify-content: flex-end;
+  }
 `;
 
 const StarContainer = styled.div`
