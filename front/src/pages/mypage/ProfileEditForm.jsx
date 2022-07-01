@@ -1,5 +1,12 @@
 import { useState } from "react";
-import { InfoBox, Email, Level, Coloring } from "./mypage.style";
+import {
+  InfoBox,
+  Email,
+  Level,
+  Coloring,
+  ProfileImg,
+  ImgContainer,
+} from "./mypage.style";
 import styled from "styled-components";
 import Button from "components/button/Button";
 import { LEVEL_LIST } from "./constants";
@@ -7,7 +14,13 @@ import { useChangeNickname } from "queries/userQuery";
 import theme from "../../styles/Theme";
 import { useMediaQuery } from "react-responsive";
 
-const ProfileEditForm = ({ nickname, email, level, setEditing }) => {
+const ProfileEditForm = ({
+  nickname,
+  email,
+  level,
+  setEditing,
+  profileImgUrl,
+}) => {
   const [editNickname, setEditNickname] = useState(nickname);
   const changeNickname = useChangeNickname();
   const data = { nickname: editNickname };
@@ -20,37 +33,48 @@ const ProfileEditForm = ({ nickname, email, level, setEditing }) => {
   };
 
   return (
-    <InfoBox>
-      <StyledInput
-        name="nickname"
-        type="text"
-        value={editNickname}
-        onChange={(e) => setEditNickname(e.target.value)}
-      />
-      <Email>{email}</Email>
-      <Level>
-        Lv. <Coloring>{LEVEL_LIST[level].level}</Coloring>
-      </Level>
-      {!mediaQuery ? (
-        <div>
-          <Button onClick={() => setEditing(false)}>취소</Button>
-          <Button type="submit" onClick={handleSubmit}>
-            완료
-          </Button>
-        </div>
-      ) : (
-        <div style={{ display: "flex", justifyContent: "space-evenly" }}>
-          <Button onClick={() => setEditing(false)}>취소</Button>
-          <Button type="submit" onClick={handleSubmit}>
-            완료
-          </Button>
-        </div>
-      )}
-    </InfoBox>
+    <ProfileBox>
+      <ImgContainer>
+        <ProfileImg src={profileImgUrl} />
+      </ImgContainer>
+      <InfoBox>
+        <StyledInput
+          name="nickname"
+          type="text"
+          value={editNickname}
+          onChange={(e) => setEditNickname(e.target.value)}
+        />
+        <Email>{email}</Email>
+        <Level>
+          Lv. <Coloring>{LEVEL_LIST[level].level}</Coloring>
+        </Level>
+        {!mediaQuery ? (
+          <div>
+            <Button onClick={() => setEditing(false)}>취소</Button>
+            <Button type="submit" onClick={handleSubmit}>
+              완료
+            </Button>
+          </div>
+        ) : (
+          <div style={{ display: "flex", justifyContent: "space-evenly" }}>
+            <Button onClick={() => setEditing(false)}>취소</Button>
+            <Button type="submit" onClick={handleSubmit}>
+              완료
+            </Button>
+          </div>
+        )}
+      </InfoBox>
+    </ProfileBox>
   );
 };
 
 export default ProfileEditForm;
+
+const ProfileBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  padding-left: 15px;
+`;
 
 const StyledInput = styled.input`
   width: 90%;

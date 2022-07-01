@@ -8,13 +8,18 @@ import Loader from "components/loader";
 
 const MyPage = () => {
   const { data, status } = useGetUserInfo();
-  const { email, nickname, experience } = data?.userState || {};
+  const { email, nickname, experience, profileImgUrl } = data?.userState || {};
   if (status === "loading") return <Loader />;
 
   return (
     <>
       <InfoContainer>
-        <Profile email={email} nickname={nickname} experience={experience} />
+        <Profile
+          email={email}
+          nickname={nickname}
+          experience={experience}
+          profileImgUrl={profileImgUrl}
+        />
         <Level experience={experience} />
       </InfoContainer>
       <Navs />
