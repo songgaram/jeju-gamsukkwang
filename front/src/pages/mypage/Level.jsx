@@ -88,7 +88,7 @@ const LevelContainer = styled.div`
   display: flex;
   flex-direction: column;
 
-  @media screen and ${({ theme }) => theme.breakpoint} {
+  @media screen and ${({ theme }) => theme.breakPoint} {
     margin-top: 4rem;
   }
 `;
@@ -120,7 +120,7 @@ const FigureBox = styled.div`
       border-radius: 20px;
     }
 
-    @media screen and ${({ theme }) => theme.breakpoint} {
+    @media screen and ${({ theme }) => theme.breakPoint} {
       width: 22rem;
     }
   }
@@ -132,8 +132,8 @@ const Desc = styled.div`
   font-size: 2.5rem;
   margin-bottom: 15px;
 
-  @media screen and ${({ theme }) => theme.breakpoint} {
-    font-size: 1.5rem;
+  @media screen and ${({ theme }) => theme.breakPoint} {
+    font-size: 2rem;
   }
 `;
 
@@ -144,7 +144,7 @@ const Number = styled.div`
   font-weight: bold;
   margin-left: 3rem;
 
-  @media screen and ${({ theme }) => theme.breakpoint} {
+  @media screen and ${({ theme }) => theme.breakPoint} {
     margin-left: 1rem;
     font-size: 1.5rem;
   }
@@ -154,7 +154,7 @@ const Emphasized = styled.span`
   color: ${({ theme }) => theme.colors.black};
   font-size: 3rem;
 
-  @media screen and ${({ theme }) => theme.breakpoint} {
+  @media screen and ${({ theme }) => theme.breakPoint} {
     font-size: 2rem;
   }
 `;
