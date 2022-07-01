@@ -14,7 +14,6 @@ export const useGetPost = (postId) => {
   return useQuery([useGetPost], async () => {
     const res = await http.get(`/community/${postId}`);
     const data = res.data;
-    console.log(data);
     return data;
   });
 };
