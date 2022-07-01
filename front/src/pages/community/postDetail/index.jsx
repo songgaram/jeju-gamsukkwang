@@ -51,7 +51,6 @@ const PostDetailBox = styled.div`
   justify-content: center;
   margin: 50px 0;
 
-<<<<<<< HEAD
   div {
     width: 800px;
     margin: 0 auto;
@@ -63,11 +62,9 @@ const PostDetailBox = styled.div`
       border-radius: 10px;
       font-size: 12px;
     }
-=======
   @media screen and ${({ theme }) => theme.breakPoint} {
     width: 100%;
     margin: 20px 0;
->>>>>>> b3ef8e9dfb27ee7530fa1fc51c3eb45068b53fee
   }
 `;
 
