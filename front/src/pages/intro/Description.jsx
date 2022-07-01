@@ -109,6 +109,7 @@ const CardSubtitle = styled.div`
 
   @media screen and ${({ theme }) => theme.breakPoint} {
     text-align: center;
+    white-space: pre-line;
   }
 `;
 
