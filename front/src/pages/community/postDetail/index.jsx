@@ -96,9 +96,10 @@ const PostDetailBox = styled.div`
   margin: 50px 0;
 
   section {
+    width: 800px;
     display: flex;
     justify-content: flex-end;
-    width: 90%;
+    margin: 0 auto;
     margin-top: 20px;
 
     button {
@@ -114,11 +115,13 @@ const PostDetailBox = styled.div`
     button:nth-child(2) {
       color: ${({ theme }) => theme.colors.white};
       background: #74c0fc;
+      margin-left: 10px;
     }
 
     button:nth-child(3) {
       color: ${({ theme }) => theme.colors.white};
       background: #ff8787;
+      margin-left: 10px;
     }
   }
 
