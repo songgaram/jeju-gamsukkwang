@@ -1,43 +1,81 @@
-import React, { useMemo, useRef } from "react";
+import React, { useMemo, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
+
+import http from "libs/apiController";
+import HeadDropdown from "./headDropdown";
 
 import styled from "styled-components";
+import "react-quill/dist/quill.snow.css";
 
 const Post = () => {
+  const navigate = useNavigate();
+
+  const imageRef = useRef();
   const quillRef = useRef();
 
+  const [title, setTitle] = useState("");
+  const [contents, setContents] = useState("");
+  const [isSelected, setInSelected] = useState("");
+
+  const headFunction = (itemValue) => {
+    setInSelected(itemValue);
+  };
+
+  const onChangeTitle = (e) => {
+    const item = e.target.value;
+    setTitle(item);
+  };
+
+  // 에디터 글 onChange
+  const onChangeContents = (postContents) => {
+    setContents(postContents);
+  };
+
+  // 이미지를 따로 처리해 저장하기 때문에 imageHandler를 만든다
   const imageHandler = () => {
-    console.log("에디터에서 이미지 버튼을 클릭하면 이 핸들러가 시작됩니다!");
+    // 히든으로 숨겨진 input을 선택하도록 한다.
+    imageRef.current.click(); // 선택을 input으로 하게함
+  };
 
-    // 1. 이미지를 저장할 input type=file DOM을 만든다.
-    const input = document.createElement("input");
-    // 속성 써주기
-    input.setAttribute("type", "file");
-    input.setAttribute("accept", "image/*");
-    input.click(); // 에디터 이미지버튼을 클릭하면 이 input이 클릭된다.
-    // input이 클릭되면 파일 선택창이 나타난다.
+  // 히든 인풋에 현재 선택된 이미지 값 넣어주기
+  const onChangeImageInput = async (e) => {
+    e.preventDefault();
 
-    // input에 변화가 생긴다면 = 이미지를 선택
-    input.addEventListener("change", async () => {
-      const file = input.files[0];
-      const formData = new FormData();
-      formData.append("img", file);
+    // server에서 multer 사용을 위한 formData를 만든다.
+    const formData = new FormData();
 
-      // try {
-      //   const result = await axios.post("http://localhost:4050/img", formData);
-      //   console.log("성공 시, 백엔드가 보내주는 데이터", result.data.url);
-      //   const IMG_URL = result.data.url;
+    // e.target.files에 있는 파일들을 멀터에 저장해야댐.
+    formData.append("imgFile", e.target.files[0]);
 
-      //   const editor = quillRef.current.getEditor();
+    try {
+      const res = await http.post("community/image", formData);
+      console.log("이미지 저장 성공", res.data[0]);
+      const IMG_URL = res.data[0];
 
-      //   const range = editor.getSelection();
-      //   editor.insertEmbed(range, "image", IMG_URL);
-      // } catch (error) {
-      //   console.log("실패했어요ㅠ");
-      // }
-    });
+      const editor = quillRef.current.getEditor();
+      editor.root.innerHTML =
+        editor.root.innerHTML + `<img src=${IMG_URL} /><br/>`;
+    } catch (error) {
+      console.log("이미지 업로드 실패");
+    }
+  };
+
+  const onSave = async () => {
+    let newBoard = {
+      title: title,
+      content: contents,
+      head: isSelected,
+    };
+
+    try {
+      const res = await http.post("community", newBoard);
+      console.log("이미지 저장 성공", res.data);
+      navigate("/community");
+    } catch (error) {
+      console.log("이미지 업로드 실패");
+    }
   };
 
   const modules = useMemo(() => {
@@ -68,15 +106,41 @@ const Post = () => {
 
   return (
     <PostBox>
+      <h2>✏️ 게시글 작성</h2>
+      <FlexBox>
+        <HeadDropdown headFunction={headFunction} />
+        <TitleBox>
+          <input
+            type="text"
+            placeholder="게시글 제목을 입력해주세요"
+            onChange={onChangeTitle}
+            value={title}
+          />
+        </TitleBox>
+      </FlexBox>
       <EditorBox>
         <ReactQuill
           ref={quillRef}
+          name="postContents"
+          value={contents}
+          onChange={onChangeContents}
+          placeholder="내용을 입력해주세요"
           theme="snow"
-          placeholder="플레이스 홀더"
           modules={modules}
           formats={formats}
         />
+        <input
+          hidden
+          type="file"
+          ref={imageRef}
+          onChange={onChangeImageInput}
+        />
       </EditorBox>
+      <ButtonBox>
+        <button type="button" onClick={onSave}>
+          게시글 등록
+        </button>
+      </ButtonBox>
     </PostBox>
   );
 };
@@ -84,20 +148,63 @@ const Post = () => {
 export default Post;
 
 const PostBox = styled.div`
-  width: 100%;
-  height: calc(100vh - 70px);
+  width: 700px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  margin: 0 auto;
+
+  h2 {
+    margin-top: 50px;
+    font-size: 20px;
+    font-weight: 600;
+  }
+`;
+
+const FlexBox = styled.div`
+  width: 700px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   align-items: center;
+  margin: 30px 0;
+`;
+
+const TitleBox = styled.div`
+  input {
+    width: 510px;
+    padding: 11px 20px;
+    border: 1px solid ${({ theme }) => theme.colors.gray02};
+    border-radius: 5px;
+  }
 `;
 
 const EditorBox = styled.div`
   width: 700px;
+
   .quill > .ql-toolbar:first-child {
     display: none !important;
   }
 
   .ql-editor {
     height: 400px;
+  }
+`;
+
+const ButtonBox = styled.div`
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  width: 700px;
+  margin: 0 auto;
+
+  button {
+    padding: 10px 20px;
+    background: ${({ theme }) => theme.colors.primary};
+    color: ${({ theme }) => theme.colors.white};
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    margin: 30px 0;
   }
 `;

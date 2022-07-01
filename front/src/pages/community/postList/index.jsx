@@ -30,7 +30,7 @@ const PostList = ({ isSelected }) => {
             </label>
             <h3>{data.title}</h3>
           </Title>
-          <p>{data.content}</p>
+          {/* <p>{data.content}</p> */}
         </ItemBox>
       ))}
     </>
