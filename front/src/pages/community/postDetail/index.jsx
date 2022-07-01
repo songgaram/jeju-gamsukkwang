@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import ReactHtmlParser from "react-html-parser";
+import { useRecoilValue } from "recoil";
 
+import http from "libs/apiController";
+import { userState } from "states";
 import { useGetPost } from "queries/communityQuery";
+import PostEdit from "../postEdit";
 
 import styled from "styled-components";
-import { useRecoilValue } from "recoil";
-import { userState } from "states";
-import http from "libs/apiController";
 
 const PostDetail = () => {
   const navigate = useNavigate();
@@ -17,6 +18,7 @@ const PostDetail = () => {
   const postUserId = postItem?.data?.userId;
   const loginUserId = useRecoilValue(userState).id;
   const [isVisible, setIsVisible] = useState(false);
+  const [isEditable, setIsEditable] = useState(false);
 
   const handleDelete = async () => {
     try {
@@ -34,6 +36,8 @@ const PostDetail = () => {
       setIsVisible(false);
     }
   }, [postUserId, loginUserId]);
+
+  if (isEditable) return <PostEdit />;
 
   return (
     <PostDetailBox>
@@ -65,7 +69,14 @@ const PostDetail = () => {
         </button>
         {isVisible && (
           <>
-            <button type="button">수정하기</button>
+            <button
+              type="button"
+              onClick={() => {
+                setIsEditable(true);
+              }}
+            >
+              수정하기
+            </button>
             <button type="button" onClick={handleDelete}>
               삭제하기
             </button>
