@@ -53,4 +53,9 @@ const ModalBox = styled.div`
   animation: ${slideUp} 0.4s cubic-bezier(0.5, 0, 0, 0.8) forwards;
 `;
 
-export { ModalBackground, ModalBox };
+const ModalMessage = styled.p`
+  white-space: pre-line;
+  text-align: center;
+`;
+
+export { ModalBackground, ModalBox, ModalMessage };

@@ -8,8 +8,11 @@ import DescSection from "./DescSection";
 import { useScrollFadeIn } from "hooks/useScrollFadeIn";
 import theme from "../../styles/Theme";
 import { useMediaQuery } from "react-responsive";
+import { useNavigate } from "react-router-dom";
 
 const Intro = () => {
+  const navigate = useNavigate();
+
   const animatedItem = {
     0: useScrollFadeIn("up", 0.9, 0),
     1: useScrollFadeIn("up", 0.9, 0.5),
@@ -36,7 +39,9 @@ const Intro = () => {
               인증할 수 있는 <Highlighted>공유 서비스</Highlighted>입니다.
             </Subtitle>
           )}
-          <Button>로그인하고 시작하기</Button>
+          <Button onClick={() => navigate("/login")}>
+            로그인하고 시작하기
+          </Button>
         </ContentContainer>
 
         <Browser src={BrowserImage} alt="브라우저" {...animatedItem[1]} />

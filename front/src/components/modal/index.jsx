@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { useClickAway } from "react-use";
 
 import { ExclamationIcon } from "assets/svgs";
-import { ModalBackground, ModalBox } from "./modal.style";
+import { ModalBackground, ModalBox, ModalMessage } from "./modal.style";
 import ModalButton from "components/button/ModalButton";
 
 const Modal = ({ setIsOpenModal, modalMessage }) => {
@@ -20,7 +20,7 @@ const Modal = ({ setIsOpenModal, modalMessage }) => {
     <ModalBackground>
       <ModalBox ref={outsideRef}>
         <ExclamationIcon width={80} height={80} />
-        <p>{modalMessage}</p>
+        <ModalMessage>{modalMessage}</ModalMessage>
         <ModalButton onClick={handleCloseButtonClick} color="gray04">
           확인
         </ModalButton>
