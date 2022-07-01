@@ -35,8 +35,8 @@ const DetailTabCell = styled.div`
 `;
 
 const BarContainer = styled.div`
-  width: 100%;
-  height: 6px;
+  width: 90%;
+  height: 10px;
   background-color: ${({ theme }) => theme.colors.gray02};
   border-radius: 4px;
   position: relative;
@@ -46,7 +46,7 @@ const BarContainer = styled.div`
 
 const Bar = styled.div`
   width: ${(props) => props.width}%;
-  height: 6px;
+  height: 10px;
   background-color: ${({ theme }) => theme.colors.secondary};
   border-radius: 4px;
   display: inline-block;
