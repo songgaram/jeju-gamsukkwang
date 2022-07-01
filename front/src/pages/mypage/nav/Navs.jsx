@@ -66,6 +66,18 @@ const Nav = styled.nav`
       color: ${({ theme }) => theme.colors.white};
     }
   }
+
+  @media screen and ${({ theme }) => theme.breakPoint} {
+    ul {
+      li {
+        width: 6rem;
+      }
+      a {
+        font-size: ${({ theme }) => theme.fontSizes.small};
+        font-weight: 600;
+      }
+    }
+  }
 `;
 
 const NavContainer = styled.div`

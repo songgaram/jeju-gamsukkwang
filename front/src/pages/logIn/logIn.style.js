@@ -67,6 +67,9 @@ const InputBox = styled.div`
     margin: 7px 10px;
     font-size: 12px;
     color: ${({ theme }) => theme.colors.primary};
+    @media screen and ${({ theme }) => theme.breakPoint} {
+      font-size: 10px;
+    }
   }
 `;
 

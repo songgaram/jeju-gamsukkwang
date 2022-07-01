@@ -93,6 +93,9 @@ const LevelBox = styled.div`
   flex-direction: row;
   align-items: center;
   margin-bottom: 5%;
+  @media screen and ${({ theme }) => theme.breakPoint} {
+    flex-direction: column;
+  }
 `;
 
 const FigureBox = styled.div`
@@ -141,6 +144,7 @@ const Number = styled.div`
 
   @media screen and ${({ theme }) => theme.breakPoint} {
     margin-left: 1rem;
+    margin-bottom: 1rem;
     font-size: 1.5rem;
   }
 `;

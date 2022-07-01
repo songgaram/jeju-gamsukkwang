@@ -42,10 +42,6 @@ const StyledButton = styled.button`
     color: ${({ theme }) => theme.colors.white};
     border: none;
   }
-
-  @media screen and ${({ theme }) => theme.breakPoint} {
-    font-size: ${({ theme }) => theme.fontSizes.xs};
-  }
 `;
 
 function Button({ children, ...rest }) {

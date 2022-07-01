@@ -110,10 +110,6 @@ paths:
             schema:
               type: object
               properties:
-                tourId:
-                  type: string
-                  required: true
-                  default: 46748ca6-4a6d-4ed7-bef7-4f40452f6fa0
                 content:
                   type: string
                   required: true
