@@ -4,11 +4,14 @@ import styled from "styled-components";
 import Button from "components/button/Button";
 import { LEVEL_LIST } from "./constants";
 import { useChangeNickname } from "queries/userQuery";
+import theme from "../../styles/Theme";
+import { useMediaQuery } from "react-responsive";
 
 const ProfileEditForm = ({ nickname, email, level, setEditing }) => {
   const [editNickname, setEditNickname] = useState(nickname);
   const changeNickname = useChangeNickname();
   const data = { nickname: editNickname };
+  const mediaQuery = useMediaQuery({ query: theme.breakPoint });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,12 +31,21 @@ const ProfileEditForm = ({ nickname, email, level, setEditing }) => {
       <Level>
         Lv. <Coloring>{LEVEL_LIST[level].level}</Coloring>
       </Level>
-      <div>
-        <Button onClick={() => setEditing(false)}>취소</Button>
-        <Button type="submit" onClick={handleSubmit}>
-          완료
-        </Button>
-      </div>
+      {!mediaQuery ? (
+        <div>
+          <Button onClick={() => setEditing(false)}>취소</Button>
+          <Button type="submit" onClick={handleSubmit}>
+            완료
+          </Button>
+        </div>
+      ) : (
+        <div style={{ display: "flex", justifyContent: "space-evenly" }}>
+          <Button onClick={() => setEditing(false)}>취소</Button>
+          <Button type="submit" onClick={handleSubmit}>
+            완료
+          </Button>
+        </div>
+      )}
     </InfoBox>
   );
 };

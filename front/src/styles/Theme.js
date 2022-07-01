@@ -15,6 +15,7 @@ const colors = {
 const calcRem = (size) => `${size / 16}rem`;
 
 const fontSizes = {
+  xs: calcRem(12),
   small: calcRem(14),
   base: calcRem(16),
   lg: calcRem(18),
