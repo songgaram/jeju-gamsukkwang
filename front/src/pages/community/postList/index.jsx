@@ -1,14 +1,15 @@
-// import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { useGetPostList } from "queries/communityQuery";
 
 import styled from "styled-components";
 
-const PostList = ({ isSelected }) => {
+const PostList = ({ headSelected }) => {
   const navigate = useNavigate();
+
   // const [page, setPage] = useState(1);
-  const List = useGetPostList(isSelected);
+  const List = useGetPostList(headSelected);
 
   const handleClick = (postId) => {
     navigate(`/community/${postId}`);
@@ -19,18 +20,18 @@ const PostList = ({ isSelected }) => {
   return (
     <>
       {List.data.articles.map((data) => (
-        <ItemBox key={data.id} onClick={() => handleClick(data.id)}>
+        <ItemBox key={data?.id} onClick={() => handleClick(data.id)}>
           <Title>
             <label>
-              {data.head === "question"
+              {data?.head === "question"
                 ? "질문"
-                : data.head === "info"
+                : data?.head === "info"
                 ? "정보"
                 : "잡담"}
             </label>
-            <h3>{data.title}</h3>
+            <h3>{data?.title}</h3>
           </Title>
-          <p>{data.content}</p>
+          {/* <p>{data.content}</p> */}
         </ItemBox>
       ))}
     </>

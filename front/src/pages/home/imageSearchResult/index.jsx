@@ -50,6 +50,8 @@ const ImageSearchResult = ({ resultName }) => {
     navigate(`/landmark/detail/${tourId}`);
   };
 
+  //로딩 state를 추가(로딩 모달같은거)
+
   if (resultData === undefined || reviewData === undefined)
     return <NoResultModal setIsOpenModal={setIsNoResultModal} />;
 

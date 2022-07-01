@@ -1,5 +1,5 @@
 import styled from "styled-components";
-// import { CardTitle, CardSubtitle } from "./intro";
+import { useNavigate } from "react-router-dom";
 import Button from "components/button/Button";
 import { useScrollFadeIn } from "hooks/useScrollFadeIn";
 import DescImage1 from "assets/images/DescImage1.png";
@@ -12,7 +12,9 @@ const image = {
   2: DescImage3,
 };
 
-const Descrption = ({ title, subtitle, number, flex }) => {
+const Descrption = ({ title, subtitle, path, number, flex }) => {
+  const navigate = useNavigate();
+
   const animatedItem = {
     0: useScrollFadeIn("left", 0.9, 0.1),
     1: useScrollFadeIn("right", 0.9, 0.3),
@@ -29,7 +31,9 @@ const Descrption = ({ title, subtitle, number, flex }) => {
           <CardTitle>{title}</CardTitle>
           <CardSubtitle>{subtitle}</CardSubtitle>
           <div>
-            <Button color="gray03">자세히 보기</Button>
+            <Button color="gray03" onClick={() => navigate(path)}>
+              자세히 보기
+            </Button>
           </div>
         </ContentContainer>
       </DescrptionCard>

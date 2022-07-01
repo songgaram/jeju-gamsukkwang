@@ -1,6 +1,5 @@
 import ReviewCard from "./ReviewCard";
 import { useGetReviewList } from "queries/reviewQuery";
-import React from "react";
 import { MdExpandMore } from "react-icons/md";
 import styled from "styled-components";
 

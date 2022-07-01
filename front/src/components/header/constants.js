@@ -26,4 +26,6 @@ const NAV_LIST = [
   },
 ];
 
-export { NAV_LIST };
+const MODAL_MESSAGE = "로그인 먼저 해주세요!";
+
+export { NAV_LIST, MODAL_MESSAGE };

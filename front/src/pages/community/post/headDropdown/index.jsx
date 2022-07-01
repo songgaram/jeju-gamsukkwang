@@ -6,8 +6,8 @@ import { DROP_DOWN_LIST } from "./data";
 import styled from "styled-components";
 import { ArrowButton } from "assets/svgs";
 
-const Dropdown = ({ dropDownFunction }) => {
-  const [selected, setSelected] = useState("전체");
+const HeadDropdown = ({ headFunction }) => {
+  const [selected, setSelected] = useState("정보");
   const [isListOpen, setIsListOpen] = useState(false);
   const outsideRef = useRef(null);
 
@@ -20,7 +20,7 @@ const Dropdown = ({ dropDownFunction }) => {
     const itemValue = e.currentTarget.value;
 
     setSelected(item);
-    dropDownFunction(itemValue);
+    headFunction(itemValue);
     setIsListOpen(false);
   };
 
@@ -56,15 +56,14 @@ const Dropdown = ({ dropDownFunction }) => {
   );
 };
 
-export default Dropdown;
+export default HeadDropdown;
 
 const DropdownBox = styled.div`
   position: relative;
   width: 120px;
-  margin-bottom: 30px;
 
   @media screen and ${({ theme }) => theme.breakPoint} {
-    width: 100%;
+    width: 120px;
   }
 `;
 
@@ -76,7 +75,7 @@ const DropdownButton = styled.div`
   height: 100%;
   padding: 10px 14px;
   border: 1px solid ${({ theme }) => theme.colors.gray02};
-  border-radius: 10px;
+  border-radius: 5px;
   background: ${({ theme }) => theme.colors.white};
 `;
 

@@ -8,10 +8,10 @@ import PostList from "./postList";
 
 const Community = () => {
   const navigate = useNavigate();
-  const [isSelected, setInSelected] = useState("");
+  const [headSelected, setHeadSelected] = useState("");
 
   const dropDownFunction = (itemValue) => {
-    setInSelected(itemValue);
+    setHeadSelected(itemValue);
   };
 
   return (
@@ -21,13 +21,13 @@ const Community = () => {
         <Dropdown dropDownFunction={dropDownFunction} />
       </DropdownBox>
       <PostBox>
-        <PostList isSelected={isSelected} />
+        <PostList headSelected={headSelected} />
       </PostBox>
-      <BottonBox>
+      <ButtonBox>
         <button type="button" onClick={() => navigate("/community/post")}>
           게시글 작성
         </button>
-      </BottonBox>
+      </ButtonBox>
     </CommunityBox>
   );
 };
@@ -55,6 +55,12 @@ const DropdownBox = styled.div`
   align-items: flex-start;
   width: 800px;
   margin: 0 auto;
+
+  @media screen and ${({ theme }) => theme.breakPoint} {
+    width: 80%;
+    justify-content: space-around;
+    align-items: center;
+  }
 `;
 
 const PostBox = styled.div`
@@ -62,7 +68,7 @@ const PostBox = styled.div`
   margin: 0 auto;
 `;
 
-const BottonBox = styled.div`
+const ButtonBox = styled.div`
   display: flex;
   justify-content: end;
   align-items: center;
@@ -77,5 +83,13 @@ const BottonBox = styled.div`
     border-radius: 10px;
     cursor: pointer;
     margin-top: 30px;
+  }
+
+  @media screen and ${({ theme }) => theme.breakPoint} {
+    width: 100%;
+
+    button {
+      margin-right: 5%;
+    }
   }
 `;

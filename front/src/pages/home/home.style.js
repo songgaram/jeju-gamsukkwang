@@ -79,7 +79,7 @@ const TextButtonBox = styled.div`
   display: flex;
   flex-direction: column;
   text-align: center;
-  margin-top: 90px;
+  margin-top: 50px;
   font-size: 14px;
   color: ${({ theme }) => theme.colors.gray03};
   span:last-child {
