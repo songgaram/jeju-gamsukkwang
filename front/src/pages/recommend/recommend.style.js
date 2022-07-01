@@ -20,6 +20,8 @@ const ContentBox = styled.div`
     font-size: 24px;
     font-weight: 600;
   }
+
+  }
 `;
 
 const DropdownBox = styled.div`
@@ -27,6 +29,11 @@ const DropdownBox = styled.div`
   justify-content: flex-end;
   width: 100%;
   margin-right: 10%;
+
+  @media screen and ${({ theme }) => theme.breakPoint} {
+    justify-content: center;
+    margin-right: 0%;
+  }
 `;
 
 const CardsContainer = styled.div`

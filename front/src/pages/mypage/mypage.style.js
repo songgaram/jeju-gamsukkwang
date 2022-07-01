@@ -53,6 +53,10 @@ const InfoBox = styled.div`
   flex-direction: column;
   margin-left: 2rem;
   justify-content: space-evenly;
+
+  @media screen and ${({ theme }) => theme.breakPoint} {
+    justify-content: space-between;
+  }
 `;
 
 const NickName = styled.div`

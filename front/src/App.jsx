@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 
-import Home from "pages/Home";
+import Home from "pages/home";
 import Intro from "pages/intro";
 import Register from "pages/register";
 import Landmark from "pages/landmark";

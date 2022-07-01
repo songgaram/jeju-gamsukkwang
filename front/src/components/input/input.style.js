@@ -15,6 +15,7 @@ const StyledInput = styled.input`
 
   @media screen and ${({ theme }) => theme.breakPoint} {
     width: 300px;
+  }
 `;
 
 export { StyledInput };
