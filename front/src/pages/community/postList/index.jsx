@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import Pagination from "react-js-pagination";
 
 import { useGetPostList } from "queries/communityQuery";
 
@@ -7,12 +8,27 @@ import styled from "styled-components";
 
 const PostList = ({ headSelected }) => {
   const navigate = useNavigate();
+  const [page, setPage] = useState(1);
+  const [queryData, setQueryData] = useState({
+    headSelected: headSelected,
+    page: page,
+  });
 
-  // const [page, setPage] = useState(1);
-  const List = useGetPostList(headSelected);
+  useEffect(() => {
+    setQueryData({
+      headSelected: headSelected,
+      page: page,
+    });
+  }, [page, headSelected]);
+
+  const List = useGetPostList(queryData);
 
   const handleClick = (postId) => {
     navigate(`/community/${postId}`);
+  };
+
+  const handlePageChange = (page) => {
+    setPage(page);
   };
 
   if (!List.data) return <span>loading...</span>;
@@ -34,6 +50,15 @@ const PostList = ({ headSelected }) => {
           {/* <p>{data.content}</p> */}
         </ItemBox>
       ))}
+      <Pager>
+        <Pagination
+          activePage={page}
+          itemsCountPerPage={10}
+          totalItemsCount={List.data.total}
+          pageRangeDisplayed={5}
+          onChange={handlePageChange}
+        />
+      </Pager>
     </>
   );
 };
@@ -41,6 +66,8 @@ const PostList = ({ headSelected }) => {
 export default PostList;
 
 const ItemBox = styled.div`
+  width: 800px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   padding: 20px;
@@ -89,4 +116,67 @@ const Title = styled.div`
     font-weight: 600;
     margin-left: 10px;
   }
+`;
+
+const Pager = styled.div`
+  .pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  ul.pagination li:first-child,
+  ul.pagination li:last-child  {
+    display: none;
+  }
+
+  ul.pagination li {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border: 1px solid  ${({ theme }) => theme.colors.white};
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+  }
+
+  ul.pagination li:first-child {
+    border-radius: 5px 0 0 5px;
+  }
+
+  ul.pagination li:last-child {
+    border-radius: 0 5px 5px 0;
+  }
+
+  ul.pagination li a {
+    text-decoration: none;
+    color: ${({ theme }) => theme.colors.primary};
+    font-size: 1rem;
+  }
+
+  ul.pagination li.active a {
+    color: ${({ theme }) => theme.colors.white};
+    
+  }
+
+  ul.pagination li.active {
+    background-color: ${({ theme }) => theme.colors.primary};
+    border-radius: 50%;
+  }
+
+  ul.pagination li a:hover,
+  ul.pagination li a.active {
+    color: ${({ theme }) => theme.colors.primary};
+  }
+
+  .page-selection {
+    width: 48px;
+    height: 30px;
+    color: ${({ theme }) => theme.colors.primary};
 `;
