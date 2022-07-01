@@ -82,9 +82,9 @@ const Post = () => {
     return {
       toolbar: {
         container: [
-          [{ header: [1, 2, 3, false] }],
+          [{ size: ["small", false, "large", "huge"] }],
           ["bold", "italic", "underline", "strike"],
-          [{ color: [] }, { align: [] }],
+          [{ color: [] }, { background: [] }, { align: [] }],
           ["link", "image"],
         ],
         handlers: {
@@ -95,12 +95,15 @@ const Post = () => {
   }, []);
 
   const formats = [
-    "header",
+    "size",
     "bold",
     "italic",
     "underline",
     "strike",
-    "blockquote",
+    "color",
+    "align",
+    "background",
+    "link",
     "image",
   ];
 
