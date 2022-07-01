@@ -5,23 +5,34 @@ import Pagination from "react-js-pagination";
 import { useGetPostList } from "queries/communityQuery";
 
 import styled from "styled-components";
+import http from "libs/apiController";
 
 const PostList = ({ headSelected }) => {
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
-  const [queryData, setQueryData] = useState({
-    headSelected: headSelected,
-    page: page,
-  });
+
+  const [List, setList] = useState([]);
 
   useEffect(() => {
-    setQueryData({
-      headSelected: headSelected,
-      page: page,
-    });
+    setPage(1);
+  }, [headSelected]);
+
+  useEffect(() => {
+    const fetchFunction = async () => {
+      try {
+        const res = await http.get(
+          `/community?page=${page}&limit=10${headSelected}`,
+        );
+        setList(res);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchFunction();
   }, [page, headSelected]);
 
-  const List = useGetPostList(queryData);
+  // const List = useGetPostList(queryData);
 
   const handleClick = (postId) => {
     navigate(`/community/${postId}`);
