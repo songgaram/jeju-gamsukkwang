@@ -1,13 +1,39 @@
-import { useGetPost } from "queries/communityQuery";
+import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import ReactHtmlParser from "react-html-parser";
+
+import { useGetPost } from "queries/communityQuery";
+
 import styled from "styled-components";
+import { useRecoilValue } from "recoil";
+import { userState } from "states";
+import http from "libs/apiController";
 
 const PostDetail = () => {
   const navigate = useNavigate();
   const params = useParams();
   const postId = params.id;
   const postItem = useGetPost(postId);
+  const postUserId = postItem?.data?.userId;
+  const loginUserId = useRecoilValue(userState).id;
+  const [isVisible, setIsVisible] = useState(false);
+
+  const handleDelete = async () => {
+    try {
+      await http.delete(`/community/${postId}`);
+      window.location.replace("/community");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    if (loginUserId === postUserId) {
+      setIsVisible(true);
+    } else {
+      setIsVisible(false);
+    }
+  }, [postUserId, loginUserId]);
 
   return (
     <PostDetailBox>
@@ -37,6 +63,14 @@ const PostDetail = () => {
         >
           뒤로가기
         </button>
+        {isVisible && (
+          <>
+            <button type="button">수정하기</button>
+            <button type="button" onClick={handleDelete}>
+              삭제하기
+            </button>
+          </>
+        )}
       </section>
     </PostDetailBox>
   );
@@ -55,6 +89,7 @@ const PostDetailBox = styled.div`
     justify-content: flex-end;
     width: 90%;
     margin-top: 20px;
+
     button {
       width: 100px;
       padding: 7px 15px;
@@ -62,10 +97,21 @@ const PostDetailBox = styled.div`
       border: none;
       border-radius: 10px;
       font-size: 12px;
+      font-weight: 600;
+    }
+
+    button:nth-child(2) {
+      color: ${({ theme }) => theme.colors.white};
+      background: #74c0fc;
+    }
+
+    button:nth-child(3) {
+      color: ${({ theme }) => theme.colors.white};
+      background: #ff8787;
     }
   }
 
-  @media screen and ${({ theme }) => theme.breakPoint} {
+  @media screen and (${({ theme }) => theme.breakPoint}) {
     width: 100%;
     margin: 20px 0;
 
@@ -106,7 +152,7 @@ const ContentBox = styled.div`
 
     img {
       max-width: 700px;
-      @media screen and ${({ theme }) => theme.breakPoint} {
+      @media screen and (${({ theme }) => theme.breakPoint}) {
         max-width: 300px;
       }
     }
@@ -116,7 +162,7 @@ const ContentBox = styled.div`
     margin-bottom: 10px;
   }
 
-  @media screen and ${({ theme }) => theme.breakPoint} {
+  @media screen and (${({ theme }) => theme.breakPoint}) {
     width: 100%;
     padding: 20px;
   }

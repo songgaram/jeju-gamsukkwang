@@ -1,4 +1,4 @@
-import { useQuery } from "react-query";
+import { useQuery, useMutation } from "react-query";
 
 import http from "libs/apiController";
 
@@ -16,4 +16,8 @@ export const useGetPost = (postId) => {
     const data = res.data;
     return data;
   });
+};
+
+export const useDeletePost = () => {
+  return useMutation((postId) => http.delete(`/community/${postId}`));
 };
