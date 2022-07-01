@@ -112,7 +112,7 @@ communityRouter.get("/community/:id", loginRequired, async (req, res, next) => {
 
     await paramSchema.validateAsync(req.params);
 
-    const { articleId } = req.params;
+    const { id: articleId } = req.params;
     const article = await CommunityService.getArticle({ articleId });
 
     res.status(200).json(article);
