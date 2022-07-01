@@ -36,10 +36,6 @@ const Container = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-
-  @media screen and ${({ theme }) => theme.breakPoint} {
-    padding: 10%;
-  }
 `;
 const IconContainer = styled.div`
   width: 1000px;

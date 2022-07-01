@@ -1,11 +1,11 @@
 const NAV_LIST = [
   {
-    id: 0,
+    id: "1",
     text: "My Map",
     path: "mymap",
   },
   {
-    id: 1,
+    id: "2",
     text: "My Stamp",
     path: "mystamp",
   },

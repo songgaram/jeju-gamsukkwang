@@ -37,41 +37,6 @@ paths:
         "400":
           description: 잘못된 요청을 보냈을 때 오류가 발생합니다.
 
-  /community:
-    post:
-      tags:
-        - Community
-      summary: 게시글 작성
-      security:
-        - Authorization: []
-      description: /community로 게시글 작성 요청을 보냅니다. 단, 로그인 사용자만 사용할 수 있습니다.
-      requestBody:
-        description: 제목, 내용을 필수 req.body로 받습니다.
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                title:
-                  type: string
-                  required: true
-                  default: 게시글 테스트 중입니다, 제목.
-                content:
-                  type: string
-                  required: true
-                  default: 게시글 테스트 중입니다, 내용.
-                head:
-                  type: string
-                  required: true
-                  default: 게시글 테스트 중입니다, 말머리
-      responses:
-        "201":
-          description: 게시글 작성 성공
-        "400":
-          description: 제목이나 내용이 공란일 때 오류가 발생합니다.
-        "403":
-          description: 로그인되어 있지 않을 때 오류가 발생합니다.
-
   /community/{id}:
     get:
       tags:
@@ -94,13 +59,55 @@ paths:
           description: 잘못된 요청을 보냈을 때 오류가 발생합니다.
         "403":
           description: 로그인되어 있지 않을 때 오류가 발생합니다.
+
+  /community:
+    post:
+      tags:
+        - Community
+      summary: 게시글 작성
+      security:
+        - Authorization: []
+      description: /community로 게시글 작성 요청을 보냅니다. 단, 로그인 사용자만 사용할 수 있습니다.
+      requestBody:
+        description: 제목, 내용을 필수 req.body로 받습니다.
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  required: true
+                  default: 게시글 테스트 중입니다, 제목.
+                content:
+                  type: string
+                  required: true
+                  default: 게시글 테스트 중입니다, 내용.
+                head:
+                  type: string
+                  required: true
+                  default: 게시글 테스트 중입니다, 말머리
+                imgFile:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+      responses:
+        "201":
+          description: 게시글 작성 성공
+        "400":
+          description: 제목이나 내용이 공란일 때 오류가 발생합니다.
+        "403":
+          description: 로그인되어 있지 않을 때 오류가 발생합니다.
+
+  /community/{id}/:
     put:
       tags:
         - Community
       summary: 특정 게시글 수정
       security:
         - Authorization: []
-      description: /community/{id}/으로 특정 게시글의 제목과 내용을 수정 요청합니다. 단, 해당 게시글의 작성자만 사용할 수 있습니다.
+      description: /community/{id}/으로 특정 게시글의 제목과 내용을 수정 요청합니다. 단, 해당 게시글의 작성자만 사용할 수 있습니다. url 맨 뒤의 /는 없어도 됩니다.
       parameters:
         - name: id
           in: path
@@ -127,6 +134,11 @@ paths:
                   type: string
                   required: true
                   default: 게시글 수정 테스트 중입니다, 말머리
+                imgFile:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
       responses:
         "201":
           description: 게시글 수정 성공
@@ -134,47 +146,29 @@ paths:
           description: 제목이나 내용이 공란일 때, 사용자가 수정 권한이 없을 때 오류가 발생합니다.
         "403":
           description: 로그인되어 있지 않을 때 오류가 발생합니다.
-    delete:
-      tags:
-        - Community
-      summary: 특정 게시글 삭제
-      security:
-        - Authorization: []
-      description: /community/{id}로 특정 게시글의 제목과 내용, 그리고 게시글의 댓글을 요청합니다. 단, 해당 게시글의 작성자만 사용할 수 있습니다.
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-          description: 게시글의 고유 id입니다.
-      responses:
-        "200":
-          description: 게시글 삭제 성공
-        "400":
-          description: 사용자가 삭제 권한이 없을 때, 잘못된 요청을 보냈을 떄 오류가 발생합니다.
-        "403":
-          description: 로그인되어 있지 않을 때 오류가 발생합니다.
 
-  /community/image:
-    post:
-      tags:
-        - Community
-      summary: 게시글 이미지 업로드
-      security:
-        - Authorization: []
-      description: /community/image로 게시글 이미지를 업로드하고, 그 이미지의 url을 받습니다.
-      requestBody:
-        description: 이미지 파일을 필수 req.body로 받습니다.
-        content:
-          multipart/form-data:
-            schema:
-              properties:
-                imgFile:
-                  type: array
-                  items:
-                    type: string
-                    format: binary
+/community/{id}:
+  delete:
+    tags:
+      - Community
+    summary: 특정 게시글 삭제
+    security:
+      - Authorization: []
+    description: /community/{id}로 특정 게시글의 제목과 내용, 그리고 게시글의 댓글을 요청합니다. 단, 해당 게시글의 작성자만 사용할 수 있습니다.
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: 게시글의 고유 id입니다.
+    responses:
+      "200":
+        description: 게시글 삭제 성공
+      "400":
+        description: 사용자가 삭제 권한이 없을 때, 잘못된 요청을 보냈을 떄 오류가 발생합니다.
+      "403":
+        description: 로그인되어 있지 않을 때 오류가 발생합니다.
 
 /community/{id}/like:
   put:

@@ -1,5 +1,4 @@
 import styled, { keyframes } from "styled-components";
-import { darken } from "polished";
 
 const fadeIn = keyframes`
  from {
@@ -37,6 +36,7 @@ const ModalBackground = styled.div`
 
   * {
     font-weight: 600;
+    color: ${({ theme }) => theme.colors.black};
   }
 `;
 
@@ -52,50 +52,21 @@ const ModalBox = styled.div`
   animation: ${slideUp} 0.4s cubic-bezier(0.5, 0, 0, 0.8) forwards;
 `;
 
-const ImgInputButton = styled.label`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  outline: none;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  transition: all 0.2s ease-in-out;
+const ModalButton = styled.button`
+  padding: 10px 20px;
+  background-color: #e5e5f1;
+  border-radius: 10px;
   border: none;
-  font-weight: 600;
-
-  /*크기*/
-  height: 50px;
-  font-size: ${({ theme }) => theme.fontSizes.lg};
-
-  /*색상*/
-  background: ${({ theme }) => theme.colors.primary};
-  color: ${({ theme }) => theme.colors.white};
-
-  &:hover {
-    background: ${({ theme }) => darken(0.1, theme.colors.primary)};
-  }
-
-  &:active {
-    background: ${({ theme }) => darken(0.1, theme.colors.primary)};
-  }
-
-  /* 기타 */
-  & + & {
-    margin-left: 1rem;
-  }
-
-  & > input {
-    display: none;
-  }
+  cursor: pointer;
 `;
 
 const Span = styled.span`
-  margin-top: 15px;
-  font-size: 12px;
-  text-align: center;
+  font-size: ${({ theme }) => theme.fontSizes.small};
   color: ${({ theme }) => theme.colors.gray03};
+
+  & > p {
+    background: linear-gradient(#fff 50%, rgba(255, 136, 29, 60%) 50%);
+  }
 `;
 
-export { ModalBackground, ModalBox, Span, ImgInputButton };
+export { ModalBackground, ModalBox, ModalButton, Span };

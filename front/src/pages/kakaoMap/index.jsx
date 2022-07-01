@@ -21,7 +21,7 @@ const Map = () => {
     const map = new kakao.maps.Map(container, options);
 
     // 주소-좌표 변환 객체를 생성합니다
-    const geocoder = new kakao.maps.services.Geocoder();
+    var geocoder = new kakao.maps.services.Geocoder();
 
     geocoder.addressSearch(address, function (result, status) {
       // 정상적으로 검색이 완료됐으면

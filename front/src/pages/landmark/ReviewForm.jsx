@@ -7,7 +7,7 @@ import {
   StarContainer,
 } from "./landmark.style";
 import { BsStarFill } from "react-icons/bs";
-import Button from "components/button/Button";
+import Button from "components/Button";
 import registerValidation from "./utils";
 import { usePostReview } from "queries/reviewQuery";
 import { TEXT_LIST, MODAL_MESSAGE } from "./constants";

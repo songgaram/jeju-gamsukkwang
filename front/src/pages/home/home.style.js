@@ -31,29 +31,6 @@ const ContentsBox = styled.div`
   span:last-child {
     background: linear-gradient(#fff 50%, rgba(255, 136, 29, 60%) 50%);
   }
-
-  @media screen and ${({ theme }) => theme.breakPoint} {
-    text-align: center;
-    line-height: 150%;
-
-    h1 {
-      font-size: 24px;
-      font-weight: 600;
-      margin-bottom: 30px;
-      line-height: 150%;
-    }
-
-    span {
-      width: auto;
-      font-size: 18px;
-      margin-bottom: 10px;
-      line-height: 150%;
-    }
-
-    span:last-child {
-      background: linear-gradient(#fff 50%, rgba(255, 136, 29, 60%) 50%);
-    }
-  }
 `;
 
 const Button = styled.button`

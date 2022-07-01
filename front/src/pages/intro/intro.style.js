@@ -20,22 +20,12 @@ const CardTitle = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.xxxl};
   font-weight: bold;
   margin-bottom: 10%;
-
-  @media screen and ${({ theme }) => theme.breakPoint} {
-    text-align: center;
-  }
 `;
 
 const CardSubtitle = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.base};
   font-weight: 300;
   margin-bottom: 5%;
-
-  @media screen and ${({ theme }) => theme.breakPoint} {
-    text-align: center;
-    white-space: pre-line;
-    line-height: 150%;
-  }
 `;
 
 export { CardWrapper, CardTitle, CardSubtitle };

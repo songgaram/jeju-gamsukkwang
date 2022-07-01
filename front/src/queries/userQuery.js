@@ -32,15 +32,12 @@ export const useChangeNickname = () => {
 export const useIncreaseExp = () => {
   const queryClient = useQueryClient();
 
-  return useMutation(
-    async (point) => await http.post("user/exp", { point: Number(point) }),
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries("userState");
-      },
-      onError: (err) => console.log(err),
+  return useMutation(async (point) => await http.post("user/exp", point), {
+    onSuccess: () => {
+      queryClient.invalidateQueries("userState");
     },
-  );
+    onError: (err) => console.log(err),
+  });
 };
 
 //스탬프 추가

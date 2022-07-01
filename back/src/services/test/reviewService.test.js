@@ -1,6 +1,4 @@
-import { reviewModel } from "../../db";
 import { ReviewService } from "../reviewService";
-import { UserService } from "../userService";
 
 const mockUserId = "b4f9ab8c-43fa-4bd9-8f82-27a979f7a3a9";
 const mockTourId = "81cd8ae4-044e-42bc-ba1f-6108d192edc3";
@@ -49,23 +47,6 @@ describe("Review MVP Test", () => {
     expect(addReview.rating).toEqual(5);
   });
 
-  it("랜드마크에 대한 인증을 진행하지 않았을 시, 그 랜드마크의 리뷰를 작성할 수 없다", async () => {
-    const addMock = {
-      loginUserId: mockUserId,
-      tourId: "230859140639285970",
-      content: "isTesting",
-      rating: 5,
-    };
-
-    reviewModel.isStamped = jest.fn().mockResolvedValue(false);
-
-    try {
-      await ReviewService.addReview(addMock);
-    } catch (err) {
-      expect(err.message).toEqual("system.error.noAuthorized");
-    }
-  });
-
   it("특정 랜드마크의 리뷰가 평점 별로 각각 1개 이상 있을 때의 요약 정보를 가지고 온다.", async () => {
     const getReviewInfo = await ReviewService.getReviewInfo({
       tourId: mockTourId,
@@ -91,9 +72,6 @@ describe("Review MVP Test", () => {
       content: "isTesting",
       rating: 5,
     };
-
-    reviewModel.isStamped = jest.fn().mockResolvedValue(true);
-
     try {
       await ReviewService.addReview(addMock);
     } catch (err) {

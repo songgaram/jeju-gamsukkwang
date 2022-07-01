@@ -24,6 +24,7 @@ const ModalBackground = styled.div`
 
   * {
     font-weight: 600;
+    color: ${({ theme }) => theme.colors.black};
   }
 `;
 
@@ -52,4 +53,14 @@ const ModalBox = styled.div`
   animation: ${slideUp} 0.4s cubic-bezier(0.5, 0, 0, 0.8) forwards;
 `;
 
-export { ModalBackground, ModalBox };
+const Button = styled.button`
+  margin-top: 20px;
+  padding: 10px 20px;
+  color: ${({ theme }) => theme.colors.white};
+  background: ${({ theme }) => theme.colors.primary};
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+`;
+
+export { ModalBackground, ModalBox, Button };

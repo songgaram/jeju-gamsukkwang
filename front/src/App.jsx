@@ -9,11 +9,8 @@ import LogIn from "pages/logIn";
 import Layout from "components/layout";
 import MyPage from "pages/mypage";
 import Recommend from "pages/recommend";
-import MyMap from "pages/mypage/nav/MyMap";
-import MyStamp from "pages/mypage/nav/MyStamp";
-import Community from "pages/community";
-import Post from "pages/community/post";
-import PostDetail from "pages/community/postDetail";
+import MyMap from "pages/mypage/MyMap";
+import MyStamp from "pages/mypage/MyStamp";
 import Map from "pages/kakaoMap";
 
 const App = () => {
@@ -32,9 +29,6 @@ const App = () => {
           <Route path="mymap" element={<MyMap />} />
           <Route path="mystamp" element={<MyStamp />} />
         </Route>
-        <Route path="/community" element={<Community />} />
-        <Route path="/community/post" element={<Post />} />
-        <Route path="/community/:id" element={<PostDetail />} />
       </Route>
     </Routes>
   );

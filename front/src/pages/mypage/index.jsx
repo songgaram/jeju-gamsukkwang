@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Profile from "./Profile";
 import Level from "./Level";
-import Navs from "./nav/Navs";
+import Navs from "./Navs";
 import { Outlet } from "react-router-dom";
 import { useGetUserInfo } from "queries/userQuery";
 import Loader from "components/loader";
@@ -33,11 +33,6 @@ const InfoContainer = styled.div`
   column-gap: 10%;
   justify-content: center;
   padding: 6rem 15rem;
-
-  @media screen and ${({ theme }) => theme.breakPoint} {
-    display: block;
-    padding: 6rem 2.5rem;
-  }
 `;
 
 const OutletContainer = styled.div`
@@ -46,10 +41,6 @@ const OutletContainer = styled.div`
   height: auto;
   border-radius: 45px 45px 0 0;
   padding: 7% 0;
-
-  @media screen and ${({ theme }) => theme.breakPoint} {
-    padding: 9% 0;
-  }
 `;
 
 export default MyPage;

@@ -6,7 +6,7 @@ import {
   Footer,
   StarContainer,
 } from "./landmark.style";
-import Button from "components/button/Button";
+import Button from "components/Button";
 import { BsStarFill } from "react-icons/bs";
 
 const ReviewEditForm = () => {

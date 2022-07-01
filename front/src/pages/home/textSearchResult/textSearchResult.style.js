@@ -11,7 +11,7 @@ const TextSearchResultBox = styled.div`
   margin: 20px auto 0;
   margin-right: auto;
   margin-left: auto;
-  overflow-y: scroll;
+  overflow: scroll;
   padding: 16px 24px;
   background: ${({ theme }) => theme.colors.gray01};
   border-radius: 10px;
@@ -24,6 +24,8 @@ const TextSearchResultBox = styled.div`
   }
 
   ul {
+    overflow: scroll;
+
     li {
       display: flex;
       flex-direction: row;

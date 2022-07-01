@@ -3,8 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useClickAway } from "react-use";
 
 import { NoResultIcon } from "assets/svgs";
-import { ModalBackground, ModalBox } from "./noResultModal.styled";
-import ModalButton from "components/button/ModalButton";
+import { ModalBackground, ModalBox, Button } from "./noResultModal.styled";
 
 const NoResultModal = ({ setIsOpenModal }) => {
   const navigate = useNavigate();
@@ -25,9 +24,7 @@ const NoResultModal = ({ setIsOpenModal }) => {
       <ModalBox ref={outsideRef}>
         <NoResultIcon width={80} />
         <span>감귤이가 장소를 찾지 못했어요 :(</span>
-        <ModalButton onClick={handleCloseButtonClick} color="primary" mt="20px">
-          확인
-        </ModalButton>
+        <Button onClick={handleCloseButtonClick}>확인</Button>
       </ModalBox>
     </ModalBackground>
   );

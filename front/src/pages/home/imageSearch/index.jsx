@@ -32,7 +32,7 @@ const ImageSearch = () => {
 
       setIsLoading(false);
 
-      if (parseInt(res.data.data.summary[0].percentage) >= 65) {
+      if (parseInt(res.data.data.summary[0].percentage) >= 75) {
         setIsResultModal(true);
       }
       setIsNoResultModal(true);
@@ -48,7 +48,7 @@ const ImageSearch = () => {
         📷 이미지로 검색하기
         <input
           type="file"
-          accept="image/jpg, image/jpeg"
+          accept="image/jpg"
           ref={photoInput}
           onChange={handleUploadImage}
         />

@@ -43,15 +43,15 @@ tourRouter.post("/tour/image", s3Single(), async (req, res, next) => {
     await fileValidator.validateAsync(req.file);
     const { location, originalname } = req.file;
 
-    // ai로 보내는 이미지 확장자가 jpg(JPG) 또는 jpeg(JPEG)가 아니라면 에러 띄우기
-    const checkExtension = /(.jpg$|.JPG$|.jpeg$|.JPEG$)/gi;
+    // ai로 보내는 이미지 확장자가 jpg가 아니라면 에러 띄우기
+    const checkExtension = /.jpg$/;
     if (!checkExtension.test(originalname)) {
-      throw new Error("extension only must be JPG, JPEG");
+      throw new Error("extension only must be JPG");
     }
 
-    // exifr이 한글 파일명은 인식하지 못하므로 영어, 숫자, 허용된 특수문자가 아닌 단어가 들어간다면 에러 띄우기
-    const checkName = /^[A-Za-z0-9~.-_]*$/;
-    if (!checkName.test(originalname)) {
+    // exifr이 한글 파일명은 인식하지 못하므로 한글이 들어가면 에러 띄우기
+    const checkName = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
+    if (checkName.test(originalname)) {
       throw new Error("fileName must not have Korean");
     }
 
