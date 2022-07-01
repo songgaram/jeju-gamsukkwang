@@ -7,3 +7,4 @@ export { ReactComponent as ArrowButton } from "./arrowButton.svg";
 export { ReactComponent as LikesIcon } from "./heart.svg";
 export { ReactComponent as RatingIcon } from "./star.svg";
 export { ReactComponent as ReviewIcon } from "./tooltip.svg";
+export { ReactComponent as TangerineIconSm } from "./tangerineIconSm.svg";

@@ -45,6 +45,10 @@ const LoginButton = styled.button`
   border: 1px solid ${({ theme }) => theme.colors.primary};
   background: ${(props) => (props.isActive ? "#ff881d" : "#fff")};
   cursor: pointer;
+
+  @media screen and ${({ theme }) => theme.breakPoint} {
+    width: 342px;
+  }
 `;
 
 const InputBox = styled.div`
@@ -63,6 +67,9 @@ const InputBox = styled.div`
     margin: 7px 10px;
     font-size: 12px;
     color: ${({ theme }) => theme.colors.primary};
+    @media screen and ${({ theme }) => theme.breakPoint} {
+      font-size: 10px;
+    }
   }
 `;
 

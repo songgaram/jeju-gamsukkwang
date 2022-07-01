@@ -53,11 +53,4 @@ const ModalBox = styled.div`
   animation: ${slideUp} 0.4s cubic-bezier(0.5, 0, 0, 0.8) forwards;
 `;
 
-const ModalButton = styled.button`
-  padding: 10px 20px;
-  background-color: #e5e5f1;
-  border-radius: 10px;
-  border: none;
-`;
-
-export { ModalBackground, ModalBox, ModalButton };
+export { ModalBackground, ModalBox };
