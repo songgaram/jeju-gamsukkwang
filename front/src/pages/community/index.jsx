@@ -23,11 +23,11 @@ const Community = () => {
       <PostBox>
         <PostList isSelected={isSelected} />
       </PostBox>
-      <BottonBox>
+      <ButtonBox>
         <button type="button" onClick={() => navigate("/community/post")}>
           게시글 작성
         </button>
-      </BottonBox>
+      </ButtonBox>
     </CommunityBox>
   );
 };
@@ -62,7 +62,7 @@ const PostBox = styled.div`
   margin: 0 auto;
 `;
 
-const BottonBox = styled.div`
+const ButtonBox = styled.div`
   display: flex;
   justify-content: end;
   align-items: center;
