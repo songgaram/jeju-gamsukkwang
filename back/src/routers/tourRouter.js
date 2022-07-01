@@ -44,7 +44,7 @@ tourRouter.post("/tour/image", s3Single(), async (req, res, next) => {
     const { location, originalname } = req.file;
 
     // ai로 보내는 이미지 확장자가 jpg(JPG) 또는 jpeg(JPEG)가 아니라면 에러 띄우기
-    const checkExtension = /(.jpg$|.JPG$|.jpeg$|.JPEG$)/;
+    const checkExtension = /(.jpg$|.JPG$|.jpeg$|.JPEG$)/gi;
     if (!checkExtension.test(originalname)) {
       throw new Error("extension only must be JPG, JPEG");
     }
