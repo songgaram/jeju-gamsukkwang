@@ -10,6 +10,7 @@ import { BsStarFill } from "react-icons/bs";
 import Button from "components/button/Button";
 import registerValidation from "./utils";
 import { usePostReview } from "queries/reviewQuery";
+import { useGetUserInfo } from "queries/userQuery";
 import { TEXT_LIST, MODAL_MESSAGE } from "./constants";
 import Modal from "components/modal";
 import ModalPortal from "components/modal/modalPortal";
@@ -25,6 +26,7 @@ const ReviewForm = ({ id }) => {
   const { isRatingValid, isContentValid } = registerValidation(rating, content);
   const isActive = isRatingValid && isContentValid;
 
+  const { data } = useGetUserInfo();
   const postReview = usePostReview();
   const theme = useTheme();
 
@@ -56,67 +58,75 @@ const ReviewForm = ({ id }) => {
   };
 
   return (
+    // eslint-disable-next-line react/jsx-no-useless-fragment
     <>
-      <ReviewFormContainer onSubmit={handleSubmitReview}>
-        <HeaderContainer align="center" justify="center">
-          <Title>랜드마크를 평가해주세요!</Title>
-          <Required>필수</Required>
-        </HeaderContainer>
+      {data && (
+        <>
+          <ReviewFormContainer onSubmit={handleSubmitReview}>
+            <HeaderContainer align="center" justify="center">
+              <Title>랜드마크를 평가해주세요!</Title>
+              <Required>필수</Required>
+            </HeaderContainer>
 
-        <StarContainer>
-          {[1, 2, 3, 4, 5].map((el) => (
-            <BsStarFill
-              color={
-                (clicked >= el) | (hovered >= el)
-                  ? theme.colors.secondary
-                  : theme.colors.gray02
-              }
-              key={el}
-              size={`${50 / 16}rem`}
-              onMouseEnter={() => setHovered(el)}
-              onMouseLeave={() => setHovered(null)}
-              onClick={() => {
-                setClicked(el);
-                setRating(el);
-              }}
-              cursor="pointer"
+            <StarContainer>
+              {[1, 2, 3, 4, 5].map((el) => (
+                <BsStarFill
+                  color={
+                    (clicked >= el) | (hovered >= el)
+                      ? theme.colors.secondary
+                      : theme.colors.gray02
+                  }
+                  key={el}
+                  size={`${50 / 16}rem`}
+                  onMouseEnter={() => setHovered(el)}
+                  onMouseLeave={() => setHovered(null)}
+                  onClick={() => {
+                    setClicked(el);
+                    setRating(el);
+                  }}
+                  cursor="pointer"
+                />
+              ))}
+            </StarContainer>
+            <div style={{ position: "relative" }}>
+              {[1, 2, 3, 4, 5].map((num) => (
+                <HiddenText key={num} show={hovered === num}>
+                  {TEXT_LIST[num - 1]}
+                </HiddenText>
+              ))}
+            </div>
+
+            <HeaderContainer align="center">
+              <Title>다른 여행객을 위한 후기와 팁</Title>
+              <Required>필수</Required>
+            </HeaderContainer>
+            <InputForm
+              maxLength="200"
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
             />
-          ))}
-        </StarContainer>
-        <div style={{ position: "relative" }}>
-          {[1, 2, 3, 4, 5].map((num) => (
-            <HiddenText key={num} show={hovered === num}>
-              {TEXT_LIST[num - 1]}
-            </HiddenText>
-          ))}
-        </div>
-
-        <HeaderContainer align="center">
-          <Title>다른 여행객을 위한 후기와 팁</Title>
-          <Required>필수</Required>
-        </HeaderContainer>
-        <InputForm
-          maxLength="200"
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-        />
-        <Footer>
-          <div>{content.length}/200</div>
-          <Button
-            color="deepblue"
-            type="submit"
-            disabled={!isActive}
-            onSubmit={handleSubmitReview}
-          >
-            리뷰 등록
-          </Button>
-        </Footer>
-      </ReviewFormContainer>
-      <ModalPortal>
-        {isOpenModal && (
-          <Modal setIsOpenModal={setIsOpenModal} modalMessage={modalMessage} />
-        )}
-      </ModalPortal>
+            <Footer>
+              <div>{content.length}/200</div>
+              <Button
+                color="deepblue"
+                type="submit"
+                disabled={!isActive}
+                onSubmit={handleSubmitReview}
+              >
+                리뷰 등록
+              </Button>
+            </Footer>
+          </ReviewFormContainer>
+          <ModalPortal>
+            {isOpenModal && (
+              <Modal
+                setIsOpenModal={setIsOpenModal}
+                modalMessage={modalMessage}
+              />
+            )}
+          </ModalPortal>
+        </>
+      )}
     </>
   );
 };
