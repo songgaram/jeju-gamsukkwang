@@ -2,7 +2,7 @@ import styled from "styled-components";
 import IntroTitle from "assets/images/IntroTitle.png";
 import BrowserImage from "assets/images/BrowserImage.png";
 import BackgroundImage from "assets/images/BackgroundImage.png";
-import Button from "components/Button";
+import Button from "components/button/Button";
 import CardSection from "./CardSection";
 import DescSection from "./DescSection";
 import { useScrollFadeIn } from "hooks/useScrollFadeIn";

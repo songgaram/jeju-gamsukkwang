@@ -8,7 +8,7 @@ import {
   DropdownMenu,
 } from "styled-dropdown-component";
 
-import Button from "components/Button";
+import Button from "components/button/Button";
 import { NAV_LIST } from "./constants";
 import { loginState } from "../../states";
 

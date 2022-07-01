@@ -1,8 +1,8 @@
 import { useRef } from "react";
 import { useClickAway } from "react-use";
-import { ModalBackground, ModalBox } from "./modal.style";
+import { ModalBackground, ModalBox } from "./imageAuth.style";
 import Loading from "./Loading";
-import ImageAuth from "./ImageAuth";
+import ImageAuthResult from "./ImageAuthResult";
 
 const Modal = ({ setIsOpenModal, isLoading, data }) => {
   const outsideRef = useRef(null);
@@ -17,7 +17,7 @@ const Modal = ({ setIsOpenModal, isLoading, data }) => {
         {isLoading ? (
           <Loading />
         ) : (
-          <ImageAuth data={data} setIsOpenModal={setIsOpenModal} />
+          <ImageAuthResult data={data} setIsOpenModal={setIsOpenModal} />
         )}
       </ModalBox>
     </ModalBackground>
