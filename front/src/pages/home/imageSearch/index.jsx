@@ -16,6 +16,11 @@ const ImageSearch = () => {
   const [isResultModal, setIsResultModal] = useState(false);
   const [isNoResultModal, setIsNoResultModal] = useState(false);
   const [resultName, setResultName] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const modalMessage = {
+    "extension only must be JPG, JPEG": "jpg 이미지만 검색 가능합니다.",
+    "Unknown file format": "파일명 안내문구를 확인해주세요.",
+  };
 
   const handleUploadImage = useCallback(async (e) => {
     if (!e.target.files) return;
@@ -37,6 +42,7 @@ const ImageSearch = () => {
       }
       setIsNoResultModal(true);
     } catch (error) {
+      setErrorMessage(error.response.data.errormessage);
       setIsLoading(false);
       setIsErrorModal(true);
     }
@@ -53,7 +59,11 @@ const ImageSearch = () => {
           onChange={handleUploadImage}
         />
       </ImageUploadBox>
-      <Span>이미지 검색 기능은 jpg 파일만 지원됩니다.</Span>
+      {errorMessage === "Unknown file format" ? (
+        <Span>이미지 검색 기능은 jpg 파일만 지원됩니다.</Span>
+      ) : (
+        <Span>파일명 안내문구를 확인해주세요.</Span>
+      )}
       <ModalPortal>
         {isLoading && <Loading />}
         {isResultModal && <ImageSearchResult resultName={resultName} />}
@@ -63,7 +73,7 @@ const ImageSearch = () => {
         {isErrorModal && (
           <Modal
             setIsOpenModal={setIsErrorModal}
-            modalMessage="jpg 이미지만 검색 가능합니다."
+            modalMessage={modalMessage[errorMessage]}
           />
         )}
       </ModalPortal>
