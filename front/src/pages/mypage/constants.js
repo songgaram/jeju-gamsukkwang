@@ -38,4 +38,6 @@ const LEVEL_LIST = [
   },
 ];
 
-export { NAV_LIST, LEVEL_LIST };
+const AWS_URL = "https://dev-team8-bucket.s3.ap-northeast-2.amazonaws.com/";
+
+export { NAV_LIST, LEVEL_LIST, AWS_URL };

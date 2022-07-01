@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useState } from "react";
-import { LEVEL_LIST } from "./constants";
+import { LEVEL_LIST, AWS_URL } from "./constants";
 import Button from "components/button/Button";
 import {
   InfoBox,
@@ -16,6 +16,7 @@ import ProfileEditForm from "./ProfileEditForm";
 const Profile = ({ email, nickname, experience, profileImgUrl }) => {
   const level = parseInt(parseInt(experience) / 10);
   const [isEditing, setIsEditing] = useState(false);
+  console.log(profileImgUrl);
 
   const handleClick = () => {
     setIsEditing(true);
@@ -30,11 +31,12 @@ const Profile = ({ email, nickname, experience, profileImgUrl }) => {
           email={email}
           level={level}
           setIsEditing={setIsEditing}
+          profileImgUrl={profileImgUrl}
         />
       ) : (
         <ProfileBox>
           <ImgContainer>
-            <ProfileImg src={profileImgUrl} />
+            <ProfileImg src={AWS_URL + profileImgUrl} />
           </ImgContainer>
 
           <InfoBox>

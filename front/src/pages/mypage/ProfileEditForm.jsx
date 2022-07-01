@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import {
   InfoBox,
   Email,
@@ -9,34 +9,64 @@ import {
 } from "./mypage.style";
 import styled from "styled-components";
 import Button from "components/button/Button";
-import { LEVEL_LIST } from "./constants";
+import { LEVEL_LIST, AWS_URL } from "./constants";
 import { useChangeNickname } from "queries/userQuery";
 import theme from "../../styles/Theme";
+import { RiEdit2Fill } from "react-icons/ri";
 import { useMediaQuery } from "react-responsive";
+import http from "libs/apiController";
 
 const ProfileEditForm = ({
   nickname,
   email,
   level,
-  setEditing,
+  setIsEditing,
   profileImgUrl,
 }) => {
   const [editNickname, setEditNickname] = useState(nickname);
+  const [editImgUrl, setEditImgUrl] = useState(profileImgUrl);
   const changeNickname = useChangeNickname();
   const data = { nickname: editNickname };
   const mediaQuery = useMediaQuery({ query: theme.breakPoint });
+  const photoInput = useRef(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     changeNickname.mutate(data);
-    setEditing(false);
+    setIsEditing(false);
+    window.location.replace("/mypage");
+  };
+
+  const handleChangeImg = async (e) => {
+    if (!e.target.files) return;
+
+    const formData = new FormData();
+    formData.append("imgFile", e.target.files[0]);
+    try {
+      const res = await http.put("user/profileImg", formData);
+      setEditImgUrl(res.data.profileImgUrl);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
     <ProfileBox>
-      <ImgContainer>
-        <ProfileImg src={profileImgUrl} />
-      </ImgContainer>
+      <FlexBox>
+        <ImgContainer>
+          <ProfileImg src={AWS_URL + editImgUrl} />
+        </ImgContainer>
+        <ImgUploadLabel>
+          <RiEdit2Fill size="1.5rem" style={{ cursor: "pointer" }} />
+          <input
+            type="file"
+            accept="image/*"
+            ref={photoInput}
+            onChange={handleChangeImg}
+          />
+        </ImgUploadLabel>
+      </FlexBox>
+
       <InfoBox>
         <StyledInput
           name="nickname"
@@ -50,14 +80,14 @@ const ProfileEditForm = ({
         </Level>
         {!mediaQuery ? (
           <div>
-            <Button onClick={() => setEditing(false)}>취소</Button>
+            <Button onClick={() => setIsEditing(false)}>취소</Button>
             <Button type="submit" onClick={handleSubmit}>
               완료
             </Button>
           </div>
         ) : (
           <div style={{ display: "flex", justifyContent: "space-evenly" }}>
-            <Button onClick={() => setEditing(false)}>취소</Button>
+            <Button onClick={() => setIsEditing(false)}>취소</Button>
             <Button type="submit" onClick={handleSubmit}>
               완료
             </Button>
@@ -77,7 +107,7 @@ const ProfileBox = styled.div`
 `;
 
 const StyledInput = styled.input`
-  width: 90%;
+  width: 150px;
   height: 35px;
   padding: 0 5%;
   letter-spacing: 0.5px;
@@ -88,5 +118,17 @@ const StyledInput = styled.input`
 
   &:focus {
     border: 1px solid ${({ theme }) => theme.colors.primary};
+  }
+`;
+
+const FlexBox = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const ImgUploadLabel = styled.label`
+  margin-left: auto;
+  & > input {
+    display: none;
   }
 `;

@@ -15,7 +15,11 @@ http.interceptors.request.use(
   async (config) => {
     const accessToken = localStorage.getItem("accessToken");
 
-    if (config.url === "tour/image" || config.url === "community/image") {
+    if (
+      config.url === "tour/image" ||
+      config.url === "community/image" ||
+      config.url === "user/profileImg"
+    ) {
       config.headers["Content-Type"] = "multipart/form-data";
       accessToken &&
         (config.headers["Authorization"] = `Bearer ${accessToken}`);

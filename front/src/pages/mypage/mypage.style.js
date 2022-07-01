@@ -83,7 +83,7 @@ const ProfileImg = styled.img.attrs({ alt: "프로필 이미지" })`
 const ImgContainer = styled.div`
   width: 160px;
   height: 160px;
-  border-radius: 50%;
+  border-radius: 70%;
   overflow: hidden;
 `;
 
