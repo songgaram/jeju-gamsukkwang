@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useRecoilState } from "recoil";
-import { useMediaQuery } from "react-responsive";
 
 import Input from "components/input";
 import useDebounce from "./useDebounce";
@@ -8,13 +7,11 @@ import { useGetTourList } from "queries/searchQuery";
 import { tourList } from "./state";
 
 import { InputBox } from "./textSearch.style";
-import theme from "../../../styles/Theme";
 
 const TextSearch = () => {
   const TOUR_DATA = useGetTourList().data;
   const [searchWord, setSearchWord] = useState("");
   const [, setTourList] = useRecoilState(tourList);
-  const mediaQuery = useMediaQuery({ query: theme.breakPoint });
 
   useEffect(() => {
     setTourList(TOUR_DATA);
