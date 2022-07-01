@@ -13,7 +13,7 @@ import {
   StampImgLv4,
   StampImgLv5,
   StampImgLv6,
-} from "./mypage.style";
+} from "../mypage.style";
 import { useGetUserInfo } from "queries/userQuery";
 import Loader from "components/loader";
 

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Profile from "./Profile";
 import Level from "./Level";
-import Navs from "./Navs";
+import Navs from "./nav/Navs";
 import { Outlet } from "react-router-dom";
 import { useGetUserInfo } from "queries/userQuery";
 import Loader from "components/loader";
