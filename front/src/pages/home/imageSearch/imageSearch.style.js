@@ -30,10 +30,36 @@ const ImageUploadBox = styled.label`
   }
 `;
 
-const Span = styled.span`
-  margin-top: 15px;
-  font-size: 12px;
-  color: ${({ theme }) => theme.colors.gray03};
+const InfoBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  p {
+    cursor: pointer;
+
+    svg {
+      margin-right: 5px;
+    }
+  }
+
+  ul {
+    opacity: 0;
+    text-align: center;
+  }
+
+  * {
+    margin-top: 10px;
+    font-size: 12px;
+    color: ${({ theme }) => theme.colors.gray03};
+  }
+
+  &:hover {
+    ul {
+      opacity: 1;
+    }
+  }
 `;
 
-export { ImageUploadBox, Span };
+export { ImageUploadBox, InfoBox };

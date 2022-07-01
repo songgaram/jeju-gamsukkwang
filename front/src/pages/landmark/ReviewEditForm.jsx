@@ -60,17 +60,19 @@ const ReviewEditForm = ({ review, setIsEditing }) => {
         onChange={(e) => setEditContent(e.target.value)}
       />
       <Footer>
-        <div>{editContent.length}/1000</div>
-        <Button
-          color="primary"
-          type="submit"
-          onSubmit={() => setIsEditing(false)}
-        >
-          취소
-        </Button>
-        <Button color="deepblue" type="submit" onSubmit={handleEditReview}>
-          수정 완료
-        </Button>
+        <section>{editContent.length}/1000</section>
+        <div>
+          <Button
+            color="primary"
+            type="submit"
+            onSubmit={() => setIsEditing(false)}
+          >
+            취소
+          </Button>
+          <Button color="deepblue" type="submit" onSubmit={handleEditReview}>
+            수정 완료
+          </Button>
+        </div>
       </Footer>
     </ReviewFormContainer>
   );
