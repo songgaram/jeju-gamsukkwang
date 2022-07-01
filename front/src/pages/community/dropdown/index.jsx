@@ -62,6 +62,10 @@ const DropdownBox = styled.div`
   position: relative;
   width: 120px;
   margin-bottom: 30px;
+
+  @media screen and ${({ theme }) => theme.breakPoint} {
+    width: 100%;
+  }
 `;
 
 const DropdownButton = styled.div`

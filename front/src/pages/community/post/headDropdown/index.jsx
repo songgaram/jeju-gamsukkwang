@@ -61,6 +61,10 @@ export default HeadDropdown;
 const DropdownBox = styled.div`
   position: relative;
   width: 120px;
+
+  @media screen and ${({ theme }) => theme.breakPoint} {
+    width: 120px;
+  }
 `;
 
 const DropdownButton = styled.div`

@@ -55,6 +55,12 @@ const DropdownBox = styled.div`
   align-items: flex-start;
   width: 800px;
   margin: 0 auto;
+
+  @media screen and ${({ theme }) => theme.breakPoint} {
+    width: 80%;
+    justify-content: space-around;
+    align-items: center;
+  }
 `;
 
 const PostBox = styled.div`
@@ -77,5 +83,13 @@ const ButtonBox = styled.div`
     border-radius: 10px;
     cursor: pointer;
     margin-top: 30px;
+  }
+
+  @media screen and ${({ theme }) => theme.breakPoint} {
+    width: 100%;
+
+    button {
+      margin-right: 5%;
+    }
   }
 `;

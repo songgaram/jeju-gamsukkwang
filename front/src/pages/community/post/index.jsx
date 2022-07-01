@@ -161,6 +161,12 @@ const PostBox = styled.div`
     margin-top: 50px;
     font-size: 20px;
     font-weight: 600;
+    justify-content: flex-start;
+  }
+
+  @media screen and ${({ theme }) => theme.breakPoint} {
+    width: 100%;
+    align-items: center;
   }
 `;
 
@@ -171,6 +177,13 @@ const FlexBox = styled.div`
   justify-content: space-between;
   align-items: center;
   margin: 30px 0;
+
+  @media screen and ${({ theme }) => theme.breakPoint} {
+    width: 100%;
+    align-items: center;
+    justify-content: space-around;
+    padding-left: 2%;
+  }
 `;
 
 const TitleBox = styled.div`
@@ -179,6 +192,15 @@ const TitleBox = styled.div`
     padding: 11px 20px;
     border: 1px solid ${({ theme }) => theme.colors.gray02};
     border-radius: 5px;
+  }
+
+  @media screen and ${({ theme }) => theme.breakPoint} {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    input {
+      width: 80%;
+    }
   }
 `;
 
@@ -191,6 +213,14 @@ const EditorBox = styled.div`
 
   .ql-editor {
     height: 400px;
+  }
+
+  @media screen and ${({ theme }) => theme.breakPoint} {
+    width: 95%;
+
+    .ql-editor {
+      height: 500px;
+    }
   }
 `;
 
@@ -209,5 +239,14 @@ const ButtonBox = styled.div`
     border-radius: 10px;
     cursor: pointer;
     margin: 30px 0;
+  }
+
+  @media screen and ${({ theme }) => theme.breakPoint} {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    button {
+      margin: 30px 10px;
+    }
   }
 `;
