@@ -12,6 +12,10 @@ const StyledInput = styled.input`
   &:focus {
     border: 1px solid ${({ theme }) => theme.colors.primary};
   }
+
+  @media screen and (max-width: 540px) {
+    width: 300px;
+  }
 `;
 
 export { StyledInput };

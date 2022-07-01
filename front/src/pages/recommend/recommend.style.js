@@ -6,9 +6,9 @@ const TourPage = styled.div`
   justify-content: flex-start;
   align-items: center;
   width: 100%;
-  height: 100vh;
   margin: 0 auto;
   padding: 60px 40px;
+  overflow: hidden;
 `;
 
 const ContentBox = styled.div`
