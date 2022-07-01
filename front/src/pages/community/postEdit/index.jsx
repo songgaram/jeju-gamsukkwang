@@ -1,5 +1,5 @@
 import React, { useMemo, useRef, useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 import ReactQuill from "react-quill";
 
@@ -12,7 +12,6 @@ import "react-quill/dist/quill.snow.css";
 import theme from "../../../styles/Theme";
 
 const PostEdit = () => {
-  const navigate = useNavigate();
   const mediaQuery = useMediaQuery({ query: theme.breakPoint });
   const params = useParams();
   const postId = params.id;
@@ -32,7 +31,6 @@ const PostEdit = () => {
 
   const [title, setTitle] = useState("");
   const [contents, setContents] = useState("");
-  const [subContents, setSubContents] = useState(contents);
   const [isSelected, setInSelected] = useState(postItem.head);
 
   const headFunction = (itemValue) => {
@@ -44,13 +42,11 @@ const PostEdit = () => {
     setTitle(item);
   };
 
-  const onChangeContents = (postContents) => {
-    setSubContents(postContents);
+  const onChangeContents = (e) => {
+    const content = e;
+    console.log(content);
+    setContents(content);
   };
-
-  useEffect(() => {
-    setContents(subContents);
-  }, [subContents]);
 
   const imageHandler = () => {
     imageRef.current.click();
