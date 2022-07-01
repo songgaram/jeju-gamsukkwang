@@ -55,6 +55,10 @@ const RatingContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
+
+  @media screen and ${({ theme }) => theme.breakPoint} {
+    flex-direction: column;
+  }
 `;
 
 const RatingMean = styled.div`
@@ -65,6 +69,10 @@ const RatingMean = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  @media screen and ${({ theme }) => theme.breakPoint} {
+    width: 100%;
+  }
 `;
 
 const CountsContainer = styled.div`
@@ -73,6 +81,10 @@ const CountsContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+
+  @media screen and ${({ theme }) => theme.breakPoint} {
+    width: 100%;
+  }
 `;
 
 const CountsContent = styled.div`
