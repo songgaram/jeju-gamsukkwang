@@ -4,11 +4,14 @@ import ReviewCounts from "./ReviewCounts";
 import ReviewList from "./ReviewList";
 import ReviewForm from "./ReviewForm";
 import { useGetRatingInfo } from "queries/reviewQuery";
+import Loader from "components/loader";
 
 const ReviewSection = ({ id }) => {
-  const { data } = useGetRatingInfo(id);
+  const { data, status } = useGetRatingInfo(id);
 
-  const totalReview = data?.rating?.totalReview;
+  const { totalReview, avgRating } = data?.rating || {};
+
+  if (status === "loading") return <Loader />;
 
   return (
     <ReviewContainer>
@@ -17,7 +20,7 @@ const ReviewSection = ({ id }) => {
       </ReviewHeader>
       <RatingContainer>
         <RatingMean>
-          <div style={{ fontSize: "3rem" }}>4.9</div>
+          <div style={{ fontSize: "3rem" }}>{avgRating}</div>
           <StarRating number={5} />
         </RatingMean>
         <CountsContainer>

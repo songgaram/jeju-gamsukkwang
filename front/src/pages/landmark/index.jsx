@@ -2,25 +2,28 @@ import { useParams, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Button from "components/button/Button";
 import ReviewSection from "./ReviewSection";
+import Loader from "components/loader";
 import { useGetLandmark } from "queries/landmarkQuery";
 
 const Landmark = () => {
   const params = useParams();
   const id = params.id;
-  const { data } = useGetLandmark(id);
+  const { data, status } = useGetLandmark(id);
+  const { image, krTitle, address, description, phoneno } = data.landmark || {};
   const navigate = useNavigate();
 
   const handleClick = () => {
     navigate(`/map/${data?.landmark?.id}`);
   };
 
+  if (status === "loading") return <Loader />;
   return (
     <>
       <LandmarkContainer>
-        <ImgContainer img={data?.landmark?.image} />
+        <ImgContainer img={image} />
         <DetailContainer>
           <Header>
-            <DetailTitle>{data?.landmark?.krTitle}</DetailTitle>
+            <DetailTitle>{krTitle}</DetailTitle>
             <Button color="gray03" onClick={handleClick}>
               길찾기
             </Button>
@@ -32,7 +35,7 @@ const Landmark = () => {
                 <DetailHighlight>주소</DetailHighlight>
               </DetailTabHead>
               <DetailTabCell>
-                <p>{data?.landmark?.address}</p>
+                <p>{address}</p>
               </DetailTabCell>
             </DetailTabRow>
             <DetailTabRow>
@@ -40,7 +43,7 @@ const Landmark = () => {
                 <DetailHighlight>소개</DetailHighlight>
               </DetailTabHead>
               <DetailTabCell>
-                <p>{data?.landmark?.description}</p>
+                <p>{description}</p>
               </DetailTabCell>
             </DetailTabRow>
             <DetailTabRow>
@@ -48,7 +51,7 @@ const Landmark = () => {
                 <DetailHighlight>연락처</DetailHighlight>
               </DetailTabHead>
               <DetailTabCell>
-                <p>{data?.landmark?.phoneNo}</p>
+                <p>{phoneno}</p>
               </DetailTabCell>
             </DetailTabRow>
           </DetailContent>
