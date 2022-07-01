@@ -48,7 +48,7 @@ const Landmark = () => {
                 <DetailHighlight>연락처</DetailHighlight>
               </DetailTabHead>
               <DetailTabCell>
-                <p>{data?.landmark?.phoneno}</p>
+                <p>{data?.landmark?.phoneNo}</p>
               </DetailTabCell>
             </DetailTabRow>
           </DetailContent>
@@ -64,11 +64,6 @@ const LandmarkContainer = styled.div`
   display: flex;
   flex-direction: row;
   margin-bottom: 10%;
-
-  @media screen and ${({ theme }) => theme.breakPoint} {
-    flex-direction: column;
-    align-items: center;
-  }
 `;
 
 const ImgContainer = styled.div`
@@ -77,10 +72,6 @@ const ImgContainer = styled.div`
   background-image: url(${(props) => props.img});
   background-size: cover;
   background-repeat: no-repeat;
-
-  @media screen and ${({ theme }) => theme.breakPoint} {
-    width: 100%;
-  }
 `;
 
 const DetailContainer = styled.div`
@@ -90,20 +81,11 @@ const DetailContainer = styled.div`
   justify-content: center;
   align-items: center;
   padding: 0 5%;
-
-  @media screen and ${({ theme }) => theme.breakPoint} {
-    width: 100%;
-  }
 `;
 
 const DetailTitle = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.xxxl};
   font-weight: bold;
-
-  @media screen and ${({ theme }) => theme.breakPoint} {
-    margin-top: 1.5rem;
-    margin-bottom: 1.5rem;
-  }
 `;
 
 const Header = styled.div`
@@ -113,10 +95,6 @@ const Header = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 5%;
-
-  @media screen and ${({ theme }) => theme.breakPoint} {
-    flex-direction: column;
-  }
 `;
 
 const DetailHighlight = styled.p`
