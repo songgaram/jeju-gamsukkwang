@@ -51,10 +51,10 @@ const PostDetail = () => {
             : "잡담"}
           <span>]</span> {postItem?.data?.title}
         </h2>
-        <p>
+        <span>
           {postItem?.data?.userNickName} ㆍ{" "}
           {`${postItem?.data?.createdAt}`.split("T")[0]}
-        </p>
+        </span>
         <hr />
         <div>{ReactHtmlParser(`${postItem?.data?.content}`)}</div>
       </ContentBox>
@@ -149,9 +149,14 @@ const ContentBox = styled.div`
   h2 {
     font-size: 20px;
     font-weight: 600;
+
+    span {
+      font-size: 20px;
+      color: ${({ theme }) => theme.colors.black};
+    }
   }
 
-  p {
+  span {
     font-size: 14px;
     color: ${({ theme }) => theme.colors.gray03};
   }
