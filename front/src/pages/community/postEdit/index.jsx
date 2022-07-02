@@ -1,4 +1,10 @@
-import React, { useMemo, useRef, useState, useEffect } from "react";
+import React, {
+  useMemo,
+  useRef,
+  useState,
+  useEffect,
+  useCallback,
+} from "react";
 import { useParams } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 import ReactQuill from "react-quill";
@@ -42,10 +48,8 @@ const PostEdit = () => {
     setTitle(item);
   };
 
-  const onChangeContents = (e) => {
-    const content = e;
-    console.log(content);
-    setContents(content);
+  const onChangeContents = (postContents) => {
+    setContents(postContents);
   };
 
   const imageHandler = () => {
@@ -152,7 +156,7 @@ const PostEdit = () => {
         <ReactQuill
           ref={quillRef}
           name="postContents"
-          value={contents}
+          defaultValue={postItem.content}
           onChange={onChangeContents}
           placeholder="내용을 입력해주세요"
           theme="snow"
