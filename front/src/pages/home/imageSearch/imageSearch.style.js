@@ -26,7 +26,7 @@ const ImageUploadBox = styled.label`
   }
 
   @media screen and ${({ theme }) => theme.breakPoint} {
-    width: 340px;
+    width: 300px;
   }
 `;
 
