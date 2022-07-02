@@ -51,10 +51,10 @@ const PostDetail = () => {
             : "잡담"}
           <span>]</span> {postItem?.data?.title}
         </h2>
-        <p>
+        <span>
           {postItem?.data?.userNickName} ㆍ{" "}
           {`${postItem?.data?.createdAt}`.split("T")[0]}
-        </p>
+        </span>
         <hr />
         <div>{ReactHtmlParser(`${postItem?.data?.content}`)}</div>
       </ContentBox>
@@ -96,9 +96,10 @@ const PostDetailBox = styled.div`
   margin: 50px 0;
 
   section {
+    width: 800px;
     display: flex;
     justify-content: flex-end;
-    width: 90%;
+    margin: 0 auto;
     margin-top: 20px;
 
     button {
@@ -114,11 +115,13 @@ const PostDetailBox = styled.div`
     button:nth-child(2) {
       color: ${({ theme }) => theme.colors.white};
       background: #74c0fc;
+      margin-left: 10px;
     }
 
     button:nth-child(3) {
       color: ${({ theme }) => theme.colors.white};
       background: #ff8787;
+      margin-left: 10px;
     }
   }
 
@@ -146,9 +149,14 @@ const ContentBox = styled.div`
   h2 {
     font-size: 20px;
     font-weight: 600;
+
+    span {
+      font-size: 20px;
+      color: ${({ theme }) => theme.colors.black};
+    }
   }
 
-  p {
+  span {
     font-size: 14px;
     color: ${({ theme }) => theme.colors.gray03};
   }

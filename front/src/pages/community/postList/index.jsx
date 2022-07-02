@@ -1,27 +1,36 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Pagination from "react-js-pagination";
 
-import { useGetPostList } from "queries/communityQuery";
-
 import styled from "styled-components";
+import http from "libs/apiController";
 
 const PostList = ({ headSelected }) => {
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
-  const [queryData, setQueryData] = useState({
-    headSelected: headSelected,
-    page: page,
-  });
+
+  const [List, setList] = useState([]);
 
   useEffect(() => {
-    setQueryData({
-      headSelected: headSelected,
-      page: page,
-    });
+    setPage(1);
+  }, [headSelected]);
+
+  useEffect(() => {
+    const fetchFunction = async () => {
+      try {
+        const res = await http.get(
+          `/community?page=${page}&limit=5${headSelected}`,
+        );
+        setList(res);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchFunction();
   }, [page, headSelected]);
 
-  const List = useGetPostList(queryData);
+  // const List = useGetPostList(queryData);
 
   const handleClick = (postId) => {
     navigate(`/community/${postId}`);
@@ -34,36 +43,53 @@ const PostList = ({ headSelected }) => {
   if (!List.data) return <span>loading...</span>;
 
   return (
-    <>
-      {List.data.articles.map((data) => (
-        <ItemBox key={data?.id} onClick={() => handleClick(data.id)}>
-          <Title>
-            <label>
-              {data?.head === "question"
-                ? "질문"
-                : data?.head === "info"
-                ? "정보"
-                : "잡담"}
-            </label>
-            <h3>{data?.title}</h3>
-          </Title>
-          {/* <p>{data.content}</p> */}
-        </ItemBox>
-      ))}
+    <ListFlexBox>
+      <ItemsBox>
+        {List.data.articles.map((data) => (
+          <ItemBox key={data?.id} onClick={() => handleClick(data.id)}>
+            <Title>
+              <label>
+                {data?.head === "question"
+                  ? "질문"
+                  : data?.head === "info"
+                  ? "정보"
+                  : "잡담"}
+              </label>
+              <h3>{data?.title}</h3>
+            </Title>
+            {/* <p>{data.content}</p> */}
+          </ItemBox>
+        ))}
+      </ItemsBox>
       <Pager>
         <Pagination
           activePage={page}
-          itemsCountPerPage={10}
+          itemsCountPerPage={5}
           totalItemsCount={List.data.total}
           pageRangeDisplayed={5}
           onChange={handlePageChange}
         />
       </Pager>
-    </>
+    </ListFlexBox>
   );
 };
 
 export default PostList;
+
+const ListFlexBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 475px;
+`;
+
+const ItemsBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+`;
 
 const ItemBox = styled.div`
   width: 800px;
