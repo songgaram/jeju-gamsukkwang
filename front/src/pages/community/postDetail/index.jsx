@@ -112,6 +112,9 @@ const PostDetailBox = styled.div`
       font-size: 12px;
       font-weight: 600;
     }
+    button:nth-child(1) {
+      background: ${({ theme }) => theme.colors.gray02};
+    }
 
     button:nth-child(2) {
       color: ${({ theme }) => theme.colors.white};
