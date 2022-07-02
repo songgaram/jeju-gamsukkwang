@@ -19,7 +19,7 @@ const PostList = ({ headSelected }) => {
     const fetchFunction = async () => {
       try {
         const res = await http.get(
-          `/community?page=${page}&limit=5${headSelected}`,
+          `/community?page=${page}&limit=10${headSelected}`,
         );
         setList(res);
       } catch (error) {
@@ -57,14 +57,13 @@ const PostList = ({ headSelected }) => {
               </label>
               <h3>{data?.title}</h3>
             </Title>
-            {/* <p>{data.content}</p> */}
           </ItemBox>
         ))}
       </ItemsBox>
       <Pager>
         <Pagination
           activePage={page}
-          itemsCountPerPage={5}
+          itemsCountPerPage={10}
           totalItemsCount={List.data.total}
           pageRangeDisplayed={5}
           onChange={handlePageChange}
@@ -81,7 +80,7 @@ const ListFlexBox = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  height: 475px;
+  height: 900px;
 `;
 
 const ItemsBox = styled.div`
@@ -89,6 +88,10 @@ const ItemsBox = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+
+  @media screen and ${({ theme }) => theme.breakPoint} {
+    width: 100%;
+  }
 `;
 
 const ItemBox = styled.div`

@@ -176,11 +176,13 @@ const PostBox = styled.div`
   @media screen and ${({ theme }) => theme.breakPoint} {
     width: 100%;
     align-items: center;
+    margin: 0 auto;
 
     > section {
       display: flex;
       justify-content: flex-start;
       width: 90%;
+      margin: 0 auto;
     }
   }
 `;
