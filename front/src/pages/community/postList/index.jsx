@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Pagination from "react-js-pagination";
-
-import { useGetPostList } from "queries/communityQuery";
 
 import styled from "styled-components";
 import http from "libs/apiController";
