@@ -79,7 +79,7 @@ home 화면에 접속해 검색어로 검색을 하거나 이미지로 검색하
 랜드마크의 상세정보와 평점을 볼 수 있습니다.
 
 ### Review
-![image](/uploads/e6dfadeede6d9985de2fa3ab9592537d/image.png)
+![image](/uploads/e6dfadeede6d9985de2fa3ab9592537d/image.png) <br>
 랜드마크 인증한 유저가 리뷰와 평점을 작성할 수 있습니다.
 
 ### Community
