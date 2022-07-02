@@ -94,6 +94,10 @@ const ItemBox = styled.div`
   * {
     color: ${({ theme }) => theme.colors.black};
   }
+
+  @media screen and ${({ theme }) => theme.breakPoint} {
+    width: 100%;
+  }
 `;
 
 const Title = styled.div`
@@ -131,7 +135,7 @@ const Pager = styled.div`
   }
 
   ul.pagination li:first-child,
-  ul.pagination li:last-child  {
+  ul.pagination li:last-child {
     display: none;
   }
 
@@ -139,7 +143,7 @@ const Pager = styled.div`
     display: inline-block;
     width: 30px;
     height: 30px;
-    border: 1px solid  ${({ theme }) => theme.colors.white};
+    border: 1px solid ${({ theme }) => theme.colors.white};
     display: flex;
     justify-content: center;
     align-items: center;
@@ -162,7 +166,6 @@ const Pager = styled.div`
 
   ul.pagination li.active a {
     color: ${({ theme }) => theme.colors.white};
-    
   }
 
   ul.pagination li.active {
@@ -179,4 +182,5 @@ const Pager = styled.div`
     width: 48px;
     height: 30px;
     color: ${({ theme }) => theme.colors.primary};
+  }
 `;
