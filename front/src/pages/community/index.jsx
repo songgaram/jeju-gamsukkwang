@@ -37,9 +37,8 @@ export default Community;
 const CommunityBox = styled.section`
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  margin: 20px 0;
-  height: calc(100vh - 90px);
+  justify-content: flex-start;
+  margin: 50px 0;
 
   h2 {
     width: 800px;
