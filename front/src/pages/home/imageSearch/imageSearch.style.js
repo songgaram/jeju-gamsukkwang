@@ -4,7 +4,7 @@ const ImageUploadBox = styled.label`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 442px;
+  width: 400px;
   height: 48px;
   margin-top: 20px;
   font-size: 16px;
