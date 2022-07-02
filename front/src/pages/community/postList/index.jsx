@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Pagination from "react-js-pagination";
-
-import { useGetPostList } from "queries/communityQuery";
 
 import styled from "styled-components";
 import http from "libs/apiController";
@@ -45,22 +43,23 @@ const PostList = ({ headSelected }) => {
   if (!List.data) return <span>loading...</span>;
 
   return (
-    <>
-      {List.data.articles.map((data) => (
-        <ItemBox key={data?.id} onClick={() => handleClick(data.id)}>
-          <Title>
-            <label>
-              {data?.head === "question"
-                ? "질문"
-                : data?.head === "info"
-                ? "정보"
-                : "잡담"}
-            </label>
-            <h3>{data?.title}</h3>
-          </Title>
-          {/* <p>{data.content}</p> */}
-        </ItemBox>
-      ))}
+    <ListFlexBox>
+      <ItemsBox>
+        {List.data.articles.map((data) => (
+          <ItemBox key={data?.id} onClick={() => handleClick(data.id)}>
+            <Title>
+              <label>
+                {data?.head === "question"
+                  ? "질문"
+                  : data?.head === "info"
+                  ? "정보"
+                  : "잡담"}
+              </label>
+              <h3>{data?.title}</h3>
+            </Title>
+          </ItemBox>
+        ))}
+      </ItemsBox>
       <Pager>
         <Pagination
           activePage={page}
@@ -70,11 +69,30 @@ const PostList = ({ headSelected }) => {
           onChange={handlePageChange}
         />
       </Pager>
-    </>
+    </ListFlexBox>
   );
 };
 
 export default PostList;
+
+const ListFlexBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 900px;
+`;
+
+const ItemsBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+
+  @media screen and ${({ theme }) => theme.breakPoint} {
+    width: 100%;
+  }
+`;
 
 const ItemBox = styled.div`
   width: 800px;
@@ -146,7 +164,7 @@ const Pager = styled.div`
   }
 
   ul.pagination li:first-child,
-  ul.pagination li:last-child  {
+  ul.pagination li:last-child {
     display: none;
   }
 
@@ -154,7 +172,7 @@ const Pager = styled.div`
     display: inline-block;
     width: 30px;
     height: 30px;
-    border: 1px solid  ${({ theme }) => theme.colors.white};
+    border: 1px solid ${({ theme }) => theme.colors.white};
     display: flex;
     justify-content: center;
     align-items: center;
@@ -177,7 +195,6 @@ const Pager = styled.div`
 
   ul.pagination li.active a {
     color: ${({ theme }) => theme.colors.white};
-    
   }
 
   ul.pagination li.active {
@@ -194,4 +211,5 @@ const Pager = styled.div`
     width: 48px;
     height: 30px;
     color: ${({ theme }) => theme.colors.primary};
+  }
 `;

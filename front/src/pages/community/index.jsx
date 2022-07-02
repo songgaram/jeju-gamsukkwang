@@ -37,7 +37,7 @@ export default Community;
 const CommunityBox = styled.section`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   margin: 50px 0;
 
   h2 {
@@ -86,7 +86,6 @@ const ButtonBox = styled.div`
     border: none;
     border-radius: 10px;
     cursor: pointer;
-    margin-top: 30px;
   }
 
   @media screen and ${({ theme }) => theme.breakPoint} {
