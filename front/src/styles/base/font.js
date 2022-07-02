@@ -9,6 +9,7 @@ const font = css`
       "Microsoft YaHei", sans-serif;
     font-feature-settings: "tnum";
     color: #333;
+    letter-spacing: -0.05em;
   }
 
   input {
