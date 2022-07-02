@@ -89,6 +89,10 @@ const ItemsBox = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+
+  @media screen and ${({ theme }) => theme.breakPoint} {
+    width: 100%;
+  }
 `;
 
 const ItemBox = styled.div`
