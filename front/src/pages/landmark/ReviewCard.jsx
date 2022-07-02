@@ -14,7 +14,7 @@ export const ReviewCard = ({ review, idx }) => {
   const [isVisible, setIsVisible] = useState(false);
   const { userNickName, content, rating, createdAt, id, userId } = review;
 
-  const loginUserId = useRecoilValue(userState).id;
+  const loginUserId = useRecoilValue(userState)?.id;
 
   const deleteReview = useDeleteReview();
 
