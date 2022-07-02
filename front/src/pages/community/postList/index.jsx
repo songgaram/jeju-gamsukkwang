@@ -94,6 +94,10 @@ const ItemBox = styled.div`
   * {
     color: ${({ theme }) => theme.colors.black};
   }
+
+  @media screen and ${({ theme }) => theme.breakPoint} {
+    width: 100%;
+  }
 `;
 
 const Title = styled.div`
