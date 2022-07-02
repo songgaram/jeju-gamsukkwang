@@ -16,6 +16,10 @@ const TextSearchResultBox = styled.div`
   background: ${({ theme }) => theme.colors.gray01};
   border-radius: 10px;
 
+  @media screen and ${({ theme }) => theme.breakPoint} {
+    width: 300px;
+  }
+
   span {
     font-size: 13px;
     font-weight: 300;
