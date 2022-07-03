@@ -36,8 +36,6 @@ const PostList = ({ headSelected }) => {
     fetchFunction();
   }, [page, headSelected]);
 
-  // const List = useGetPostList(queryData);
-
   const handleClick = (postId) => {
     if (loginUserId === null) {
       setIsModalOpen(true);

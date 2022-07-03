@@ -5,7 +5,7 @@ const TextSearchResultBox = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 442px;
+  width: 400px;
   height: auto;
   max-height: 250px;
   margin: 20px auto 0;
