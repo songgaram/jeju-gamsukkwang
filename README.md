@@ -182,7 +182,7 @@ ResNet은 [ILSVRC](https://www.image-net.org/challenges/LSVRC/)(ImageNet Large S
 
 <br>
 
-## 9. 버전
+## 6. 버전
 - 1.0.0
 
 
