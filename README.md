@@ -111,7 +111,8 @@
 
 ### 서비스 구조도
 
-![service architecture](./wiki/img/serviceArchitecture.png)
+![image](https://user-images.githubusercontent.com/96907766/184671407-a94285b0-22fb-4cc8-990f-1deba2ed2760.png)
+
 
 ## 3. 프로젝트 기능 설명
 #### ⚙️ User MVP
@@ -181,7 +182,7 @@
 
 [![Watch the video](https://user-images.githubusercontent.com/71453094/179664898-aec749ef-8618-4e4f-b03d-78571f1537f5.png)](https://youtu.be/L9IzsZCiF_E)
 
-<br>
+
 ### 서비스 상세 페이지
 
 ### Home
