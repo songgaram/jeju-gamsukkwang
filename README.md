@@ -109,7 +109,7 @@
 <br>
 
 ## 프로젝트 위키
-[위키문](https://github.com/songgaram/jeju-gamsukkwang/wiki)
+[위키문서](https://github.com/songgaram/jeju-gamsukkwang/wiki)
 
 ## 프로젝트 구성도
 
